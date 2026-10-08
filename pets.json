@@ -1,0 +1,181 @@
+{
+  "cage": "findastra-pet-apps",
+  "owner": "Astra",
+  "topic": "pet-app",
+  "updated": "2026-10-07",
+  "mascots": [
+    {
+      "name": "Nullbot",
+      "art": "nullbot",
+      "lives": "On the roof of the Cage (every page and overlay that draws the Cage)",
+      "job": "Stands on the Cage and keeps watch. Not an app of its own.",
+      "note": "DRAFT in the Codex companion style. Drawn fresh; it is not OpenAI's Null Signal artwork."
+    }
+  ],
+  "pets": [
+    {
+      "repo": "findastra-pet-apps",
+      "pet": "Friendly Farmer",
+      "role": "host",
+      "art": "farmer",
+      "status": "hatching",
+      "published": false,
+      "job": "Hosts the Cage and represents this app. Stands outside it and opens or closes the door when you click him. Manager and auditor of the other pets.",
+      "added": "2026-10-07",
+      "note": "DRAFT. Holds a clipboard because he audits."
+    },
+    {
+      "repo": "github-goldfish",
+      "pet": "GitHub Goldfish",
+      "role": "pet",
+      "art": "goldfish",
+      "status": "hatching",
+      "published": false,
+      "job": "Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors.",
+      "added": "2026-10-07"
+    },
+    {
+      "repo": "data-dealer",
+      "pet": "Chip",
+      "role": "pet",
+      "art": "chip",
+      "status": "hatching",
+      "published": false,
+      "job": "Data Dealer's pixel twin.",
+      "added": "2026-10-07",
+      "note": "DRAFT guessed as a poker chip from the name; the original Chip art is not on this PC. Astra to correct."
+    },
+    {
+      "repo": "api-fairy",
+      "pet": "API Fairy",
+      "role": "pet",
+      "art": "api-fairy",
+      "status": "growing",
+      "published": false,
+      "job": "Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves.",
+      "added": "2026-10-07",
+      "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings)."
+    },
+    {
+      "repo": "unity-unicorn",
+      "pet": "Unity Unicorn",
+      "role": "pet",
+      "art": "unity-unicorn",
+      "status": "hatching",
+      "published": false,
+      "job": "To be decided with Astra (Unity and VRChat world projects).",
+      "added": "2026-10-07"
+    },
+    {
+      "repo": "learn-python",
+      "pet": "Python Panther",
+      "role": "pet",
+      "art": "python-panther",
+      "status": "hatching",
+      "published": true,
+      "job": "The pet attached to Learn Python. Job to be decided with Astra. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "A panther, not a snake. Python blue and yellow on dark fur."
+    },
+    {
+      "repo": "vrchat-ai-astra",
+      "pet": "Astra Wisp",
+      "role": "pet",
+      "art": "astra-wisp",
+      "status": "hatching",
+      "published": true,
+      "job": "The pet for VRChat AI Astra: the companion and her bridge into VRChat. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "DRAFT. The name Wisp is a placeholder."
+    },
+    {
+      "repo": "healthy-hummy",
+      "pet": "Healthy Hummy",
+      "role": "pet",
+      "art": "healthy-hummy",
+      "status": "hatching",
+      "published": false,
+      "job": "Personal health tracker. Your data stays on your PC and is never committed.",
+      "added": "2026-10-07",
+      "note": "DRAFT as a hummingbird (a guess from the name)."
+    },
+    {
+      "repo": "finance-finch",
+      "pet": "Finance Finch",
+      "role": "pet",
+      "art": "finance-finch",
+      "status": "hatching",
+      "published": false,
+      "job": "Personal finance tracker. A yellow canary. Your data stays on your PC and is never committed.",
+      "added": "2026-10-07"
+    },
+    {
+      "repo": "mommys",
+      "pet": "Mommy's",
+      "role": "pet",
+      "art": "mommys-astra",
+      "companions": ["mommys-devilish"],
+      "status": "hatching",
+      "published": false,
+      "job": "Manages Mommy's, the VRChat dance academy and entertainers club, for the Mommies. The pets are the twins from the Mommy's website, Astra and Devilish.",
+      "added": "2026-10-07",
+      "note": "DRAFT, drawn from the twin mascots on the Mommy's website (silver hair and green eyes; dark hair, white horns and blue eyes). Their lines come from that page.",
+      "says": {
+        "mommys-astra": ["welcome to the building", "raves are last Sunday", "the pole goes all the way up", "did you shake the jar yet", "shuffle class is easier than it looks", "that grade took me four tries"],
+        "mommys-devilish": ["I rigged that bow myself", "3F smells like spraypaint", "don't go below the lobby", "I'll teach you the bow first", "material swaps are free real estate", "the helipad is decorative"]
+      }
+    },
+    {
+      "repo": "paper-girl",
+      "pet": "Paper Girl",
+      "role": "pet",
+      "art": "paper-girl",
+      "status": "growing",
+      "published": true,
+      "job": "A free science discovery desk: real research, publisher explanations, fresh articles. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "DRAFT. Dark mauve and pink from the site, a folded paper hat, a rolled paper."
+    },
+    {
+      "repo": "file-master",
+      "pet": "File Master",
+      "role": "pet",
+      "art": "file-master",
+      "status": "growing",
+      "published": true,
+      "job": "Keeps a Windows PC organized: read-only audits and approval-based cleanup plans with undo. Never deletes. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "DRAFT as a manila folder."
+    },
+    {
+      "repo": "role-fairy",
+      "pet": "Role Fairy",
+      "role": "pet",
+      "art": "role-fairy",
+      "status": "growing",
+      "published": true,
+      "job": "Mommy's Role Fairy: a single-choice Discord role picker. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "DRAFT. Butterfly wings in the role colours (blue, pink)."
+    },
+    {
+      "repo": "findastra-discord-presence",
+      "pet": "Discord Damsel",
+      "role": "pet",
+      "art": "discord-damsel",
+      "status": "hatching",
+      "published": true,
+      "job": "Manages the Discord presence apps (OpenAI and Anthropic) and other Discord apps. The repo exists; it still needs pet.json and the pet-app topic.",
+      "added": "2026-10-07",
+      "note": "DRAFT. Blurple hennin and veil; no Discord logo."
+    }
+  ],
+  "candidates": [
+    { "name": "Ghost Protocol", "repo": "ghost-protocol", "why": "Public repo, a personal cybersecurity checklist; a ghost would suit it." },
+    { "name": "Astra's Infinite Pole", "repo": "astras-infinite-pole", "why": "Public Unity world source; maybe the Unity Unicorn's home." },
+    { "name": "Piranesi House", "repo": "piranesi-house", "why": "Local VRChat world project, not published." },
+    { "name": "Astra's GIF Maker", "repo": "astras-gif-maker", "why": "Local single-file tool, not published." },
+    { "name": "Image Bridge", "repo": "image-bridge", "why": "Local tool for the presence card art, not published." },
+    { "name": "Fuzzbois", "repo": "fuzzbois", "why": "Local art project, not published." }
+  ]
+}

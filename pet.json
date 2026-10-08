@@ -1,0 +1,14 @@
+{
+  "pet": "Friendly Farmer",
+  "kind": "pet-app",
+  "owner": "Astra",
+  "sprite": "art/sprites.json",
+  "art_key": "farmer",
+  "job": "Hosts the Cage and represents this app: opens and closes the door, and manages and audits the other pets.",
+  "runs_on": "Any modern browser (cage.html). Optional Node 20 or newer for the build and checks.",
+  "entry": "cage.html",
+  "status": "hatching",
+  "cage": { "topic": "pet-app", "home": "README.md" },
+  "version": "0.1.0",
+  "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07"
+}
