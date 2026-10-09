@@ -83,6 +83,69 @@
       ]
     ]
   },
+  "words": {
+    "about": "One name for each part of a pet app; PET-WORDS.md explains them. The GitHub Goldfish reads this list and flags the retired names in pet repos. test/pet-words-test-20261009.mjs keeps it in step with PET-WORDS.md.",
+    "parts": [
+      {
+        "say": "pet app",
+        "means": "the whole set: one repo, one pet and its app",
+        "retired": []
+      },
+      {
+        "say": "pet",
+        "means": "the character itself, by name",
+        "retired": [
+          "pixel twin"
+        ]
+      },
+      {
+        "say": "app",
+        "means": "the full window that opens when you double-click the pet: a web app or a Windows app",
+        "retired": [
+          "pet app's app",
+          "application interface",
+          "pet interface",
+          "local interface",
+          "browser companion"
+        ]
+      },
+      {
+        "say": "desktop pet",
+        "means": "the small pet that sits on the Windows desktop above other windows",
+        "retired": [
+          "pet app icon",
+          "desktop companion"
+        ]
+      },
+      {
+        "say": "bubble",
+        "means": "a short line that pops up over the pet; the pet talking",
+        "retired": [
+          "speech bubble",
+          "chat bubble"
+        ]
+      },
+      {
+        "say": "quick chat",
+        "means": "the small box that opens from the desktop pet so you can type to it",
+        "retired": [
+          "pet app icon chat"
+        ]
+      },
+      {
+        "say": "app icon",
+        "means": "the still picture on the taskbar, a shortcut or a browser tab",
+        "retired": []
+      },
+      {
+        "say": "pet well",
+        "means": "the square where the pet sits inside its app",
+        "retired": [
+          "pet frame"
+        ]
+      }
+    ]
+  },
   "pets": [
     {
       "repo": "astras-pet-apps",
@@ -93,7 +156,7 @@
       "asset_date": "20261008",
       "status": "growing",
       "published": true,
-      "visibility": "private",
+      "visibility": "public",
       "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
       "added": "2026-10-07",
       "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
@@ -112,7 +175,7 @@
       "added": "2026-10-07",
       "interface_local_url": "apps/github-goldfish-20261008.html",
       "interface_url": "apps/github-goldfish-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "c77f326d16d85dcf2d2328683e798605e3253a6c"
     },
@@ -127,7 +190,7 @@
       "status": "hatching",
       "published": true,
       "visibility": "private",
-      "job": "Data Dealer's pixel twin.",
+      "job": "Data Dealer's pet.",
       "added": "2026-10-07",
       "note": "Original Data Dealer drawing code, preserved at integer scale inside its yellow pocket launcher. Uses the exact original LCD palette and pixel geometry. The original app repository is private.",
       "interface_local_url": "apps/data-dealer-20261008.html",
@@ -149,7 +212,7 @@
       "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings).",
       "interface_local_url": "apps/api-fairy-20261008.html",
       "interface_url": "apps/api-fairy-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "a63b027fca258816996767eff5d6e3a75431a1fb"
     },
@@ -165,7 +228,7 @@
       "added": "2026-10-07",
       "interface_local_url": "apps/unity-unicorn-20261008.html",
       "interface_url": "apps/unity-unicorn-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "c5269d03946aae73ebb00fb0e47dea74dee9182c"
     },
@@ -216,7 +279,7 @@
       "note": "DRAFT as a hummingbird (a guess from the name).",
       "interface_local_url": "apps/health-hummy-20261008.html",
       "interface_url": "apps/health-hummy-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "9ef38ebb911b9f49586f6c6502e1040afd8f354c"
     },
@@ -232,7 +295,7 @@
       "added": "2026-10-07",
       "interface_local_url": "apps/finance-finch-20261008.html",
       "interface_url": "apps/finance-finch-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "8c184fbd7ca8ad492deacd17183b1e810e2eea15"
     },
@@ -265,7 +328,7 @@
       },
       "interface_local_url": "apps/mommys-20261008.html",
       "interface_url": "apps/mommys-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "a0a8275aca9feba005d01f4a762752b2cd55626b"
     },
@@ -295,7 +358,7 @@
       "kind": "tech",
       "status": "growing",
       "published": true,
-      "job": "Reviews a Windows PC and prepares cleanup plans with undo. Its browser companion imports a plan for review; original scripts run changes separately.",
+      "job": "Reviews a Windows PC and prepares cleanup plans with undo. Its web app imports a plan for review; original scripts run changes separately.",
       "added": "2026-10-07",
       "note": "DRAFT as a manila folder.",
       "interface_local_url": "apps/file-master-20261008.html",
@@ -334,7 +397,7 @@
       "note": "DRAFT. A penguin, electric magenta and cyan.",
       "interface_local_url": "apps/portfolio-puffer-20261008.html",
       "interface_url": "apps/portfolio-puffer-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "aef38db6544322c54e01b0ef9a1cf8dff1a8fcf1"
     },
@@ -351,7 +414,7 @@
       "note": "DRAFT. A local music-project notebook is available. It does not connect to Ableton Live or acquire samples.",
       "interface_local_url": "apps/drum-dog-20261008.html",
       "interface_url": "apps/drum-dog-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "f6f9470a5cdea6eb8e620696cf5eb2876dbf764e"
     },
@@ -368,7 +431,7 @@
       "note": "DRAFT. The job is taken from the session where Astra named it; confirm the scope with her.",
       "interface_local_url": "apps/vscode-angel-20261008.html",
       "interface_url": "apps/vscode-angel-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "37c1727f7ba304e835b6f65f53d04d3a308d9126"
     },
@@ -405,7 +468,7 @@
       "note": "DRAFT. Officially named Project Parrot, replacing Project Pal. The local desk stores manually entered ideas and due dates. OneNote scanning and background reminder integration remain unconnected.",
       "interface_local_url": "apps/project-parrot-20261008.html",
       "interface_url": "apps/project-parrot-20261008.html",
-      "visibility": "private",
+      "visibility": "public",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "43f2bc7eee8d4bf4cec96a99e2f2ac4518c8f2cb"
     }

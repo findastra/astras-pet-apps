@@ -10,7 +10,7 @@ Every pet app is its own repo under `findastra`, named in lowercase words joined
 | **GitHub topic** | `pet-app`. Added in the repo's About box (the gear). The Cage finds pets by this topic. |
 | **`README.md`** | Title is the repo name in Title Case. The first lines include `*A pet app by Astra.*`. Has a "how to run it" section and a "limits" section that says plainly what is not done. |
 | **`AGENTS.md` and `CLAUDE.md`** | Rules so any assistant can pick the repo up. |
-| **A pixel twin** | Drawn in the shared style (below). |
+| **A pet** | Drawn in the shared style (below). What every part of a pet app is called: [PET-WORDS.md](PET-WORDS.md). |
 | **Model and version** | The assistant that built or changed it is recorded (e.g. `Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07`). |
 | **A `LICENSE`** | House default: MIT, "Copyright (c) <year> findastra". |
 
@@ -35,13 +35,13 @@ Public credit is always **Astra**. No keys, `.env` files or personal data in a r
 
 `status` is **hatching** (idea or first draft), **growing** (works, rough edges) or **grown** (finished and maintained). `sprite` and `entry` must be real files in the repo.
 
-## The pixel twin
+## The pet's art
 
 **Chip is an owner-requested exception:** its original Data Dealer `drawPet` pixels are rendered
 by `scripts/chip-original-20261008.mjs` at integer scale inside the original yellow pocket shell.
 The registry's `art_source` selects this native renderer; image generation skips it. Its exact
 LCD palette, geometry and original expression shapes are preserved. The Cage's nine moods use
-the original expression and bob/blink states plus shared indicators.
+the original expression and bob/blink states plus the shared mood stickers.
 
 Pets are **generated** pixel art, not hand-coded any more. One image per pet holds the same
 character nine times in a 3×3 grid; a script slices it into the nine moods. The character stays
@@ -54,7 +54,7 @@ generations give nine slightly different creatures, which is why it is done this
 - **Neon, deliberately unnatural colours, and no two pets share a palette.** At sprite size the
   palette tells them apart faster than the silhouette does.
 - Dot eyes with a single white highlight, small pink blush cheeks.
-- The generator is told **never** to draw the mood symbols. See "One set of indicators" below.
+- The generator is told **never** to draw the mood symbols. See "One set of mood stickers" below.
 
 ### Making or redoing a pet's art
 
@@ -87,7 +87,7 @@ A pet can be generated **from another pet's sheet** by giving it `ref`, so the t
 character design: Astra is one of the Mommy's dancers in a different colourway, generated from
 their sheet. The runner always generates a referenced pet first.
 
-### One set of indicators
+### One set of mood stickers
 
 `?`, `!`, `Z`, the tear, the sweat drop and the bandage are **composited from the shared
 sticker set** in [`scripts/art-kit.mjs`](scripts/art-kit.mjs), never drawn by the generator.

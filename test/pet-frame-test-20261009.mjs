@@ -1,4 +1,4 @@
-// The pet frame (.pet-well) in every rail-style app is square. Claude Opus 5.5, 2026-10-09.
+// The pet well (.pet-well) in every rail-style app is square. Claude Opus 5.5, 2026-10-09.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

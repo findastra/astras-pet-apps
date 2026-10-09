@@ -1,7 +1,7 @@
 # Desktop Farmer
 
-Double-click `start-farmer-dock-20261008.cmd` on Windows. It builds the small
-desktop companion using the .NET Framework compiler already included with
+Double-click `start-farmer-dock-20261008.cmd` on Windows. It builds the Farmer's
+desktop pet using the .NET Framework compiler already included with
 Windows. There are no packages to install and no startup setting is changed.
 Right-click the Farmer to close him. Double-click him to open his desk.
 
