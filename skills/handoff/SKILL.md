@@ -40,5 +40,9 @@ Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 - Write your own card whenever you stop with something left: another assistant's job, a
   step that needs Astra, or work you could not finish. Say plainly what is not done.
 - Results live in the repo, not in chat. Record your model name and version on the card.
+- **✨ marks Astra's to-dos.** Start a line with ✨ only when it is a concrete action for Astra
+  herself: approve, choose, sign in, merge a PR, give a file or key. One action per line, said
+  plainly enough to do without rereading. Use ✨ nowhere else, on cards, in PRs and in chat, so
+  she can spot her to-dos at a glance. If nothing needs her, no ✨. Set by Astra on 2026-10-09.
 - Follow the repo's own rules: no pushing to `main` and no new GitHub repos without
   Astra's OK; work on a branch otherwise.
