@@ -6,7 +6,9 @@ This is **the Cage**, where Astra keeps her pet apps, and it is a pet app itself
 
 ![Every character in every mood](art/roster.png)
 
-The pets move around inside the Cage. Open the door and they can use the browser window. Click one to cheer it up; double-click a pet to open its application interface. Each has the same set of moods (idle, blink, happy, curious, worried, sad, sick, alarmed, sleep). Drawings are **drafts** unless their roster notes record Astra's approval.
+The pets move by their kind. The birds (Health Hummy, Finance Finch and Project Parrot), API Fairy, Astra Wisp, VSCode Angel and Ghost Protocol keep to the sky, the GitHub Goldfish swims at mid height, and everyone else walks the floor: the human pets hop as they go, and Python Panther runs up the walls and leaps off. The birds fly in a loose V and chase the goldfish; API Fairy, Unity Unicorn and Astra Wisp hang out together, as do Paper Girl, File Master and Chip; Drum Dog and Python Panther play tag. They move slowly inside the Cage and freely once the door is open and they have the browser window. The rules live in `cage_life` in `pets.json`, so a new pet joins in through its `kind` ([how pets move](PET-FILES.md#how-pets-move-in-the-cage)).
+
+Click a pet to cheer it up; double-click a pet to open its application interface. Each has the same set of moods (idle, blink, happy, curious, worried, sad, sick, alarmed, sleep); play never changes a pet's mood. Drawings are **drafts** unless their roster notes record Astra's approval.
 
 ## Who lives here
 
@@ -81,7 +83,7 @@ The egg is the first version. Other ideas, if it should become a real desktop ov
 
 ## Add a pet
 
-Read [PET-FILES.md](PET-FILES.md). Add an entry to `pets.json` and a prompt to `scripts/generate-pets.mjs`, supply its 3×3 mood sheet, then run `npm run build`. The count, table, roster and page update together. Set `asset_date` for new pets so the sheet and mood filenames carry the owner's date. Building existing sheets is local and does not generate paid images. The local GitHub Goldfish project is intended to audit whether pet repos have their files and registry entries.
+Read [PET-FILES.md](PET-FILES.md). Add an entry to `pets.json`, including the `kind` that decides how it moves, and a prompt to `scripts/generate-pets.mjs`, supply its 3×3 mood sheet, then run `npm run build`. The count, table, roster and page update together. Set `asset_date` for new pets so the sheet and mood filenames carry the owner's date. Building existing sheets is local and does not generate paid images. The local GitHub Goldfish project is intended to audit whether pet repos have their files and registry entries.
 
 ## Limits
 
@@ -99,4 +101,4 @@ What is not done, plainly:
 
 ## Credits
 
-Made by Astra. Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`) on 2026-10-07. Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6) on 2026-10-08. MIT licensed.
+Made by Astra. Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`) on 2026-10-07. Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6) on 2026-10-08. Cage movement by kind added with Claude Opus 5.5 (`claude-opus-5-5`) on 2026-10-09. MIT licensed.
