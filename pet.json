@@ -12,7 +12,7 @@
     "topic": "pet-app",
     "home": "README.md"
   },
-  "version": "0.2.0-20261008",
-  "source": "https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008",
+  "version": "0.2.1-20261008",
+  "source": "https://github.com/findastra/astras-pet-apps/tree/v0.2.1-20261008",
   "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07; OpenAI Codex (GPT-6), 2026-10-08"
 }

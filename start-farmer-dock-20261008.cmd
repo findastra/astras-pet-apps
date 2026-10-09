@@ -8,6 +8,7 @@ if not exist "%petroot%bin" mkdir "%petroot%bin"
 if "%~1"=="--check" goto diagnostic
 if "%~1"=="--self-test" goto diagnostic
 if "%~1"=="--tracking-test" goto diagnostic
+if "%~1"=="--benchmark" goto diagnostic
 if exist "%petexe%" (
   "%petexe%" "%petroot%." --running
   if not errorlevel 1 (

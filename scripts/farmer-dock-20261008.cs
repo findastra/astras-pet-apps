@@ -17,25 +17,20 @@ namespace AstraPetApps {
   public sealed class FarmerDock : Form {
     public const double VisibleHeight = 58.75; // BSOD computer-case y57 to feet y198 at 80/192 scale.
     public const string WindowTitle = "Astra's Pet Apps - Farmer Dock";
-    readonly string root, stateFile;
+    readonly string root;
     readonly bool testMode;
     readonly Timer timer = new Timer();
-    readonly JavaScriptSerializer json = new JavaScriptSerializer { MaxJsonLength = 67108864 };
     readonly Bitmap idle, blink;
     readonly Rectangle crop;
-    readonly LiveMiniTracker tracker = new LiveMiniTracker();
+    readonly LiveMiniTracker tracker;
     readonly Stopwatch animation = Stopwatch.StartNew();
-    RectangleF savedFrame;
-    double displayScale;
-    bool calibrated;
-    DateTime stamp = DateTime.MinValue;
-    DateTime lastGood = DateTime.MinValue;
-    int tick;
+    int placementQueued;
+    bool paintedBlink;
     public string Status { get; private set; }
     public FarmerDock(string directory, bool test = false) {
       root = directory;
       testMode = test;
-      stateFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".codex", ".codex-global-state.json");
+      var stateFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".codex", ".codex-global-state.json");
       idle = DetachedBitmap(Path.Combine(root, "art", "frames", "farmer", "idle-20261008.png"));
       blink = DetachedBitmap(Path.Combine(root, "art", "frames", "farmer", "blink-20261008.png"));
       crop = AlphaBounds(idle);
@@ -56,10 +51,18 @@ namespace AstraPetApps {
       MouseDoubleClick += (s,e) => { if(e.Button == MouseButtons.Left) OpenDesk(); };
       var tip = new ToolTip();
       tip.SetToolTip(this, "Friendly Farmer · double-click for the desk · right-click to close");
-      timer.Interval = 33;
-      timer.Tick += (s,e) => { tick++; RefreshPosition(); Invalidate(); };
+      // Create only our own hidden HWND before the worker can post updates.
+      var ownHandle=Handle;
+      tracker=new LiveMiniTracker(stateFile,!testMode);
+      tracker.SampleChanged+=QueuePlacement;
+      timer.Interval = 50;
+      timer.Tick += (s,e) => {
+        RefreshPosition();
+        bool nowBlink=animation.ElapsedMilliseconds%6600>=2340&&animation.ElapsedMilliseconds%6600<3840;
+        if(nowBlink!=paintedBlink) { paintedBlink=nowBlink;Invalidate(); }
+      };
       timer.Start();
-      FormClosed += (s,e) => { timer.Dispose(); tracker.Dispose(); idle.Dispose(); blink.Dispose(); tip.Dispose(); };
+      FormClosed += (s,e) => { timer.Dispose();tracker.SampleChanged-=QueuePlacement;tracker.Dispose();idle.Dispose();blink.Dispose();tip.Dispose(); };
     }
     public static Bitmap DetachedBitmap(string path) {
       using (var stream = new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.ReadWrite|FileShare.Delete))
@@ -68,10 +71,6 @@ namespace AstraPetApps {
     protected override bool ShowWithoutActivation { get { return !testMode; } }
     protected override CreateParams CreateParams {
       get { var value = base.CreateParams; if(!testMode)value.ExStyle |= 0x08000000 | 0x00000080; return value; }
-    }
-    static double Number(Dictionary<string,object> value,string key,double fallback) {
-      object result; double number;
-      return value.TryGetValue(key,out result) && result != null && double.TryParse(Convert.ToString(result,CultureInfo.InvariantCulture),NumberStyles.Float,CultureInfo.InvariantCulture,out number) && !double.IsNaN(number) && !double.IsInfinity(number) ? number : fallback;
     }
     public static Rectangle AlphaBounds(Bitmap image) {
       int left=image.Width,top=image.Height,right=-1,bottom=-1;
@@ -86,83 +85,47 @@ namespace AstraPetApps {
       if(!File.Exists(file)) file=Path.Combine(root,"cage.html");
       Process.Start(new ProcessStartInfo(file) { UseShellExecute=true });
     }
+    void QueuePlacement() {
+      if(IsDisposed||!IsHandleCreated||System.Threading.Interlocked.CompareExchange(ref placementQueued,1,0)!=0)return;
+      try {
+        BeginInvoke((Action)delegate {
+          System.Threading.Interlocked.Exchange(ref placementQueued,0);
+          if(!IsDisposed)PlaceFromLiveMini();
+        });
+      } catch(InvalidOperationException) { System.Threading.Interlocked.Exchange(ref placementQueued,0); }
+    }
     public void RefreshPosition() {
       if(testMode) {
         if(!Visible) { var screen=Screen.PrimaryScreen.WorkingArea;Location=new Point(screen.Left+(screen.Width-Width)/2,screen.Top+(screen.Height-Height)/2);Show(); }
         return;
       }
-      try {
-        if(!NativeDock.DesktopRunning()) { Suspend("Waiting for Codex desktop");return; }
-        if(!File.Exists(stateFile)) { Suspend("Waiting for the mini position");return; }
-        if(tick%5!=1 && calibrated) { PlaceFromLiveMini();return; }
-        var changed=File.GetLastWriteTimeUtc(stateFile);
-        if(changed==stamp && calibrated) { lastGood=DateTime.UtcNow;PlaceFromLiveMini();return; }
-        Dictionary<string,object> state;
-        using(var stream=new FileStream(stateFile,FileMode.Open,FileAccess.Read,FileShare.ReadWrite|FileShare.Delete))
-        using(var reader=new StreamReader(stream)) state=json.Deserialize<Dictionary<string,object>>(reader.ReadToEnd());
-        if(state==null) { IncompleteState();return; }
-        object open,raw;
-        if(!state.TryGetValue("electron-avatar-overlay-open",out open) || !Equals(open,true) ||
-           !state.TryGetValue("electron-avatar-overlay-bounds",out raw)) { Suspend("Mini is hidden");return; }
-        var anchor=raw as Dictionary<string,object>;
-        if(anchor==null) { IncompleteState();return; }
-        object displayRaw;
-        var display=anchor.TryGetValue("displayBounds",out displayRaw) ? displayRaw as Dictionary<string,object> : null;
-        if(display==null) { IncompleteState();return; }
-        double dx=Number(display,"x",0),dy=Number(display,"y",0),dw=Number(display,"width",0),dh=Number(display,"height",0);
-        if(dw<=0 || dh<=0) { IncompleteState();return; }
-        double ax=Number(anchor,"x",double.NaN),ay=Number(anchor,"y",double.NaN);
-        if(double.IsNaN(ax)||double.IsNaN(ay)) { IncompleteState();return; }
-        // The manifest gives this helper physical-pixel coordinates. Convert
-        // only the saved Electron DIP geometry; never resize another window.
-        if(Screen.AllScreens.Length!=1) { Suspend("Multiple-monitor layout is not supported");return; }
-        var screen=Screen.PrimaryScreen;
-        double ratio=screen.Bounds.Width/dw;
-        double ratioY=screen.Bounds.Height/dh;
-        if(Math.Abs(ratio-ratioY)>.02*Math.Max(ratio,ratioY)) { Suspend("Saved monitor geometry does not match");return; }
-        savedFrame=new RectangleF((float)(screen.Bounds.Left+(ax-dx)*ratio),(float)(screen.Bounds.Top+(ay-dy)*ratioY),(float)(80*ratio),(float)(208.0*80/192*ratioY));
-        displayScale=ratioY;
-        calibrated=true;
-        tracker.Configure(true,savedFrame);
-        stamp=changed;
-        lastGood=DateTime.UtcNow;
-        PlaceFromLiveMini();
-      } catch(IOException) { IncompleteState(); }
-        catch(UnauthorizedAccessException) { IncompleteState(); }
-        catch(ArgumentException) { IncompleteState(); }
-        catch(InvalidOperationException) { IncompleteState(); }
-        catch(FormatException) { IncompleteState(); }
-        catch(OverflowException) { IncompleteState(); }
-    }
-    void Suspend(string reason) {
-      Status=reason;calibrated=false;stamp=DateTime.MinValue;
-      tracker.Configure(false,RectangleF.Empty);Hide();
-      if(IsHandleCreated)NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);
+      // The UI path reads no settings or processes. The worker receives only
+      // this display geometry; file access, discovery and UIA stay off the UI.
+      tracker.ConfigureScreen(Screen.PrimaryScreen.Bounds,Screen.AllScreens.Length==1);
+      PlaceFromLiveMini();
     }
     void PlaceFromLiveMini() {
-      if(Screen.AllScreens.Length!=1) { Suspend("Multiple-monitor layout is not supported");return; }
-      RectangleF frame;
-      // UIA supplies physical pixels, even when the transparent parent window
-      // is clipped and remains stationary while its pet moves inside it.
-      if(!calibrated || !tracker.TryGet(out frame)) {
-        Status="Waiting for the visible BSOD pet";Hide();
-        if(IsHandleCreated)NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);
-        return;
+      if(Screen.AllScreens.Length!=1) { Hide();NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);return; }
+      RectangleF frame;double scale;long queryStarted;
+      if(!tracker.TryGet(out frame,out scale,out queryStarted)) {
+        Status=tracker.Status;Hide();
+        NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);return;
       }
-      var bounds=LiveMiniTracker.FarmerBounds(frame,displayScale,crop);
-      if(!Screen.PrimaryScreen.Bounds.IntersectsWith(bounds)) { Status="Farmer is beyond the right display edge";Hide();if(IsHandleCreated)NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);return; }
-      ClientSize=bounds.Size;Location=bounds.Location;
+      var bounds=LiveMiniTracker.FarmerBounds(frame,scale,crop);
+      if(!Screen.PrimaryScreen.Bounds.IntersectsWith(bounds)) { Status="Farmer is beyond the right display edge";Hide();NativeDock.SetProp(Handle,NativeDock.LiveProperty,IntPtr.Zero);return; }
       Status="Following BSOD's live position";
-      if(!Visible)Show();
-      // SetWindowPos and SetProp target this companion's own HWND only.
-      bool shown=NativeDock.SetWindowPos(Handle,new IntPtr(-1),bounds.X,bounds.Y,bounds.Width,bounds.Height,0x0010|0x0040);
+      bool shown=true;
+      if(!Visible||Bounds!=bounds) {
+        if(ClientSize!=bounds.Size)ClientSize=bounds.Size;
+        if(!Visible) { Location=bounds.Location;Show(); }
+        // Only the helper's own HWND is moved, without activating it.
+        shown=NativeDock.SetWindowPos(Handle,new IntPtr(-1),bounds.X,bounds.Y,bounds.Width,bounds.Height,0x0010|0x0040);
+      }
       NativeDock.SetProp(Handle,NativeDock.LiveProperty,shown?new IntPtr(1):IntPtr.Zero);
+      // Aggregate timing only: no coordinates or settings are exposed.
+      var latency=(long)((Stopwatch.GetTimestamp()-queryStarted)*1000000.0/Stopwatch.Frequency);
+      NativeDock.SetProp(Handle,NativeDock.LatencyProperty,new IntPtr(Math.Min(int.MaxValue,Math.Max(0,latency))));
       if(!shown)Status="Own window could not be shown";
-    }
-    void IncompleteState() {
-      Status="Waiting for a complete settings update";
-      if((DateTime.UtcNow-lastGood).TotalSeconds>2)Suspend(Status);
-      else PlaceFromLiveMini();
     }
     protected override void OnPaint(PaintEventArgs e) {
       base.OnPaint(e);
@@ -177,21 +140,78 @@ namespace AstraPetApps {
       } else e.Graphics.DrawImage(drawing,ClientRectangle,crop,GraphicsUnit.Pixel);
     }
   }
+  internal sealed class SavedMiniSettings {
+    readonly string path;
+    readonly JavaScriptSerializer json=new JavaScriptSerializer { MaxJsonLength=67108864 };
+    DateTime stamp=DateTime.MinValue,lastGood=DateTime.MinValue;
+    Rectangle lastScreen;
+    internal bool Enabled;
+    internal RectangleF Anchor;
+    internal double Scale;
+    internal string Status="Waiting for BSOD";
+    internal SavedMiniSettings(string file) { path=file; }
+    static double Number(Dictionary<string,object> value,string key,double fallback) {
+      object result;double number;
+      return value.TryGetValue(key,out result)&&result!=null&&double.TryParse(Convert.ToString(result,CultureInfo.InvariantCulture),NumberStyles.Float,CultureInfo.InvariantCulture,out number)&&!double.IsNaN(number)&&!double.IsInfinity(number)?number:fallback;
+    }
+    void Disable(string reason) { Enabled=false;stamp=DateTime.MinValue;Status=reason; }
+    internal void Poll(Rectangle screen,bool supported) {
+      try {
+        if(!supported) { Disable("Multiple-monitor layout is not supported");return; }
+        if(!NativeDock.DesktopRunning()) { Disable("Waiting for Codex desktop");return; }
+        if(!File.Exists(path)) { Disable("Waiting for the mini position");return; }
+        if(screen!=lastScreen) { stamp=DateTime.MinValue;lastScreen=screen; }
+        var changed=File.GetLastWriteTimeUtc(path);
+        if(changed==stamp&&Enabled) { lastGood=DateTime.UtcNow;return; }
+        Dictionary<string,object> state;
+        using(var stream=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.ReadWrite|FileShare.Delete))
+        using(var reader=new StreamReader(stream))state=json.Deserialize<Dictionary<string,object>>(reader.ReadToEnd());
+        if(state==null)throw new InvalidDataException();
+        object open,raw;
+        if(!state.TryGetValue("electron-avatar-overlay-open",out open)||!Equals(open,true)||!state.TryGetValue("electron-avatar-overlay-bounds",out raw)) { Disable("Mini is hidden");return; }
+        var anchor=raw as Dictionary<string,object>;object displayRaw;
+        var display=anchor!=null&&anchor.TryGetValue("displayBounds",out displayRaw)?displayRaw as Dictionary<string,object>:null;
+        if(display==null)throw new InvalidDataException();
+        double dx=Number(display,"x",0),dy=Number(display,"y",0),dw=Number(display,"width",0),dh=Number(display,"height",0);
+        double ax=Number(anchor,"x",double.NaN),ay=Number(anchor,"y",double.NaN);
+        if(dw<=0||dh<=0||double.IsNaN(ax)||double.IsNaN(ay))throw new InvalidDataException();
+        double sx=screen.Width/dw,sy=screen.Height/dh;
+        if(Math.Abs(sx-sy)>.02*Math.Max(sx,sy)) { Disable("Saved monitor geometry does not match");return; }
+        Anchor=new RectangleF((float)(screen.Left+(ax-dx)*sx),(float)(screen.Top+(ay-dy)*sy),(float)(80*sx),(float)(208.0*80/192*sy));
+        Scale=sy;Enabled=true;stamp=changed;lastGood=DateTime.UtcNow;Status="Waiting for the visible BSOD pet";
+      }catch(IOException) { Incomplete(); }
+       catch(UnauthorizedAccessException) { Incomplete(); }
+       catch(ArgumentException) { Incomplete(); }
+       catch(InvalidOperationException) { Incomplete(); }
+       catch(FormatException) { Incomplete(); }
+       catch(OverflowException) { Incomplete(); }
+    }
+    void Incomplete() { Status="Waiting for a complete settings update";if((DateTime.UtcNow-lastGood).TotalSeconds>2)Disable(Status); }
+  }
   internal sealed class LiveMiniTracker : IDisposable {
     readonly object gate=new object();
     readonly System.Threading.Thread worker;
-    bool enabled,stopped;
-    RectangleF anchor,latest;
+    readonly SavedMiniSettings settings;
+    readonly bool allowed;
+    bool enabled,stopped,screenReady,screenSupported;
+    Rectangle screen;
+    RectangleF latest;
+    double scale;
+    long queryStarted;
+    string status="Waiting for BSOD";
     DateTime sampled=DateTime.MinValue;
-    internal LiveMiniTracker() {
+    internal event Action SampleChanged;
+    internal string Status { get { lock(gate)return status; } }
+    internal LiveMiniTracker(string stateFile,bool active) {
+      settings=new SavedMiniSettings(stateFile);allowed=active;
       worker=new System.Threading.Thread(ReadLoop) { IsBackground=true,Name="Farmer BSOD geometry reader" };
       worker.SetApartmentState(System.Threading.ApartmentState.MTA);worker.Start();
     }
-    internal void Configure(bool active,RectangleF saved) {
-      lock(gate) { enabled=active;anchor=saved;if(!active)sampled=DateTime.MinValue; }
+    internal void ConfigureScreen(Rectangle bounds,bool supported) {
+      lock(gate) { screen=bounds;screenReady=true;screenSupported=supported;if(!supported) { enabled=false;sampled=DateTime.MinValue; } }
     }
-    internal bool TryGet(out RectangleF frame) {
-      lock(gate) { frame=latest;return enabled&&(DateTime.UtcNow-sampled).TotalMilliseconds<300; }
+    internal bool TryGet(out RectangleF frame,out double displayScale,out long started) {
+      lock(gate) { frame=latest;displayScale=scale;started=queryStarted;return enabled&&(DateTime.UtcNow-sampled).TotalMilliseconds<300; }
     }
     internal static Rectangle FarmerBounds(RectangleF frame,double scale,Rectangle crop) {
       int height=Math.Max(1,(int)Math.Round(FarmerDock.VisibleHeight*scale));
@@ -214,24 +234,74 @@ namespace AstraPetApps {
       if(Math.Abs(bounds.Width/bounds.Height-192.0/208)>.08)return false;
       frame=new RectangleF((float)bounds.Left,(float)bounds.Top,(float)bounds.Width,(float)bounds.Height);return true;
     }
+    internal static bool ConvertBounds(System.Windows.Rect bounds,out RectangleF frame) {
+      frame=RectangleF.Empty;
+      if(bounds.IsEmpty||bounds.Width<=0||bounds.Height<=0)return false;
+      foreach(double value in new [] {bounds.Left,bounds.Top,bounds.Width,bounds.Height})if(double.IsNaN(value)||double.IsInfinity(value))return false;
+      if(Math.Abs(bounds.Width/bounds.Height-192.0/208)>.08)return false;
+      frame=new RectangleF((float)bounds.Left,(float)bounds.Top,(float)bounds.Width,(float)bounds.Height);return true;
+    }
+    internal static AutomationElement ResolveImage(IntPtr window,int owner,bool native) {
+      var root=AutomationElement.FromHandle(window);if(root==null)return null;
+      var request=new CacheRequest { TreeScope=TreeScope.Element,AutomationElementMode=AutomationElementMode.Full };
+      foreach(var property in new [] {AutomationElement.NameProperty,AutomationElement.ProcessIdProperty,AutomationElement.ControlTypeProperty,AutomationElement.ClassNameProperty,AutomationElement.IsOffscreenProperty})request.Add(property);
+      using(request.Activate()) {
+        var images=root.FindAll(TreeScope.Descendants,new PropertyCondition(AutomationElement.NameProperty,"BSOD pet"));
+        if(images.Count!=1)return null;
+        var image=images[0];var item=image.Cached;
+        if(item.Name!="BSOD pet"||item.ProcessId!=owner||item.ControlType!=ControlType.Image||item.IsOffscreen)return null;
+        if(native&&!item.ClassName.StartsWith("codex-avatar-button",StringComparison.Ordinal))return null;
+        return image;
+      }
+    }
+    internal static bool ReadCachedImage(AutomationElement image,out RectangleF frame) {
+      frame=RectangleF.Empty;
+      var value=image.GetCurrentPropertyValue(AutomationElement.BoundingRectangleProperty,true);
+      return value is System.Windows.Rect && ConvertBounds((System.Windows.Rect)value,out frame);
+    }
+    void InvalidateSample() {
+      bool notify;
+      lock(gate) { notify=sampled!=DateTime.MinValue;sampled=DateTime.MinValue; }
+      if(notify) { var callback=SampleChanged;if(callback!=null)callback(); }
+    }
     void ReadLoop() {
-      IntPtr window=IntPtr.Zero;int owner=0;
+      IntPtr window=IntPtr.Zero;int owner=0;AutomationElement image=null;
+      var cadence=Stopwatch.StartNew();long nextSettings=0,nextValidation=0;
       while(true) {
-        bool active;RectangleF saved;
-        lock(gate) { if(stopped)return;active=enabled;saved=anchor; }
-        if(active) {
+        bool ready,supported;Rectangle display;
+        lock(gate) { if(stopped)return;ready=allowed&&screenReady;supported=screenSupported;display=screen; }
+        var iteration=Stopwatch.StartNew();
+        if(ready) {
           try {
-            if(window==IntPtr.Zero||!NativeDock.IsMini(window,out owner))window=NativeDock.FindMini(saved,out owner);
-            RectangleF frame;
-            if(window!=IntPtr.Zero&&ReadImage(window,owner,true,out frame)) {
-              lock(gate) { if(enabled) { latest=frame;sampled=DateTime.UtcNow; } }
-            } else { lock(gate)sampled=DateTime.MinValue;window=IntPtr.Zero; }
-          } catch(ElementNotAvailableException) { window=IntPtr.Zero; }
-            catch(COMException) { window=IntPtr.Zero; }
-            catch(InvalidOperationException) { window=IntPtr.Zero; }
-            catch(ArgumentException) { window=IntPtr.Zero; }
-        } else window=IntPtr.Zero;
-        System.Threading.Thread.Sleep(33);
+            if(cadence.ElapsedMilliseconds>=nextSettings) {
+              settings.Poll(display,supported);nextSettings=cadence.ElapsedMilliseconds+250;
+              lock(gate) { enabled=settings.Enabled&&screenSupported;scale=settings.Scale;status=settings.Status; }
+            }
+            if(!settings.Enabled||!supported) { image=null;window=IntPtr.Zero;InvalidateSample(); }
+            else {
+              if(image==null||cadence.ElapsedMilliseconds>=nextValidation) {
+                if(window==IntPtr.Zero||!NativeDock.IsMini(window,out owner))window=NativeDock.FindMini(settings.Anchor,out owner);
+                image=window==IntPtr.Zero?null:ResolveImage(window,owner,true);
+                nextValidation=cadence.ElapsedMilliseconds+250;
+              }
+              RectangleF frame;long began=Stopwatch.GetTimestamp();
+              if(image!=null&&ReadCachedImage(image,out frame)) {
+                bool notify;
+                lock(gate) {
+                  notify=sampled==DateTime.MinValue||latest!=frame;
+                  if(enabled&&!stopped) { latest=frame;sampled=DateTime.UtcNow;queryStarted=began; }
+                  else notify=false;
+                }
+                // Coalesce on the Form. No second polling timer is needed for movement.
+                if(notify) { var callback=SampleChanged;if(callback!=null)callback(); }
+              } else { image=null;InvalidateSample(); }
+            }
+          } catch(ElementNotAvailableException) { image=null;window=IntPtr.Zero;InvalidateSample(); }
+            catch(COMException) { image=null;window=IntPtr.Zero;InvalidateSample(); }
+            catch(InvalidOperationException) { image=null;window=IntPtr.Zero;InvalidateSample(); }
+            catch(ArgumentException) { image=null;window=IntPtr.Zero;InvalidateSample(); }
+        }
+        System.Threading.Thread.Sleep(ready?Math.Max(1,10-(int)iteration.ElapsedMilliseconds):50);
       }
     }
     public void Dispose() { lock(gate) { stopped=true;enabled=false;sampled=DateTime.MinValue; } }
@@ -250,6 +320,7 @@ namespace AstraPetApps {
     [DllImport("user32.dll",CharSet=CharSet.Unicode)] static extern IntPtr GetProp(IntPtr window,string name);
     [DllImport("user32.dll",SetLastError=true)] internal static extern bool SetWindowPos(IntPtr window,IntPtr after,int x,int y,int width,int height,uint flags);
     internal const string LiveProperty="AstraFarmerDock.LiveTracking";
+    internal const string LatencyProperty="AstraFarmerDock.QueryToPlacementMicroseconds";
     static DateTime presenceChecked=DateTime.MinValue;
     static readonly object presenceGate=new object();
     static HashSet<int> desktopIds=new HashSet<int>();
@@ -288,7 +359,7 @@ namespace AstraPetApps {
       EnumWindows(delegate(IntPtr window,IntPtr unused) {
         int process;if(!IsMini(window,out process))return true;
         Rect bounds;if(!GetWindowRect(window,out bounds))return true;
-        if(!RectangleF.FromLTRB(bounds.Left,bounds.Top,bounds.Right,bounds.Bottom).Contains(saved.Left+saved.Width/2,saved.Top+saved.Height/2))return true;
+        if(!saved.IsEmpty&&!RectangleF.FromLTRB(bounds.Left,bounds.Top,bounds.Right,bounds.Bottom).Contains(saved.Left+saved.Width/2,saved.Top+saved.Height/2))return true;
         match=window;matchedOwner=process;count++;return true;
       },IntPtr.Zero);
       owner=matchedOwner;return count==1?match:IntPtr.Zero;
@@ -304,7 +375,7 @@ namespace AstraPetApps {
       return ids;
     }
     internal static void Check(string root) {
-      var ids=Instances(root);int windows=0,visible=0,onScreen=0,noActivate=0,topmost=0,live=0;
+      var ids=Instances(root);int windows=0,visible=0,onScreen=0,noActivate=0,topmost=0,live=0;long latency=0;
       EnumWindows(delegate(IntPtr window,IntPtr unused) {
         uint id;GetWindowThreadProcessId(window,out id);if(!ids.Contains((int)id))return true;
         var title=new StringBuilder(256);GetWindowText(window,title,title.Capacity);if(title.ToString()!=FarmerDock.WindowTitle)return true;
@@ -312,10 +383,11 @@ namespace AstraPetApps {
         Rect rect;if(GetWindowRect(window,out rect)&&SystemInformation.VirtualScreen.IntersectsWith(Rectangle.FromLTRB(rect.Left,rect.Top,rect.Right,rect.Bottom)))onScreen++;
         int style=GetWindowLong(window,-20);if((style&0x08000000)!=0)noActivate++;if((style&8)!=0)topmost++;
         if(GetProp(window,LiveProperty)==new IntPtr(1))live++;
+        latency=Math.Max(latency,GetProp(window,LatencyProperty).ToInt64());
         return true;
       },IntPtr.Zero);
       // Print health only. Saved settings and coordinates are never logged.
-      Console.WriteLine("desktop_running="+DesktopRunning()+"; companion_processes="+ids.Count+"; companion_windows="+windows+"; visible_windows="+visible+"; on_screen_windows="+onScreen+"; nonactivating_windows="+noActivate+"; topmost_windows="+topmost+"; live_tracking_windows="+live);
+      Console.WriteLine("desktop_running="+DesktopRunning()+"; companion_processes="+ids.Count+"; companion_windows="+windows+"; visible_windows="+visible+"; on_screen_windows="+onScreen+"; nonactivating_windows="+noActivate+"; topmost_windows="+topmost+"; live_tracking_windows="+live+"; latest_query_to_placement_ms="+(latency/1000.0).ToString("F2",CultureInfo.InvariantCulture));
     }
     internal static void SelfTest(string root) {
       string path=Path.Combine(root,"art","frames","farmer","idle-20261008.png");
@@ -327,11 +399,37 @@ namespace AstraPetApps {
       }
       Console.WriteLine("Passed: detached sprite permits exclusive file access; computer-head height is fixed at 58.75 logical pixels.");
     }
+    internal static void Benchmark() {
+      Exception failure=null;
+      var worker=new System.Threading.Thread(delegate() {
+        try {
+          int owner;var window=FindMini(RectangleF.Empty,out owner);
+          if(window==IntPtr.Zero)throw new InvalidOperationException("Exactly one native mini is required.");
+          var legacy=new double[24];var cached=new double[80];RectangleF frame;
+          for(int i=0;i<legacy.Length;i++) {
+            var clock=Stopwatch.StartNew();
+            if(!LiveMiniTracker.ReadImage(window,owner,true,out frame))throw new InvalidOperationException("Visible BSOD required.");
+            legacy[i]=clock.Elapsed.TotalMilliseconds;
+          }
+          var image=LiveMiniTracker.ResolveImage(window,owner,true);
+          if(image==null)throw new InvalidOperationException("BSOD validation failed.");
+          for(int i=0;i<cached.Length;i++) {
+            var clock=Stopwatch.StartNew();
+            if(!LiveMiniTracker.ReadCachedImage(image,out frame))throw new InvalidOperationException("Cached geometry unavailable.");
+            cached[i]=clock.Elapsed.TotalMilliseconds;
+          }
+          Array.Sort(legacy);Array.Sort(cached);
+          Console.WriteLine(string.Format(CultureInfo.InvariantCulture,"Geometry query benchmark only (milliseconds): full search median={0:F2}, p95={1:F2}; cached rectangle median={2:F2}, p95={3:F2}. No window was moved.",legacy[legacy.Length/2],legacy[(int)(legacy.Length*.95)],cached[cached.Length/2],cached[(int)(cached.Length*.95)]));
+        }catch(Exception error) { failure=error; }
+      });
+      worker.IsBackground=true;worker.SetApartmentState(System.Threading.ApartmentState.MTA);worker.Start();
+      if(!worker.Join(15000)||failure!=null)throw new InvalidOperationException("Geometry benchmark unavailable.");
+    }
     static bool ReadOwnImage(IntPtr window,out RectangleF frame) {
       RectangleF found=RectangleF.Empty;bool valid=false;Exception failure=null;
       int process=Process.GetCurrentProcess().Id;
       var thread=new System.Threading.Thread(delegate() {
-        try { valid=LiveMiniTracker.ReadImage(window,process,false,out found); } catch(Exception error) { failure=error; }
+        try { var image=LiveMiniTracker.ResolveImage(window,process,false);valid=image!=null&&LiveMiniTracker.ReadCachedImage(image,out found); } catch(Exception error) { failure=error; }
       });
       thread.IsBackground=true;thread.SetApartmentState(System.Threading.ApartmentState.MTA);thread.Start();
       var deadline=DateTime.UtcNow.AddSeconds(5);
@@ -339,14 +437,32 @@ namespace AstraPetApps {
       if(thread.IsAlive||failure!=null)throw new InvalidOperationException("Synthetic UIA geometry reader failed.");
       frame=found;return valid;
     }
+    static void CheckCachedMovement(Form window,PictureBox sprite,out RectangleF before,out RectangleF after) {
+      RectangleF first=RectangleF.Empty,last=RectangleF.Empty;Exception failure=null;
+      int process=Process.GetCurrentProcess().Id;IntPtr handle=window.Handle;
+      using(var moved=new System.Threading.ManualResetEvent(false)) {
+        var thread=new System.Threading.Thread(delegate() {
+          try {
+            var image=LiveMiniTracker.ResolveImage(handle,process,false);
+            if(image==null||!LiveMiniTracker.ReadCachedImage(image,out first))throw new InvalidOperationException();
+            window.BeginInvoke((Action)delegate { sprite.Location=new Point(sprite.Left+61,sprite.Top+37);moved.Set(); });
+            if(!moved.WaitOne(2000)||!LiveMiniTracker.ReadCachedImage(image,out last))throw new InvalidOperationException();
+          }catch(Exception error) { failure=error; }
+        });
+        thread.IsBackground=true;thread.SetApartmentState(System.Threading.ApartmentState.MTA);thread.Start();
+        var deadline=DateTime.UtcNow.AddSeconds(5);
+        while(thread.IsAlive&&DateTime.UtcNow<deadline) { Application.DoEvents();System.Threading.Thread.Sleep(1); }
+        if(thread.IsAlive||failure!=null)throw new InvalidOperationException("Cached element movement test failed.");
+      }
+      before=first;after=last;
+    }
     internal static void TrackingTest() {
       using(var window=new Form { Text="Farmer tracking test - synthetic pet only",StartPosition=FormStartPosition.Manual,Location=new Point(100,100),ClientSize=new Size(500,350) })
       using(var sprite=new PictureBox { AccessibleName="BSOD pet",AccessibleRole=AccessibleRole.Graphic,Location=new Point(50,60),Size=new Size(96,104),BackColor=Color.CornflowerBlue }) {
         window.Controls.Add(sprite);window.Show();Application.DoEvents();
         var originalWindow=window.Bounds;RectangleF before,after;
-        if(!ReadOwnImage(window.Handle,out before))throw new InvalidOperationException("Synthetic image not found.");
-        sprite.Location=new Point(sprite.Left+61,sprite.Top+37);Application.DoEvents();
-        if(!ReadOwnImage(window.Handle,out after)||window.Bounds!=originalWindow||Math.Abs(after.X-before.X-61)>1||Math.Abs(after.Y-before.Y-37)>1)throw new InvalidOperationException("Child movement tracking failed.");
+        CheckCachedMovement(window,sprite,out before,out after);
+        if(window.Bounds!=originalWindow||Math.Abs(after.X-before.X-61)>1||Math.Abs(after.Y-before.Y-37)>1)throw new InvalidOperationException("Child movement tracking failed.");
         var crop=new Rectangle(38,32,180,192);
         var first=LiveMiniTracker.FarmerBounds(before,1,crop);var second=LiveMiniTracker.FarmerBounds(after,1,crop);
         if(second.X-first.X!=61||second.Y-first.Y!=37||first.Size!=second.Size||first.Left<=before.Left+before.Width*154/192.0)throw new InvalidOperationException("Right-side attachment failed.");
@@ -358,7 +474,7 @@ namespace AstraPetApps {
         if(ReadOwnImage(window.Handle,out hidden))throw new InvalidOperationException("Hidden image was accepted.");
         window.Close();
       }
-      Console.WriteLine("Passed: live Image movement inside a stationary parent; right-side attachment; fixed size; duplicate and hidden images rejected. Only synthetic test windows were moved.");
+      Console.WriteLine("Passed: cached Image follows child movement inside a stationary parent; right-side attachment; fixed size; duplicate and hidden images rejected. Only synthetic test windows were moved.");
     }
   }
 }
@@ -370,6 +486,7 @@ public static class FarmerDockProgram {
     try {
       if(mode=="--check") { AstraPetApps.NativeDock.Check(root);return 0; }
       if(mode=="--self-test") { AstraPetApps.NativeDock.SelfTest(root);return 0; }
+      if(mode=="--benchmark") { AstraPetApps.NativeDock.Benchmark();return 0; }
       if(mode=="--tracking-test") { Application.EnableVisualStyles();AstraPetApps.NativeDock.TrackingTest();return 0; }
       if(mode=="--running")return AstraPetApps.NativeDock.Instances(root).Count>0?0:1;
       if(mode!=""&&mode!="--test")return 1;

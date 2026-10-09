@@ -18,8 +18,13 @@ and calibrate the mini. It then reads the live rectangle of the exact **BSOD
 pet** accessibility Image, scoped to the uniquely identified packaged Codex
 mini window. The Farmer follows that rectangle during a drag, including when
 BSOD moves inside a stationary transparent parent window. A background reader
-and a 33-millisecond placement timer keep accessibility queries off the
-Farmer's drawing thread; actual updates depend on the accessibility provider.
+caches the validated BSOD element and reads only its live rectangle about
+every 10 milliseconds. New positions are posted immediately to the Farmer's
+UI, with at most one placement callback queued. Identity, visibility, and
+uniqueness are revalidated every 250 milliseconds. Settings reads and process
+checks also run in the background. A separate heartbeat handles stale geometry
+and drawing without adding a second movement timer. Actual updates depend on
+Windows scheduling and the accessibility provider.
 
 The companion does not write Codex settings, read conversations, send data,
 invoke accessibility actions, or control Codex windows. Only its own Farmer
@@ -52,20 +57,31 @@ optional commands are available from the project directory:
 start-farmer-dock-20261008.cmd --check
 start-farmer-dock-20261008.cmd --self-test
 start-farmer-dock-20261008.cmd --tracking-test
+start-farmer-dock-20261008.cmd --benchmark
 start-farmer-dock-20261008.cmd --test
 ```
 
 `--check` reports only aggregate process/window health, including whether this
 helper's window is visible, on-screen, topmost, nonactivating, and receiving live
-BSOD geometry. It never
+BSOD geometry, plus the latest geometry-query-to-placement duration. This timing
+does not include the native pet's own input handling or measure perceived drag
+latency. It never
 constructs another Farmer window. `--self-test` verifies the sprite's file is
 unlocked and the requested height is fixed. `--tracking-test` opens only a
 synthetic test window, moves its BSOD-named Image inside a stationary parent,
-and verifies right-side following, fixed size, and rejection of duplicate or
+and verifies that the same cached element follows the move, with right-side
+attachment, fixed size, and rejection of duplicate or
 hidden Images. It neither moves nor sends input to the actual native mini.
 `--test` opens an explicitly labeled
 ordinary test window with a sample Farmer; it does not read mini state. Close
-that window when finished. No mode changes login startup.
+that window when finished. `--benchmark` reads only the existing BSOD Image and
+compares the previous full-search query with a cached rectangle read; it never
+moves the native mini. No mode changes login startup.
+
+The 2026-10-08 query benchmark measured a median of **7.93 ms** (95th percentile
+12.67 ms) for the full search and **0.09 ms** (95th percentile 0.21 ms) for the
+cached rectangle, using 24 and 80 samples respectively on this computer. Those
+numbers measure query cost, not the complete visual response to a human drag.
 
 The browser Cage's BSOD visitor is a separate local guest. Its Farmer pairing
 does not synchronize with the actual desktop mini.
