@@ -1,8 +1,26 @@
-status: open (step 3 waits on Astra's OK for the art)
+status: open, ready to apply (art generated with Astra's OK, 2026-10-09)
 for: farmer (any assistant working on astras-pet-apps)
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-09
 needs: PET-FILES.md "Adding a pet to the Cage", PET-WORDS.md, pets.json, scripts/generate-pets.mjs, findastra/fuzzboi-friend, findastra/fuzzbois
 ---
+## Ready: apply the patch, don't regenerate
+Everything below is already done and waiting as one patch in the pet's repo:
+[`findastra/fuzzboi-friend` `cage/cage-registration-20261009.patch`](https://github.com/findastra/fuzzboi-friend/blob/main/cage/cage-registration-20261009.patch)
+(notes: [`cage/README.md`](https://github.com/findastra/fuzzboi-friend/blob/main/cage/README.md)). It holds the
+pets.json entry and new `fuzzboi` kind, the updated Fuzzbois candidate line, the generator prompt and
+reference, the app copy, the **paid mood sheet** (generated 2026-10-09 after Astra added credits) and the
+rebuilt frames, roster and cage-data. Checked against `main` at `52637db`: applies cleanly, `npm run check`
+says 19 pet apps, 48 tests pass. Astra asked to keep it out of this repo until her Cage update.
+
+```
+git apply path/to/fuzzboi-friend/cage/cage-registration-20261009.patch
+npm run build && npm run check && npm test
+```
+
+**Do not run `generate-pets.mjs fuzzboi-friend`**: the sheet is in the patch, and a re-run costs money and
+re-rolls the character. The art is a draft until Astra approves it. The frames are already in the pet's
+repo (`art/`, listed in `sprite-20261009.json`), so step 4's copy is done.
+
 ## Task
 Welcome a new pet to the Cage: **Fuzzboi Friend** (`fuzzboi-friend`). Its app lets a friend type
 a six-digit hex code and get that exact Fuzzboi, drawn from Astra's own layers in
