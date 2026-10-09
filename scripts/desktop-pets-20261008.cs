@@ -50,8 +50,10 @@ namespace AstraDesktopPets {
     internal Bitmap Idle,Blink;
     internal Rectangle Crop;
     internal RectangleF Hit;
+    internal float Scale=1;
     internal static PetSprite Load(Dictionary<string,object> entry,Dictionary<string,object> framesIndex) {
       var pet=new PetSprite { Id=PetFiles.Text(entry,"art"),Name=PetFiles.Text(entry,"pet"),Role=PetFiles.Text(entry,"role"),Interface=PetFiles.Text(entry,"interface_url") };
+      object scaleRaw;if(entry.TryGetValue("display_scale",out scaleRaw)&&scaleRaw!=null)pet.Scale=Math.Max(.1f,Math.Min(1f,Convert.ToSingle(scaleRaw,CultureInfo.InvariantCulture)));
       object raw;if(!framesIndex.TryGetValue(pet.Id,out raw))throw new InvalidDataException("No frames for "+pet.Name);
       var paths=(Dictionary<string,object>)((Dictionary<string,object>)raw)["frames"];
       pet.Idle=Detached(PetFiles.SafePath(PetFiles.Text(paths,"idle")));
@@ -158,7 +160,7 @@ namespace AstraDesktopPets {
   // The star and the Friendly Farmer. The star shows or hides every pet at once; while the
   // pets are out, each one roams the whole screen in its own PetWindow.
   internal sealed class PetsWindow : Form {
-    internal const float NormalHeight=58.75f,BugHeight=58.75f,MaxPetWidth=96;
+    internal const float NormalHeight=58.75f,MaxPetWidth=96;
     const int LogicalWidth=140,LogicalHeight=88,StarDrop=18;
     readonly List<PetSprite> pets=new List<PetSprite>();
     readonly List<PetWindow> roaming=new List<PetWindow>();
@@ -234,8 +236,8 @@ namespace AstraDesktopPets {
     void SavePosition() { if(test||!started||dockBounds.HasValue)return;using(var key=Registry.CurrentUser.CreateSubKey(PetFiles.SettingsKey)){Point location=Compact?expandedLocation:Location;key.SetValue("X",location.X);key.SetValue("Y",location.Y);} }
     void SavePetsOut() { if(test)return;using(var key=Registry.CurrentUser.CreateSubKey(PetFiles.SettingsKey))key.SetValue("PetsOut",petsOut?1:0); }
     void LayoutPets() {
-      // Every pet stands the same height; wide art is fitted without distortion.
-      foreach(var pet in pets) { float h=pet.Id=="voicemeeter-bug"?BugHeight:NormalHeight;float w=h*pet.Crop.Width/pet.Crop.Height;if(w>MaxPetWidth){h*=MaxPetWidth/w;w=MaxPetWidth;}pet.Hit=new RectangleF(0,0,w,h); }
+      // Every pet stands the same height times its display_scale from pets.json; wide art is fitted without distortion.
+      foreach(var pet in pets) { float h=NormalHeight*pet.Scale;float w=h*pet.Crop.Width/pet.Crop.Height;if(w>MaxPetWidth){h*=MaxPetWidth/w;w=MaxPetWidth;}pet.Hit=new RectangleF(0,0,w,h); }
       float fh=NormalHeight,fw=fh*farmer.Crop.Width/farmer.Crop.Height;farmer.Hit=new RectangleF(60+(76-fw)/2,LogicalHeight-12-fh,fw,fh);
     }
     void CreatePetWindows(Rectangle area) { ClosePetWindows();LayoutPets();foreach(var pet in pets)roaming.Add(new PetWindow(this,pet,scale,random));Scatter(area); }
@@ -358,11 +360,11 @@ namespace AstraDesktopPets {
     internal void WriteStatus(bool running=true) {
       if(test&&!started)return;
       int needed=(int)Math.Ceiling(LogicalWidth*scale);Rectangle area=Screen.FromRectangle(dockBounds??Bounds).WorkingArea;
-      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,pets_out=petsOut,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=BugHeight,normal_height=NormalHeight,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
+      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,pets_out=petsOut,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=pets.Exists(p=>p.Id=="voicemeeter-bug")?pets.Find(p=>p.Id=="voicemeeter-bug").Hit.Height:0f,normal_height=NormalHeight,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
     }
     internal void SelfTest() {
       if(pets.Count<1||farmer==null)throw new Exception("Roster test failed.");
-      if(BugHeight!=NormalHeight)throw new Exception("Bug standard size test failed.");
+      if(pets.Exists(p=>p.Scale<=0||p.Scale>1||Math.Abs(p.Hit.Height-Math.Min(NormalHeight*p.Scale,p.Hit.Height))>.01f))throw new Exception("Pet display scale test failed.");
       if(StarBounds.IntersectsWith(farmer.Hit)||StarBounds.Right>LogicalWidth||farmer.Hit.Right>LogicalWidth||farmer.Hit.Bottom>LogicalHeight)throw new Exception("Star and Farmer layout overlap or overflow.");
       foreach(var pet in pets)if(pet.Hit.Height>NormalHeight+.01f||pet.Hit.Width>MaxPetWidth+.01f||pet.Hit.Width<1)throw new Exception("Pet size out of range: "+pet.Name);
       Rectangle left=new Rectangle(-1920,0,1920,1080);Size size=new Size(690,172);

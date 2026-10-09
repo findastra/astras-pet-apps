@@ -124,6 +124,30 @@ Every pet uses the same nine meanings, so Astra can read any pet's face without 
 `sick` is the only mood that asks Astra for something. Use it whenever the pet cannot go on without her: a site needs her to sign in, a token or key is missing or expired, a permission was refused, a file or folder it was pointed at is not there, an app it manages is not installed. It is **not** for problems the pet found in its subject matter (that is `worried` / `alarmed`) and **not** for the pet's own crash (that is `sad`). When a pet goes `sick` it must say in words what it needs and how to give it.
 - Current frame paths are recorded in `art/frames/index.json`. Consumers use that index so they support both existing mood filenames and dated filenames. A pet repo can copy its own frames.
 
+## How pets move on the page
+
+Every pet's `kind` in `pets.json` picks a row in `pet_life.kinds`, and `pets.html` reads the
+rules from there. Nothing about movement is hard-coded per pet.
+
+| Rule | What it does now |
+|---|---|
+| `zone: "sky"` | Birds, ghosts, the fairy, the sprite (Astra Wisp) and the angel stay in the top third. |
+| `zone: "swim"` | The fish stays at mid height. |
+| `zone: "ground"` | Everyone else walks the grass. `hops: true` (humans) bounces as they walk. |
+| `climbs: true` | The cat runs up a side of the window, hangs, and leaps back off. It always climbs when chased. |
+| `flock: true` | Birds fly a loose V behind the first bird in the roster. |
+| `friends` | API Fairy, Unity Unicorn and Astra Wisp hang out; so do Paper Girl, File Master and Chip. |
+| `tag` | Drum Dog and Python Panther chase each other, taking turns being "it". |
+| `chases` | Birds chase bugs and the fish; the fish chases bugs. The chased one runs away. |
+
+Names in `friends`, `tag` and `chases` can be an art id or a kind. A new bug only needs
+`"kind": "bug"` to be chased by the birds and the fish. A kind that is not listed simply wanders.
+Play never changes a pet's mood: moods report the app's state, not the game. The desktop pets
+still wander on their own; they do not read `pet_life` yet.
+
+`display_scale` (optional, above 0 and at most 1 on the desktop) shrinks a pet on the page and
+the desktop: File Master is 0.75 and Voicemeeter Bug 0.85.
+
 ## Adding a pet to Astra's Pet Apps
 
 1. Add the entry to `pets.json` (`repo`, `pet`, `role: "pet"`, `status`, `job`, `art`, `published`, `added`). Set `asset_date` to the owner's America/Denver date, such as `20261008`, for new assets.

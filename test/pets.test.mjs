@@ -253,7 +253,8 @@ test('every pet has a bundled app interface and safe launch route', () => {
 test('unpublished Bug uses dated assets and its visible scale is validated', () => {
   const bug = registry.pets.find(p => p.art === 'voicemeeter-bug');
   assert.equal(bug.published, false);
-  assert.equal(bug.display_scale * 58.75, 58.75);
+  assert.equal(bug.display_scale, 0.85, 'Astra asked for a slightly smaller Bug on 2026-10-09');
+  assert.equal(registry.pets.find(p => p.art === 'file-master').display_scale, 0.75, 'Astra asked for a smaller File Master on 2026-10-09');
   assert.equal(assetPaths(registry, bug.art).sheet, 'art/sheets/voicemeeter-bug-20261008.png');
   for (const mood of MOODS) assert.equal(art.pets[bug.art].frames[mood], `art/frames/voicemeeter-bug/${mood}-20261008.png`);
   for (const scale of [0, -1, 3, 'small']) {

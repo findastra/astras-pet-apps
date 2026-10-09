@@ -37,7 +37,7 @@ function boot({ reduced = true, storage = new Map() } = {}) {
     performance: { now: () => milliseconds }, requestAnimationFrame: () => 1, cancelAnimationFrame() {}, addEventListener() {},
     setTimeout(fn, delay) { const id = nextTimer++; timers.set(id, { fn, time: milliseconds + delay }); return id; }, clearTimeout: id => timers.delete(id), console };
   vm.createContext(context); vm.runInContext(data, context);
-  const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)][0][1].replace(/\}\)\(\);\s*$/, 'globalThis.controls = { actors, petHeight, petWidth, moveGroup, layout, addGuest, sprite, step, setVisible, free, get layoutState() { return L; }, get bounds() { return groupBounds; }, get visible() { return visible; }, get drag() { return drag; }, P, S };})();');
+  const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)][0][1].replace(/\}\)\(\);\s*$/, 'globalThis.controls = { actors, petHeight, petWidth, petBounds, tagGames, moveGroup, layout, addGuest, sprite, step, setVisible, free, get layoutState() { return L; }, get bounds() { return groupBounds; }, get visible() { return visible; }, get drag() { return drag; }, P, S };})();');
   vm.runInContext(script, context);
   const emit = (type, x, y, target = body, extra = {}) => { const e = { clientX: x, clientY: y, pointerId: 1, button: 0, detail: 1, target, preventDefault() {}, stopPropagation() {}, ...extra }; for (const { fn } of [...(listeners.get(type) || [])].sort((a, b) => Number(b.capture) - Number(a.capture))) fn(e); return e; };
   const tick = (ms) => { milliseconds += ms; for (const [id, t] of [...timers]) if (t.time <= milliseconds) { timers.delete(id); t.fn(); } };
@@ -45,12 +45,12 @@ function boot({ reduced = true, storage = new Map() } = {}) {
 }
 const centre = (a, actor) => [(actor.x + a.P / 2) * a.S, (actor.y + a.P / 2) * a.S];
 
-test('The pets start out roaming free across the whole page, with a 40px star, standard Bug height and smaller Ghost', () => {
+test('The pets start out roaming free across the whole page, with a 40px star, a smaller Ghost, File Master and Bug', () => {
   const t = boot(), a = t.api;
   assert.equal(a.visible, true); assert.equal(t.get('stage').hidden, false);
   assert.match(html, /\.star-core \{ width: 40px; height: 40px;/);
   assert.match(html, /\.star-orbit \{[^}]*width: 48px; height: 48px;/);
-  for (const p of [...a.actors.pets, a.actors.farmer]) assert.equal(a.petHeight(p) * 2, p.id === 'ghost-protocol' ? 44.0625 : 58.75);
+  for (const p of [...a.actors.pets, a.actors.farmer]) assert.equal(a.petHeight(p) * 2, { 'ghost-protocol': 44.0625, 'file-master': 58.75 * .75, 'voicemeeter-bug': 58.75 * .85 }[p.id] ?? 58.75);
   for (const p of a.actors.pets) assert.equal(p.mode, 'out', `${p.name} is free from the start`);
   const b = a.free(), xs = a.actors.pets.map(p => p.x);
   assert.ok(Math.max(...xs) - Math.min(...xs) > (b.x1 - b.x0) * .75, 'everyone is spread across the window at once');
@@ -188,4 +188,91 @@ test('Farmer remains draggable over a button while uncovered page controls keep 
   assert.equal(a.drag, null);
   t.emit('pointerdown', 1500, 20, button); assert.equal(a.drag, null);
   button.onclick(); assert.match(t.get('status').textContent, /^Meet Ghost Protocol/);
+});
+
+/* ---------- pet life (pets.json pet_life), added 2026-10-09 ---------- */
+const registry = JSON.parse(readFileSync(new URL('../pets.json', import.meta.url), 'utf8'));
+const life = registry.pet_life;
+function run(t, seconds) { for (let i = 0; i < seconds * 20; i++) { t.tick(50); t.api.step(.05); } }
+const pet = (t, id) => t.api.actors.pets.find(p => p.id === id);
+const only = (t, ...keep) => { for (const p of t.api.actors.pets) p.docked = !keep.includes(p); }; // set the others aside
+
+test('Every pet has a known kind, and every movement rule names a real pet or kind', () => {
+  const kinds = new Set(Object.keys(life.kinds)), arts = new Set(registry.pets.map(p => p.art));
+  for (const p of registry.pets) assert.ok(kinds.has(p.kind), `${p.pet} has kind ${p.kind}`);
+  for (const name of [...life.friends.flat(), ...life.tag.flat(), ...life.chases.flat()]) assert.ok(arts.has(name) || kinds.has(name), name);
+  for (const k of Object.values(life.kinds)) assert.ok(['sky', 'swim', 'ground'].includes(k.zone));
+  assert.equal(registry.pets.find(p => p.art === 'voicemeeter-bug').kind, 'bug');
+});
+
+test('Sky pets stay high, the fish swims mid-height, and ground pets stay on the grass', () => {
+  const t = boot({ reduced: false });
+  for (const p of t.api.actors.pets) if (p.kind === 'bird' || p.kind === 'bug') p.docked = true; // no chases pulling anyone out of their zone
+  run(t, 20);
+  for (const p of t.api.actors.pets) {
+    if (p.docked || p.id === 'python-panther') continue; // the cat climbs the sides
+    const b = t.api.petBounds(p), zone = life.kinds[p.kind].zone, at = (p.y - b.y0) / (b.y1 - b.y0);
+    if (zone === 'sky') assert.ok(at <= .4, `${p.id} is high (${at.toFixed(2)})`);
+    if (zone === 'swim') assert.ok(at >= .3 && at <= .8, `${p.id} swims mid (${at.toFixed(2)})`);
+    if (zone === 'ground') assert.equal(p.y, b.y1, `${p.id} is on the grass`);
+  }
+});
+
+test('Birds fly together and the friend groups hang out', () => {
+  const t = boot({ reduced: false });
+  pet(t, 'goldfish').docked = true; pet(t, 'voicemeeter-bug').docked = true; // nothing for the birds to chase
+  run(t, 25);
+  const birds = t.api.actors.pets.filter(p => p.kind === 'bird');
+  const spread = Math.max(...birds.map(p => p.x)) - Math.min(...birds.map(p => p.x));
+  assert.ok(spread < 80, `flock spread ${spread.toFixed(1)}`);
+  for (const group of life.friends) {
+    const xs = group.map(id => pet(t, id).x);
+    assert.ok(Math.max(...xs) - Math.min(...xs) < 80, `${group.join(', ')} are together`);
+  }
+});
+
+test('Voicemeeter Bug runs from the birds and the fish chases it; the fish runs from the birds', () => {
+  const t = boot({ reduced: false });
+  const fish = pet(t, 'goldfish'), finch = pet(t, 'finance-finch'), bug = pet(t, 'voicemeeter-bug');
+  only(t, finch, bug);
+  bug.x = 300; bug.vx = 0; bug.y = t.api.petBounds(bug).y1; finch.x = bug.x - 20; finch.y = bug.y - 10;
+  const before = Math.abs(bug.x - finch.x);
+  run(t, 2);
+  assert.ok(Math.abs(bug.x - finch.x) > before, 'the bug runs from the bird');
+  only(t, fish, bug);
+  bug.x = 300; bug.vx = 0; fish.x = bug.x + 100; fish.y = bug.y - 30; fish.vx = fish.vy = 0;
+  const gap = Math.hypot(fish.x - bug.x, fish.y - bug.y);
+  run(t, 1);
+  assert.ok(Math.hypot(fish.x - bug.x, fish.y - bug.y) < gap, 'the fish closes on the bug');
+  finch.docked = false; finch.x = fish.x - 15; finch.y = fish.y; t.api.step(.05);
+  assert.equal(fish.fleeing, true, 'the fish runs from the bird');
+});
+
+test('A second bug is chased with no code change', () => {
+  const t = boot({ reduced: false });
+  const finch = pet(t, 'finance-finch'), first = pet(t, 'voicemeeter-bug');
+  const bug2 = { ...first, id: 'another-bug', name: 'Another Bug', x: 300, vx: 0, wall: 0 };
+  t.api.actors.pets.push(bug2); only(t, finch, bug2);
+  finch.x = 280; finch.y = bug2.y - 10; run(t, 1);
+  assert.equal(bug2.fleeing, true);
+});
+
+test('Cat and dog play tag, and the cat escapes up a wall', () => {
+  const t = boot({ reduced: false });
+  const cat = pet(t, 'python-panther'), dog = pet(t, 'drum-dog'), b = t.api.petBounds(cat);
+  only(t, cat, dog);
+  cat.x = b.x1 - 1; dog.x = b.x1 - 20;
+  run(t, 1);
+  assert.ok(cat.wall || cat.airborne, 'the chased cat went up the wall');
+  assert.ok(cat.y < b.y1, 'the cat is off the grass');
+  run(t, 6);
+  dog.x = 300; cat.x = 302; cat.wall = 0; cat.airborne = false; cat.y = dog.y;
+  const [game] = [...t.api.tagGames.values()]; game.graceUntil = 0; game.it = 'drum-dog';
+  t.api.step(.05);
+  assert.equal(game.it, 'python-panther', 'tagged: the cat is it');
+});
+
+test('Humans hop as they walk', () => {
+  const t = boot({ reduced: false }); run(t, 6);
+  for (const p of t.api.actors.pets.filter(p => p.kind === 'human')) assert.ok(p.playHopAt, `${p.id} hopped`);
 });

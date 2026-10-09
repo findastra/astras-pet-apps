@@ -22,8 +22,9 @@ Clicks use Windows' configured double-click time and distance. Switching to anot
 cancels a pending gesture, and so do dragging or losing mouse capture. Pets pause while
 hovered, clicked or dragged. One 200 ms timer drives all movement; every pet moves at most
 two pixels across and one down per step, scaled for the display. There is no full-screen
-input surface or global mouse hook: transparent pixels pass clicks through. Normal pets,
-including Bug, have a visible height of 58.75 logical pixels; wide art is fitted without
+input surface or global mouse hook: transparent pixels pass clicks through. Normal pets have a
+visible height of 58.75 logical pixels, times the pet's `display_scale` in pets.json (File Master
+0.75 and Voicemeeter Bug 0.85, at Astra's request on 2026-10-09); wide art is fitted without
 distortion, at most 96 logical pixels across. Desktop pets show their idle and blink
 frames. Loaded sprite files are immediately released.
 
