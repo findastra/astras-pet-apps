@@ -2,14 +2,94 @@
   "cage": "astras-pet-apps",
   "owner": "Astra",
   "topic": "pet-app",
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "mascots": [],
+  "cage_life": {
+    "about": "How the pets move in the Cage. Each pet's kind picks a row in kinds. Names in friends, tag and chases can be an art id or a kind, so a new pet of a known kind (another bug, say) joins in with no code change.",
+    "kinds": {
+      "bird": {
+        "zone": "sky",
+        "flock": true
+      },
+      "ghost": {
+        "zone": "sky"
+      },
+      "angel": {
+        "zone": "sky"
+      },
+      "fairy": {
+        "zone": "sky"
+      },
+      "sprite": {
+        "zone": "sky"
+      },
+      "fish": {
+        "zone": "swim"
+      },
+      "bug": {
+        "zone": "ground"
+      },
+      "human": {
+        "zone": "ground",
+        "hops": true
+      },
+      "cat": {
+        "zone": "ground",
+        "climbs": true
+      },
+      "dog": {
+        "zone": "ground"
+      },
+      "unicorn": {
+        "zone": "ground"
+      },
+      "penguin": {
+        "zone": "ground"
+      },
+      "tech": {
+        "zone": "ground"
+      }
+    },
+    "friends": [
+      [
+        "api-fairy",
+        "unity-unicorn",
+        "astra-wisp"
+      ],
+      [
+        "paper-girl",
+        "file-master",
+        "chip"
+      ]
+    ],
+    "tag": [
+      [
+        "drum-dog",
+        "python-panther"
+      ]
+    ],
+    "chases": [
+      [
+        "bird",
+        "bug"
+      ],
+      [
+        "bird",
+        "fish"
+      ],
+      [
+        "fish",
+        "bug"
+      ]
+    ]
+  },
   "pets": [
     {
       "repo": "astras-pet-apps",
       "pet": "Friendly Farmer",
       "role": "host",
       "art": "farmer",
+      "kind": "human",
       "asset_date": "20261008",
       "status": "growing",
       "published": true,
@@ -25,6 +105,7 @@
       "pet": "GitHub Goldfish",
       "role": "pet",
       "art": "goldfish",
+      "kind": "fish",
       "status": "growing",
       "published": true,
       "job": "Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors.",
@@ -40,6 +121,7 @@
       "pet": "Chip",
       "role": "pet",
       "art": "chip",
+      "kind": "tech",
       "asset_date": "20261008",
       "art_source": "chip-original-20261008",
       "status": "hatching",
@@ -59,6 +141,7 @@
       "pet": "API Fairy",
       "role": "pet",
       "art": "api-fairy",
+      "kind": "fairy",
       "status": "growing",
       "published": true,
       "job": "Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves.",
@@ -75,6 +158,7 @@
       "pet": "Unity Unicorn",
       "role": "pet",
       "art": "unity-unicorn",
+      "kind": "unicorn",
       "status": "hatching",
       "published": true,
       "job": "A local planning desk for Unity and VRChat projects: tasks, scene notes and manual status tracking.",
@@ -90,6 +174,7 @@
       "pet": "Python Panther",
       "role": "pet",
       "art": "python-panther",
+      "kind": "cat",
       "status": "hatching",
       "published": true,
       "job": "A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons.",
@@ -106,6 +191,7 @@
       "pet": "Astra Wisp",
       "role": "pet",
       "art": "astra-wisp",
+      "kind": "sprite",
       "status": "hatching",
       "published": true,
       "job": "Represents VRChat AI Astra, the planned bridge that brings Astra into VRChat. Its pet-app integration remains unfinished.",
@@ -122,6 +208,7 @@
       "pet": "Health Hummy",
       "role": "pet",
       "art": "health-hummy",
+      "kind": "bird",
       "status": "hatching",
       "published": true,
       "job": "Personal health tracker. Your data stays on your PC and is never committed.",
@@ -138,6 +225,7 @@
       "pet": "Finance Finch",
       "role": "pet",
       "art": "finance-finch",
+      "kind": "bird",
       "status": "hatching",
       "published": true,
       "job": "Personal finance tracker. A yellow canary. Your data stays on your PC and is never committed.",
@@ -153,6 +241,7 @@
       "pet": "Mommy's Mommies",
       "role": "pet",
       "art": "mommys-mommies",
+      "kind": "human",
       "status": "hatching",
       "published": true,
       "job": "A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned.",
@@ -185,6 +274,7 @@
       "pet": "Paper Girl",
       "role": "pet",
       "art": "paper-girl",
+      "kind": "human",
       "status": "growing",
       "published": true,
       "job": "A free science discovery desk: real research, publisher explanations and fresh articles.",
@@ -202,6 +292,7 @@
       "pet": "File Master",
       "role": "pet",
       "art": "file-master",
+      "kind": "tech",
       "status": "growing",
       "published": true,
       "job": "Reviews a Windows PC and prepares cleanup plans with undo. Its browser companion imports a plan for review; original scripts run changes separately.",
@@ -218,6 +309,7 @@
       "pet": "Discord Damsel",
       "role": "pet",
       "art": "discord-damsel",
+      "kind": "human",
       "status": "hatching",
       "published": true,
       "job": "Opens the installed OpenAI and Anthropic Discord presence controls, with a manual setup checklist.",
@@ -234,6 +326,7 @@
       "pet": "Portfolio Puffer",
       "role": "pet",
       "art": "portfolio-puffer",
+      "kind": "penguin",
       "status": "hatching",
       "published": true,
       "job": "Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual.",
@@ -250,6 +343,7 @@
       "pet": "Drum Dog",
       "role": "pet",
       "art": "drum-dog",
+      "kind": "dog",
       "status": "hatching",
       "published": true,
       "job": "Keeps track ideas, sample references, permissions and session notes locally. Ableton Live connections are planned.",
@@ -266,6 +360,7 @@
       "pet": "VSCode Angel",
       "role": "pet",
       "art": "vscode-angel",
+      "kind": "angel",
       "status": "hatching",
       "published": true,
       "job": "Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned.",
@@ -282,6 +377,7 @@
       "pet": "Ghost Protocol",
       "role": "pet",
       "art": "ghost-protocol",
+      "kind": "ghost",
       "asset_date": "20261008",
       "status": "hatching",
       "published": true,
@@ -300,6 +396,7 @@
       "pet": "Project Parrot",
       "role": "pet",
       "art": "project-parrot",
+      "kind": "bird",
       "asset_date": "20261008",
       "status": "hatching",
       "published": true,
