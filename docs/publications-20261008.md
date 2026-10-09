@@ -8,11 +8,12 @@ Release date: **2026-10-08, America/Denver**. Prepared for Astra by **OpenAI Cod
 |---|---|
 | Official name | Astra's Pet Apps |
 | Version | `0.2.0-20261008` |
-| Exact source tag | `v0.2.0-20261008` — tag creation pending |
-| Source commit | Pending; record the committed source hash after commit |
+| Exact source tag | `v0.2.0-20261008` — pushed and remotely verified |
+| Source commit | `1df0f2d57ed8f6ee8d166ebc988cfa95abe9d0c8` |
 | GitHub destination | [findastra/astras-pet-apps](https://github.com/findastra/astras-pet-apps) — private repository created and verified |
-| Version source link | [v0.2.0-20261008](https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008) — available to collaborators after the tag is pushed |
-| Source upload | Pending |
+| Version source link | [v0.2.0-20261008](https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008) — exact pushed source; collaborators only |
+| Source upload | Verified: remote main and peeled annotated tag matched the source commit |
+| GitHub Release | [Published pre-release](https://github.com/findastra/astras-pet-apps/releases/tag/v0.2.0-20261008) — verified in GitHub |
 | Platform | Static browser app, entry `cage.html` |
 | Hosted deployment | Local browser preview verified; no new hosted app deployment |
 | Local verification | Registry check passed; 36 automated tests passed, including original Chip pixel checks and all 18 interface paths; rendered roster visually inspected |
@@ -21,7 +22,7 @@ The seven generated companion interfaces also passed a Node DOM harness executin
 
 ## Per-app source releases
 
-The [machine-readable release ledger](repository-releases-20261008.json) records all 18 entries, their source tags and exact commits, later documentation commits where applicable, and GitHub Release verification. At this pre-commit audit, 17 companion app source uploads and GitHub Releases are verified. The Cage destination is created and its bundled release is pending. Project Parrot is now published after GitHub’s temporary creation limit cleared. Private source URLs require a signed-in collaborator. No newly hosted standalone interface is claimed by a source upload.
+The [machine-readable release ledger](repository-releases-20261008.json) records all 18 entries, their source tags and exact commits, later documentation commits where applicable, and GitHub Release verification. All 18 repositories, source uploads, GitHub Releases and pet-app topics are verified. Project Parrot is published after GitHub’s temporary creation limit cleared. The bundled Cage source and its immutable release tag were verified remotely at the commit above. Private source URLs require a signed-in collaborator. No newly hosted standalone interface is claimed by a source upload.
 
 Discord Presence and File Master use `v0.1.1-20261008-pets`; their earlier tags remain immutable. The other existing-app releases use `v0.1.0-20261008-pets`. The ten newly created private companion app repositories use `v0.1.0-20261008`.
 
@@ -60,3 +61,7 @@ The local build converts these sheets into dated frame filenames, composes the s
 - Ghost Protocol is a personal cybersecurity checklist. Its pet does not scan the PC, monitor threats, or receive checklist progress.
 - BSOD's optional local visit is not a live bridge to the ChatGPT pet.
 - Passing local checks does not confirm source upload, tag publication, or a hosted deployment. Update the source and deployment table only after those actions are verified.
+
+## Rollback
+
+Restore the immutable `v0.2.0-20261008` source tag for this build. The later publication-receipt commit changes documentation only and does not move that tag. Close the optional Windows Farmer companion to stop it; no installed Codex file or login-startup setting was changed.

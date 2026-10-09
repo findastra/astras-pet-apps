@@ -7,16 +7,15 @@
   "summary": {
     "registered_entries": 18,
     "repositories_created_verified": 18,
-    "source_uploads_verified": 17,
-    "github_releases_verified": 17,
+    "source_uploads_verified": 18,
+    "github_releases_verified": 18,
     "new_hosted_interfaces_verified": 0,
-    "pet_app_topics_verified": 17
+    "pet_app_topics_verified": 18
   },
   "provenance": {
     "source_verification": "Standard authenticated git push followed by ls-remote verification of main and peeled annotated tag. Existing app main may contain a later documentation-only receipt commit.",
     "release_verification": "Parent agent reported authenticated GitHub UI verification; no tokens or credentials are stored in this file.",
     "private_source": "Private repository URLs do not imply public availability.",
-    "pending_cage": "Update the Cage entry after its commit and upload are verified. Do not move an existing tag to incorporate receipt updates.",
     "interface_copy": "All17 published companion HTML files match their tagged source. The generator preserves existing copies by default."
   },
   "entries": [
@@ -28,25 +27,26 @@
       "repository_created_verified": true,
       "repository_url": "https://github.com/findastra/astras-pet-apps",
       "intended_repository_url": "https://github.com/findastra/astras-pet-apps",
-      "source_upload_verified": false,
+      "source_upload_verified": true,
       "source_tag": "v0.2.0-20261008",
-      "source_commit": null,
-      "source_tag_url": null,
-      "source_commit_url": null,
+      "source_commit": "1df0f2d57ed8f6ee8d166ebc988cfa95abe9d0c8",
+      "source_tag_url": "https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008",
+      "source_commit_url": "https://github.com/findastra/astras-pet-apps/commit/1df0f2d57ed8f6ee8d166ebc988cfa95abe9d0c8",
       "documentation_commit": null,
-      "verified_main_commit": null,
-      "github_release_verified": false,
-      "github_release_url": null,
-      "release_verification": "Pending authenticated GitHub UI verification.",
+      "verified_main_commit": "1df0f2d57ed8f6ee8d166ebc988cfa95abe9d0c8",
+      "github_release_verified": true,
+      "github_release_url": "https://github.com/findastra/astras-pet-apps/releases/tag/v0.2.0-20261008",
+      "release_verification": "Verified release heading and Pre-release status through authenticated GitHub UI.",
       "access": "Source and release URLs require a signed-in repository collaborator.",
       "local_interface": "apps/astras-pet-apps-20261008.html",
       "local_interface_sha256": "a9b824d40e23e10a0e4a2483cfec26414d423ebc5a47f11b2e7a78dffc3daf13",
       "new_interface_hosting_status": "Local interface available; no new hosted deployment verified.",
       "original_interface_url": null,
       "original_interface_note": null,
-      "topic_status": "Pending authenticated GitHub UI verification.",
-      "pending_reason": "Private destination created. Root agent owns pending source commit, tag, push and release verification.",
-      "topic_pet_app_verified": false
+      "topic_status": "Verified pet-app topic after saving through authenticated GitHub UI.",
+      "pending_reason": null,
+      "topic_pet_app_verified": true,
+      "documentation_receipt": "This ledger is updated in a later documentation-only commit; the source tag remains immutable."
     },
     {
       "repository": "github-goldfish",
