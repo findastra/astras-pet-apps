@@ -212,6 +212,11 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   const petHeight = (a) => P * (a.id === 'ghost-protocol' ? .75 : 1);
   const BSOD_SCALE = 80 / 192 / S; // Preserve the native minimum frame, including its antenna.
   const flyingIds = new Set(['api-fairy', 'role-fairy', 'astra-wisp', 'goldfish', 'health-hummy', 'finance-finch', 'vscode-angel', 'ghost-protocol', 'project-parrot']);
+  // How each kind of pet moves, and who likes or chases whom, comes from pets.json "cage_life".
+  const LIFE = D.registry.cage_life || {};
+  const kindOfArt = (id) => { const entry = pets.find((p) => p.art === id); return entry && entry.kind || null; };
+  const lifeOf = (p) => (p.kind && LIFE.kinds && LIFE.kinds[p.kind]) || {};
+  const isFlyer = (id, kind) => { const zone = kind && LIFE.kinds && LIFE.kinds[kind] && LIFE.kinds[kind].zone; return zone ? zone === 'sky' || zone === 'swim' : flyingIds.has(id); };
   let W = 0, H = 0, L = {};
   const BAR = '#d9a441', BAR_D = '#8a5f1c', BAR_L = '#f3cf7a';
   const actors = { pets: [], farmer: null };
@@ -308,12 +313,13 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
 
   function clampPet(p) {
     const b = petBounds(p);
-    p.x = Math.min(Math.max(p.x, b.x0), b.x1); p.y = p.flying ? Math.min(Math.max(p.y, b.y0), b.y1) : b.y1;
+    p.x = Math.min(Math.max(p.x, b.x0), b.x1);
+    p.y = p.flying || p.wall || p.airborne ? Math.min(Math.max(p.y, b.y0), b.y1) : b.y1;
   }
   function newHeading(p) {
     const speed = p.mode === 'caged' ? rand(4, 8) : rand(10, 24);
-    p.vx = (Math.random() < .5 ? -1 : 1) * speed;
-    p.vy = p.flying ? rand(-speed * .6, speed * .6) : 0;
+    p.vx = p.wx = (Math.random() < .5 ? -1 : 1) * speed;
+    p.vy = p.wy = p.flying ? rand(-speed * .6, speed * .6) : 0;
     p.headingUntil = now() + rand(2, 5);
   }
   function timedFrame(milliseconds, durations) {
@@ -326,14 +332,18 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   }
   const jumping = (p) => !reduced && p.jumpUntil > now();
   function hopOffset(p) {
-    if (p.guest || !jumping(p)) return 0;
+    if (p.guest) return 0;
+    // Humans bounce along as they walk: a short arc that does not stop them moving.
+    const u = p.playHopAt ? (now() - p.playHopAt) / .45 : 1;
+    const play = !reduced && u >= 0 && u < 1 ? -Math.sin(Math.PI * u) * 6 : 0;
+    if (!jumping(p)) return play;
     return jumpOffsets[timedFrame((now() - p.jumpStarted) * 1000, jumpTiming)] * BSOD_SCALE;
   }
 
   function init() {
     const chars = pets.filter((p) => p.role === 'pet').flatMap((p) => [p.art, ...(p.companions || [])].map((id) => ({ id, app: p, lines: (p.says || {})[id] })));
     actors.pets = chars.map((c) => ({
-      id: c.id, name: c.app.pet, app: c.app, flying: flyingIds.has(c.id), lines: c.lines, status: c.app.status, x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
+      id: c.id, name: c.app.pet, app: c.app, kind: kindOfArt(c.id), flying: isFlyer(c.id, kindOfArt(c.id)), lines: c.lines, status: c.app.status, x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
       hop: rand(0, 6), squash: 0, t: rand(0, 5), poked: 0,
     }));
     const host = pets.find((p) => p.role === 'host');
@@ -465,6 +475,136 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   }
   const now = () => performance.now() / 1000;
 
+  /* ---------- cage life: zones, flocks, friends, tag and chases ----------
+     Each pet's kind (pets.json) says where it lives: sky (birds, ghosts, fairies, the angel),
+     swim (the fish, in the middle) or ground. Humans hop as they walk; the cat can run up a wall
+     and leap off it. Rules in cage_life.friends, .tag and .chases name pets by art id or kind,
+     so a new bug is chased by the birds and the fish as soon as its kind is "bug".
+     Moods are left alone: they report each app's state, so play never changes a face. */
+  const named = (a, name) => a.id === name || (a.kind != null && a.kind === name);
+  const tagGames = new Map(); // tag pair index -> { it, graceUntil }
+  function tagGame(i) {
+    if (!tagGames.has(i)) tagGames.set(i, { it: LIFE.tag[i][0], graceUntil: 0 });
+    return tagGames.get(i);
+  }
+  function tagPair(a, b) {
+    const games = LIFE.tag || [];
+    for (let i = 0; i < games.length; i++) {
+      const [x, y] = games[i];
+      if ((named(a, x) && named(b, y)) || (named(a, y) && named(b, x))) return i;
+    }
+    return -1;
+  }
+  // Does a hunt b right now? Tag partners take turns being "it".
+  function hunts(a, b, t) {
+    const i = tagPair(a, b);
+    if (i >= 0) { const game = tagGame(i); return named(a, game.it) && !named(b, game.it) && t >= game.graceUntil; }
+    return (LIFE.chases || []).some(([hunter, prey]) => named(a, hunter) && named(b, prey));
+  }
+  const friendsOf = (p) => (LIFE.friends || []).find((group) => group.some((name) => named(p, name))) || null;
+  function band(p, b) {
+    const zone = lifeOf(p).zone, h = b.y1 - b.y0;
+    if (zone === 'sky') return [b.y0, b.y0 + h * .35];
+    if (zone === 'swim') return [b.y0 + h * .4, b.y0 + h * .75];
+    return [b.y0, b.y1];
+  }
+  function nearest(p, list) {
+    let best = null, distance = Infinity;
+    for (const o of list) { const d = Math.hypot(o.x - p.x, o.y - p.y); if (d < distance) { best = o; distance = d; } }
+    return { o: best, d: distance };
+  }
+  function live(p, b, dt, t) {
+    const life = lifeOf(p), caged = p.mode === 'caged';
+    const pace = caged ? .55 : 1, sight = caged ? 70 : 150, fear = caged ? 30 : 60;
+    const others = actors.pets.filter((o) => o !== p && !o.docked && o.mode === p.mode);
+
+    // The cat on a wall: climb, hang, then leap back into the room.
+    if (p.wall) {
+      p.x = p.wall < 0 ? b.x0 : b.x1; p.vx = 0;
+      if (p.wallPhase === 'up') { p.y -= 28 * pace * dt; if (p.y <= p.wallTop) { p.y = p.wallTop; p.wallPhase = 'hang'; p.wallUntil = t + rand(1, 2.5); } }
+      else if (t >= p.wallUntil) { p.vx = -p.wall * 34 * pace; p.vy = -20; p.wall = 0; p.airborne = true; }
+      clampPet(p); return;
+    }
+    if (p.airborne) {
+      p.vy += 160 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < b.x0 || p.x > b.x1) p.vx *= -1;
+      if (p.y >= b.y1) { p.airborne = false; p.y = b.y1; newHeading(p); }
+      clampPet(p); return;
+    }
+
+    // Who matters: anything hunting me nearby, else anything I hunt.
+    let goal = null, away = false, speed = 0;
+    const threat = nearest(p, others.filter((o) => hunts(o, p, t)));
+    if (threat.o && threat.d < fear) { goal = threat.o; away = true; speed = 40; }
+    else {
+      const tagging = others.filter((o) => hunts(p, o, t) && tagPair(p, o) >= 0);
+      const prey = tagging.length ? nearest(p, tagging) : nearest(p, others.filter((o) => hunts(p, o, t)));
+      if (prey.o && (tagging.length || prey.d < sight)) {
+        goal = prey.o; speed = tagging.length ? 30 : 34;
+        if (tagging.length && prey.d < 8) {
+          // Caught: the other one is it now, after a moment to get away.
+          const i = tagPair(p, prey.o), pair = LIFE.tag[i], game = tagGame(i);
+          game.it = named(p, pair[0]) ? pair[1] : pair[0]; game.graceUntil = t + 1.5;
+        }
+      }
+    }
+    p.fleeing = away;
+
+    if (!p.wx || t >= p.headingUntil) newHeading(p);
+    let tx = p.wx, ty = p.wy, inBand = true;
+    if (goal) {
+      const dx = goal.x - p.x, dy = goal.y - p.y, d = Math.hypot(dx, dy) || 1, s = away ? -1 : 1;
+      tx = s * dx / d * speed * pace; ty = s * dy / d * speed * pace; inBand = false;
+    } else if (life.flock) {
+      // The first bird in the roster leads; the rest fly a loose V behind it.
+      const flock = [p, ...others.filter((o) => o.kind === p.kind)].sort((a, c) => actors.pets.indexOf(a) - actors.pets.indexOf(c));
+      const leader = flock[0];
+      if (leader !== p) {
+        const rank = flock.indexOf(p), side = rank % 2 ? 1 : -1, back = Math.ceil(rank / 2), facing = leader.vx < 0 ? -1 : 1;
+        const gx = leader.x - facing * back * 24 + side * 3, gy = leader.y + side * back * 10;
+        tx = Math.max(-36, Math.min(36, (gx - p.x) * 2)) * pace; ty = Math.max(-36, Math.min(36, (gy - p.y) * 2)) * pace; inBand = false;
+      }
+    } else {
+      const group = friendsOf(p);
+      if (group) {
+        const crew = [p, ...others.filter((o) => friendsOf(o) === group)];
+        if (crew.length > 1) {
+          // Hang out: walk to a spot beside the others, then idle there with a small sway.
+          crew.sort((a, c) => group.findIndex((n) => named(a, n)) - group.findIndex((n) => named(c, n)));
+          const centre = crew.reduce((sum, o) => sum + o.x, 0) / crew.length;
+          const spot = centre + (crew.indexOf(p) - (crew.length - 1) / 2) * 26;
+          tx = Math.abs(spot - p.x) > 3 ? Math.max(-16, Math.min(16, (spot - p.x) * 1.5)) * pace : Math.sin(p.t * 1.3) * 2;
+        }
+      }
+    }
+    if (!p.flying) ty = 0;
+
+    const ease = Math.min(1, dt * (away ? 6 : 3)); // prey react faster than they wander
+    p.vx += (tx - p.vx) * ease; p.vy += (ty - p.vy) * ease;
+    p.x += p.vx * dt;
+    if (p.flying) {
+      p.y += p.vy * dt;
+      if (inBand) {
+        const [top, bottom] = band(p, b);
+        // Drift back to its own height: up for the sky, back to mid-water for the fish.
+        if (p.y < top) { p.wy = Math.abs(p.wy) || 4; p.y += Math.min(top - p.y, 45 * pace * dt); }
+        else if (p.y > bottom) { p.wy = -Math.abs(p.wy) || -4; p.y -= Math.min(p.y - bottom, 45 * pace * dt); }
+      }
+    } else p.y = b.y1;
+
+    // Hitting a side: turn round, or, for a climber, run up the wall (always when chased).
+    if (p.x <= b.x0 || p.x >= b.x1) {
+      const side = p.x <= b.x0 ? -1 : 1;
+      if (life.climbs && !p.flying && (away || Math.random() < .35)) {
+        p.wall = side; p.wallPhase = 'up'; p.wallTop = b.y0 + (b.y1 - b.y0) * rand(.1, .6);
+      } else { p.wx = -side * Math.abs(p.wx || 6); p.vx = -side * Math.abs(p.vx); }
+    }
+    if (p.flying && (p.y <= b.y0 || p.y >= b.y1)) { p.wy = p.y <= b.y0 ? Math.abs(p.wy) : -Math.abs(p.wy); }
+
+    if (life.hops && !p.flying && t >= (p.nextHopAt ??= t + rand(0, 3))) { p.playHopAt = t; p.nextHopAt = t + rand(1.5, 4); }
+    clampPet(p);
+  }
+
   function step(dt) {
     const t = now();
     // pets
@@ -473,15 +613,10 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
       if (reduced || p.docked || (cageDrag && cageDrag.active && (p.mode === 'caged' || p.guest))) continue;
       if (p.mode === 'caged' || p.mode === 'out') {
         const b = petBounds(p);
-        if (p.mode === 'caged' && !p.flying) { p.vx = p.vy = 0; p.y = b.y1; }
-        else if (!jumping(p) && hoveredPet !== p) {
-          if (!p.vx || t >= p.headingUntil) newHeading(p);
-          p.x += p.vx * dt; if (p.flying) p.y += p.vy * dt; else p.y = b.y1;
-          if (p.x < b.x0 || p.x > b.x1) p.vx *= -1;
-          if (p.flying && (p.y < b.y0 || p.y > b.y1)) p.vy *= -1;
-          clampPet(p);
-        } else p.vx = p.vy = 0;
+        if (!jumping(p) && hoveredPet !== p) live(p, b, dt, t);
+        else { p.vx = p.vy = 0; if (p.airborne) { p.airborne = false; clampPet(p); } }
       } else {
+        p.wall = 0; p.airborne = false;
         const b = petBounds(p);
         const destination = p.mode === 'leave' ? L.right + 6 : Math.max(b.x0, Math.min(b.x1, p.homeX));
         const distance = destination - p.x, travel = 30 * dt;
@@ -492,6 +627,8 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
           if (p.mode === 'leave') { p.mode = 'out'; if (!p.flying) p.y = free().y1; }
           else p.mode = 'caged';
           newHeading(p); clampPet(p);
+          // The door is on the right, so a pet that just came out heads into the room.
+          if (p.mode === 'out') { p.wx = -Math.abs(p.wx) * 1.5; p.headingUntil = now() + rand(4, 9); }
         }
       }
       p.poked = Math.max(0, p.poked - dt);
