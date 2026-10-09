@@ -17,7 +17,7 @@ Fixed outside this folder:
 
 | File | What | Note |
 |---|---|---|
-| `apps/github-goldfish-20261008.html` | bundled copy of the Goldfish, `HUB = 'findastra-pet-apps'` | resolved 2026-10-09: `HUB` is `'astras-pet-apps'` and the hub-name messages derive from it, ported from github-goldfish. Not a straight copy: the bundle keeps its hub wording and `hub` pet.json key, which github-goldfish still calls the Cage / `cage` |
+| `apps/github-goldfish-20261008.html` | bundled copy of the Goldfish, `HUB = 'findastra-pet-apps'` | resolved 2026-10-09: `HUB` is `'astras-pet-apps'` and the hub-name messages derive from it, ported from github-goldfish. Not a straight copy: the bundle keeps its hub wording and `hub` pet.json key, which github-goldfish still calls by its retired enclosure name |
 | `scripts/desktop-pets-20261008.cs` (renamed 2026-10-09) | state file under `%LOCALAPPDATA%\findastra-pet-apps` | resolved 2026-10-09: the free-roaming desktop pets write status under `%LOCALAPPDATA%\astras-pet-apps`; the old folder held no state to migrate |
 | `docs/desktop-pets-20261008.md` (renamed 2026-10-09) | documents that path | resolved 2026-10-09 with the code |
 
