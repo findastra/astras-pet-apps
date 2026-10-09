@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { validate, buildTable, applyTable, assetPaths, START, END } from '../scripts/lib.mjs';
@@ -29,10 +29,10 @@ test('the real registry, README table and built frames all agree', () => {
   assert.deepEqual(validate(registry, read('README.md'), art), []);
 });
 
-test('exactly one host, and it is the Cage itself', () => {
+test('exactly one host, and it is the hub itself', () => {
   const hosts = registry.pets.filter((p) => p.role === 'host');
   assert.equal(hosts.length, 1);
-  assert.equal(hosts[0].repo, registry.cage);
+  assert.equal(hosts[0].repo, registry.hub);
   assert.equal(hosts[0].pet, 'Friendly Farmer');
 });
 
@@ -250,16 +250,52 @@ test('every pet has a bundled app interface and safe launch route', () => {
   assert.ok(validate(bad, applyTable(read('README.md'), bad), art).some((p) => p.includes('interface_url must be')));
 });
 
+test('unpublished Bug uses dated assets and its visible scale is validated', () => {
+  const bug = registry.pets.find(p => p.art === 'voicemeeter-bug');
+  assert.equal(bug.published, false);
+  assert.equal(bug.display_scale * 58.75, 58.75);
+  assert.equal(assetPaths(registry, bug.art).sheet, 'art/sheets/voicemeeter-bug-20261008.png');
+  for (const mood of MOODS) assert.equal(art.pets[bug.art].frames[mood], `art/frames/voicemeeter-bug/${mood}-20261008.png`);
+  for (const scale of [0, -1, 3, 'small']) {
+    const bad = structuredClone(registry); bad.pets.find(p => p.art === bug.art).display_scale = scale;
+    assert.ok(validate(bad, applyTable(read('README.md'), bad), art).some(p => p.includes('display_scale')));
+  }
+});
+
 test('README markers are present and ordered', () => {
   const r = read('README.md');
   assert.ok(r.indexOf(START) > 0 && r.indexOf(END) > r.indexOf(START));
 });
 
 test('no personal data, tokens or work info in the repo files', () => {
-  for (const f of ['README.md', 'ROSTER.md', 'AGENTS.md', 'PET-FILES.md', 'pets.json', 'cage.html', 'cage-data.js', 'scripts/generate-pets.mjs']) {
+  for (const f of ['README.md', 'ROSTER.md', 'AGENTS.md', 'PET-FILES.md', 'pets.json', 'pets.html', 'pets-data.js', 'scripts/generate-pets.mjs']) {
     const t = read(f);
     assert.ok(!/ghp_[A-Za-z0-9]{20}/.test(t), `${f} has a GitHub token`);
     assert.ok(!/sk-[A-Za-z0-9_-]{20}/.test(t), `${f} has an API key`);
     assert.ok(!/C:\\Users\\/.test(t), `${f} has a personal path`);
   }
+});
+
+// Astra asked on 2026-10-09 for the pets to roam free, with the enclosure gone from every file.
+// The word is assembled here so this guard does not trip over itself. Two exclusions: embedded
+// base64 images (random letters), and the bundled original Data Dealer dashboard, whose retired
+// casino vocabulary names that company's payments desk, not anything in this app.
+test('no file in the repo puts the pets in an enclosure again', () => {
+  const word = new RegExp('ca' + 'ge', 'i');
+  const skipDirs = new Set(['.git', 'node_modules', 'bin', 'art']);
+  const skipFiles = new Set(['apps/data-dealer-20261008.html']);
+  const textFile = /\.(md|json|html|js|mjs|cs|ps1|cmd|manifest|txt)$/i;
+  const offenders = [];
+  const walk = (dir) => {
+    for (const name of readdirSync(path(dir || '.'))) {
+      const rel = dir ? `${dir}/${name}` : name;
+      if (statSync(path(rel)).isDirectory()) { if (!skipDirs.has(name)) walk(rel); continue; }
+      if ((!textFile.test(name) && name !== 'LICENSE') || skipFiles.has(rel)) continue;
+      const text = read(rel).replace(/data:[a-z/+.-]+;base64,[A-Za-z0-9+/=]+/gi, '');
+      if (word.test(text) || word.test(name)) offenders.push(rel);
+    }
+  };
+  walk('');
+  for (const id of Object.keys(art.pets)) for (const file of Object.values(art.pets[id].frames)) if (word.test(file)) offenders.push(file);
+  assert.deepEqual(offenders, []);
 });

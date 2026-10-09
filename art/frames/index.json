@@ -339,6 +339,24 @@
     "sleep": "art/frames/project-parrot/sleep-20261008.png"
    },
    "sheet": "art/sheets/project-parrot-20261008.png"
+  },
+  "voicemeeter-bug": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/voicemeeter-bug/idle-20261008.png",
+    "blink": "art/frames/voicemeeter-bug/blink-20261008.png",
+    "happy": "art/frames/voicemeeter-bug/happy-20261008.png",
+    "curious": "art/frames/voicemeeter-bug/curious-20261008.png",
+    "worried": "art/frames/voicemeeter-bug/worried-20261008.png",
+    "sad": "art/frames/voicemeeter-bug/sad-20261008.png",
+    "sick": "art/frames/voicemeeter-bug/sick-20261008.png",
+    "alarmed": "art/frames/voicemeeter-bug/alarmed-20261008.png",
+    "sleep": "art/frames/voicemeeter-bug/sleep-20261008.png"
+   },
+   "sheet": "art/sheets/voicemeeter-bug-20261008.png"
   }
  }
 }

@@ -1,13 +1,13 @@
 # Pet files: the rules for every pet app
 
-*Part of the Cage ([README](README.md)). The GitHub Goldfish checks these rules across the whole account.*
+*Part of Astra's Pet Apps ([README](README.md)). The GitHub Goldfish checks these rules across the whole account.*
 
 Every pet app is its own repo under `findastra`, named in lowercase words joined by hyphens. Every pet repo has:
 
 | File or setting | Rule |
 |---|---|
 | **`pet.json`** | See below. |
-| **GitHub topic** | `pet-app`. Added in the repo's About box (the gear). The Cage finds pets by this topic. |
+| **GitHub topic** | `pet-app`. Added in the repo's About box (the gear). Astra's Pet Apps finds pets by this topic. |
 | **`README.md`** | Title is the repo name in Title Case. The first lines include `*A pet app by Astra.*`. Has a "how to run it" section and a "limits" section that says plainly what is not done. |
 | **`AGENTS.md` and `CLAUDE.md`** | Rules so any assistant can pick the repo up. |
 | **A pixel twin** | Drawn in the shared style (below). |
@@ -28,7 +28,7 @@ Public credit is always **Astra**. No keys, `.env` files or personal data in a r
   "runs_on": "Where it runs.",
   "entry": "index.html",
   "status": "hatching",
-  "cage": { "topic": "pet-app", "home": "README.md" },
+  "hub": { "topic": "pet-app", "home": "README.md" },
   "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07"
 }
 ```
@@ -40,7 +40,7 @@ Public credit is always **Astra**. No keys, `.env` files or personal data in a r
 **Chip is an owner-requested exception:** its original Data Dealer `drawPet` pixels are rendered
 by `scripts/chip-original-20261008.mjs` at integer scale inside the original yellow pocket shell.
 The registry's `art_source` selects this native renderer; image generation skips it. Its exact
-LCD palette, geometry and original expression shapes are preserved. The Cage's nine moods use
+LCD palette, geometry and original expression shapes are preserved. The shared nine moods use
 the original expression and bob/blink states plus shared indicators.
 
 Pets are **generated** pixel art, not hand-coded any more. One image per pet holds the same
@@ -124,7 +124,7 @@ Every pet uses the same nine meanings, so Astra can read any pet's face without 
 `sick` is the only mood that asks Astra for something. Use it whenever the pet cannot go on without her: a site needs her to sign in, a token or key is missing or expired, a permission was refused, a file or folder it was pointed at is not there, an app it manages is not installed. It is **not** for problems the pet found in its subject matter (that is `worried` / `alarmed`) and **not** for the pet's own crash (that is `sad`). When a pet goes `sick` it must say in words what it needs and how to give it.
 - Current frame paths are recorded in `art/frames/index.json`. Consumers use that index so they support both existing mood filenames and dated filenames. A pet repo can copy its own frames.
 
-## Adding a pet to the Cage
+## Adding a pet to Astra's Pet Apps
 
 1. Add the entry to `pets.json` (`repo`, `pet`, `role: "pet"`, `status`, `job`, `art`, `published`, `added`). Set `asset_date` to the owner's America/Denver date, such as `20261008`, for new assets.
 2. Add its prompt to `PETS` in `scripts/generate-pets.mjs` and supply the 3×3 mood sheet. With `asset_date: "20261008"`, a ghost's sheet is `art/sheets/ghost-protocol-20261008.png` and its frames are `art/frames/ghost-protocol/idle-20261008.png`, etc. Existing assets are not renamed.

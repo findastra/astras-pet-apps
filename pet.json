@@ -4,15 +4,15 @@
   "owner": "Astra",
   "sprite": "art/frames/index.json",
   "art_key": "farmer",
-  "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
-  "runs_on": "Any modern browser (cage.html); optional Windows desktop Farmer launcher. Node 20 or newer for builds and checks.",
-  "entry": "cage.html",
+  "job": "Hosts Astra's Pet Apps and keeps an eye on the pets roaming free. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
+  "runs_on": "Any modern browser (pets.html); optional Windows desktop pets and Farmer launchers. Node 20 or newer for builds and checks.",
+  "entry": "pets.html",
   "status": "growing",
-  "cage": {
+  "hub": {
     "topic": "pet-app",
     "home": "README.md"
   },
   "version": "0.2.1-20261008",
   "source": "https://github.com/findastra/astras-pet-apps/tree/v0.2.1-20261008",
-  "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07; OpenAI Codex (GPT-6), 2026-10-08"
+  "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07; OpenAI Codex (GPT-6), 2026-10-08; Claude Opus 5.5 (claude-opus-5-5), 2026-10-09"
 }

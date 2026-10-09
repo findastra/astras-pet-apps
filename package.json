@@ -2,12 +2,12 @@
   "name": "astras-pet-apps",
   "version": "0.2.1-20261008",
   "private": true,
-  "description": "Astra's Pet Apps: the Cage, where Astra keeps her pet apps.",
+  "description": "Astra's Pet Apps, where Astra's pet apps roam free.",
   "license": "MIT",
   "scripts": {
     "test": "node --test test/*.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node scripts/check-cage.mjs",
+    "check": "node scripts/check-pets.mjs",
     "generate": "node scripts/generate-pets.mjs"
   },
   "engines": {

@@ -1,8 +1,8 @@
 {
-  "cage": "astras-pet-apps",
+  "hub": "astras-pet-apps",
   "owner": "Astra",
   "topic": "pet-app",
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "mascots": [],
   "pets": [
     {
@@ -14,7 +14,7 @@
       "status": "growing",
       "published": true,
       "visibility": "private",
-      "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
+      "job": "Hosts Astra's Pet Apps and keeps an eye on the pets roaming free. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
       "added": "2026-10-07",
       "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
       "interface_local_url": "apps/astras-pet-apps-20261008.html",
@@ -63,7 +63,7 @@
       "published": true,
       "job": "Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves.",
       "added": "2026-10-07",
-      "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings).",
+      "note": "Redrawn in the shared pet style from her 32x24 LCD original (pink hair, mint wings).",
       "interface_local_url": "apps/api-fairy-20261008.html",
       "interface_url": "apps/api-fairy-20261008.html",
       "visibility": "private",
@@ -287,7 +287,7 @@
       "published": true,
       "job": "A personal cybersecurity checklist for reviewing your own security habits and tracking the steps you complete.",
       "added": "2026-10-08",
-      "note": "Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the Cage character is not connected to checklist progress or security monitoring.",
+      "note": "Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the pet character is not connected to checklist progress or security monitoring.",
       "interface_local_url": "apps/ghost-protocol-20261008.html",
       "interface_url": "https://findastra.github.io/ghost-protocol/",
       "interface_live_url": "https://findastra.github.io/ghost-protocol/",
@@ -311,6 +311,21 @@
       "visibility": "private",
       "source_tag": "v0.1.0-20261008",
       "source_commit": "43f2bc7eee8d4bf4cec96a99e2f2ac4518c8f2cb"
+    },
+    {
+      "repo": "voicemeeter-bug",
+      "pet": "Voicemeeter Bug",
+      "role": "pet",
+      "art": "voicemeeter-bug",
+      "asset_date": "20261008",
+      "display_scale": 1,
+      "status": "growing",
+      "published": false,
+      "job": "A small Windows desktop companion for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app.",
+      "added": "2026-10-08",
+      "note": "DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Audio repair runs in the separate local Windows app; browser moods do not measure audio health.",
+      "interface_local_url": "apps/voicemeeter-bug-20261008.html",
+      "interface_url": "apps/voicemeeter-bug-20261008.html"
     }
   ],
   "candidates": [

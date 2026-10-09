@@ -83,7 +83,7 @@ The 2026-10-08 query benchmark measured a median of **7.93 ms** (95th percentile
 cached rectangle, using 24 and 80 samples respectively on this computer. Those
 numbers measure query cost, not the complete visual response to a human drag.
 
-The browser Cage's BSOD visitor is a separate local guest. Its Farmer pairing
+The browser page's BSOD visitor is a separate local guest. Its Farmer pairing
 does not synchronize with the actual desktop mini.
 
 Implementation reference: Microsoft's

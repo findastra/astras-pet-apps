@@ -30,7 +30,7 @@
       const follow = h('label', undefined, 'check', tile), input = h('input', undefined, '', follow); input.type = 'checkbox'; input.checked = state.flags[pet.repo] === true; h('span', 'Needs my attention', '', follow); input.onchange = () => { state.flags[pet.repo] = input.checked; save(); };
     } }; search.oninput = render; render(); notesCard();
     const desktop = card('Optional Windows Farmer', 'After extracting the app download, run the included launcher to place the Farmer at the left edge of your desktop.');
-    h('code', 'start-farmer-dock-20261008.cmd', '', desktop); h('p', 'The desktop Farmer opens this Cage. Browser pages cannot start a Windows launcher automatically.', 'muted', desktop);
+    h('code', 'start-farmer-dock-20261008.cmd', '', desktop); h('p', 'The desktop Farmer opens the pets page. Browser pages cannot start a Windows launcher automatically.', 'muted', desktop);
   }
 
   if (cfg.type === 'keys') {

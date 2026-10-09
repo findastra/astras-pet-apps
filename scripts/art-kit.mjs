@@ -1,4 +1,4 @@
-// Pixel-art toolkit for the Cage's pets: 32x32, full colour, soft tinted outlines, rim light and
+// Pixel-art toolkit for Astra's pets: 32x32, full colour, soft tinted outlines, rim light and
 // shadow, dot eyes and pink cheeks. Everything is symmetric about x = 15.5, so mirror(x) = 31 - x.
 import { deflateSync } from 'node:zlib';
 

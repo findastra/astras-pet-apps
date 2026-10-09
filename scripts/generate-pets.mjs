@@ -1,4 +1,4 @@
-// Generates a 3x3 mood sheet for every pet, then converts each one into the Cage's sprite format.
+// Generates a 3x3 mood sheet for every pet, then converts each one into the shared sprite format.
 //
 //   node scripts/generate-pets.mjs                 everything still missing
 //   node scripts/generate-pets.mjs goldfish chip   just these
@@ -79,6 +79,7 @@ export const PETS = [
   { id: 'portfolio-puffer', what: 'a chubby round penguin standing upright with flippers at its sides, a clear beak and webbed feet, wearing CUTE ROUND wire-rimmed spectacles on his face, the round Harry Potter kind', colours: 'electric magenta body, glowing cyan belly, bright neon yellow beak and feet' },
   { id: 'ghost-protocol', what: 'a friendly small floating ghost with a rounded sheet-like head, two tiny soft arms and a gently scalloped floating hem, no legs, no props and no lettering', colours: 'pale mint and seafoam body, bright teal inner folds, dark charcoal dot eyes, tiny coral blush cheeks' },
   { id: 'project-parrot', what: 'a compact friendly parrot perched upright with a small curved beak, folded wings and a neat short tail, no props and no lettering', colours: 'scarlet-red primary body, electric ultramarine wings and tail, bright gold beak and feet' },
+  { id: 'voicemeeter-bug', what: 'a tiny cute compact neckless bug with a single round joined head-and-body silhouette, short antennae and little feet, no separate head stalk, no long neck, no props and no lettering', colours: 'soft silver-grey body, vivid signal-red shell details, charcoal-black antennae and feet, tiny pink cheeks' },
 ];
 
 const prompt = (p) => `${STYLE} The character is ${p.what}, in NEON unconventional colours: ${p.colours}. It must clearly read as ${p.what.split(',')[0]}.`;

@@ -1,22 +1,22 @@
 # Roster
 
-*The running list of everyone who lives in the Cage. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*
+*The running list of every pet in Astra's Pet Apps. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*
 
-**18 pet apps so far, drawn as 18 characters (18 app pets, 0 companions, 0 mascots). 18 of the 18 pet apps have a repo on GitHub.**
+**19 pet apps so far, drawn as 19 characters (19 app pets, 0 companions, 0 mascots). 18 of the 19 pet apps have a repo on GitHub.**
 
 Whether each of those repos carries its `pet.json` and the `pet-app` topic is not recorded here. Run `npm run check -- --online` to ask GitHub.
 
-Last updated 2026-10-08. Drawings below are **drafts** unless their notes record Astra's approval. The pets are generated pixel art; how they are made is in [PET-FILES.md](PET-FILES.md).
+Last updated 2026-10-09. Drawings below are **drafts** unless their notes record Astra's approval. The pets are generated pixel art; how they are made is in [PET-FILES.md](PET-FILES.md).
 
 ![Every character in every mood](art/roster.png)
 
-Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity Unicorn, Python Panther, Astra Wisp, Health Hummy, Finance Finch, Mommy's Mommies, Paper Girl, File Master, Discord Damsel, Portfolio Puffer, Drum Dog, VSCode Angel, Ghost Protocol, Project Parrot; columns are idle, blink, happy, curious, worried, sad, sick, alarmed, sleep.
+Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity Unicorn, Python Panther, Astra Wisp, Health Hummy, Finance Finch, Mommy's Mommies, Paper Girl, File Master, Discord Damsel, Portfolio Puffer, Drum Dog, VSCode Angel, Ghost Protocol, Project Parrot, Voicemeeter Bug; columns are idle, blink, happy, curious, worried, sad, sick, alarmed, sleep.
 
 ## Pet apps
 
 | # | Pet | Role | Status | On GitHub | What it does | Art |
 |---|---|---|---|---|---|---|
-| 1 | **Friendly Farmer** | host | growing | private repo | Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list. | <img src="art/frames/farmer/idle-20261008.png" width="48" height="48" alt="farmer idle"> |
+| 1 | **Friendly Farmer** | host | growing | private repo | Hosts Astra's Pet Apps and keeps an eye on the pets roaming free. The Farmer’s desk opens all apps and keeps a personal follow-up list. | <img src="art/frames/farmer/idle-20261008.png" width="48" height="48" alt="farmer idle"> |
 | 2 | **GitHub Goldfish** | pet | growing | private repo | Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors. | <img src="art/frames/goldfish/idle.png" width="48" height="48" alt="goldfish idle"> |
 | 3 | **Chip** | pet | hatching | private repo | Data Dealer's pixel twin. | <img src="art/frames/chip/idle-20261008.png" width="48" height="48" alt="chip idle"> |
 | 4 | **API Fairy** | pet | growing | private repo | Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves. | <img src="art/frames/api-fairy/idle.png" width="48" height="48" alt="api-fairy idle"> |
@@ -34,6 +34,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | 16 | **VSCode Angel** | pet | hatching | private repo | Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned. | <img src="art/frames/vscode-angel/idle.png" width="48" height="48" alt="vscode-angel idle"> |
 | 17 | **Ghost Protocol** | pet | hatching | [ghost-protocol](https://github.com/findastra/ghost-protocol) | A personal cybersecurity checklist for reviewing your own security habits and tracking the steps you complete. | <img src="art/frames/ghost-protocol/idle-20261008.png" width="48" height="48" alt="ghost-protocol idle"> |
 | 18 | **Project Parrot** | pet | hatching | private repo | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | <img src="art/frames/project-parrot/idle-20261008.png" width="48" height="48" alt="project-parrot idle"> |
+| 19 | **Voicemeeter Bug** | pet | growing | not yet | A small Windows desktop companion for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
 
 ## Every mood
 
@@ -63,7 +64,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 
 ### API Fairy
 
-*Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings).*
+*Redrawn in the shared pet style from her 32x24 LCD original (pink hair, mint wings).*
 
 | idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -167,7 +168,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 
 ### Ghost Protocol
 
-*Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the Cage character is not connected to checklist progress or security monitoring.*
+*Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the pet character is not connected to checklist progress or security monitoring.*
 
 | idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -180,6 +181,14 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | <img src="art/frames/project-parrot/idle-20261008.png" width="56" height="56" alt="project-parrot idle"> | <img src="art/frames/project-parrot/blink-20261008.png" width="56" height="56" alt="project-parrot blink"> | <img src="art/frames/project-parrot/happy-20261008.png" width="56" height="56" alt="project-parrot happy"> | <img src="art/frames/project-parrot/curious-20261008.png" width="56" height="56" alt="project-parrot curious"> | <img src="art/frames/project-parrot/worried-20261008.png" width="56" height="56" alt="project-parrot worried"> | <img src="art/frames/project-parrot/sad-20261008.png" width="56" height="56" alt="project-parrot sad"> | <img src="art/frames/project-parrot/sick-20261008.png" width="56" height="56" alt="project-parrot sick"> | <img src="art/frames/project-parrot/alarmed-20261008.png" width="56" height="56" alt="project-parrot alarmed"> | <img src="art/frames/project-parrot/sleep-20261008.png" width="56" height="56" alt="project-parrot sleep"> |
+
+### Voicemeeter Bug
+
+*DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Audio repair runs in the separate local Windows app; browser moods do not measure audio health.*
+
+| idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="56" height="56" alt="voicemeeter-bug idle"> | <img src="art/frames/voicemeeter-bug/blink-20261008.png" width="56" height="56" alt="voicemeeter-bug blink"> | <img src="art/frames/voicemeeter-bug/happy-20261008.png" width="56" height="56" alt="voicemeeter-bug happy"> | <img src="art/frames/voicemeeter-bug/curious-20261008.png" width="56" height="56" alt="voicemeeter-bug curious"> | <img src="art/frames/voicemeeter-bug/worried-20261008.png" width="56" height="56" alt="voicemeeter-bug worried"> | <img src="art/frames/voicemeeter-bug/sad-20261008.png" width="56" height="56" alt="voicemeeter-bug sad"> | <img src="art/frames/voicemeeter-bug/sick-20261008.png" width="56" height="56" alt="voicemeeter-bug sick"> | <img src="art/frames/voicemeeter-bug/alarmed-20261008.png" width="56" height="56" alt="voicemeeter-bug alarmed"> | <img src="art/frames/voicemeeter-bug/sleep-20261008.png" width="56" height="56" alt="voicemeeter-bug sleep"> |
 
 ## Candidates (not counted until Astra says yes)
 
