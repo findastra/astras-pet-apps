@@ -5,7 +5,8 @@
 Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-07. Record your model name and version here when you change something substantial.
 Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6), 2026-10-08.
 Cage movement by kind (zones, flocks, friends, tag and chases from `cage_life` in pets.json) added with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
-Square pet frame for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+Square pet well for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+Pet words (`PET-WORDS.md`, `words` in pets.json, `test/pet-words-test-20261009.mjs`) and public-repo labels with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 
 ## What this is
 The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
@@ -26,7 +27,7 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
   generated sheet has a symbol drawn into it, redo the sheet.
 - **Generating costs money** (one image per pet, billed to Astra's OpenAI account). Regenerate
   one pet, not the set. Sheets in `art/sheets/` are kept so a re-run is free.
-- Do not put another creator's artwork, or a recognisable derivative of it, in this repo. It is private; keep provenance and sharing rights explicit. Astra's own characters only.
+- Do not put another creator's artwork, or a recognisable derivative of it, in this repo. It is public; keep provenance and sharing rights explicit. Astra's own characters only.
 - **No dependencies.** Node's built-in modules only. The page `cage.html` must work by double-click (that is why data is in `cage-data.js`, not fetched).
 - **Never commit** keys, `.env` files or personal data. Health and finance pets keep user data on the user's PC.
 - **Say plainly what is not done.** Every drawing is a draft until Astra approves it; do not call it final. Say when a pet is not on GitHub yet (`published: false`).
@@ -39,7 +40,9 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - New asset filenames are lowercase and dated immediately before the extension. Set `asset_date`
   on a new registry entry; the sheet and all nine mood files use that suffix. Existing filenames stay unchanged.
 - Pet file rules: [PET-FILES.md](PET-FILES.md).
+- **Pet words:** one name per part (pet, app, desktop pet, bubble, quick chat, app icon, pet well). Use [PET-WORDS.md](PET-WORDS.md); `words` in pets.json is its machine-readable copy for the Goldfish. When a new part needs a name, add it to both and run `npm test`.
 - The GitHub Goldfish (`findastra/github-goldfish`) audits this repo and the whole account.
+- **Handoffs:** work left for another assistant is a card in `handoffs/` ([skills/handoff/SKILL.md](skills/handoff/SKILL.md)). "Tell the Farmer" means a card here.
 
 ## Commands
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`

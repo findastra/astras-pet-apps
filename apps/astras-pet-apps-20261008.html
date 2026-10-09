@@ -19,7 +19,7 @@
   const checklist = (title, items) => { const box = card(title, 'Check a step after you have verified it yourself.'); for (const [id, text] of items.entries()) { const row = h('label', undefined, 'check', box); const input = h('input', undefined, '', row); input.type = 'checkbox'; input.checked = state.checks[id] === true; h('span', text, '', row); input.onchange = () => { state.checks[id] = input.checked; save(); }; } return box; };
 
   if (cfg.type === 'manager') {
-    const box = card('All 18 apps', 'Each card opens its real application or its local companion interface.');
+    const box = card('All 18 apps', 'Each card opens that pet's app.');
     const search = field(box, 'Find an app', 'search'); search.type = 'search';
     const grid = h('div', undefined, 'app-grid', box);
     const render = () => { grid.replaceChildren(); for (const pet of cfg.pets.filter((p) => (p.pet + ' ' + p.job).toLowerCase().includes(search.value.toLowerCase()))) {
