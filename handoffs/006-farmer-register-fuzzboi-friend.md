@@ -1,4 +1,4 @@
-status: open (step 3 waits on Astra's OK for the art; the repo waits on Astra creating or OK'ing it)
+status: open (step 3 waits on Astra's OK for the art)
 for: farmer (any assistant working on astras-pet-apps)
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-09
 needs: PET-FILES.md "Adding a pet to the Cage", PET-WORDS.md, pets.json, scripts/generate-pets.mjs, findastra/fuzzboi-friend, findastra/fuzzbois
@@ -6,7 +6,7 @@ needs: PET-FILES.md "Adding a pet to the Cage", PET-WORDS.md, pets.json, scripts
 ## Task
 Welcome a new pet to the Cage: **Fuzzboi Friend** (`fuzzboi-friend`). Its app lets a friend type
 a six-digit hex code and get that exact Fuzzboi, drawn from Astra's own layers in
-`findastra/fuzzbois`. The app is `fuzzboi-friend-20261009.html`, meant to be live at
+`findastra/fuzzbois`. The app is `fuzzboi-friend-20261009.html`, live at
 <https://findastra.github.io/fuzzboi-friend/>. Fuzzbois' own site, the Fuzzboi Forge, is live at
 <https://findastra.github.io/fuzzbois/>.
 
@@ -18,7 +18,7 @@ a six-digit hex code and get that exact Fuzzboi, drawn from Astra's own layers i
    `asset_date: "20261009"`, `interface_url` and `interface_local_url`:
    `"apps/fuzzboi-friend-20261009.html"`, `interface_live_url`: `"https://findastra.github.io/fuzzboi-friend/"`,
    job: "Makes your own Fuzzboi: type a six-digit hex code and get that exact Fuzzboi, drawn from
-   Astra's layers, as a PNG." Set `published: true` only once the repo is on GitHub.
+   Astra's layers, as a PNG." `published: true` (the public repo exists, with topic `pet-app`).
    `kind`: a Fuzzboi is a fuzzy ground creature; pick a ground kind (an unlisted kind just wanders).
    Suggested `says` lines: "what's your code?", "fluffing you up…", "ooh, a rare one!", "save it before you lose it".
    **Also fix the stale entry** near the end of pets.json: Fuzzbois (`fuzzbois`) still says "Local
