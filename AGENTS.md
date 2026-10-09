@@ -32,6 +32,15 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - The Farmer is the only `role: "host"` and his repo is this repo. There is exactly one host.
 - Count claims (how many pets) come from `npm run check` / ROSTER.md, never from memory.
 
+## Handoffs (every assistant)
+Astra works with many assistants at once, and GitHub is the shared desk.
+- When Astra's request is unclear or sounds like an assignment ("tell the farmer"), check
+  GitHub first: `handoffs/` here and in the other `findastra` repos, then their AGENTS.md.
+  Ask her only what the repos do not answer.
+- When you stop with work left for someone else, write a card in `handoffs/` and list it in
+  `handoffs/README.md`. Format: [skills/handoff/SKILL.md](skills/handoff/SKILL.md).
+- Cards for the Farmer (this repo's host) go here.
+
 ## Conventions
 - Repo names: lowercase words joined by hyphens. README title is the same words in Title Case.
 - New asset filenames are lowercase and dated immediately before the extension. Set `asset_date`
