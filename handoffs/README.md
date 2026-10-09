@@ -13,3 +13,5 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-apps.
 | [004: Register RGBee in the Cage](004-farmer-register-rgbee.md) | Farmer | open, art waits on Astra's OK |
 | [005: Goldfish audit of RGBee and old pet words](005-goldfish-audit-rgbee-and-pet-words.md) | Goldfish | open |
 | [006: Register Fuzzboi Friend in the Cage](006-farmer-register-fuzzboi-friend.md) | Farmer | open, art waits on Astra's OK |
+| [007: Register Mail Snail in the Cage](007-farmer-register-mail-snail.md) | Farmer | open, waits on Astra's OK |
+| [008: Register five new placeholder pets](008-farmer-register-new-placeholders.md) | Farmer | open, art waits on Astra's OK |
