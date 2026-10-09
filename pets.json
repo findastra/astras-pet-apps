@@ -157,7 +157,7 @@
       "status": "growing",
       "published": true,
       "visibility": "public",
-      "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
+      "job": "Hosts the Cage and opens or closes its door. The Farmerâ€™s desk opens all apps and keeps a personal follow-up list.",
       "added": "2026-10-07",
       "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
       "interface_local_url": "apps/astras-pet-apps-20261008.html",
@@ -498,6 +498,11 @@
       "name": "Fuzzbois",
       "repo": "fuzzbois",
       "why": "Local art project, not published."
+    },
+    {
+      "name": "Backup Beaver",
+      "repo": "backup-beaver",
+      "why": "Planned pet app. Repo created as a private placeholder on 2026-10-09; job not yet decided. Affects the Friendly Farmer (host desk) and GitHub Goldfish (reads this words list)."
     }
   ]
 }
