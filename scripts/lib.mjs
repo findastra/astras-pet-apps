@@ -1,4 +1,4 @@
-// Shared by update-readme.mjs, check-cage.mjs, build.mjs and the tests.
+// Shared by update-readme.mjs, check-pets.mjs, build.mjs and the tests.
 export const OWNER = 'findastra';
 export const START = '<!-- pets:start (generated from pets.json by scripts/update-readme.mjs; do not edit by hand) -->';
 export const END = '<!-- pets:end -->';
@@ -57,6 +57,7 @@ export function validate(registry, readme, art) {
     // unpublished pet. Omitting it silently claims the repo is live, so require it explicitly.
     if (typeof p.published !== 'boolean') problems.push(`${p.repo || '(entry)'}: "published" must be true or false (leaving it out claims the repo is already on GitHub)`);
     if (p.visibility !== undefined && !['public', 'private'].includes(p.visibility)) problems.push(`${p.repo}: visibility must be public or private`);
+    if (p.display_scale !== undefined && (!Number.isFinite(p.display_scale) || p.display_scale <= 0 || p.display_scale > 2)) problems.push(`${p.repo}: display_scale must be greater than zero and at most two`);
     if (!safeInterfaceURL(p.interface_url)) problems.push(`${p.repo}: interface_url must be an http(s) URL or a dated apps/ HTML path`);
     if (p.interface_local_url !== undefined && !/^apps\/[a-z0-9]+(?:-[a-z0-9]+)*-\d{8}(?:-\d{6})?\.html$/.test(p.interface_local_url)) problems.push(`${p.repo}: interface_local_url must be a dated apps/ HTML path`);
     if (p.repo && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.repo)) problems.push(`${p.repo}: repo names are lowercase words joined by hyphens`);
@@ -70,8 +71,8 @@ export function validate(registry, readme, art) {
     for (const id of Object.keys(p.says || {})) if (id !== p.art && !(p.companions || []).includes(id)) problems.push(`${p.repo}: "says" lists ${id}, which is not one of its characters`);
   }
   const hosts = registry.pets.filter((p) => p.role === 'host');
-  if (hosts.length !== 1) problems.push(`there must be exactly one host (the Cage's own pet); found ${hosts.length}`);
-  else if (hosts[0].repo !== registry.cage) problems.push(`the host's repo must be the Cage repo "${registry.cage}"`);
+  if (hosts.length !== 1) problems.push(`there must be exactly one host (the hub's own pet); found ${hosts.length}`);
+  else if (hosts[0].repo !== registry.hub) problems.push(`the host's repo must be the hub repo "${registry.hub}"`);
   for (const m of registry.mascots || []) { if (!m.art || !m.name) problems.push('a mascot needs "name" and "art"'); arts.add(m.art); }
   if (art) for (const id of arts) if (!art.pets[id]) problems.push(`no art drawn for "${id}" (add its prompt to scripts/generate-pets.mjs, generate it, then npm run build)`);
   if (art) for (const id of Object.keys(art.pets)) if (!arts.has(id)) problems.push(`art "${id}" is drawn but not listed in pets.json`);

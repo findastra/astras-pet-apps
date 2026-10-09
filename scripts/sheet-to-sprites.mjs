@@ -1,4 +1,4 @@
-// Turns a generated 3x3 mood sheet into the Cage's sprite format.
+// Turns a generated 3x3 mood sheet into the shared sprite format.
 //
 //   node scripts/sheet-to-sprites.mjs <sheet.png> <art-id> [--colours 20] [--size N] [--out dir]
 //
@@ -13,7 +13,7 @@
 // features away - the one-pixel black outline and the small beak and feet simply vanish.
 //
 // Output is the same { pal, rows } shape the hand-drawn pets use, so everything downstream
-// (cage-data.js, the roster, cage.html, the tests) keeps working.
+// (pets-data.js, the roster, pets.html, the tests) keeps working.
 //
 // Node built-ins only, like the rest of this repo.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';

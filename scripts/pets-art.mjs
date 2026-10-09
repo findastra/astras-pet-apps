@@ -1,4 +1,4 @@
-// The Cage's characters, drawn in code so every pet shares one style and one set of moods.
+// Astra's pet characters, drawn in code so every pet shares one style and one set of moods.
 // DRAFTS for Astra's approval. Chip and the Farmer in particular are best guesses.
 import {
   Cv, W, H, mirror, ellipse, ellipseRot, rrect, union, minus, cells, mirrored, poly, paint, outline, tint, stamp, put,
@@ -132,7 +132,7 @@ const farmer = {
   face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 14, my: 19, cx: 9, cy: 18, tr: [26, 0], tl: [1, 2], pl: [21, 14] }, this.ink); },
 };
 
-/* ---------- Nullbot: stands on the Cage. DRAFT, my own drawing in the same style. ---------- */
+/* ---------- Nullbot: the hub's robot mascot. DRAFT, my own drawing in the same style. ---------- */
 const SCREEN = {
   idle: '#ff4a4a', blink: '#a02a2a', happy: '#7dff9e', curious: '#6ee7ff', worried: '#ffc247',
   sad: '#6fa8ff', sick: '#cfe8cf', alarmed: '#ff4a4a', sleep: '#4a5280',

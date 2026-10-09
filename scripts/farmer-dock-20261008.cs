@@ -82,7 +82,7 @@ namespace AstraPetApps {
     }
     void OpenDesk() {
       var file=Path.Combine(root,"apps","astras-pet-apps-20261008.html");
-      if(!File.Exists(file)) file=Path.Combine(root,"cage.html");
+      if(!File.Exists(file)) file=Path.Combine(root,"pets.html");
       Process.Start(new ProcessStartInfo(file) { UseShellExecute=true });
     }
     void QueuePlacement() {

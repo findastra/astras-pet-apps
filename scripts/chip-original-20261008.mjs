@@ -61,7 +61,7 @@ export function chipLayout(size = 256) {
   const scale = Math.floor(size / 128);
   if (scale < 1) throw new Error('Original Chip requires a frame at least 128px square');
   const x = Math.floor((size - 76 * scale) / 2);
-  // Reserve headroom above the antenna for the Cage's shared mood badges.
+  // Reserve headroom above the antenna for the shared mood badges.
   const y = Math.floor((size - 106 * scale) / 2) + 20 * scale;
   const screenX = x + 12 * scale, screenY = y + 19 * scale;
   return { scale, x, y, screenX, screenY, lcdX: screenX + 10 * scale, lcdY: screenY + Math.floor(7.5 * scale) };

@@ -1,4 +1,4 @@
-// Usage: node scripts/check-cage.mjs [--online]
+// Usage: node scripts/check-pets.mjs [--online]
 // Checks pets.json and the README table. --online also asks GitHub whether each pet's repo
 // exists, carries the pet-app topic, and has a pet.json.
 import { readFileSync } from 'node:fs';
@@ -12,6 +12,7 @@ const problems = validate(registry, readFileSync(p('README.md'), 'utf8'), art);
 
 if (process.argv.includes('--online')) {
   for (const pet of registry.pets) {
+    if (pet.published === false) { console.log(`${pet.repo}: local app, not published; online checks skipped.`); continue; }
     if (pet.visibility === 'private') { console.log(`${pet.repo}: private repository; anonymous online checks skipped.`); continue; }
     const r = await fetch(`https://api.github.com/repos/${OWNER}/${pet.repo}`, { headers: { Accept: 'application/vnd.github+json' } });
     if (r.status === 404) { problems.push(`${pet.repo}: not on GitHub yet (or private)`); continue; }
@@ -24,6 +25,6 @@ if (process.argv.includes('--online')) {
 }
 if (problems.length) { console.error(problems.map((s) => '- ' + s).join('\n')); process.exit(1); }
 const stand = Object.entries(art.pets).filter(([, a]) => a.placeholder).map(([id]) => id);
-console.log(`Cage OK: ${registry.pets.length} pet apps, ${(registry.mascots || []).length} mascot(s), ${Object.keys(art.pets).length} characters drawn at ${art.size}px.`);
-// A placeholder is not an error (the Cage still works), but it is not finished art either.
+console.log(`Pets OK: ${registry.pets.length} pet apps, ${(registry.mascots || []).length} mascot(s), ${Object.keys(art.pets).length} characters drawn at ${art.size}px.`);
+// A placeholder is not an error (the pets still work), but it is not finished art either.
 if (stand.length) console.log(`Placeholder art, needs regenerating: ${stand.join(", ")}`);
