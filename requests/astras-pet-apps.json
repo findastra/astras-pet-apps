@@ -23,7 +23,16 @@
       "status": "done",
       "done": "2026-10-09",
       "by": "Claude Opus 5.5 (claude-opus-5-5)",
-      "note": "Added to 19 app pages. Data Dealer keeps its own Chip chat. New requests typed into a page reach the desk when you paste them to an assistant with Copy for an assistant."
+      "note": "Each app page has a pocket companion at the bottom right; click it and the chat pops up with an Edits tab and a Chat tab. Data Dealer keeps Chip. Requests typed into a page reach the desk when you paste them to an assistant with Copy for an assistant."
+    },
+    {
+      "id": "astras-pet-apps-20261009-06",
+      "said": "Make the chat like Chip on Data Dealer: click the pet at the bottom right and the chat pops up, not inside the page. On all pages.",
+      "logged": "2026-10-09",
+      "status": "done",
+      "done": "2026-10-09",
+      "by": "Claude Opus 5.5 (claude-opus-5-5)",
+      "note": "Done on all 18 pages that had the chat. Each device is painted in its pet’s own colour."
     },
     {
       "id": "astras-pet-apps-20261009-04",

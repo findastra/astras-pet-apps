@@ -1,12 +1,14 @@
-// The chat companion at the bottom of every app page. Claude Opus 5.5 (claude-opus-5-5), 2026-10-09.
+// Each app's pocket companion (like Chip on Data Dealer). Claude Opus 5.5 (claude-opus-5-5), 2026-10-09.
 //
 // Reads pets.json, art/frames/index.json and requests/<repo>.json, then:
 //   apps/companion-data-20261009.js   each app's pet, frames and requests, for the pages
-//   apps/*.html                       one marked <script> block before </body> (idempotent)
+//   apps/*.html                       one marked <script> block before </body> (idempotent);
+//                                     it adds nothing inside the page, only the pocket device
 // The client code is apps/companion-20261009.js (hand-written, not generated).
 // Data Dealer is skipped: its page already has Chip's own chat.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { decodePng } from './sheet-to-sprites.mjs';
 
 export const STATUSES = ['open', 'in-progress', 'needs-astra', 'done'];
 export const SKIP = new Set(['data-dealer']);
@@ -58,6 +60,28 @@ export function needsByArt(files, registry) {
 
 // The local copy of each app in apps/. Paper Girl and Ghost Protocol also have live sites, which
 // live in their own repos and do not get this chat.
+// The pocket device is painted in the pet's own main colour: the commonest strongly coloured
+// pixel of its idle frame, with black or white text, whichever reads better on it.
+export function shellColours(pngPath) {
+  const { rgba } = decodePng(readFileSync(pngPath));
+  const counts = new Map();
+  for (let i = 0; i < rgba.length; i += 4) {
+    if (rgba[i + 3] < 200) continue;
+    const [r, g, b] = [rgba[i], rgba[i + 1], rgba[i + 2]], max = Math.max(r, g, b), min = Math.min(r, g, b);
+    const l = (max + min) / 510, s = max === min ? 0 : (max - min) / (255 - Math.abs(max + min - 255));
+    if (s < .5 || l < .3 || l > .7) continue; // strong colours only, so skin tones and outlines do not win
+    const key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4);
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  if (!counts.size) return { shell: '#d9e25a', ink: '#0a0b05' };
+  const key = [...counts].sort((a, b) => b[1] - a[1])[0][0];
+  const rgb = [(key >> 8) & 15, (key >> 4) & 15, key & 15].map((v) => v * 16 + 8);
+  const lin = (v) => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; };
+  const lum = .2126 * lin(rgb[0]) + .7152 * lin(rgb[1]) + .0722 * lin(rgb[2]);
+  const dark = (lum + .05) / .0525, light = 1.05 / (lum + .05);
+  return { shell: '#' + rgb.map((v) => v.toString(16).padStart(2, '0')).join(''), ink: dark >= light ? '#0d0b10' : '#ffffff' };
+}
+
 const pageFor = (p) => [p.interface_local_url, p.interface_url].find((u) => typeof u === 'string' && /^apps\/[a-z0-9-]+\.html$/.test(u))?.slice(5) || null;
 
 export function buildCompanion({ quiet = false } = {}) {
@@ -73,6 +97,7 @@ export function buildCompanion({ quiet = false } = {}) {
     const frames = (art.pets[p.art] || {}).frames || {};
     apps[p.repo] = {
       name: p.pet, job: p.job, host: p.role === 'host', page,
+      ...(frames.idle ? shellColours(frames.idle) : {}),
       // Paths are relative to apps/, where the pages live.
       frames: Object.fromEntries(['idle', 'happy', 'curious', 'sick', 'sleep'].filter((m) => frames[m]).map((m) => [m, '../' + frames[m]])),
       requests: (files[p.repo] || {}).requests || [],

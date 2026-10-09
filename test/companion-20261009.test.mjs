@@ -36,7 +36,7 @@ test('every app page except Data Dealer has exactly one companion, for its own a
     assert.equal(blocks, 1, `${p.pet} has one companion`);
     assert.match(html, new RegExp(`companion-20261009\\.js" data-app="${p.repo}"`));
     assert.ok(data.apps[p.repo], `${p.pet} has companion data`);
-    assert.ok(html.lastIndexOf('companion:end') < html.lastIndexOf('</body>') || !html.includes('</body>'), `${p.pet}: chat is at the very bottom`);
+    assert.ok(html.lastIndexOf('companion:end') < html.lastIndexOf('</body>') || !html.includes('</body>'), `${p.pet}: the companion script comes last`);
   }
   assert.equal(pages.length, registry.pets.length);
 });

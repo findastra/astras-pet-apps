@@ -1,9 +1,10 @@
 # Requests
 
-What Astra has asked each app for, one file per app: `<repo>.json`. Each app page shows its
-file in the chat at the very bottom: open requests under **Upcoming**, finished ones taken off
-the list and kept under **Made**. A request that needs Astra makes the pet sick and raises an
-alert until she answers.
+What Astra has asked each app for, one file per app: `<repo>.json`. Each app page has a pocket
+companion at the bottom right, like Chip on Data Dealer; click it and its chat pops up. Its
+Edits tab shows this file: open requests under **Upcoming**, finished ones taken off the list
+and kept under **Made**. A request that needs Astra makes the pet sick and puts a badge on its
+device until she answers.
 
 Astra types new requests into an app's chat. They stay in that browser until an assistant
 adds them here; the chat's **Copy for an assistant** button gives her the text to paste.

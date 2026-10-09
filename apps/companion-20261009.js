@@ -1,26 +1,29 @@
-// The companion chat at the very bottom of every app page. Claude Opus 5.5 (claude-opus-5-5), 2026-10-09.
+// Each app's pocket companion, like Chip on Data Dealer. Claude Opus 5.5 (claude-opus-5-5), 2026-10-09.
 // Hand-written; scripts/companion-20261009.mjs adds it to each page with data-app="<repo>".
 //
-// What Astra types is logged as a request and shown under Upcoming. Requests on file in
-// requests/<repo>.json come in through companion-data-20261009.js: open ones stay under
-// Upcoming, made ones are taken off and kept under Made, and a "needs-astra" one makes the
-// pet sick and raises an alert until she answers. New requests stay in this browser until
-// an assistant puts them on file; "Copy for an assistant" gives her the text to paste.
-// Inside Claude (window.claude available) the companion also answers in its own words.
+// The pet waits in a small pocket device at the bottom right. Click it and its chat pops up
+// over the page; nothing is added inside the page itself. Two tabs:
+//   EDITS  what Astra has asked for: questions that need her, upcoming edits, and made ones
+//   CHAT   what she has said and what the pet said back
+// What Astra types is logged as a request and kept in this browser until an assistant puts it
+// on file in requests/<repo>.json ("Copy for an assistant" gives her the text to paste).
+// Requests on file come in through companion-data-20261009.js: made ones leave Upcoming, and a
+// "needs-astra" one makes the pet sick and puts a badge on the device until she answers.
+// Inside Claude (window.claude available) the pet also answers in its own words, like Chip.
 // All text goes into the page with textContent.
 (() => {
   const script = document.currentScript;
   const repo = script && script.dataset.app;
   const DATA = window.COMPANION_DATA;
   const app = DATA && DATA.apps && DATA.apps[repo];
-  if (!app || document.getElementById('companion')) return;
+  if (!app || document.getElementById('cmp-open')) return;
 
   const KEY = 'astras-pet-apps:companion:' + repo + ':v1';
   const store = {
     load() { try { const v = JSON.parse(localStorage.getItem(KEY)); return v && typeof v === 'object' ? v : null; } catch { return null; } },
     save(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); return true; } catch { return false; } },
   };
-  const state = Object.assign({ messages: [], pending: [], answers: [], seenDone: null }, store.load() || {});
+  const state = Object.assign({ messages: [], pending: [], answers: [], seenDone: null, view: 'edits' }, store.load() || {});
   const today = () => { const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).map((x) => [x.type, x.value])); return `${p.year}-${p.month}-${p.day}`; };
   const onFile = app.requests || [];
   const fileIds = new Set(onFile.map((r) => r.id));
@@ -31,171 +34,191 @@
   // Questions for Astra are shown under Needs you, so Upcoming lists only the work.
   const upcoming = () => [...onFile.filter((r) => r.status === 'open' || r.status === 'in-progress'), ...state.pending];
   const made = () => onFile.filter((r) => r.status === 'done').sort((a, b) => (b.done || '').localeCompare(a.done || ''));
+  // The Farmer also keeps an eye on every other app that is waiting on Astra.
   const otherNeeds = () => app.host ? Object.entries(DATA.apps).filter(([id, a]) => id !== repo && (a.requests || []).some((r) => r.status === 'needs-astra')) : [];
+  const alertCount = () => needs().length + otherNeeds().reduce((s, [, a]) => s + a.requests.filter((r) => r.status === 'needs-astra').length, 0);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- look ---------- */
+  /* ---------- look: a pocket device in the pet's own colour ---------- */
+  const shell = app.shell || '#d9e25a', ink = app.ink || '#0a0b05';
   const css = `
-  .cmp{--c-bg:#fffaf3;--c-panel:#ffffff;--c-line:#e6dccd;--c-text:#2b2230;--c-muted:#6d6176;--c-accent:#b4570f;--c-warn:#b3261e;--c-ok:#2f6b1f;
-    all:initial;display:block;box-sizing:border-box;margin:48px auto 0;max-width:1180px;padding:0 16px 96px;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--c-text)}
-  @media (prefers-color-scheme:dark){.cmp{--c-bg:#1f1b26;--c-panel:#2a2433;--c-line:#43394f;--c-text:#f4eef8;--c-muted:#bfb2cc;--c-accent:#ffb35c;--c-warn:#ff8a80;--c-ok:#a5e08a}}
-  .cmp *{box-sizing:border-box;font:inherit;color:inherit}
-  .cmp-box{background:var(--c-bg);border:1px solid var(--c-line);border-radius:16px;overflow:hidden}
-  .cmp-head{display:flex;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--c-line)}
-  .cmp-head img{width:56px;height:56px;object-fit:contain;image-rendering:pixelated;flex:none}
-  .cmp-name{font-weight:700;font-size:17px;margin:0}
-  .cmp-state{margin:0;color:var(--c-muted);font-size:13px}
-  .cmp-state.warn{color:var(--c-warn);font-weight:600}
-  .cmp-head .cmp-grow{flex:1;min-width:0}
-  .cmp button{cursor:pointer;border-radius:999px;border:1px solid var(--c-line);background:var(--c-panel);padding:6px 14px;font-weight:600;font-size:13px}
-  .cmp button.cmp-main{background:var(--c-accent);border-color:var(--c-accent);color:#fff}
-  @media (prefers-color-scheme:dark){.cmp button.cmp-main{color:#2b1305}}
-  .cmp button:focus-visible,.cmp textarea:focus-visible,.cmp input:focus-visible,.cmp summary:focus-visible,.cmp a:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
-  .cmp-sec{padding:12px 16px;border-bottom:1px solid var(--c-line)}
-  .cmp-sec h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);font-weight:700}
-  .cmp-alert{background:color-mix(in srgb,var(--c-warn) 10%,var(--c-bg))}
-  .cmp-alert h3{color:var(--c-warn)}
-  .cmp ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-  .cmp li{background:var(--c-panel);border:1px solid var(--c-line);border-radius:10px;padding:8px 12px}
-  .cmp-said{margin:0}
-  .cmp-meta{margin:2px 0 0;color:var(--c-muted);font-size:12px}
-  .cmp-q{margin:0 0 6px;font-weight:600}
-  .cmp-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border:1px solid currentColor;border-radius:6px;padding:0 6px;margin-right:6px}
-  .cmp-tag.warn{color:var(--c-warn)} .cmp-tag.ok{color:var(--c-ok)} .cmp-tag.mute{color:var(--c-muted)}
-  .cmp-reply{display:flex;gap:8px;margin-top:6px}
-  .cmp-reply input{flex:1;min-width:0;border:1px solid var(--c-line);border-radius:8px;padding:6px 10px;background:var(--c-bg)}
-  .cmp details summary{cursor:pointer;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);font-weight:700}
-  .cmp details ul{margin-top:8px}
-  .cmp-log{max-height:280px;overflow-y:auto;display:grid;gap:8px}
-  .cmp-msg{max-width:80%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere}
-  .cmp-msg.me{justify-self:end;background:var(--c-accent);color:#fff}
-  @media (prefers-color-scheme:dark){.cmp-msg.me{color:#2b1305}}
-  .cmp-msg.pet{justify-self:start;background:var(--c-panel);border:1px solid var(--c-line)}
-  .cmp-form{display:flex;gap:8px;padding:12px 16px;align-items:flex-end}
-  .cmp-form textarea{flex:1;min-width:0;min-height:44px;max-height:160px;resize:vertical;border:1px solid var(--c-line);border-radius:10px;padding:10px 12px;background:var(--c-panel)}
-  .cmp-copy{width:100%;min-height:120px;margin-top:8px;border:1px solid var(--c-line);border-radius:8px;padding:8px;background:var(--c-panel);font:12px/1.4 ui-monospace,Consolas,monospace}
-  .cmp-empty{color:var(--c-muted);margin:0}
-  .cmp-pill{all:initial;position:fixed;right:16px;bottom:16px;z-index:2147483000;cursor:pointer;background:#b3261e;color:#fff;border-radius:999px;padding:10px 16px;font:600 14px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.3)}
-  .cmp-pill:focus-visible{outline:3px solid #ffb35c;outline-offset:2px}
-  .cmp-hidden{display:none!important}
-  @media (max-width:560px){.cmp-head{flex-wrap:wrap}.cmp-msg{max-width:92%}}`;
+  .cmp-root{all:initial;--shell:${shell};--ink:${ink};--lcd:color-mix(in srgb,${shell} 22%,#fbfaf2);--lcd-ink:#1d1a22;--muted:#5d5866;--warn:#b3261e;--line:color-mix(in srgb,#1d1a22 18%,transparent);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--lcd-ink)}
+  .cmp-root *{box-sizing:border-box;font:inherit;color:inherit;margin:0;padding:0;letter-spacing:normal;text-transform:none}
+  .cmp-root button{cursor:pointer;border:0;background:none;text-align:center}
+  .cmp-root button:focus-visible,.cmp-root input:focus-visible,.cmp-root textarea:focus-visible,.cmp-root summary:focus-visible,.cmp-root a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+  .cmp-launch{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:2147483000;width:76px;height:92px;border-radius:24px 24px 28px 28px!important;background:var(--shell)!important;border:3px solid var(--ink)!important;box-shadow:0 0 0 3px var(--shell),0 4px 14px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+  .cmp-launch::before{content:"";position:absolute;top:-14px;left:14px;width:8px;height:12px;background:var(--shell);border:3px solid var(--ink);border-bottom:0;border-radius:5px 5px 0 0}
+  .cmp-launch .cmp-scr{width:54px;height:46px;background:var(--lcd);border:3px solid var(--ink);border-radius:9px;display:grid;place-items:center;overflow:hidden}
+  .cmp-launch img{width:42px;height:42px;object-fit:contain;image-rendering:pixelated}
+  .cmp-launch .cmp-lbl{font:800 10px/1 ui-monospace,Consolas,monospace;color:var(--ink);letter-spacing:.12em}
+  .cmp-badge{position:absolute;top:-10px;right:-10px;min-width:24px;background:var(--warn);color:#fff!important;font:800 12px/1 ui-monospace,Consolas,monospace;border-radius:999px;padding:5px 7px;border:2px solid #fff;text-align:center}
+  .cmp-launch:hover{transform:translateY(-2px)}
+  .cmp-launch.cmp-calling{animation:cmp-call 1.6s ease-in-out infinite}
+  @keyframes cmp-call{0%,100%{transform:rotate(0)}8%{transform:rotate(-6deg)}16%{transform:rotate(6deg)}24%{transform:rotate(0)}}
+  .cmp-panel{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:2147483001;width:min(400px,calc(100vw - 32px));height:min(640px,calc(100vh - 110px));height:min(640px,calc(100dvh - 110px));background:var(--shell);border:3px solid var(--ink);border-radius:34px 34px 40px 40px;box-shadow:0 0 0 3px var(--shell),0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;padding:14px 14px 16px;gap:10px;color:var(--ink)}
+  .cmp-panel::before{content:"";position:absolute;top:-18px;left:34px;width:10px;height:15px;background:var(--shell);border:3px solid var(--ink);border-bottom:0;border-radius:6px 6px 0 0}
+  .cmp-panel[hidden],.cmp-launch[hidden],.cmp-root [hidden]{display:none!important}
+  .cmp-head{display:flex;align-items:center;gap:10px}
+  .cmp-head b{font:800 17px/1.1 ui-monospace,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase}
+  .cmp-head span{font:600 11px/1.2 ui-monospace,Consolas,monospace;opacity:.8}
+  .cmp-x{margin-left:auto;width:32px;height:32px;border-radius:50%;background:var(--ink)!important;color:var(--shell)!important;font:800 18px/1 ui-monospace,monospace!important;flex:none;display:grid;place-items:center}
+  .cmp-lcd{background:var(--lcd);color:var(--lcd-ink);border:3px solid var(--ink);border-radius:14px}
+  .cmp-screen{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;padding:8px 12px}
+  .cmp-screen img{width:84px;height:84px;object-fit:contain;image-rendering:pixelated;display:block}
+  .cmp-stats{display:grid;gap:5px;font:700 12px/1.2 ui-monospace,Consolas,monospace}
+  .cmp-stats .cmp-warn{color:var(--warn)}
+  .cmp-tabs{display:flex;gap:6px}
+  .cmp-tabs button{flex:1;display:flex!important;align-items:center;justify-content:center!important;text-align:center!important;border:3px solid var(--ink)!important;border-radius:10px;padding:7px 0;font:800 11px/1 ui-monospace,Consolas,monospace;letter-spacing:.08em;color:var(--ink)}
+  .cmp-tabs button[aria-pressed="true"]{background:var(--ink)!important;color:var(--shell)!important}
+  .cmp-view{flex:1;min-height:0;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:10px}
+  .cmp-h{font:800 11px/1 ui-monospace,Consolas,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .cmp-h.cmp-warn{color:var(--warn)}
+  .cmp-root ul{list-style:none;display:grid;gap:7px}
+  .cmp-root li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+  .cmp-q{font-weight:700}
+  .cmp-meta{color:var(--muted);font-size:12px;margin-top:2px}
+  .cmp-tag{display:inline-block;font:800 10px/1.4 ui-monospace,Consolas,monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid currentColor;border-radius:6px;padding:0 5px;margin-right:6px;color:var(--muted)}
+  .cmp-reply{display:flex;gap:6px;margin-top:6px}
+  .cmp-reply input,.cmp-in textarea{flex:1;min-width:0;background:#fff;color:var(--lcd-ink);border:2px solid var(--ink);border-radius:10px;padding:6px 10px}
+  .cmp-small{display:inline-flex!important;align-items:center;justify-content:center!important;background:var(--ink)!important;color:var(--shell)!important;border-radius:10px;padding:6px 12px;font:800 11px/1 ui-monospace,Consolas,monospace;letter-spacing:.06em}
+  .cmp-small:disabled{opacity:.45;cursor:default}
+  .cmp-root a{color:var(--lcd-ink);text-decoration:underline}
+  .cmp-root details summary{cursor:pointer}
+  .cmp-root details ul{margin-top:7px}
+  .cmp-empty{color:var(--muted)}
+  .cmp-msg{max-width:88%;padding:7px 10px;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .cmp-msg.me{align-self:flex-end;background:var(--ink);color:var(--shell)}
+  .cmp-msg.pet{align-self:flex-start;background:#fff;border:1px solid var(--line)}
+  .cmp-copy{width:100%;min-height:110px;border:2px solid var(--ink);border-radius:10px;padding:8px;background:#fff;font:12px/1.4 ui-monospace,Consolas,monospace!important}
+  .cmp-in{display:flex;gap:8px;align-items:stretch}
+  .cmp-in textarea{min-height:42px;max-height:120px;resize:none}
+  .cmp-in button{background:var(--ink)!important;color:var(--shell)!important;border-radius:12px;padding:0 14px;font:800 11px/1 ui-monospace,Consolas,monospace;letter-spacing:.08em}
+  @media (max-width:520px){.cmp-panel{right:12px;left:12px;width:auto}.cmp-launch{right:12px}}
+  @media (prefers-reduced-motion:reduce){.cmp-launch:hover{transform:none}.cmp-launch.cmp-calling{animation:none}}`;
   const style = document.createElement('style'); style.textContent = css; document.head.append(style);
 
   const h = (tag, text, cls, parent) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; if (parent) parent.append(e); return e; };
   const btn = (parent, label, onClick, cls = '') => { const b = h('button', label, cls, parent); b.type = 'button'; b.onclick = onClick; return b; };
 
-  const root = h('section', null, 'cmp', document.body); root.id = 'companion';
-  root.setAttribute('aria-label', `${app.name}: chat and requests`);
-  const box = h('div', null, 'cmp-box', root);
-  const head = h('div', null, 'cmp-head', box);
-  const face = h('img', null, '', head); face.alt = '';
-  const grow = h('div', null, 'cmp-grow', head);
-  h('p', `Chat with ${app.name}`, 'cmp-name', grow);
-  const status = h('p', '', 'cmp-state', grow); status.setAttribute('role', 'status');
-  const copyBtn = btn(head, 'Copy for an assistant', () => copyForAssistant());
-  const alertSec = h('div', null, 'cmp-sec cmp-alert', box);
-  const upSec = h('div', null, 'cmp-sec', box);
-  const madeSec = h('div', null, 'cmp-sec', box);
-  const logSec = h('div', null, 'cmp-sec', box);
-  h('h3', 'Chat', '', logSec);
-  const log = h('div', null, 'cmp-log', logSec); log.setAttribute('aria-live', 'polite');
-  const form = h('form', null, 'cmp-form', box);
+  const root = h('div', null, 'cmp-root', document.body);
+  // The pocket device at the bottom right.
+  const launch = btn(root, null, () => open(), 'cmp-launch'); launch.id = 'cmp-open';
+  const lscr = h('span', null, 'cmp-scr', launch); const lface = h('img', null, '', lscr); lface.alt = '';
+  h('span', 'CHAT', 'cmp-lbl', launch);
+  const badge = h('span', '', 'cmp-badge', launch); badge.hidden = true;
+  // The chat that pops up over the page.
+  const panel = h('section', null, 'cmp-panel', root); panel.hidden = true; panel.id = 'cmp-panel';
+  panel.setAttribute('aria-label', `${app.name}: chat and edits`);
+  const head = h('div', null, 'cmp-head', panel);
+  h('b', app.name, '', head);
+  h('span', app.host ? 'looks after\nall your apps' : 'app companion', '', head).style.whiteSpace = 'pre-line';
+  btn(head, '×', () => close(), 'cmp-x').setAttribute('aria-label', `Close ${app.name}`);
+  const screen = h('div', null, 'cmp-lcd cmp-screen', panel);
+  const face = h('img', null, '', screen); face.alt = '';
+  const stats = h('div', null, 'cmp-stats', screen);
+  const statState = h('div', '', '', stats); statState.setAttribute('role', 'status');
+  const statUp = h('div', '', '', stats);
+  const statMade = h('div', '', '', stats);
+  const tabs = h('div', null, 'cmp-tabs', panel); tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', `${app.name} views`);
+  const tabEdits = btn(tabs, 'EDITS', () => setView('edits'));
+  const tabChat = btn(tabs, 'CHAT', () => setView('chat'));
+  const edits = h('div', null, 'cmp-lcd cmp-view', panel);
+  const log = h('div', null, 'cmp-lcd cmp-view', panel); log.setAttribute('aria-live', 'polite');
+  const form = h('form', null, 'cmp-in', panel);
   const input = h('textarea', null, '', form);
-  input.placeholder = `Tell ${app.name} what you want changed or done`;
-  input.setAttribute('aria-label', `Message for ${app.name}`);
-  const send = h('button', 'Log it', 'cmp-main', form); send.type = 'submit';
-  const pill = h('button', '', 'cmp-pill cmp-hidden', document.body); pill.type = 'button';
-  // The alert button stays out of the way while the chat itself is on screen.
-  let chatInView = false;
-  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { chatInView = e.isIntersecting; drawHead(); }, { threshold: .15 }).observe(root);
-  pill.onclick = () => { root.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); (alertSec.querySelector('input') || input).focus({ preventScroll: true }); };
+  input.placeholder = `Tell ${app.name} what you want…`;
+  input.setAttribute('aria-label', `Message ${app.name}`);
+  const send = h('button', 'SEND', '', form); send.type = 'submit';
 
-  const save = () => { if (!store.save(state)) say('I can’t save in this browser, so new requests will be lost when you close the page. Use Copy for an assistant first.'); };
+  function open() { panel.hidden = false; launch.hidden = true; setView(state.view); drawAll(); input.focus(); }
+  function close() { panel.hidden = true; launch.hidden = false; launch.focus(); }
+  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
+  function setView(v) {
+    state.view = v === 'chat' ? 'chat' : 'edits'; save();
+    tabEdits.setAttribute('aria-pressed', String(state.view === 'edits')); tabChat.setAttribute('aria-pressed', String(state.view === 'chat'));
+    edits.hidden = state.view !== 'edits'; log.hidden = state.view !== 'chat';
+    if (state.view === 'chat') log.scrollTop = log.scrollHeight;
+  }
+
+  const save = () => { if (!store.save(state)) { /* private window: the chat still works until the page closes */ } };
   function addMsg(who, text) { state.messages.push({ who, text, at: new Date().toISOString() }); state.messages = state.messages.slice(-200); save(); drawLog(); }
   function say(text) { addMsg('pet', text); }
 
   /* ---------- drawing ---------- */
   function mood() { return needs().length ? 'sick' : upcoming().length ? 'curious' : made().length ? 'happy' : 'idle'; }
-  function drawHead() {
-    const m = mood(), src = app.frames[m] || app.frames.idle;
-    if (src) face.src = src; else face.classList.add('cmp-hidden');
-    const n = needs().length, u = upcoming().length, others = otherNeeds();
-    status.className = 'cmp-state' + (n || others.length ? ' warn' : '');
-    status.textContent = n ? `Needs you: ${n} question${n === 1 ? '' : 's'} below.`
-      : others.length ? `All clear here. ${others.length} other app${others.length === 1 ? ' needs' : 's need'} you.`
-      : u ? `${u} upcoming edit${u === 1 ? '' : 's'}.` : 'All clear.';
-    copyBtn.disabled = !state.pending.length && !state.answers.length;
-    copyBtn.title = copyBtn.disabled ? 'Nothing new to hand over yet' : 'Copy your new requests and answers to paste to Claude or Codex';
-    const total = n + others.reduce((s, [, a]) => s + a.requests.filter((r) => r.status === 'needs-astra').length, 0);
-    pill.classList.toggle('cmp-hidden', !total || chatInView);
-    pill.textContent = n ? `${app.name} needs you` : `${total} question${total === 1 ? '' : 's'} for you`;
+  function drawFace() {
+    const src = app.frames[mood()] || app.frames.idle;
+    for (const img of [face, lface]) if (src) img.src = src;
+    const n = needs().length, others = otherNeeds(), total = alertCount(), u = upcoming().length;
+    statState.className = n || others.length ? 'cmp-warn' : '';
+    statState.textContent = n ? `NEEDS YOU · ${n}` : others.length ? `${others.length} APP${others.length === 1 ? '' : 'S'} NEED YOU` : u ? 'WORKING ON IT' : 'ALL CLEAR';
+    statUp.textContent = `UPCOMING · ${u}`;
+    statMade.textContent = `MADE · ${made().length}`;
+    tabEdits.textContent = `EDITS${total ? ' · ' + total + '!' : u ? ' · ' + u : ''}`;
+    badge.hidden = !total; badge.textContent = String(total);
+    launch.classList.toggle('cmp-calling', !!total && !reduced);
+    launch.setAttribute('aria-label', total ? `Open chat with ${app.name}. ${total} question${total === 1 ? '' : 's'} need you.` : `Open chat with ${app.name}`);
   }
   function item(list, r) {
     const li = h('li', null, '', list);
-    const p = h('p', null, 'cmp-said', li);
-    if (r.status === 'in-progress') h('span', 'in progress', 'cmp-tag ok', p);
-    else if (r.local) h('span', r.copied ? 'copied, not on file yet' : 'only in this browser', 'cmp-tag mute', p);
+    const p = h('p', null, '', li);
+    if (r.status === 'in-progress') h('span', 'in progress', 'cmp-tag', p);
+    else if (r.local) h('span', r.copied ? 'copied' : 'only here', 'cmp-tag', p);
     p.append(document.createTextNode(r.said));
     const bits = [`logged ${r.logged}`];
     if (r.status === 'done') bits.push(`made ${r.done}${r.by ? ' by ' + r.by : ''}`);
     h('p', bits.join(' · '), 'cmp-meta', li);
     if (r.note) h('p', r.note, 'cmp-meta', li);
-    return li;
   }
-  function drawAlert() {
-    alertSec.replaceChildren();
+  function drawEdits() {
+    edits.replaceChildren();
     const mine = needs(), others = otherNeeds();
-    alertSec.classList.toggle('cmp-hidden', !mine.length && !others.length);
-    if (!mine.length && !others.length) return;
-    h('h3', 'Needs you', '', alertSec);
-    const list = h('ul', null, '', alertSec);
-    for (const r of mine) {
-      const li = h('li', null, '', list);
-      h('p', r.question, 'cmp-q', li);
-      h('p', `About: ${r.said}`, 'cmp-meta', li);
-      const given = state.answers.find((a) => a.id === r.id);
-      if (given) h('p', `Your answer: ${given.text} (copy it for an assistant to hand it over)`, 'cmp-meta', li);
-      const row = h('form', null, 'cmp-reply', li);
-      const ans = h('input', null, '', row); ans.placeholder = 'Your answer'; ans.setAttribute('aria-label', 'Answer: ' + r.question);
-      const ok = h('button', 'Answer', '', row); ok.type = 'submit';
-      row.onsubmit = (e) => {
-        e.preventDefault(); const text = ans.value.trim(); if (!text) return;
-        state.answers = state.answers.filter((a) => a.id !== r.id).concat({ id: r.id, text, at: today() });
-        addMsg('me', text);
-        say('Thanks. I’ve noted your answer. Press Copy for an assistant and paste it to Claude or Codex so they can carry on.');
-        drawAll();
-      };
+    if (mine.length || others.length) {
+      h('p', 'Needs you', 'cmp-h cmp-warn', edits);
+      const ul = h('ul', null, '', edits);
+      for (const r of mine) {
+        const li = h('li', null, '', ul);
+        h('p', r.question, 'cmp-q', li);
+        h('p', `About: ${r.said}`, 'cmp-meta', li);
+        const given = state.answers.find((a) => a.id === r.id);
+        if (given) h('p', `Your answer: ${given.text}. Copy it for an assistant to hand it over.`, 'cmp-meta', li);
+        const row = h('form', null, 'cmp-reply', li);
+        const ans = h('input', null, '', row); ans.placeholder = 'Your answer'; ans.setAttribute('aria-label', 'Answer: ' + r.question);
+        const ok = h('button', 'ANSWER', 'cmp-small', row); ok.type = 'submit';
+        row.onsubmit = (e) => {
+          e.preventDefault(); const text = ans.value.trim(); if (!text) return;
+          state.answers = state.answers.filter((a) => a.id !== r.id).concat({ id: r.id, text, at: today() });
+          addMsg('me', text);
+          say('Thanks, noted. Press Copy for an assistant and paste it to Claude or Codex so they can carry on.');
+          drawAll();
+        };
+      }
+      for (const [, other] of others) {
+        const li = h('li', null, '', ul);
+        const a = h('a', other.name, 'cmp-q', h('p', null, '', li)); a.href = other.page;
+        for (const r of other.requests.filter((x) => x.status === 'needs-astra')) h('p', r.question, 'cmp-meta', li);
+      }
     }
-    for (const [id, other] of others) {
-      const li = h('li', null, '', list);
-      const p = h('p', null, 'cmp-q', li);
-      const a = h('a', other.name, '', p); a.href = other.page + '#companion';
-      for (const r of other.requests.filter((x) => x.status === 'needs-astra')) h('p', r.question, 'cmp-meta', li);
-    }
-  }
-  function drawUpcoming() {
-    upSec.replaceChildren();
-    h('h3', 'Upcoming edits', '', upSec);
+    h('p', 'Upcoming edits', 'cmp-h', edits);
     const list = upcoming();
-    if (!list.length) { h('p', 'Nothing waiting. Anything you tell me shows up here until it’s made.', 'cmp-empty', upSec); return; }
-    const ul = h('ul', null, '', upSec);
-    for (const r of list) item(ul, r);
-  }
-  function drawMade() {
-    madeSec.replaceChildren();
-    const list = made();
-    madeSec.classList.toggle('cmp-hidden', !list.length);
-    if (!list.length) return;
-    const d = h('details', null, '', madeSec);
-    h('summary', `Made · ${list.length}`, '', d);
-    const ul = h('ul', null, '', d);
-    for (const r of list) item(ul, r);
+    if (!list.length) h('p', 'Nothing waiting. Anything you tell me shows up here until it’s made.', 'cmp-empty', edits);
+    else { const ul = h('ul', null, '', edits); for (const r of list) item(ul, r); }
+    const done = made();
+    if (done.length) {
+      const d = h('details', null, '', edits);
+      h('summary', `Made · ${done.length}`, 'cmp-h', d);
+      const ul = h('ul', null, '', d); for (const r of done) item(ul, r);
+    }
+    const handover = btn(edits, 'COPY FOR AN ASSISTANT', () => copyForAssistant(), 'cmp-small');
+    handover.disabled = !state.pending.length && !state.answers.length;
+    handover.title = handover.disabled ? 'Nothing new to hand over yet' : 'Copy your new requests and answers to paste to Claude or Codex';
   }
   function drawLog() {
     log.replaceChildren();
     for (const m of state.messages) h('div', m.text, 'cmp-msg ' + (m.who === 'me' ? 'me' : 'pet'), log);
     log.scrollTop = log.scrollHeight;
   }
-  function drawAll() { drawHead(); drawAlert(); drawUpcoming(); drawMade(); drawLog(); }
+  function drawAll() { drawFace(); drawEdits(); drawLog(); }
 
   /* ---------- handing requests to an assistant ---------- */
   function handoverText() {
@@ -214,13 +237,11 @@
     try { await navigator.clipboard.writeText(text); copied = true; } catch { /* shown below instead */ }
     for (const r of state.pending) r.copied = true;
     save();
-    if (copied) say('Copied. Paste it to Claude or Codex. Each request leaves Upcoming once it’s been made.');
-    else {
-      say('Your browser wouldn’t let me copy, so the text is in the box below. Select it and copy it.');
-      const old = logSec.querySelector('.cmp-copy'); if (old) old.remove();
-      const area = h('textarea', null, 'cmp-copy', logSec); area.value = text; area.readOnly = true; area.setAttribute('aria-label', 'Text to paste to an assistant'); area.select();
-    }
     drawAll();
+    if (copied) { say('Copied. Paste it to Claude or Codex. Each request leaves Upcoming once it’s been made.'); return; }
+    say('Your browser wouldn’t let me copy, so the text is in the box on the Edits tab. Select it and copy it.');
+    const area = h('textarea', null, 'cmp-copy', edits); area.value = text; area.readOnly = true; area.setAttribute('aria-label', 'Text to paste to an assistant');
+    setView('edits'); area.focus(); area.select();
   }
 
   /* ---------- talking ---------- */
@@ -234,10 +255,11 @@
     const s = await getSample(); if (!s) return null;
     const context = {
       app: app.name, job: app.job,
-      upcoming: upcoming().map((r) => ({ said: r.said, status: r.local ? 'not on file yet' : r.status, question: r.question || undefined })),
+      needs_you: needs().map((r) => ({ said: r.said, question: r.question })),
+      upcoming: upcoming().map((r) => ({ said: r.said, status: r.local ? 'not on file yet' : r.status })),
       made: made().slice(0, 10).map((r) => ({ said: r.said, made: r.done, note: r.note })),
     };
-    const rules = `You are ${app.name}, a small pixel pet who lives at the bottom of your own app page, talking with Astra, who made you. Answer in 1 to 3 short, friendly sentences of plain text. You cannot change code or files yourself: what Astra asks for is logged as a request, and assistants (Claude or Codex) make the edits when they next work on you. Never claim an edit is done unless it is listed under made. Be honest when you do not know.\n\nDATA (JSON): ${JSON.stringify(context)}`;
+    const rules = `You are ${app.name}, a small pixel pet who lives in a pocket device on your own app page, talking with Astra, who made you. Answer in 1 to 3 short, friendly sentences of plain text. You cannot change code or files yourself: what Astra asks for is logged as a request, and assistants (Claude or Codex) make the edits when they next work on you. Never claim an edit is done unless it is listed under made. Be honest when you do not know.\n\nDATA (JSON): ${JSON.stringify(context)}`;
     try {
       const { text: answer } = await s([{ role: 'user', content: rules }, ...state.messages.slice(-10).map((m) => ({ role: m.who === 'me' ? 'user' : 'assistant', content: m.text })), { role: 'user', content: text }], { modelTier: 'quick', cache: false });
       return answer && answer.trim() ? answer.trim() : null;
@@ -247,14 +269,14 @@
     e.preventDefault();
     const text = input.value.trim(); if (!text) return;
     input.value = '';
-    const r = { id: `${repo}-local-${Date.now().toString(36)}`, said: text, logged: today(), status: 'open', local: true };
-    state.pending.push(r);
+    state.pending.push({ id: `${repo}-local-${Date.now().toString(36)}`, said: text, logged: today(), status: 'open', local: true });
+    setView('chat');
     addMsg('me', text);
     drawAll();
     send.disabled = true;
     const answer = await claudeReply(text);
     send.disabled = false;
-    say(answer || `Logged. It’s under Upcoming (${upcoming().length} now). Press Copy for an assistant and paste it to Claude or Codex, and they’ll start on it the next time they work on me.`);
+    say(answer || `Logged. It’s under Upcoming on the Edits tab (${upcoming().length} now). Press Copy for an assistant there and paste it to Claude or Codex, and they’ll start on it the next time they work on me.`);
     drawAll();
   };
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
@@ -265,10 +287,11 @@
     for (const r of made().filter((x) => !state.seenDone.includes(x.id)).reverse()) say(`Made: ${r.said}${r.note ? '\n' + r.note : ''}`);
   } else {
     const n = needs().length, u = upcoming().length, m = made().length;
-    say(`Hi, I’m ${app.name}. Tell me what you’d like changed or done and I’ll keep track of it here. ` +
-      (n ? `I need you for ${n} thing${n === 1 ? '' : 's'}; it’s at the top of this chat.` : u ? `${u} edit${u === 1 ? ' is' : 's are'} coming up.` : m ? `${m} of your requests ${m === 1 ? 'has' : 'have'} been made.` : 'Nothing is waiting right now.'));
+    say(`Hi, I’m ${app.name}. Tell me what you’d like changed or done and I’ll keep track of it on the Edits tab. ` +
+      (n ? `I need you for ${n} thing${n === 1 ? '' : 's'}; it’s at the top of Edits.` : u ? `${u} edit${u === 1 ? ' is' : 's are'} coming up.` : m ? `${m} of your requests ${m === 1 ? 'has' : 'have'} been made.` : 'Nothing is waiting right now.'));
   }
   state.seenDone = doneIds;
   save();
+  setView(state.view);
   drawAll();
 })();
