@@ -1,13 +1,16 @@
 {
-  "name": "findastra-pet-apps",
-  "version": "0.1.0",
+  "name": "astras-pet-apps",
+  "version": "0.2.0-20261008",
   "private": true,
-  "description": "The Cage: where Astra keeps her pet apps.",
+  "description": "Astra's Pet Apps: the Cage, where Astra keeps her pet apps.",
   "license": "MIT",
   "scripts": {
-    "test": "node --test test/",
-    "build": "node scripts/build-art.mjs && node scripts/update-readme.mjs",
-    "check": "node scripts/check-cage.mjs"
+    "test": "node --test test/*.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check-cage.mjs",
+    "generate": "node scripts/generate-pets.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

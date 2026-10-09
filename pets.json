@@ -1,49 +1,58 @@
 {
-  "cage": "findastra-pet-apps",
+  "cage": "astras-pet-apps",
   "owner": "Astra",
   "topic": "pet-app",
-  "updated": "2026-10-07",
-  "mascots": [
-    {
-      "name": "Nullbot",
-      "art": "nullbot",
-      "lives": "On the roof of the Cage (every page and overlay that draws the Cage)",
-      "job": "Stands on the Cage and keeps watch. Not an app of its own.",
-      "note": "DRAFT in the Codex companion style. Drawn fresh; it is not OpenAI's Null Signal artwork."
-    }
-  ],
+  "updated": "2026-10-08",
+  "mascots": [],
   "pets": [
     {
-      "repo": "findastra-pet-apps",
+      "repo": "astras-pet-apps",
       "pet": "Friendly Farmer",
       "role": "host",
       "art": "farmer",
-      "status": "hatching",
-      "published": false,
-      "job": "Hosts the Cage and represents this app. Stands outside it and opens or closes the door when you click him. Manager and auditor of the other pets.",
+      "asset_date": "20261008",
+      "status": "growing",
+      "published": true,
+      "visibility": "private",
+      "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
       "added": "2026-10-07",
-      "note": "DRAFT. Holds a clipboard because he audits."
+      "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
+      "interface_local_url": "apps/astras-pet-apps-20261008.html",
+      "interface_url": "apps/astras-pet-apps-20261008.html"
     },
     {
       "repo": "github-goldfish",
       "pet": "GitHub Goldfish",
       "role": "pet",
       "art": "goldfish",
-      "status": "hatching",
-      "published": false,
+      "status": "growing",
+      "published": true,
       "job": "Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors.",
-      "added": "2026-10-07"
+      "added": "2026-10-07",
+      "interface_local_url": "apps/github-goldfish-20261008.html",
+      "interface_url": "apps/github-goldfish-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "c77f326d16d85dcf2d2328683e798605e3253a6c"
     },
     {
       "repo": "data-dealer",
       "pet": "Chip",
       "role": "pet",
       "art": "chip",
+      "asset_date": "20261008",
+      "art_source": "chip-original-20261008",
       "status": "hatching",
-      "published": false,
+      "published": true,
+      "visibility": "private",
       "job": "Data Dealer's pixel twin.",
       "added": "2026-10-07",
-      "note": "DRAFT guessed as a poker chip from the name; the original Chip art is not on this PC. Astra to correct."
+      "note": "Original Data Dealer drawing code, preserved at integer scale inside its yellow pocket launcher. Uses the exact original LCD palette and pixel geometry. The original app repository is private.",
+      "interface_local_url": "apps/data-dealer-20261008.html",
+      "interface_url": "apps/data-dealer-20261008.html",
+      "interface_live_url": "https://claude.ai/artifact/CzBXnEWyRjq5Tui7o3oRS8",
+      "source_tag": "v0.1.0-20261008-pets",
+      "source_commit": "4f876dd7b22a7caebf0bb3fbb021539f5b474041"
     },
     {
       "repo": "api-fairy",
@@ -51,10 +60,15 @@
       "role": "pet",
       "art": "api-fairy",
       "status": "growing",
-      "published": false,
+      "published": true,
       "job": "Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves.",
       "added": "2026-10-07",
-      "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings)."
+      "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings).",
+      "interface_local_url": "apps/api-fairy-20261008.html",
+      "interface_url": "apps/api-fairy-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "a63b027fca258816996767eff5d6e3a75431a1fb"
     },
     {
       "repo": "unity-unicorn",
@@ -62,9 +76,14 @@
       "role": "pet",
       "art": "unity-unicorn",
       "status": "hatching",
-      "published": false,
-      "job": "To be decided with Astra (Unity and VRChat world projects).",
-      "added": "2026-10-07"
+      "published": true,
+      "job": "A local planning desk for Unity and VRChat projects: tasks, scene notes and manual status tracking.",
+      "added": "2026-10-07",
+      "interface_local_url": "apps/unity-unicorn-20261008.html",
+      "interface_url": "apps/unity-unicorn-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "c5269d03946aae73ebb00fb0e47dea74dee9182c"
     },
     {
       "repo": "learn-python",
@@ -73,9 +92,14 @@
       "art": "python-panther",
       "status": "hatching",
       "published": true,
-      "job": "The pet attached to Learn Python. Job to be decided with Astra. The repo exists; it still needs pet.json and the pet-app topic.",
+      "job": "A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons.",
       "added": "2026-10-07",
-      "note": "A panther, not a snake. Python blue and yellow on dark fur."
+      "note": "A panther, not a snake. Python blue and yellow on dark fur.",
+      "interface_local_url": "apps/learn-python-20261008.html",
+      "interface_url": "apps/learn-python-20261008.html",
+      "visibility": "public",
+      "source_tag": "v0.1.0-20261008-pets",
+      "source_commit": "d5088d07566f7c698818e6a2c93a91ca68bfa5e1"
     },
     {
       "repo": "vrchat-ai-astra",
@@ -84,20 +108,30 @@
       "art": "astra-wisp",
       "status": "hatching",
       "published": true,
-      "job": "The pet for VRChat AI Astra: the companion and her bridge into VRChat. The repo exists; it still needs pet.json and the pet-app topic.",
+      "job": "Represents VRChat AI Astra, the planned bridge that brings Astra into VRChat. Its pet-app integration remains unfinished.",
       "added": "2026-10-07",
-      "note": "DRAFT. The name Wisp is a placeholder."
+      "note": "DRAFT. The name Wisp is a placeholder.",
+      "interface_local_url": "apps/vrchat-ai-astra-20261008.html",
+      "interface_url": "apps/vrchat-ai-astra-20261008.html",
+      "visibility": "public",
+      "source_tag": "v0.1.0-20261008-pets",
+      "source_commit": "5e15125a7d35144f883117c51b9f3cd2faf26c40"
     },
     {
-      "repo": "healthy-hummy",
-      "pet": "Healthy Hummy",
+      "repo": "health-hummy",
+      "pet": "Health Hummy",
       "role": "pet",
-      "art": "healthy-hummy",
+      "art": "health-hummy",
       "status": "hatching",
-      "published": false,
+      "published": true,
       "job": "Personal health tracker. Your data stays on your PC and is never committed.",
       "added": "2026-10-07",
-      "note": "DRAFT as a hummingbird (a guess from the name)."
+      "note": "DRAFT as a hummingbird (a guess from the name).",
+      "interface_local_url": "apps/health-hummy-20261008.html",
+      "interface_url": "apps/health-hummy-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "9ef38ebb911b9f49586f6c6502e1040afd8f354c"
     },
     {
       "repo": "finance-finch",
@@ -105,25 +139,46 @@
       "role": "pet",
       "art": "finance-finch",
       "status": "hatching",
-      "published": false,
+      "published": true,
       "job": "Personal finance tracker. A yellow canary. Your data stays on your PC and is never committed.",
-      "added": "2026-10-07"
+      "added": "2026-10-07",
+      "interface_local_url": "apps/finance-finch-20261008.html",
+      "interface_url": "apps/finance-finch-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "8c184fbd7ca8ad492deacd17183b1e810e2eea15"
     },
     {
       "repo": "mommys",
-      "pet": "Mommy's",
+      "pet": "Mommy's Mommies",
       "role": "pet",
-      "art": "mommys-astra",
-      "companions": ["mommys-devilish"],
+      "art": "mommys-mommies",
       "status": "hatching",
-      "published": false,
-      "job": "Manages Mommy's, the VRChat dance academy and entertainers club, for the Mommies. The pets are the twins from the Mommy's website, Astra and Devilish.",
+      "published": true,
+      "job": "A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned.",
       "added": "2026-10-07",
-      "note": "DRAFT, drawn from the twin mascots on the Mommy's website (silver hair and green eyes; dark hair, white horns and blue eyes). Their lines come from that page.",
+      "note": "DRAFT, drawn from the twin mascots on the Mommy's website (blonde hair and green eyes; dark brunette hair, white horns and blue eyes). Their lines come from that page.",
       "says": {
-        "mommys-astra": ["welcome to the building", "raves are last Sunday", "the pole goes all the way up", "did you shake the jar yet", "shuffle class is easier than it looks", "that grade took me four tries"],
-        "mommys-devilish": ["I rigged that bow myself", "3F smells like spraypaint", "don't go below the lobby", "I'll teach you the bow first", "material swaps are free real estate", "the helipad is decorative"]
-      }
+        "mommys-mommies": [
+          "welcome to the building",
+          "raves are last Sunday",
+          "the pole goes all the way up",
+          "did you shake the jar yet",
+          "shuffle class is easier than it looks",
+          "that grade took me four tries",
+          "I rigged that bow myself",
+          "3F smells like spraypaint",
+          "don't go below the lobby",
+          "I'll teach you the bow first",
+          "material swaps are free real estate",
+          "the helipad is decorative"
+        ]
+      },
+      "interface_local_url": "apps/mommys-20261008.html",
+      "interface_url": "apps/mommys-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "a0a8275aca9feba005d01f4a762752b2cd55626b"
     },
     {
       "repo": "paper-girl",
@@ -132,9 +187,15 @@
       "art": "paper-girl",
       "status": "growing",
       "published": true,
-      "job": "A free science discovery desk: real research, publisher explanations, fresh articles. The repo exists; it still needs pet.json and the pet-app topic.",
+      "job": "A free science discovery desk: real research, publisher explanations and fresh articles.",
       "added": "2026-10-07",
-      "note": "DRAFT. Dark mauve and pink from the site, a folded paper hat, a rolled paper."
+      "note": "DRAFT. Dark mauve and pink from the site, a folded paper hat, a rolled paper.",
+      "interface_local_url": "apps/paper-girl-20261008.html",
+      "interface_url": "https://findastra.github.io/paper-girl/",
+      "interface_live_url": "https://findastra.github.io/paper-girl/",
+      "visibility": "public",
+      "source_tag": "v0.1.0-20261008-pets",
+      "source_commit": "170225bcb74129ddb11208764c323e30351d5659"
     },
     {
       "repo": "file-master",
@@ -143,20 +204,14 @@
       "art": "file-master",
       "status": "growing",
       "published": true,
-      "job": "Keeps a Windows PC organized: read-only audits and approval-based cleanup plans with undo. Never deletes. The repo exists; it still needs pet.json and the pet-app topic.",
+      "job": "Reviews a Windows PC and prepares cleanup plans with undo. Its browser companion imports a plan for review; original scripts run changes separately.",
       "added": "2026-10-07",
-      "note": "DRAFT as a manila folder."
-    },
-    {
-      "repo": "role-fairy",
-      "pet": "Role Fairy",
-      "role": "pet",
-      "art": "role-fairy",
-      "status": "growing",
-      "published": true,
-      "job": "Mommy's Role Fairy: a single-choice Discord role picker. The repo exists; it still needs pet.json and the pet-app topic.",
-      "added": "2026-10-07",
-      "note": "DRAFT. Butterfly wings in the role colours (blue, pink)."
+      "note": "DRAFT as a manila folder.",
+      "interface_local_url": "apps/file-master-20261008.html",
+      "interface_url": "apps/file-master-20261008.html",
+      "visibility": "public",
+      "source_tag": "v0.1.1-20261008-pets",
+      "source_commit": "77f2853ee3e8b6865fee0cf9b2e3ce09af79a77d"
     },
     {
       "repo": "findastra-discord-presence",
@@ -165,17 +220,124 @@
       "art": "discord-damsel",
       "status": "hatching",
       "published": true,
-      "job": "Manages the Discord presence apps (OpenAI and Anthropic) and other Discord apps. The repo exists; it still needs pet.json and the pet-app topic.",
+      "job": "Opens the installed OpenAI and Anthropic Discord presence controls, with a manual setup checklist.",
       "added": "2026-10-07",
-      "note": "DRAFT. Blurple hennin and veil; no Discord logo."
+      "note": "DRAFT. Blurple hennin and veil; no Discord logo.",
+      "interface_local_url": "apps/findastra-discord-presence-20261008.html",
+      "interface_url": "apps/findastra-discord-presence-20261008.html",
+      "visibility": "public",
+      "source_tag": "v0.1.1-20261008-pets",
+      "source_commit": "25bfb4031ee98e5f496b052643189f56cfec92be"
+    },
+    {
+      "repo": "portfolio-puffer",
+      "pet": "Portfolio Puffer",
+      "role": "pet",
+      "art": "portfolio-puffer",
+      "status": "hatching",
+      "published": true,
+      "job": "Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual.",
+      "added": "2026-10-08",
+      "note": "DRAFT. A penguin, electric magenta and cyan.",
+      "interface_local_url": "apps/portfolio-puffer-20261008.html",
+      "interface_url": "apps/portfolio-puffer-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "aef38db6544322c54e01b0ef9a1cf8dff1a8fcf1"
+    },
+    {
+      "repo": "drum-dog",
+      "pet": "Drum Dog",
+      "role": "pet",
+      "art": "drum-dog",
+      "status": "hatching",
+      "published": true,
+      "job": "Keeps track ideas, sample references, permissions and session notes locally. Ableton Live connections are planned.",
+      "added": "2026-10-08",
+      "note": "DRAFT. A local music-project notebook is available. It does not connect to Ableton Live or acquire samples.",
+      "interface_local_url": "apps/drum-dog-20261008.html",
+      "interface_url": "apps/drum-dog-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "f6f9470a5cdea6eb8e620696cf5eb2876dbf764e"
+    },
+    {
+      "repo": "vscode-angel",
+      "pet": "VSCode Angel",
+      "role": "pet",
+      "art": "vscode-angel",
+      "status": "hatching",
+      "published": true,
+      "job": "Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned.",
+      "added": "2026-10-08",
+      "note": "DRAFT. The job is taken from the session where Astra named it; confirm the scope with her.",
+      "interface_local_url": "apps/vscode-angel-20261008.html",
+      "interface_url": "apps/vscode-angel-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "37c1727f7ba304e835b6f65f53d04d3a308d9126"
+    },
+    {
+      "repo": "ghost-protocol",
+      "pet": "Ghost Protocol",
+      "role": "pet",
+      "art": "ghost-protocol",
+      "asset_date": "20261008",
+      "status": "hatching",
+      "published": true,
+      "job": "A personal cybersecurity checklist for reviewing your own security habits and tracking the steps you complete.",
+      "added": "2026-10-08",
+      "note": "Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the Cage character is not connected to checklist progress or security monitoring.",
+      "interface_local_url": "apps/ghost-protocol-20261008.html",
+      "interface_url": "https://findastra.github.io/ghost-protocol/",
+      "interface_live_url": "https://findastra.github.io/ghost-protocol/",
+      "visibility": "public",
+      "source_tag": "v0.1.0-20261008-pets",
+      "source_commit": "1b2ba2723b4508891281fe2e8a3bced0cb3e3b6a"
+    },
+    {
+      "repo": "project-parrot",
+      "pet": "Project Parrot",
+      "role": "pet",
+      "art": "project-parrot",
+      "asset_date": "20261008",
+      "status": "hatching",
+      "published": true,
+      "job": "Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them.",
+      "added": "2026-10-08",
+      "note": "DRAFT. Officially named Project Parrot, replacing Project Pal. The local desk stores manually entered ideas and due dates. OneNote scanning and background reminder integration remain unconnected.",
+      "interface_local_url": "apps/project-parrot-20261008.html",
+      "interface_url": "apps/project-parrot-20261008.html",
+      "visibility": "private",
+      "source_tag": "v0.1.0-20261008",
+      "source_commit": "43f2bc7eee8d4bf4cec96a99e2f2ac4518c8f2cb"
     }
   ],
   "candidates": [
-    { "name": "Ghost Protocol", "repo": "ghost-protocol", "why": "Public repo, a personal cybersecurity checklist; a ghost would suit it." },
-    { "name": "Astra's Infinite Pole", "repo": "astras-infinite-pole", "why": "Public Unity world source; maybe the Unity Unicorn's home." },
-    { "name": "Piranesi House", "repo": "piranesi-house", "why": "Local VRChat world project, not published." },
-    { "name": "Astra's GIF Maker", "repo": "astras-gif-maker", "why": "Local single-file tool, not published." },
-    { "name": "Image Bridge", "repo": "image-bridge", "why": "Local tool for the presence card art, not published." },
-    { "name": "Fuzzbois", "repo": "fuzzbois", "why": "Local art project, not published." }
+    {
+      "name": "Astra's Infinite Pole",
+      "repo": "astras-infinite-pole",
+      "why": "Public Unity world source; maybe the Unity Unicorn's home."
+    },
+    {
+      "name": "Piranesi House",
+      "repo": "piranesi-house",
+      "why": "Local VRChat world project, not published."
+    },
+    {
+      "name": "Astra's GIF Maker",
+      "repo": "astras-gif-maker",
+      "why": "Local single-file tool, not published."
+    },
+    {
+      "name": "Image Bridge",
+      "repo": "image-bridge",
+      "why": "Local tool for the presence card art, not published."
+    },
+    {
+      "name": "Fuzzbois",
+      "repo": "fuzzbois",
+      "why": "Local art project, not published."
+    }
   ]
 }

@@ -1,0 +1,344 @@
+{
+ "size": 256,
+ "moods": [
+  "idle",
+  "blink",
+  "happy",
+  "curious",
+  "worried",
+  "sad",
+  "sick",
+  "alarmed",
+  "sleep"
+ ],
+ "pets": {
+  "farmer": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/farmer/idle-20261008.png",
+    "blink": "art/frames/farmer/blink-20261008.png",
+    "happy": "art/frames/farmer/happy-20261008.png",
+    "curious": "art/frames/farmer/curious-20261008.png",
+    "worried": "art/frames/farmer/worried-20261008.png",
+    "sad": "art/frames/farmer/sad-20261008.png",
+    "sick": "art/frames/farmer/sick-20261008.png",
+    "alarmed": "art/frames/farmer/alarmed-20261008.png",
+    "sleep": "art/frames/farmer/sleep-20261008.png"
+   },
+   "sheet": "art/sheets/farmer-20261008.png"
+  },
+  "goldfish": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/goldfish/idle.png",
+    "blink": "art/frames/goldfish/blink.png",
+    "happy": "art/frames/goldfish/happy.png",
+    "curious": "art/frames/goldfish/curious.png",
+    "worried": "art/frames/goldfish/worried.png",
+    "sad": "art/frames/goldfish/sad.png",
+    "sick": "art/frames/goldfish/sick.png",
+    "alarmed": "art/frames/goldfish/alarmed.png",
+    "sleep": "art/frames/goldfish/sleep.png"
+   },
+   "sheet": "art/sheets/goldfish.png"
+  },
+  "chip": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/chip/idle-20261008.png",
+    "blink": "art/frames/chip/blink-20261008.png",
+    "happy": "art/frames/chip/happy-20261008.png",
+    "curious": "art/frames/chip/curious-20261008.png",
+    "worried": "art/frames/chip/worried-20261008.png",
+    "sad": "art/frames/chip/sad-20261008.png",
+    "sick": "art/frames/chip/sick-20261008.png",
+    "alarmed": "art/frames/chip/alarmed-20261008.png",
+    "sleep": "art/frames/chip/sleep-20261008.png"
+   },
+   "source": "scripts/chip-original-20261008.mjs",
+   "art_kind": "original-code"
+  },
+  "api-fairy": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/api-fairy/idle.png",
+    "blink": "art/frames/api-fairy/blink.png",
+    "happy": "art/frames/api-fairy/happy.png",
+    "curious": "art/frames/api-fairy/curious.png",
+    "worried": "art/frames/api-fairy/worried.png",
+    "sad": "art/frames/api-fairy/sad.png",
+    "sick": "art/frames/api-fairy/sick.png",
+    "alarmed": "art/frames/api-fairy/alarmed.png",
+    "sleep": "art/frames/api-fairy/sleep.png"
+   },
+   "sheet": "art/sheets/api-fairy.png"
+  },
+  "unity-unicorn": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/unity-unicorn/idle.png",
+    "blink": "art/frames/unity-unicorn/blink.png",
+    "happy": "art/frames/unity-unicorn/happy.png",
+    "curious": "art/frames/unity-unicorn/curious.png",
+    "worried": "art/frames/unity-unicorn/worried.png",
+    "sad": "art/frames/unity-unicorn/sad.png",
+    "sick": "art/frames/unity-unicorn/sick.png",
+    "alarmed": "art/frames/unity-unicorn/alarmed.png",
+    "sleep": "art/frames/unity-unicorn/sleep.png"
+   },
+   "sheet": "art/sheets/unity-unicorn.png"
+  },
+  "python-panther": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/python-panther/idle.png",
+    "blink": "art/frames/python-panther/blink.png",
+    "happy": "art/frames/python-panther/happy.png",
+    "curious": "art/frames/python-panther/curious.png",
+    "worried": "art/frames/python-panther/worried.png",
+    "sad": "art/frames/python-panther/sad.png",
+    "sick": "art/frames/python-panther/sick.png",
+    "alarmed": "art/frames/python-panther/alarmed.png",
+    "sleep": "art/frames/python-panther/sleep.png"
+   },
+   "sheet": "art/sheets/python-panther.png"
+  },
+  "astra-wisp": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/astra-wisp/idle.png",
+    "blink": "art/frames/astra-wisp/blink.png",
+    "happy": "art/frames/astra-wisp/happy.png",
+    "curious": "art/frames/astra-wisp/curious.png",
+    "worried": "art/frames/astra-wisp/worried.png",
+    "sad": "art/frames/astra-wisp/sad.png",
+    "sick": "art/frames/astra-wisp/sick.png",
+    "alarmed": "art/frames/astra-wisp/alarmed.png",
+    "sleep": "art/frames/astra-wisp/sleep.png"
+   },
+   "sheet": "art/sheets/astra-wisp.png"
+  },
+  "health-hummy": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/health-hummy/idle.png",
+    "blink": "art/frames/health-hummy/blink.png",
+    "happy": "art/frames/health-hummy/happy.png",
+    "curious": "art/frames/health-hummy/curious.png",
+    "worried": "art/frames/health-hummy/worried.png",
+    "sad": "art/frames/health-hummy/sad.png",
+    "sick": "art/frames/health-hummy/sick.png",
+    "alarmed": "art/frames/health-hummy/alarmed.png",
+    "sleep": "art/frames/health-hummy/sleep.png"
+   },
+   "sheet": "art/sheets/health-hummy.png"
+  },
+  "finance-finch": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/finance-finch/idle.png",
+    "blink": "art/frames/finance-finch/blink.png",
+    "happy": "art/frames/finance-finch/happy.png",
+    "curious": "art/frames/finance-finch/curious.png",
+    "worried": "art/frames/finance-finch/worried.png",
+    "sad": "art/frames/finance-finch/sad.png",
+    "sick": "art/frames/finance-finch/sick.png",
+    "alarmed": "art/frames/finance-finch/alarmed.png",
+    "sleep": "art/frames/finance-finch/sleep.png"
+   },
+   "sheet": "art/sheets/finance-finch.png"
+  },
+  "mommys-mommies": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/mommys-mommies/idle.png",
+    "blink": "art/frames/mommys-mommies/blink.png",
+    "happy": "art/frames/mommys-mommies/happy.png",
+    "curious": "art/frames/mommys-mommies/curious.png",
+    "worried": "art/frames/mommys-mommies/worried.png",
+    "sad": "art/frames/mommys-mommies/sad.png",
+    "sick": "art/frames/mommys-mommies/sick.png",
+    "alarmed": "art/frames/mommys-mommies/alarmed.png",
+    "sleep": "art/frames/mommys-mommies/sleep.png"
+   },
+   "sheet": "art/sheets/mommys-mommies.png"
+  },
+  "paper-girl": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/paper-girl/idle.png",
+    "blink": "art/frames/paper-girl/blink.png",
+    "happy": "art/frames/paper-girl/happy.png",
+    "curious": "art/frames/paper-girl/curious.png",
+    "worried": "art/frames/paper-girl/worried.png",
+    "sad": "art/frames/paper-girl/sad.png",
+    "sick": "art/frames/paper-girl/sick.png",
+    "alarmed": "art/frames/paper-girl/alarmed.png",
+    "sleep": "art/frames/paper-girl/sleep.png"
+   },
+   "sheet": "art/sheets/paper-girl.png"
+  },
+  "file-master": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/file-master/idle.png",
+    "blink": "art/frames/file-master/blink.png",
+    "happy": "art/frames/file-master/happy.png",
+    "curious": "art/frames/file-master/curious.png",
+    "worried": "art/frames/file-master/worried.png",
+    "sad": "art/frames/file-master/sad.png",
+    "sick": "art/frames/file-master/sick.png",
+    "alarmed": "art/frames/file-master/alarmed.png",
+    "sleep": "art/frames/file-master/sleep.png"
+   },
+   "sheet": "art/sheets/file-master.png"
+  },
+  "discord-damsel": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/discord-damsel/idle.png",
+    "blink": "art/frames/discord-damsel/blink.png",
+    "happy": "art/frames/discord-damsel/happy.png",
+    "curious": "art/frames/discord-damsel/curious.png",
+    "worried": "art/frames/discord-damsel/worried.png",
+    "sad": "art/frames/discord-damsel/sad.png",
+    "sick": "art/frames/discord-damsel/sick.png",
+    "alarmed": "art/frames/discord-damsel/alarmed.png",
+    "sleep": "art/frames/discord-damsel/sleep.png"
+   },
+   "sheet": "art/sheets/discord-damsel.png"
+  },
+  "portfolio-puffer": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/portfolio-puffer/idle.png",
+    "blink": "art/frames/portfolio-puffer/blink.png",
+    "happy": "art/frames/portfolio-puffer/happy.png",
+    "curious": "art/frames/portfolio-puffer/curious.png",
+    "worried": "art/frames/portfolio-puffer/worried.png",
+    "sad": "art/frames/portfolio-puffer/sad.png",
+    "sick": "art/frames/portfolio-puffer/sick.png",
+    "alarmed": "art/frames/portfolio-puffer/alarmed.png",
+    "sleep": "art/frames/portfolio-puffer/sleep.png"
+   },
+   "sheet": "art/sheets/portfolio-puffer.png",
+   "wears": [
+    "glasses"
+   ]
+  },
+  "drum-dog": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/drum-dog/idle.png",
+    "blink": "art/frames/drum-dog/blink.png",
+    "happy": "art/frames/drum-dog/happy.png",
+    "curious": "art/frames/drum-dog/curious.png",
+    "worried": "art/frames/drum-dog/worried.png",
+    "sad": "art/frames/drum-dog/sad.png",
+    "sick": "art/frames/drum-dog/sick.png",
+    "alarmed": "art/frames/drum-dog/alarmed.png",
+    "sleep": "art/frames/drum-dog/sleep.png"
+   },
+   "sheet": "art/sheets/drum-dog.png"
+  },
+  "vscode-angel": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/vscode-angel/idle.png",
+    "blink": "art/frames/vscode-angel/blink.png",
+    "happy": "art/frames/vscode-angel/happy.png",
+    "curious": "art/frames/vscode-angel/curious.png",
+    "worried": "art/frames/vscode-angel/worried.png",
+    "sad": "art/frames/vscode-angel/sad.png",
+    "sick": "art/frames/vscode-angel/sick.png",
+    "alarmed": "art/frames/vscode-angel/alarmed.png",
+    "sleep": "art/frames/vscode-angel/sleep.png"
+   },
+   "sheet": "art/sheets/vscode-angel.png"
+  },
+  "ghost-protocol": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/ghost-protocol/idle-20261008.png",
+    "blink": "art/frames/ghost-protocol/blink-20261008.png",
+    "happy": "art/frames/ghost-protocol/happy-20261008.png",
+    "curious": "art/frames/ghost-protocol/curious-20261008.png",
+    "worried": "art/frames/ghost-protocol/worried-20261008.png",
+    "sad": "art/frames/ghost-protocol/sad-20261008.png",
+    "sick": "art/frames/ghost-protocol/sick-20261008.png",
+    "alarmed": "art/frames/ghost-protocol/alarmed-20261008.png",
+    "sleep": "art/frames/ghost-protocol/sleep-20261008.png"
+   },
+   "sheet": "art/sheets/ghost-protocol-20261008.png"
+  },
+  "project-parrot": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/project-parrot/idle-20261008.png",
+    "blink": "art/frames/project-parrot/blink-20261008.png",
+    "happy": "art/frames/project-parrot/happy-20261008.png",
+    "curious": "art/frames/project-parrot/curious-20261008.png",
+    "worried": "art/frames/project-parrot/worried-20261008.png",
+    "sad": "art/frames/project-parrot/sad-20261008.png",
+    "sick": "art/frames/project-parrot/sick-20261008.png",
+    "alarmed": "art/frames/project-parrot/alarmed-20261008.png",
+    "sleep": "art/frames/project-parrot/sleep-20261008.png"
+   },
+   "sheet": "art/sheets/project-parrot-20261008.png"
+  }
+ }
+}

@@ -4,3 +4,13 @@ node_modules/
 .claude/
 .DS_Store
 Thumbs.db
+
+# Intermediate 64px conversions written by generate-pets.mjs. The frames in art/frames/
+# are what ship; these are only a fallback source for a pet whose sheet has gone missing.
+art/generated/
+
+# External reference artwork stays local until redistribution is permitted.
+art/imports/
+
+# Windows companion builds are reproducible from source.
+bin/

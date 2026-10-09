@@ -7,11 +7,12 @@ import { OWNER, validate } from './lib.mjs';
 
 const p = (f) => fileURLToPath(new URL(`../${f}`, import.meta.url));
 const registry = JSON.parse(readFileSync(p('pets.json'), 'utf8'));
-const art = JSON.parse(readFileSync(p('art/sprites.json'), 'utf8'));
+const art = JSON.parse(readFileSync(p('art/frames/index.json'), 'utf8'));
 const problems = validate(registry, readFileSync(p('README.md'), 'utf8'), art);
 
 if (process.argv.includes('--online')) {
   for (const pet of registry.pets) {
+    if (pet.visibility === 'private') { console.log(`${pet.repo}: private repository; anonymous online checks skipped.`); continue; }
     const r = await fetch(`https://api.github.com/repos/${OWNER}/${pet.repo}`, { headers: { Accept: 'application/vnd.github+json' } });
     if (r.status === 404) { problems.push(`${pet.repo}: not on GitHub yet (or private)`); continue; }
     if (!r.ok) { problems.push(`${pet.repo}: GitHub answered ${r.status}`); continue; }
@@ -22,4 +23,7 @@ if (process.argv.includes('--online')) {
   }
 }
 if (problems.length) { console.error(problems.map((s) => '- ' + s).join('\n')); process.exit(1); }
-console.log(`Cage OK: ${registry.pets.length} pet apps, ${(registry.mascots || []).length} mascot(s), ${Object.keys(art.sprites).length} characters drawn.`);
+const stand = Object.entries(art.pets).filter(([, a]) => a.placeholder).map(([id]) => id);
+console.log(`Cage OK: ${registry.pets.length} pet apps, ${(registry.mascots || []).length} mascot(s), ${Object.keys(art.pets).length} characters drawn at ${art.size}px.`);
+// A placeholder is not an error (the Cage still works), but it is not finished art either.
+if (stand.length) console.log(`Placeholder art, needs regenerating: ${stand.join(", ")}`);

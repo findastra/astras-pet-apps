@@ -104,7 +104,7 @@ const fairy = {
   },
 };
 
-/* ---------- Friendly Farmer: host, manager and auditor of the Cage (findastra-pet-apps). DRAFT. ---------- */
+/* ---------- Friendly Farmer: host, manager and auditor of Astra's Pet Apps (astras-pet-apps). DRAFT. ---------- */
 const farmer = {
   id: 'farmer', name: 'Friendly Farmer', ink: '#3a2010',
   body(cv, mood) {
@@ -240,21 +240,16 @@ const wisp = {
     const star = cells([[15, 1], [16, 1], [14, 2], [15, 2], [16, 2], [17, 2], [12, 3], [13, 3], [14, 3], [15, 3], [16, 3], [17, 3], [18, 3], [19, 3], [14, 4], [15, 4], [16, 4], [17, 4], [13, 5], [14, 5], [17, 5], [18, 5]]);
     paint(cv, star, '#ffe27a', { hi: '#fff3b8', lo: '#e0b030' });
   },
-  face(cv, mood) {
-    const m = MOOD[mood], c = { ink: mood === 'sick' ? '#9cc267' : '#5ff0ff', white: '#ffffff', tongue: '#ff7d9c' };
-    eyes(cv, m.eyes === 'glossy' ? 'open' : m.eyes, 11, 13, c);
-    const pk = { ink: '#2a1a4e', white: '#ffffff', tongue: '#ff7d9c' };
-    mouth(cv, m.mouth, 21, pk);
-    if (m.cheeks) cheeks(cv, 8, 20, PINK);
-    if (m.tear) cv.both(11, 17, '#4fa3ea');
-    for (const s of m.st || []) { const [name, where] = s.split('@'); const [x, y] = where === 'tl' ? [1, 4] : [26, 0]; put(cv, name, x, y); }
-    if (m.plaster) stamp(cv, 20, 8, ['.t.', 'ttt', '.t.'], { t: '#f3d3a2' });
-  },
+  // One shared face like every other pet, so the eyes read as the same creature family.
+  // She used to hand-roll this: glossy collapsed to open and she had no brows at all, which
+  // left worried, sad and alarmed with no expression. "eye" and "line" keep her glow on the
+  // dark visor, where the house ink would be invisible.
+  face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 13, my: 21, cx: 8, cy: 20, eye: '#5ff0ff', line: '#7fd8ff', tr: [26, 0], tl: [1, 4], pl: [20, 8] }, this.ink); },
 };
 
-/* ---------- Healthy Hummy: a hummingbird (guess from the name) ---------- */
+/* ---------- Health Hummy: a hummingbird (guess from the name) ---------- */
 const hummy = {
-  id: 'healthy-hummy', name: 'Healthy Hummy', ink: '#0c3a26',
+  id: 'health-hummy', name: 'Health Hummy', ink: '#0c3a26',
   body(cv, mood) {
     const d = droop(mood);
     const wing = d ? ellipseRot(5, 21, 2.6, 6, 38) : ellipseRot(4, 14, 2.6, 7.5, -58);
@@ -346,23 +341,32 @@ const paperGirl = {
   face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 14, my: 19, cx: 9, cy: 18, tr: [27, 0], tl: [1, 2], pl: [20, 12] }, this.ink); },
 };
 
-/* ---------- File Master: a manila folder that never deletes anything ---------- */
+/* ---------- File Master: a manila folder creature that never deletes anything.
+   Drawn as a real folder: back panel, a tab on the left, filed papers peeking over the
+   top, and a front panel with a crisp fold line. The face lives on the front panel. ---------- */
 const fileMaster = {
   id: 'file-master', name: 'File Master', ink: '#4a2e10',
   body(cv, mood) {
-    paint(cv, rrect(17, 3, 25, 10, 0), '#ffffff', { hi: '#ffffff', lo: '#dcd4e8' });
-    for (const [x, y] of [[19, 5], [20, 5], [21, 5], [22, 5], [23, 5], [19, 7], [20, 7], [21, 7]]) cv.set(x, y, '#b8b0cc');
-    paint(cv, rrect(5, 9, 26, 27, 3), '#f2c46d', { hi: '#ffe0a0', lo: '#c99a3a', band: 2 });
-    paint(cv, rrect(6, 5, 15, 10, 1), '#f2c46d', { hi: '#ffe0a0', lo: '#c99a3a' });
-    paint(cv, rrect(8, 6, 13, 8, 0), '#fff6e0', { flat: true });
-    for (const x of [9, 10, 11, 12]) cv.set(x, 7, '#4a7fd1');
-    paint(cv, rrect(7, 13, 24, 26, 2), '#ffd98a', { hi: '#fff0c0', lo: '#d8a850' });
-    const arm = ellipse(3, 19, 2, 2.6);
-    paint(cv, union(arm, mirrored(arm)), '#f2c46d', { hi: '#ffe0a0', lo: '#c99a3a' });
-    const foot = rrect(9, 28, 13, 30, 1);
-    paint(cv, union(foot, mirrored(foot)), '#c99a3a', { hi: '#e0b458' });
+    const d = droop(mood);
+    // back panel of the folder
+    paint(cv, rrect(4, 8, 27, 28, 1), '#e0ae58', { hi: '#f6cf86', lo: '#b4832c', band: 2 });
+    // the tab, top left: the thing that makes it read as a folder and not a box
+    paint(cv, rrect(4, 4, 12, 9, 1), '#e0ae58', { hi: '#f6cf86', lo: '#b4832c' });
+    paint(cv, rrect(6, 6, 11, 7, 0), '#fff6e0', { flat: true });
+    for (const x of [7, 8, 9, 10]) cv.set(x, 6, '#4a7fd1');
+    // filed papers peeking over the top edge
+    paint(cv, rrect(14, 5, 24, 14, 0), '#ffffff', { hi: '#ffffff', lo: '#d8d2e4' });
+    paint(cv, rrect(13, 3, 22, 14, 0), '#fdf8ec', { hi: '#ffffff', lo: '#ddd6c6' });
+    for (const y of [5, 7]) for (let x = 15; x <= 20; x++) cv.set(x, y, '#b9b2c8');
+    // front panel, with a hard fold line along its top
+    paint(cv, rrect(4, 13, 27, 28, 1), '#f7cd7e', { hi: '#ffe6ac', lo: '#cf9c3e', band: 2 });
+    for (let x = 5; x <= 26; x++) cv.set(x, 13, '#c7922f');
+    const arm = ellipse(2.5, d ? 22 : 19, 2, 2.6);
+    paint(cv, union(arm, mirrored(arm)), '#e0ae58', { hi: '#f6cf86', lo: '#b4832c' });
+    const foot = rrect(9, 29, 13, 31, 1);
+    paint(cv, union(foot, mirrored(foot)), '#b4832c', { hi: '#d2a04a' });
   },
-  face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 15, my: 20, cx: 9, cy: 19, tr: [28, 0], tl: [1, 2], pl: [20, 16] }, this.ink); },
+  face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 17, my: 22, cx: 8, cy: 21, tr: [27, 0], tl: [1, 10], pl: [21, 17] }, this.ink); },
 };
 
 /* ---------- Role Fairy: Mommy's role picker. Wings in the role colours. ---------- */

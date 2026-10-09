@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Findastra Pet Apps</title>
-<meta name="description" content="The Cage: where Astra keeps her pet apps. Pets bounce around inside, Nullbot stands on the roof, and the Friendly Farmer opens the door.">
+<title>Astra's Pet Apps</title>
+<meta name="description" content="Astra's Pet Apps: the Cage where Astra keeps her pet apps. Hover to make them hop, drag the Cage, or let the Friendly Farmer open its door.">
+<meta name="version" content="0.2.0-20261008">
+<meta name="source-version" content="https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008">
 <style>
 :root {
   --bg: #17121d; --panel: #221a2b; --panel-2: #2d2338; --line: #463757; --text: #f6eefc; --muted: #c4b4d4;
@@ -32,21 +34,35 @@ button:focus-visible { outline: 3px solid var(--note); outline-offset: 2px; }
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
 th { color: var(--muted); font-weight: 600; font-size: .85rem; }
-td canvas { width: 48px; height: 48px; image-rendering: pixelated; display: block; }
+td:last-child { min-width: 220px; overflow-wrap: anywhere; }
+td:nth-child(2) { min-width: 120px; }
+td img { width: 48px; height: 48px; display: block; object-fit: contain; }
 .badge { font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 6px; border: 1.5px solid currentColor; }
 .badge.hatching { color: var(--warn); } .badge.growing { color: var(--note); } .badge.grown { color: var(--ok); }
 .scroll { overflow-x: auto; }
+.guest-note { color: var(--muted); font-size: .88rem; margin: 8px 0 0; }
+.guest-controls { margin-top: 14px; }
+button:disabled { cursor: wait; opacity: .65; }
 ol li, ul li { margin: 6px 0; }
 .big { font-size: 1.05rem; }
-#stage { position: fixed; left: 0; top: 0; pointer-events: none; image-rendering: pixelated; z-index: 20; }
+#stage { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 20; }
 #stage[hidden] { display: none; }
+#cage-move { position: fixed; z-index: 25; height: 20px; padding: 0; border: 0; background: transparent; color: var(--text); cursor: grab; touch-action: none; font: 11px/1 system-ui, sans-serif; }
+#cage-move span { display: inline-block; padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); opacity: .85; }
+#cage-move:active { cursor: grabbing; }
+#cage-move[hidden] { display: none; }
 #egg {
-  position: fixed; left: 14px; bottom: 14px; z-index: 30; width: 60px; height: 60px; padding: 0; cursor: pointer;
-  border-radius: 18px; border: 2px solid var(--line); background: var(--panel); display: grid; place-items: center;
-  box-shadow: 0 3px 0 var(--line);
+  position: fixed; left: 8px; top: 8px; z-index: 30; width: 60px; height: 60px; padding: 0; cursor: grab;
+  border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; touch-action: none;
 }
-#egg canvas { width: 48px; height: 48px; image-rendering: pixelated; }
-#egg:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+.star-core, .star-orbit i { clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 94%, 50% 72%, 21% 94%, 32% 57%, 2% 35%, 39% 35%); }
+.star-core { width: 30px; height: 30px; background: #fff4a8; animation: star-spin 5s linear infinite; }
+.star-orbit { position: absolute; width: 48px; height: 48px; left: 6px; top: 6px; transform: rotate(var(--angle)); animation: star-orbit 3s linear infinite; }
+.star-orbit i { display: block; width: 3px; height: 3px; margin: 0 auto; background: var(--color); }
+#egg[aria-pressed="false"] .star-core { opacity: .65; }
+@keyframes star-spin { to { transform: rotate(360deg); } }
+@keyframes star-orbit { to { transform: rotate(calc(var(--angle) + 360deg)); } }
+@media (prefers-reduced-motion: reduce) { .star-core, .star-orbit { animation: none; } }
 .bubble { position: fixed; z-index: 40; pointer-events: none; background: #fff6fb; color: #3a0016; border: 2px solid #ff2e7e; border-radius: 12px; padding: 6px 10px; font-size: 13px; max-width: 190px; transform: translate(-50%, -100%); box-shadow: 0 4px 10px rgba(0,0,0,.35); }
 .bubble[hidden] { display: none; }
 .sr { position: absolute; left: -9999px; }
@@ -55,17 +71,24 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
 </head>
 <body>
 <main>
-  <h1>Findastra Pet Apps</h1>
+  <h1>Astra's Pet Apps</h1>
   <p class="sub"><em>A pet app by Astra.</em> This is the Cage, where Astra keeps her pets. The Friendly Farmer runs it.</p>
 
   <section class="card" aria-label="Controls">
     <div class="row">
       <button id="door" class="act" type="button">Open the Cage</button>
-      <span class="big">or click the Farmer. Click any pet to cheer it up. The egg in the corner hides or shows everyone (<kbd>Alt</kbd>+<kbd>P</kbd>).</span>
+      <span class="big">or click the Farmer. Click a pet to make it hop; double-click to open its app. Drag the Cage, Farmer, robot or star to move the group. Click the star to hide or show everyone (<kbd>Alt</kbd>+<kbd>P</kbd>).</span>
     </div>
     <p class="status" id="status" role="status" aria-live="polite"></p>
     <p style="margin:12px 0 6px;color:var(--muted)">Show a mood on everyone, to see each drawing:</p>
     <div class="row" id="moods" role="group" aria-label="Mood for every character"></div>
+    <div class="row guest-controls">
+      <button id="meet-ghost" class="chip" type="button">Meet Ghost Protocol</button>
+      <button id="invite-bsod" class="chip" type="button" aria-pressed="false" aria-describedby="bsod-note">Invite BSOD</button>
+      <button id="bsod-place" class="chip" type="button" hidden>Let BSOD visit the Cage</button>
+      <input id="bsod-file" type="file" accept="image/png,image/webp" hidden aria-label="Choose BSOD sprite sheet">
+    </div>
+    <p class="guest-note" id="bsod-note">BSOD can visit as a local copy. It does not sync with your desktop pet. Your sprite sheet stays in this tab and is never uploaded.</p>
   </section>
 
   <h2>Who lives here</h2>
@@ -75,19 +98,21 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   <h2>Get the Cage</h2>
   <ol>
     <li><strong>Look at it:</strong> open <code>cage.html</code> from this repo in any browser. It needs no install and no network.</li>
-    <li><strong>Take it with you:</strong> on the repo page press <em>Code, Download ZIP</em>, unzip, and double-click <code>cage.html</code>. Or <code>git clone https://github.com/findastra/findastra-pet-apps</code>.</li>
+    <li><strong>Take it with you:</strong> on the repo page press <em>Code, Download ZIP</em>, unzip, and double-click <code>cage.html</code>. Or <code>git clone https://github.com/findastra/astras-pet-apps</code>.</li>
     <li><strong>Get a pet:</strong> each pet is its own repo (see the table). Download its ZIP the same way. Pets not on GitHub yet say so.</li>
   </ol>
   <p>The full instructions, the file rules for new pets and the running roster are in <a href="README.md">README.md</a>, <a href="PET-FILES.md">PET-FILES.md</a> and <a href="ROSTER.md">ROSTER.md</a>.</p>
 
   <footer>
-    <p>Drawings are drafts for Astra to approve. Nullbot is drawn fresh in the style of the Codex companions and is not OpenAI's artwork. Built 2026-10-07 by Claude Sonnet 5.5 (<code>claude-sonnet-5-5</code>) for Astra. MIT licensed.</p>
+    <p>Version 0.2.0-20261008 · <a href="https://github.com/findastra/astras-pet-apps/tree/v0.2.0-20261008">Exact source version</a>. Private source links are visible to repository collaborators.</p>
+    <p>Ghost Protocol's ghost is approved. Other drawings remain drafts for Astra to approve. Cage art uses one shared set of mood symbols; Chip preserves its original Data Dealer drawing. Built 2026-10-07 by Claude Sonnet 5.5 (<code>claude-sonnet-5-5</code>); art pipeline rebuilt 2026-10-08 by Claude Opus 5 (<code>claude-opus-5</code>) and Claude Opus 5.5 (<code>claude-opus-5-5</code>), for Astra. MIT licensed.</p>
   </footer>
 </main>
 
 <canvas id="stage" aria-hidden="true"></canvas>
+<button id="cage-move" type="button" aria-label="Move the Cage. Drag or use the arrow keys." title="Drag the top rail to move the Cage. Arrow keys also work."><span>Move the Cage</span></button>
 <div id="bubble" class="bubble" role="status" hidden></div>
-<button id="egg" type="button" aria-pressed="true" aria-label="Hide the pets" title="Hide or show the pets (Alt+P)"><canvas id="eggface" width="16" height="16"></canvas></button>
+<button id="egg" type="button" aria-pressed="true" aria-label="Hide the pets" title="Click to hide or show pets (Alt+P); drag to move the group"><span class="star-core" aria-hidden="true"></span><span class="star-orbit" style="--angle:0deg;--color:#ff4966" aria-hidden="true"><i></i></span><span class="star-orbit" style="--angle:120deg;--color:#54ff88" aria-hidden="true"><i></i></span><span class="star-orbit" style="--angle:240deg;--color:#5ba8ff" aria-hidden="true"><i></i></span></button>
 
 <script src="cage-data.js"></script>
 <script>
@@ -102,45 +127,78 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (a, b) => a + Math.random() * (b - a);
 
-  /* ---------- sprites ---------- */
+  /* ---------- sprites ----------
+     Each pet's nine moods are PNG files under art/frames/, 256px square. They load as plain
+     images from relative paths, which works when this page is double-clicked as well as when
+     it is served, because nothing is fetched. */
   const cache = {};
+  let loading = 0;
   function frame(id, mood) {
     const key = id + '/' + mood;
     if (cache[key]) return cache[key];
-    const f = D.sprites[id].frames[mood], c = document.createElement('canvas');
-    c.width = c.height = 32;
-    const x = c.getContext('2d');
-    f.rows.forEach((row, y) => [...row].forEach((ch, i) => { if (f.pal[ch]) { x.fillStyle = f.pal[ch]; x.fillRect(i, y, 1, 1); } }));
-    return (cache[key] = c);
+    const src = D.frames[id] && D.frames[id][mood];
+    const img = new Image();
+    if (src) {
+      loading++;
+      img.onload = img.onerror = () => { if (--loading === 0 && visible) draw(); };
+      img.src = src;
+    }
+    return (cache[key] = img);
   }
+  const ready = (img) => img.complete && img.naturalWidth > 0;
+  // Ask for every frame up front so the first moods do not pop in one at a time.
+  for (const id of Object.keys(D.frames)) for (const m of D.moods) frame(id, m);
 
   /* ---------- page: roster table, moods, counts ---------- */
   const pets = D.registry.pets, mascots = D.registry.mascots || [];
   const tbody = $('roster').tBodies[0];
-  const addRow = (art, name, role, status, job, url) => {
+  function applicationUrl(app) {
+    const raw = app && app.interface_url;
+    if (typeof raw !== 'string' || !raw.trim() || raw.startsWith('//')) return null;
+    try {
+      const url = new URL(raw, location.href);
+      if (url.username || url.password) return null;
+      if (/^[a-z][a-z0-9+.-]*:/i.test(raw)) return /^https?:$/.test(url.protocol) ? url.href : null;
+      if (raw.startsWith('/') || raw.includes('\\') || raw.split(/[?#]/, 1)[0].split('/').some((part) => decodeURIComponent(part) === '..')) return null;
+      const directory = new URL('./', location.href);
+      return ['http:', 'https:', 'file:'].includes(url.protocol) && url.origin === directory.origin && url.pathname.startsWith(directory.pathname) ? url.href : null;
+    } catch { return null; }
+  }
+  function openApplication(actor) {
+    if (actor.guest) { $('invite-bsod').focus(); say('BSOD is a local guest here. Its desktop pet is controlled in ChatGPT.'); return; }
+    const url = applicationUrl(actor.app);
+    if (!url) { say(`${actor.name || 'This pet'} does not have an app interface in this build yet.`); return; }
+    const link = document.createElement('a'); link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.click();
+    say(`Opening ${actor.name || actor.app.pet}.`);
+  }
+  const addRow = (art, name, role, status, job, url, availability = '', app = null) => {
     const tr = tbody.insertRow();
-    const c = document.createElement('canvas'); c.width = c.height = 32; c.getContext('2d').drawImage(frame(art, 'idle'), 0, 0);
-    tr.insertCell().append(c);
+    const img = document.createElement('img');
+    img.src = D.frames[art] ? D.frames[art].idle : ''; img.alt = ''; img.width = img.height = 48;
+    tr.insertCell().append(img);
     const nameCell = tr.insertCell();
     if (url) { const a = document.createElement('a'); a.href = url; a.textContent = name; nameCell.append(a); } else nameCell.textContent = name;
+    if (availability) { const note = document.createElement('div'); note.className = 'guest-note'; note.textContent = availability; nameCell.append(note); }
+    if (applicationUrl(app)) { const open = document.createElement('button'); open.type = 'button'; open.className = 'chip'; open.textContent = 'Open app'; open.setAttribute('aria-label', `Open ${name}`); open.onclick = () => openApplication({ name, app }); nameCell.append(open); }
     tr.insertCell().textContent = role;
     const st = document.createElement('span'); st.className = 'badge ' + status; st.textContent = status; tr.insertCell().append(st);
     tr.insertCell().textContent = job;
   };
   for (const m of mascots) addRow(m.art, m.name, 'mascot', 'grown', m.job);
-  let companions = 0;
   for (const p of pets) {
-    addRow(p.art, p.role === 'pet' ? D.sprites[p.art].name : p.pet, p.role, p.status, p.job, p.published === false ? null : `https://github.com/findastra/${p.repo}`);
-    for (const c of p.companions || []) { companions++; addRow(c, D.sprites[c].name, 'companion', p.status, `Lives in ${p.pet}.`); }
+    const availability = p.published === false ? 'not on GitHub yet' : p.visibility === 'private' ? 'private repo' : '';
+    addRow(p.art, p.pet, p.role, p.status, p.job, p.published === false || p.visibility === 'private' ? null : `https://github.com/findastra/${p.repo}`, availability, p);
+    for (const c of p.companions || []) addRow(c, c, 'companion', p.status, `Lives in ${p.pet}.`);
   }
-  $('count').textContent = `${pets.length} pet apps, drawn as ${pets.length + companions + mascots.length} characters (${companions} companion${companions === 1 ? '' : 's'} and ${mascots.length} mascot). ${pets.filter((p) => p.published !== false).length} of the pet apps have a repo on GitHub.`;
+  const onGitHub = pets.filter((p) => p.published !== false).length;
+  $('count').textContent = `${pets.length} pet apps. ${onGitHub} of them have a repo on GitHub.`;
 
   let forced = null;
   const moodBox = $('moods');
   const moodBtn = (label, value) => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = label;
     b.setAttribute('aria-pressed', String(forced === value));
-    b.onclick = () => { forced = value; [...moodBox.children].forEach((x) => x.setAttribute('aria-pressed', String(x === b))); say(value ? `Everyone is feeling ${value}.` : 'Everyone is back to their own moods.'); draw(); };
+    b.onclick = () => { forced = value; [...moodBox.children].forEach((x) => x.setAttribute('aria-pressed', String(x === b))); say(value ? `Everyone is feeling ${value}.` : 'Everyone is back to their own moods.'); step(0); draw(); };
     moodBox.append(b);
   };
   moodBtn('auto', null); D.moods.forEach((m) => moodBtn(m, m));
@@ -149,49 +207,236 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
 
   /* ---------- the stage ---------- */
   const cv = $('stage'), ctx = cv.getContext('2d');
-  let S = 3, W = 0, H = 0, L = {};
+  const S = 2;
+  const P = 58.75 / S; // BSOD computer-case top (57) to feet (198), at native 80/192 scale.
+  const petHeight = (a) => P * (a.id === 'ghost-protocol' ? .75 : 1);
+  const BSOD_SCALE = 80 / 192 / S; // Preserve the native minimum frame, including its antenna.
+  const flyingIds = new Set(['api-fairy', 'role-fairy', 'astra-wisp', 'goldfish', 'health-hummy', 'finance-finch', 'vscode-angel', 'ghost-protocol', 'project-parrot']);
+  let W = 0, H = 0, L = {};
   const BAR = '#d9a441', BAR_D = '#8a5f1c', BAR_L = '#f3cf7a';
-  const actors = { pets: [], nullbot: null, farmer: null };
+  const actors = { pets: [], farmer: null };
   let want = 'closed', raf = 0, last = 0, visible = true;
+  let guestSheet = null, localGuestTried = false, spotlight = null, spotlightTimer = 0;
+  let cagePosition = null, cageBounds = {}, cageDrag = null;
+  try {
+    const saved = JSON.parse(store.get('cage.position'));
+    if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) cagePosition = { x: Math.max(0, Math.min(1, saved.x)), y: Math.max(0, Math.min(1, saved.y)) };
+  } catch { /* Ignore an unavailable or outdated preference. */ }
+  const guestFrames = [6, 8, 8, 4, 5, 8, 6, 6, 6];
+  // Playback timings from the installed mini pet. Door travel is specific to the Cage.
+  const idleTiming = [1680, 660, 660, 840, 840, 1920];
+  const jumpTiming = [140, 140, 140, 140, 280];
+  const walkTiming = [120, 120, 120, 120, 120, 120, 120, 220];
+  const jumpOffsets = [0, -8, -16, -8, 0];
+  const jumpDuration = 2.52;
+  const localPage = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]', '::1'].includes(location.hostname);
 
   function layout() {
-    S = innerWidth < 700 ? 2 : 3;
     W = Math.ceil(innerWidth / S); H = Math.ceil(innerHeight / S);
-    cv.width = W; cv.height = H; cv.style.width = W * S + 'px'; cv.style.height = H * S + 'px';
-    const gy = H - 6;
-    const farmerX = W - 40;
-    const right = farmerX - 8;
-    const cageW = Math.max(96, Math.min(190, right - 6));
-    L = { gy, right, x0: right - cageW, cageW, top: gy - 72, floor: gy - 4, farmerX, roof: gy - 76 };
-    if (actors.nullbot) actors.nullbot.x = Math.min(Math.max(actors.nullbot.x, L.x0 + 2), L.right - 34);
-    actors.farmer.x = farmerX; actors.farmer.y = gy - 32;
-    for (const p of actors.pets) clampPet(p);
+    // Logical coordinates stay fixed; device-pixel ratio changes only raster resolution.
+    const R = S * (window.devicePixelRatio || 1);
+    cv.width = Math.round(W * R); cv.height = Math.round(H * R);
+    cv.style.width = W * S + 'px'; cv.style.height = H * S + 'px';
+    ctx.setTransform(R, 0, 0, R, 0, 0);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    const dockedGuest = actors.pets.find((p) => p.docked);
+    const right = W - (dockedGuest ? 2 * P + 24 : P + 16);
+    // Keep the star clear on the left and the Farmer outside the door on the right.
+    // The enclosure spans the remaining width and is two-thirds its former height.
+    const cageW = Math.max(48, right - 88 / S);
+    const previous = L;
+    cageBounds = { x0: 36, x1: Math.max(36, W - cageW - (dockedGuest ? 2 * P + 26 : P + 10)), y0: 2, y1: Math.max(2, H - 59) };
+    const x0 = cagePosition ? cageBounds.x0 + (cageBounds.x1 - cageBounds.x0) * cagePosition.x : Math.max(cageBounds.x0, Math.min(cageBounds.x1, right - cageW));
+    const originY = cagePosition ? cageBounds.y0 + (cageBounds.y1 - cageBounds.y0) * cagePosition.y : cageBounds.y1;
+    const gy = originY + 53;
+    L = { gy, right: x0 + cageW, x0, cageW, top: gy - 48, floor: gy - 4, farmerX: x0 + cageW + 8 + (dockedGuest ? P + 8 : 0), roof: gy - 52 };
+    actors.farmer.x = L.farmerX; actors.farmer.y = gy - P;
+    if (dockedGuest) { dockedGuest.x = L.farmerX - P - 8; dockedGuest.y = actors.farmer.y; }
+    if (Number.isFinite(previous.x0)) {
+      for (const p of actors.pets) if (p.mode === 'caged') { p.x += L.x0 - previous.x0; p.y += L.top - previous.top; }
+    }
+    for (const p of actors.pets) if (!p.docked) clampPet(p);
+    placeCageHandle();
   }
-  const interior = () => ({ x0: L.x0 + 4, x1: L.right - 4 - 32, y0: L.top, y1: L.floor - 32 });
-  const free = () => ({ x0: 0, x1: W - 32, y0: 2, y1: L.gy - 32 });
+  const interior = () => ({ x0: L.x0 + 4, x1: Math.max(L.x0 + 4, L.right - 4 - P), y0: L.top, y1: L.floor - P });
+  const free = () => ({ x0: 0, x1: Math.max(0, W - P), y0: 2, y1: H - 6 - P });
+  function petWidth(p) {
+    if (p.guest) return 116 * BSOD_SCALE;
+    const b = D.bounds && D.bounds[p.id];
+    return b ? petHeight(p) * (b[2] - b[0]) / Math.max(1, b[3] - b[1]) : petHeight(p);
+  }
+  function petBounds(p) {
+    const b = p.mode === 'caged' || p.mode === 'enter' ? interior() : free();
+    const inset = Math.max(0, (petWidth(p) - P) / 2);
+    b.x0 += inset; b.x1 -= inset;
+    if (b.x0 > b.x1) b.x0 = b.x1 = (b.x0 + b.x1) / 2;
+    return b;
+  }
+
+  function placeCageHandle() {
+    const handle = $('cage-move');
+    handle.style.left = L.x0 * S + 'px'; handle.style.top = (L.roof - 1) * S + 'px';
+    handle.style.width = L.cageW * S + 'px';
+    const star = $('egg');
+    star.style.left = L.x0 * S - 68 + 'px'; star.style.top = L.gy * S - 60 + 'px';
+  }
+  function moveCage(x, y, remember = false) {
+    const nextX = Math.max(cageBounds.x0, Math.min(cageBounds.x1, x));
+    const nextY = Math.max(cageBounds.y0, Math.min(cageBounds.y1, y));
+    const dx = nextX - L.x0, dy = nextY - (L.roof - 1);
+    for (const key of ['x0', 'right', 'farmerX']) L[key] += dx;
+    for (const key of ['gy', 'top', 'floor', 'roof']) L[key] += dy;
+    actors.farmer.x += dx; actors.farmer.y += dy;
+    for (const p of actors.pets) {
+      if (p.mode === 'caged' || p.docked || p.guest) { p.x += dx; p.y += dy; }
+      if (p.mode === 'enter' && Number.isFinite(p.homeX)) p.homeX += dx;
+    }
+    cagePosition = {
+      x: (nextX - cageBounds.x0) / (cageBounds.x1 - cageBounds.x0 || 1),
+      y: (nextY - cageBounds.y0) / (cageBounds.y1 - cageBounds.y0 || 1),
+    };
+    if (remember) store.set('cage.position', JSON.stringify(cagePosition));
+    $('bubble').hidden = true; placeCageHandle(); draw();
+  }
+  $('cage-move').onkeydown = (e) => {
+    const direction = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+    if (!direction) return;
+    e.preventDefault();
+    const distance = e.shiftKey ? 16 : 4;
+    moveCage(L.x0 + direction[0] * distance, L.roof - 1 + direction[1] * distance, true);
+  };
 
   function clampPet(p) {
-    const b = p.mode === 'caged' ? interior() : free();
-    p.x = Math.min(Math.max(p.x, b.x0), b.x1); p.y = Math.min(Math.max(p.y, b.y0), b.y1);
+    const b = petBounds(p);
+    p.x = Math.min(Math.max(p.x, b.x0), b.x1); p.y = p.flying ? Math.min(Math.max(p.y, b.y0), b.y1) : b.y1;
   }
-  function newHeading(p, speed = rand(10, 24)) { const a = rand(0, Math.PI * 2); p.vx = Math.cos(a) * speed; p.vy = Math.sin(a) * speed * 0.7; }
+  function newHeading(p) {
+    const speed = p.mode === 'caged' ? rand(4, 8) : rand(10, 24);
+    p.vx = (Math.random() < .5 ? -1 : 1) * speed;
+    p.vy = p.flying ? rand(-speed * .6, speed * .6) : 0;
+    p.headingUntil = now() + rand(2, 5);
+  }
+  function timedFrame(milliseconds, durations) {
+    let elapsed = Math.max(0, milliseconds) % durations.reduce((sum, value) => sum + value, 0);
+    for (let i = 0; i < durations.length; i++) { if (elapsed < durations[i]) return i; elapsed -= durations[i]; }
+    return 0;
+  }
+  function startJump(p, kind = 'poke') {
+    p.jumpStarted = now(); p.jumpUntil = p.jumpStarted + jumpDuration; p.jumpKind = kind;
+  }
+  const jumping = (p) => !reduced && p.jumpUntil > now();
+  function hopOffset(p) {
+    if (p.guest || !jumping(p)) return 0;
+    return jumpOffsets[timedFrame((now() - p.jumpStarted) * 1000, jumpTiming)] * BSOD_SCALE;
+  }
 
   function init() {
     const chars = pets.filter((p) => p.role === 'pet').flatMap((p) => [p.art, ...(p.companions || [])].map((id) => ({ id, app: p, lines: (p.says || {})[id] })));
     actors.pets = chars.map((c) => ({
-      id: c.id, name: D.sprites[c.id].name, lines: c.lines, status: c.app.status, x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
+      id: c.id, name: c.app.pet, app: c.app, flying: flyingIds.has(c.id), lines: c.lines, status: c.app.status, x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
       hop: rand(0, 6), squash: 0, t: rand(0, 5), poked: 0,
     }));
-    actors.nullbot = { id: 'nullbot', x: 0, y: 0, dir: 1, mood: 'idle', until: 0, blinkAt: 2, t: 0, bob: 0 };
-    actors.farmer = { id: 'farmer', x: 0, y: 0, mood: 'idle', until: 0, blinkAt: 3, t: 0 };
+    const host = pets.find((p) => p.role === 'host');
+    actors.farmer = { id: host ? host.art : 'farmer', name: host ? host.pet : 'Friendly Farmer', app: host, x: 0, y: 0, mood: 'idle', until: 0, blinkAt: 3, t: 0 };
     layout();
     const b = interior();
-    actors.pets.forEach((p) => { p.x = rand(b.x0, b.x1); p.y = rand(b.y0, b.y1); newHeading(p); });
-    actors.nullbot.x = L.x0 + (L.cageW - 32) / 2; actors.nullbot.y = L.roof - 32;
+    actors.pets.forEach((p, i) => { p.x = b.x0 + (b.x1 - b.x0) * (i + .5) / actors.pets.length; p.y = p.flying ? rand(b.y0, b.y1) : b.y1; clampPet(p); newHeading(p); });
   }
 
+  /* ---------- BSOD: an optional private guest, never a registered app ---------- */
+  function loadGuestSheet(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        if (img.naturalWidth !== 1536 || img.naturalHeight !== 1872) {
+          reject(new Error('Choose the original BSOD sheet: 1536 × 1872 pixels, with 8 columns and 9 rows.'));
+        } else resolve(img);
+      };
+      img.onerror = () => reject(new Error('The sheet could not be opened. Choose BSOD’s original PNG or WebP sprite sheet.'));
+      img.src = src;
+    });
+  }
+  function focusPet(p) {
+    if (!visible) setVisible(true);
+    spotlight = p;
+    p.mood = 'happy'; p.shown = 'happy'; p.until = now() + 3; p.sleepUntil = 0; p.poked = 3;
+    startJump(p);
+    clearTimeout(spotlightTimer);
+    spotlightTimer = setTimeout(() => { spotlight = null; draw(); }, 8000);
+    showBubble(p, p.guest ? 'BSOD · local guest' : p.name);
+    draw();
+  }
+  function addGuest(sheet) {
+    guestSheet = sheet;
+    const b = interior();
+    const p = {
+      id: 'bsod-guest', name: 'BSOD', guest: true, docked: true, flying: false, status: 'local guest',
+      x: b.x1, y: b.y1, vx: 0, vy: 0, mode: 'docked',
+      mood: 'happy', shown: 'happy', until: 0, sleepUntil: 0, blinkAt: 3,
+      hop: 0, squash: 0, t: 0, poked: 0,
+    };
+    actors.pets.push(p);
+    layout();
+    $('invite-bsod').textContent = 'Send BSOD home';
+    $('invite-bsod').setAttribute('aria-pressed', 'true');
+    $('bsod-place').hidden = false; $('bsod-place').textContent = 'Let BSOD visit the Cage';
+    focusPet(p);
+    say('BSOD is beside the Farmer. This local copy can also visit the Cage; it does not sync with your desktop pet.');
+  }
+  $('invite-bsod').onclick = async () => {
+    const guest = actors.pets.find((p) => p.guest);
+    if (guest) {
+      actors.pets = actors.pets.filter((p) => !p.guest);
+      if (spotlight === guest) spotlight = null;
+      $('bubble').hidden = true;
+      $('invite-bsod').textContent = 'Invite BSOD';
+      $('invite-bsod').setAttribute('aria-pressed', 'false');
+      $('bsod-place').hidden = true; layout();
+      say('BSOD has gone home. You can invite the local copy again.'); draw(); return;
+    }
+    if (guestSheet) { addGuest(guestSheet); return; }
+    if (localPage && !localGuestTried) {
+      localGuestTried = true;
+      $('invite-bsod').disabled = true;
+      try { addGuest(await loadGuestSheet('art/imports/bsod-sprites-20261008.webp')); }
+      catch { say('No local BSOD sheet was found. Click Invite BSOD again to choose its original 1536 × 1872 PNG or WebP.'); }
+      finally { $('invite-bsod').disabled = false; }
+      return;
+    }
+    $('bsod-file').click();
+  };
+  $('bsod-place').onclick = () => {
+    const guest = actors.pets.find((p) => p.guest); if (!guest) return;
+    guest.docked = !guest.docked;
+    guest.mode = guest.docked ? 'docked' : want === 'open' ? 'out' : 'caged';
+    layout();
+    if (!guest.docked) { const b = guest.mode === 'caged' ? interior() : free(); guest.x = b.x1; guest.y = b.y1; newHeading(guest); }
+    else guest.vx = guest.vy = 0;
+    $('bsod-place').textContent = guest.docked ? 'Let BSOD visit the Cage' : 'Keep BSOD beside Farmer';
+    focusPet(guest); say(guest.docked ? 'The Farmer is to the right of this local BSOD guest.' : 'BSOD is visiting with the other pets.');
+  };
+  $('bsod-file').onchange = async () => {
+    const file = $('bsod-file').files[0];
+    $('bsod-file').value = '';
+    if (!file) return;
+    if (!['image/png', 'image/webp'].includes(file.type) || file.size > 20 * 1024 * 1024) {
+      say('Choose a PNG or WebP sprite sheet smaller than 20 MB.'); return;
+    }
+    const url = URL.createObjectURL(file);
+    $('invite-bsod').disabled = true;
+    try { addGuest(await loadGuestSheet(url)); }
+    catch (error) { say(error.message); }
+    finally { URL.revokeObjectURL(url); $('invite-bsod').disabled = false; }
+  };
+  $('meet-ghost').onclick = () => {
+    const ghost = actors.pets.find((p) => p.id === 'ghost-protocol');
+    if (!ghost) { say('Ghost Protocol is not in this build yet.'); return; }
+    focusPet(ghost);
+    say('Meet Ghost Protocol, your pale mint ghost. Its cybersecurity checklist has its own app; the Cage does not monitor security.');
+  };
+
   /* ---------- behaviour ---------- */
-  const doorOpen = () => want === 'open' || actors.pets.some((p) => p.mode !== 'caged');
+  const doorOpen = () => want === 'open' || actors.pets.some((p) => !p.docked && p.mode !== 'caged');
   function setDoor(next) {
     if (next === want) return;
     want = next;
@@ -199,11 +444,24 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     actors.farmer.mood = 'happy'; actors.farmer.until = now() + 1.6;
     if (want === 'open') {
       say('The Farmer opens the Cage. The pets are out!');
-      actors.pets.forEach((p, i) => { if (p.mode === 'caged') { p.mode = 'leave'; p.sleepUntil = 0; } });
+      const b = free();
+      actors.pets.forEach((p, i) => { if (p.mode === 'caged') { p.mode = 'leave'; p.sleepUntil = 0; p.targetX = b.x0 + (b.x1 - b.x0) * (i + .5) / actors.pets.length; } });
     } else {
       say('The Farmer calls everyone home.');
-      actors.pets.forEach((p) => { if (p.mode === 'out' || p.mode === 'leave') p.mode = 'enter'; });
+      const b = interior();
+      actors.pets.forEach((p, i) => { if (p.mode === 'out' || p.mode === 'leave') { p.mode = 'enter'; p.homeX = b.x0 + (b.x1 - b.x0) * (i + .5) / actors.pets.length; p.y = b.y1; } });
     }
+    if (reduced) {
+      const b = want === 'open' ? free() : interior();
+      actors.pets.forEach((p, i) => {
+        if (p.docked) return;
+        p.mode = want === 'open' ? 'out' : 'caged';
+        p.x = b.x0 + (b.x1 - b.x0) * (i + .5) / actors.pets.length;
+        p.y = b.y1; p.targetX = null; p.vx = p.vy = 0;
+        clampPet(p);
+      });
+    }
+    step(0); draw();
   }
   const now = () => performance.now() / 1000;
 
@@ -212,68 +470,70 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     // pets
     for (const p of actors.pets) {
       p.t += dt;
-      if (reduced) continue;
+      if (reduced || p.docked || (cageDrag && cageDrag.active && (p.mode === 'caged' || p.guest))) continue;
       if (p.mode === 'caged' || p.mode === 'out') {
-        if (p.sleepUntil > t) { p.vx = p.vy = 0; continue; }
-        if (p.mode === 'caged' && Math.random() < dt * 0.012 && !p.poked) { p.sleepUntil = t + rand(5, 9); continue; }
-        if (!p.vx && !p.vy) newHeading(p);
-        if (Math.random() < dt * 0.25) newHeading(p);
-        const b = p.mode === 'caged' ? interior() : free();
-        p.x += p.vx * dt; p.y += p.vy * dt;
-        if (p.x < b.x0 || p.x > b.x1) { p.vx *= -1; p.squash = 0.18; }
-        if (p.y < b.y0 || p.y > b.y1) { p.vy *= -1; p.squash = 0.18; }
-        clampPet(p);
+        const b = petBounds(p);
+        if (p.mode === 'caged' && !p.flying) { p.vx = p.vy = 0; p.y = b.y1; }
+        else if (!jumping(p) && hoveredPet !== p) {
+          if (!p.vx || t >= p.headingUntil) newHeading(p);
+          p.x += p.vx * dt; if (p.flying) p.y += p.vy * dt; else p.y = b.y1;
+          if (p.x < b.x0 || p.x > b.x1) p.vx *= -1;
+          if (p.flying && (p.y < b.y0 || p.y > b.y1)) p.vy *= -1;
+          clampPet(p);
+        } else p.vx = p.vy = 0;
       } else {
-        // leave: head for the open door; enter: head back in through it
-        const dy = L.floor - 32 - 2;
-        const tx = p.mode === 'leave' ? L.right + 6 : L.x0 + L.cageW / 2 - 16;
-        const ty = p.mode === 'leave' ? dy : dy - 6;
-        const ox = p.mode === 'enter' && p.x > L.right - 4 ? L.right - 12 : tx;
-        const oy = p.mode === 'enter' && p.x > L.right - 4 ? dy : ty;
-        const ax = ox - p.x, ay = oy - p.y, d = Math.hypot(ax, ay) || 1;
-        p.vx = (ax / d) * 30; p.vy = (ay / d) * 30;
-        p.x += p.vx * dt; p.y += p.vy * dt;
-        if (p.mode === 'leave' && p.x >= L.right) { p.mode = 'out'; newHeading(p, rand(14, 26)); }
-        if (p.mode === 'enter') {
-          const b = interior();
-          if (p.x <= b.x1 && p.x >= b.x0 && p.y >= b.y0 && p.y <= b.y1) { p.mode = 'caged'; newHeading(p); }
+        const b = petBounds(p);
+        const destination = p.mode === 'leave' ? L.right + 6 : Math.max(b.x0, Math.min(b.x1, p.homeX));
+        const distance = destination - p.x, travel = 30 * dt;
+        p.vx = Math.sign(distance) * 30;
+        p.x += Math.sign(distance) * Math.min(Math.abs(distance), travel);
+        p.y = L.floor - P;
+        if (Math.abs(distance) <= travel) {
+          if (p.mode === 'leave') { p.mode = 'out'; if (!p.flying) p.y = free().y1; }
+          else p.mode = 'caged';
+          newHeading(p); clampPet(p);
         }
       }
-      p.hop += dt * (Math.hypot(p.vx, p.vy) / 6 + 1);
-      p.squash = Math.max(0, p.squash - dt);
       p.poked = Math.max(0, p.poked - dt);
     }
     // the door shuts once everyone is home
     if (want === 'closed' && actors.pets.every((p) => p.mode === 'caged')) { /* door drawn closed by doorOpen() */ }
-    // Nullbot paces on the roof and worries when pets are out
-    const n = actors.nullbot;
-    if (!reduced) {
-      n.x += n.dir * 6 * dt; n.t += dt;
-      if (n.x < L.x0 + 4) n.dir = 1; if (n.x > L.right - 36) n.dir = -1;
-    }
-    n.y = L.roof - 32;
-    const out = actors.pets.some((p) => p.mode !== 'caged');
-    pickMood(n, t, n.until > t ? n.mood : out ? 'worried' : 'idle', dt);
     pickMood(actors.farmer, t, actors.farmer.until > t ? actors.farmer.mood : doorOpen() ? 'curious' : 'idle', dt);
     for (const p of actors.pets) {
-      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : p.mode === 'out' ? 'happy' : p.mode === 'caged' ? 'idle' : 'curious';
+      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : p.mode === 'leave' || p.mode === 'enter' ? 'curious' : 'idle';
       pickMood(p, t, base, dt);
     }
     $('status').dataset.n = String(actors.pets.filter((p) => p.mode === 'out').length);
   }
   function pickMood(a, t, base, dt) {
-    a.blinkAt -= dt;
     let m = forced || base;
-    if (!forced && m === 'idle' && a.blinkAt < 0) { m = 'blink'; if (a.blinkAt < -0.14) a.blinkAt = rand(2, 5); }
+    if (!forced && m === 'idle') {
+      if (a.idleSince == null) a.idleSince = t;
+      const phase = timedFrame((t - a.idleSince) * 1000, idleTiming);
+      if (phase === 2 || phase === 3) m = 'blink';
+    } else a.idleSince = null;
     a.shown = m;
   }
 
   /* ---------- drawing ---------- */
   function px(x, y, w, h, c) { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); }
-  function sprite(a, bob = 0, sq = 0) {
+  function sprite(a, bob = 0) {
+    if (a.guest) {
+      if (!guestSheet || !ready(guestSheet)) return;
+      const mood = forced || a.shown || 'idle';
+      const row = forced ? (['sad', 'sick', 'worried', 'alarmed'].includes(mood) ? 5 : mood === 'curious' ? 6 : mood === 'happy' ? 8 : 0) : jumping(a) ? 4 : Math.abs(a.vx) > 3 ? (a.vx < 0 ? 1 : 2) : 0;
+      if (a.spriteRow !== row) { a.spriteRow = row; a.spriteStarted = now(); }
+      const elapsed = (now() - a.spriteStarted) * 1000;
+      const column = reduced ? 0 : row === 0 ? timedFrame(elapsed, idleTiming) : row === 4 ? timedFrame((now() - a.jumpStarted) * 1000, jumpTiming) : row === 1 || row === 2 ? timedFrame(elapsed, walkTiming) : Math.floor(elapsed / 125) % guestFrames[row];
+      const scale = BSOD_SCALE;
+      ctx.drawImage(guestSheet, column * 192, row * 208, 192, 208, a.x + P / 2 - 96 * scale, a.y + P - 198 * scale, 192 * scale, 208 * scale);
+      return;
+    }
     const f = frame(a.id, a.shown || 'idle');
-    const w = 32, h = Math.round(32 * (1 - sq)), dy = 32 - h;
-    ctx.drawImage(f, Math.round(a.x), Math.round(a.y + bob + dy), w, h);
+    if (!ready(f)) return; // still loading, or the frame is missing: draw nothing rather than throw
+    const bounds = (D.bounds && D.bounds[a.id]) || [0, 0, f.naturalWidth, f.naturalHeight];
+    const scale = petHeight(a) / Math.max(1, bounds[3] - bounds[1]);
+    ctx.drawImage(f, a.x + P / 2 - (bounds[0] + bounds[2]) / 2 * scale, a.y + bob + P - bounds[3] * scale, f.naturalWidth * scale, f.naturalHeight * scale);
   }
   function cageBack() {
     const { x0, cageW, top, floor, right } = L;
@@ -297,23 +557,27 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     }
   }
   function ground() {
-    px(0, L.gy, W, H - L.gy, '#4d7a3a'); px(0, L.gy, W, 1, '#7fb15a');
-    for (let x = 3; x < W; x += 9) px(x, L.gy + 2, 2, 1, '#3a5f2c');
+    const gy = H - 6;
+    px(0, gy, W, H - gy, '#4d7a3a'); px(0, gy, W, 1, '#7fb15a');
+    for (let x = 3; x < W; x += 9) px(x, gy + 2, 2, 1, '#3a5f2c');
   }
   function draw() {
     if (!visible) return;
     ctx.clearRect(0, 0, W, H);
     ground();
     cageBack();
-    const bob = (a) => (reduced ? 0 : -Math.abs(Math.sin(a.hop || 0)) * 3.5);
+    const bob = hopOffset;
     const byY = (a, b) => a.y - b.y;
     const caged = actors.pets.filter((p) => p.mode === 'caged').sort(byY);
-    for (const p of caged) sprite(p, bob(p), reduced ? 0 : p.squash > 0 ? 0.14 : 0);
+    for (const p of caged) sprite(p, bob(p));
     cageFront();
     const out = actors.pets.filter((p) => p.mode !== 'caged').sort(byY);
-    for (const p of out) sprite(p, bob(p), reduced ? 0 : p.squash > 0 ? 0.14 : 0);
-    const n = actors.nullbot; sprite(n, reduced ? 0 : Math.sin(n.t * 3) > 0.95 ? -1 : 0);
-    const f = actors.farmer; sprite(f, reduced ? 0 : Math.sin(f.t * 2) > 0.9 ? -1 : 0);
+    for (const p of out) sprite(p, bob(p));
+    sprite(actors.farmer);
+    if (spotlight) {
+      ctx.save(); ctx.strokeStyle = '#8fffe1'; ctx.lineWidth = 1;
+      ctx.setLineDash([3, 2]); ctx.strokeRect(spotlight.x - 2, spotlight.y - 5, P + 4, P + 6); ctx.restore();
+    }
   }
   function loop(ts) {
     if (!visible) return;
@@ -324,73 +588,138 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   }
 
   /* ---------- clicks: the Farmer works the door, pets cheer up ---------- */
-  const hit = (a, pad = 4) => (x, y) => x >= a.x + pad && x <= a.x + 32 - pad && y >= a.y + 2 && y <= a.y + 32;
+  const hit = (a, pad = 2) => (x, y) => {
+    if (a.guest) {
+      // The native frame includes the antenna and the baked jump poses above the case.
+      // Use the same complete frame rectangle as sprite(), regardless of the current mood.
+      const left = a.x + P / 2 - 96 * BSOD_SCALE, top = a.y + P - 198 * BSOD_SCALE;
+      return x >= left && x <= left + 192 * BSOD_SCALE && y >= top && y <= top + 208 * BSOD_SCALE;
+    }
+    return x >= a.x + (P - petWidth(a)) / 2 + pad && x <= a.x + (P + petWidth(a)) / 2 - pad && y >= a.y + P - petHeight(a) + 2 && y <= a.y + P;
+  };
   function target(e) {
     if (!visible) return null;
     const x = e.clientX / S, y = e.clientY / S;
+    // Canvas pets are drawn over the page; their handles take precedence over controls below.
     if (hit(actors.farmer)(x, y)) return { kind: 'farmer' };
-    if (hit(actors.nullbot)(x, y)) return { kind: 'nullbot' };
+    for (const p of actors.pets.filter((p) => p.guest).sort((a, b) => b.y - a.y)) if (hit(p)(x, y)) return { kind: 'pet', p };
+    if (e.target instanceof Element && e.target.closest('button, a, input, select, textarea')) return null;
     for (const p of [...actors.pets].sort((a, b) => b.y - a.y)) if (hit(p)(x, y)) return { kind: 'pet', p };
     if (x >= L.right - 6 && x <= L.right + 4 && y >= L.top && y <= L.floor) return { kind: 'door' };
+    if (x >= L.x0 && x <= L.right && y >= L.roof - 1 && y <= L.floor + 4) return { kind: 'cage' };
     return null;
   }
-  document.addEventListener('pointermove', (e) => { document.body.style.cursor = target(e) ? 'pointer' : ''; });
-  document.addEventListener('pointerdown', (e) => {
-    const t = target(e); if (!t) return;
-    e.preventDefault(); e.stopPropagation();
-    const tm = now();
-    if (t.kind === 'farmer' || t.kind === 'door') setDoor(want === 'open' ? 'closed' : 'open');
-    else if (t.kind === 'nullbot') { actors.nullbot.mood = 'happy'; actors.nullbot.until = tm + 1.8; say('Nullbot beeps happily.'); }
-    else {
-      const p = t.p; p.mood = 'happy'; p.until = tm + 1.8; p.sleepUntil = 0; p.poked = 3; p.squash = 0.2; newHeading(p, rand(18, 30));
-      const line = p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
-      showBubble(p, line); say(`${p.name} is happy.`);
+  let hoveredPet = null;
+  document.addEventListener('pointermove', (e) => {
+    if (cageDrag) return;
+    const t = target(e), next = t && t.kind === 'pet' ? t.p : null;
+    document.body.style.cursor = t ? t.kind === 'cage' ? 'grab' : 'pointer' : '';
+    if (next !== hoveredPet) {
+      if (hoveredPet && hoveredPet.jumpKind === 'hover') hoveredPet.jumpUntil = 0;
+      if (next) startJump(next, 'hover');
+      hoveredPet = next; draw();
     }
+  });
+  document.addEventListener('pointerleave', () => {
+    if (cageDrag) return;
+    if (hoveredPet && hoveredPet.jumpKind === 'hover') hoveredPet.jumpUntil = 0;
+    hoveredPet = null; document.body.style.cursor = ''; draw();
+  });
+  let pendingPetClick = null, openedPet = null, openedAt = 0;
+  let suppressStarUntil = 0, suppressDoubleUntil = 0;
+  function cancelPetClick() { if (pendingPetClick) clearTimeout(pendingPetClick.timer); pendingPetClick = null; }
+  function cheerPet(p) {
+    p.mood = 'happy'; p.until = now() + jumpDuration; p.sleepUntil = 0; p.poked = 3; startJump(p);
+    const line = p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
+    showBubble(p, line); say(`${p.name} is happy.`); step(0); draw();
+  }
+  function doubleClickPet(p) {
+    cancelPetClick();
+    if (openedPet === p && now() - openedAt < .3) return;
+    openedPet = p; openedAt = now(); openApplication(p);
+  }
+  function pointerTarget(e) {
+    if (!visible) return null;
+    if (e.target instanceof Element) {
+      if (e.target.closest('#egg')) return { kind: 'star' };
+      if (e.target.closest('#cage-move')) return { kind: 'cage' };
+    }
+    return target(e);
+  }
+  function activateTarget(t, priorAt) {
+    if (t.kind === 'star') { suppressStarUntil = now() + .15; setVisible(!visible); return; }
+    if (t.kind === 'cage') return;
+    if (t.kind === 'door') { setDoor(want === 'open' ? 'closed' : 'open'); return; }
+    const actor = t.kind === 'farmer' ? actors.farmer : t.p;
+    if (priorAt != null && now() - priorAt <= .45) { doubleClickPet(actor); return; }
+    pendingPetClick = { actor, at: now(), timer: setTimeout(() => {
+      pendingPetClick = null;
+      if (actor === actors.farmer) setDoor(want === 'open' ? 'closed' : 'open'); else cheerPet(actor);
+    }, 450) };
+  }
+  document.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || cageDrag) return;
+    const t = pointerTarget(e); if (!t) return;
+    e.preventDefault(); e.stopPropagation();
+    const actor = t.kind === 'farmer' ? actors.farmer : t.p;
+    const priorAt = pendingPetClick && pendingPetClick.actor === actor ? pendingPetClick.at : null;
+    cancelPetClick();
+    const capture = t.kind === 'star' ? $('egg') : $('cage-move');
+    cageDrag = { pointer: e.pointerId, x: e.clientX, y: e.clientY, cageX: L.x0, cageY: L.roof - 1, target: t, priorAt, capture, active: false,
+      canMove: t.kind !== 'pet' || t.p.guest || t.p.mode === 'caged' };
+    try { capture.setPointerCapture(e.pointerId); } catch { /* Document listeners still finish the gesture. */ }
+  }, true);
+  document.addEventListener('pointermove', (e) => {
+    if (!cageDrag || e.pointerId !== cageDrag.pointer || !visible) return;
+    const dx = e.clientX - cageDrag.x, dy = e.clientY - cageDrag.y;
+    if (!cageDrag.active && Math.hypot(dx, dy) < 4) return;
+    cageDrag.active = true;
+    e.preventDefault(); e.stopPropagation();
+    if (hoveredPet && hoveredPet.jumpKind === 'hover') hoveredPet.jumpUntil = 0;
+    hoveredPet = null;
+    document.body.style.cursor = cageDrag.canMove ? 'grabbing' : '';
+    if (cageDrag.canMove) moveCage(cageDrag.cageX + dx / S, cageDrag.cageY + dy / S);
+  }, true);
+  function finishPointer(e, cancelled = false) {
+    if (!cageDrag || (e && e.pointerId !== cageDrag.pointer)) return;
+    const gesture = cageDrag; cageDrag = null;
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    try { if (gesture.capture.hasPointerCapture(gesture.pointer)) gesture.capture.releasePointerCapture(gesture.pointer); } catch { /* Capture may already be lost. */ }
+    document.body.style.cursor = '';
+    if (gesture.active) {
+      suppressDoubleUntil = now() + .45;
+      if (gesture.target.kind === 'star') suppressStarUntil = now() + .15;
+      if (gesture.canMove) moveCage(L.x0, L.roof - 1, true);
+    } else if (!cancelled && visible) activateTarget(gesture.target, gesture.priorAt);
+  }
+  document.addEventListener('pointerup', (e) => finishPointer(e), true);
+  document.addEventListener('pointercancel', (e) => finishPointer(e, true), true);
+  document.addEventListener('lostpointercapture', (e) => finishPointer(e, true), true);
+  document.addEventListener('dblclick', (e) => {
+    const t = target(e); if (!t || !['farmer', 'pet'].includes(t.kind) || now() < suppressDoubleUntil) return;
+    e.preventDefault(); e.stopPropagation();
+    doubleClickPet(t.kind === 'farmer' ? actors.farmer : t.p);
   }, true);
   let bubbleTimer = 0;
   function showBubble(a, text) {
     const b = $('bubble'); b.textContent = text; b.hidden = false;
-    b.style.left = Math.min(Math.max((a.x + 16) * S, 100), innerWidth - 100) + 'px'; b.style.top = Math.max(a.y * S - 4, 40) + 'px';
+    b.style.left = Math.min(Math.max((a.x + P / 2) * S, 100), innerWidth - 100) + 'px'; b.style.top = Math.max(a.y * S - 4, 40) + 'px';
     clearTimeout(bubbleTimer); bubbleTimer = setTimeout(() => { b.hidden = true; }, 3000);
   }
   $('door').onclick = () => setDoor(want === 'open' ? 'closed' : 'open');
 
-  /* ---------- the egg: show or hide everyone ---------- */
-  const eggCtx = $('eggface').getContext('2d');
-  function drawEgg(open) {
-    eggCtx.clearRect(0, 0, 16, 16);
-    const shell = '#fff1d6', shade = '#f0d3a8', ink = '#3a2a4a', spot = '#ffc9a0';
-    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) {
-      const dx = (x - 7.5) / 6.2, dy = (y - 8.2) / (y < 8 ? 7.2 : 7.2);
-      if (dx * dx + dy * dy <= 1) { eggCtx.fillStyle = dx > 0.45 || dy > 0.6 ? shade : shell; eggCtx.fillRect(x, y, 1, 1); }
-    }
-    for (const [x, y] of [[4, 11], [10, 13], [9, 4], [5, 5]]) { eggCtx.fillStyle = spot; eggCtx.fillRect(x, y, 1, 1); }
-    eggCtx.fillStyle = ink;
-    // outline
-    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) {
-      const dx = (x - 7.5) / 6.2, dy = (y - 8.2) / 7.2, dx2 = (x - 7.5) / 7.3, dy2 = (y - 8.2) / 8.3;
-      if (dx * dx + dy * dy > 1 && dx2 * dx2 + dy2 * dy2 <= 1) eggCtx.fillRect(x, y, 1, 1);
-    }
-    if (open) { // cracked, with a face peeking out
-      for (const [x, y] of [[4, 6], [5, 7], [6, 6], [7, 7], [8, 6], [9, 7], [10, 6], [11, 7]]) eggCtx.fillRect(x, y, 1, 1);
-      eggCtx.fillRect(6, 9, 1, 2); eggCtx.fillRect(9, 9, 1, 2); eggCtx.fillStyle = '#ff8fb0'; eggCtx.fillRect(4, 11, 2, 1); eggCtx.fillRect(10, 11, 2, 1);
-      eggCtx.fillStyle = ink; eggCtx.fillRect(7, 12, 2, 1);
-    } else { // sleeping egg
-      eggCtx.fillRect(5, 9, 3, 1); eggCtx.fillRect(9, 9, 3, 1); eggCtx.fillRect(7, 12, 2, 1);
-      eggCtx.fillStyle = '#9fb4ff'; eggCtx.fillRect(11, 3, 3, 1); eggCtx.fillRect(12, 4, 1, 1); eggCtx.fillRect(11, 5, 3, 1);
-    }
-  }
+  /* ---------- the star: show or hide everyone ---------- */
   function setVisible(v, remember = true) {
     visible = v;
-    $('stage').hidden = !v; if (!v) $('bubble').hidden = true; $('egg').setAttribute('aria-pressed', String(v));
+    $('stage').hidden = !v; $('cage-move').hidden = !v; if (!v) $('bubble').hidden = true; $('egg').setAttribute('aria-pressed', String(v));
     $('egg').setAttribute('aria-label', v ? 'Hide the pets' : 'Show the pets');
-    drawEgg(v);
+    if (!v) { cancelPetClick(); finishPointer(null, true); }
     if (remember) store.set('cage.visible', v ? '1' : '0');
     cancelAnimationFrame(raf);
     if (v) { last = performance.now(); layout(); if (reduced) draw(); else raf = requestAnimationFrame(loop); }
-    say(v ? 'Everyone is out. Click the egg to send them away.' : 'Everyone is tucked away. Click the egg to bring them back.');
+    say(v ? 'The pets are visible. Click the star to hide them.' : 'Everyone is tucked away. Click the star to bring them back.');
   }
-  $('egg').onclick = () => setVisible(!visible);
+  $('egg').onclick = (e) => { if (e.detail !== 0 && now() < suppressStarUntil) { e.preventDefault(); return; } setVisible(!visible); };
   addEventListener('keydown', (e) => { if (e.altKey && !e.ctrlKey && !e.metaKey && e.key.toLowerCase() === 'p') { e.preventDefault(); setVisible(!visible); } });
   addEventListener('resize', () => { layout(); if (visible) draw(); });
 
