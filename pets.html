@@ -573,7 +573,8 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     }
     pickMood(actors.farmer, t, actors.farmer.until > t ? actors.farmer.mood : 'idle', dt);
     for (const p of actors.pets) {
-      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : 'idle';
+      // A pet whose app has a question for Astra (requests/) looks sick until she answers it.
+      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : D.needs && D.needs[p.id] ? 'sick' : 'idle';
       pickMood(p, t, base, dt);
     }
     $('status').dataset.n = String(actors.pets.filter((p) => !p.docked).length);
@@ -673,7 +674,8 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   function cancelPetClick() { if (pendingPetClick) clearTimeout(pendingPetClick.timer); pendingPetClick = null; }
   function cheerPet(p) {
     p.mood = 'happy'; p.until = now() + jumpDuration; p.sleepUntil = 0; p.poked = 3; startJump(p);
-    const line = p.host ? `${p.name} · double-click for his desk` : p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
+    const asks = D.needs && D.needs[p.id];
+    const line = asks ? `${p.name} needs you: ${asks[0]}` : p.host ? `${p.name} · double-click for his desk` : p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
     showBubble(p, line); say(`${p.name} is happy.`); step(0); draw();
   }
   function doubleClickPet(p) {

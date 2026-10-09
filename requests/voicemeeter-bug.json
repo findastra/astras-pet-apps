@@ -1,0 +1,14 @@
+{
+  "app": "voicemeeter-bug",
+  "requests": [
+    {
+      "id": "voicemeeter-bug-20261009-01",
+      "said": "Voicemeeter Bug should be a little smaller.",
+      "logged": "2026-10-09",
+      "status": "done",
+      "done": "2026-10-09",
+      "by": "Claude Opus 5.5 (claude-opus-5-5)",
+      "note": "Drawn at 85 percent on the page and the desktop (display_scale 0.85)."
+    }
+  ]
+}

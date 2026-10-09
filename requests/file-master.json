@@ -1,0 +1,14 @@
+{
+  "app": "file-master",
+  "requests": [
+    {
+      "id": "file-master-20261009-01",
+      "said": "The File Master icon is too big.",
+      "logged": "2026-10-09",
+      "status": "done",
+      "done": "2026-10-09",
+      "by": "Claude Opus 5.5 (claude-opus-5-5)",
+      "note": "Drawn at 75 percent on the page and the desktop (display_scale 0.75)."
+    }
+  ]
+}

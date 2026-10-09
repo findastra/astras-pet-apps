@@ -1,0 +1,12 @@
+{
+  "app": "project-parrot",
+  "requests": [
+    {
+      "id": "project-parrot-20261009-01",
+      "said": "Remind me to start the twelve approved pet apps.",
+      "logged": "2026-10-09",
+      "status": "open",
+      "note": "Handoff card 005 describes the work."
+    }
+  ]
+}

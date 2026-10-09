@@ -6,7 +6,7 @@ Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-07. Record your mode
 Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6), 2026-10-08.
 Voicemeeter Bug's local desktop integration and browser companion added with OpenAI Codex (GPT-6), 2026-10-08.
 Pets set free to roam the page and the whole desktop, with the star showing or hiding everyone at once, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
-Pets move by kind on the page (sky, swim and ground zones, flocks, friends, tag and chases from `pet_life` in pets.json), and File Master and Voicemeeter Bug drawn smaller via `display_scale` on the page and desktop, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+Chat companion at the bottom of every app page, with requests/ as its shared memory, and pets move by kind on the page (sky, swim and ground zones, flocks, friends, tag and chases from `pet_life` in pets.json), and File Master and Voicemeeter Bug drawn smaller via `display_scale` on the page and desktop, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 
 ## What this is
 The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who looks after the pets roaming free. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `pets-data.js`, the art) is generated from it.
@@ -35,6 +35,15 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - Fetched or user text goes into the DOM with `textContent`, never `innerHTML`.
 - The Farmer is the only `role: "host"` and his repo is this repo. There is exactly one host.
 - Count claims (how many pets) come from `npm run check` / ROSTER.md, never from memory.
+
+## Requests from the app chats (every assistant)
+Every app page has a chat at the very bottom where Astra tells that app what she wants.
+- Before any task or update on an app, read `requests/<repo>.json` and do its open requests
+  that fit the work. Mark each one done with the date, your model and a one-line note; it then
+  leaves the app's Upcoming list. When you are stuck, set `needs-astra` with a plain question:
+  the pet looks sick and the chat alerts her until she answers. Rules: [requests/README.md](requests/README.md).
+- Requests she pastes from a chat ("Requests for <pet> from its app page…") go on file with
+  the ids they came with.
 
 ## Handoffs (every assistant)
 Astra works with many assistants at once, and GitHub is the shared desk.

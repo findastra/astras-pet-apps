@@ -1,0 +1,43 @@
+{
+  "app": "astras-pet-apps",
+  "requests": [
+    {
+      "id": "astras-pet-apps-20261009-01",
+      "said": "Give the pets patterns: birds, ghosts and flying things stay high; humans stay on the ground jumping; the cat can jump onto the walls; the cat and dog chase each other; the birds fly together; the fairy, unicorn and sprite hang out; File Master, Chip and Paper Girl hang out; the bug and the fish run from the birds, and the fish chases the bug.",
+      "logged": "2026-10-09",
+      "status": "done",
+      "done": "2026-10-09",
+      "by": "Claude Opus 5.5 (claude-opus-5-5)",
+      "note": "Done on pets.html through pet_life in pets.json. Any new pet with kind \"bug\" is chased too. The desktop pets still wander on their own; that part is the next request."
+    },
+    {
+      "id": "astras-pet-apps-20261009-02",
+      "said": "Desktop pets follow the same patterns as the page.",
+      "logged": "2026-10-09",
+      "status": "open"
+    },
+    {
+      "id": "astras-pet-apps-20261009-03",
+      "said": "Every app page has a chat at the very bottom that keeps track of what I tell it, shows logged and upcoming edits, takes them off once they are made, and alerts me when it needs me.",
+      "logged": "2026-10-09",
+      "status": "done",
+      "done": "2026-10-09",
+      "by": "Claude Opus 5.5 (claude-opus-5-5)",
+      "note": "Added to 19 app pages. Data Dealer keeps its own Chip chat. New requests typed into a page reach the desk when you paste them to an assistant with Copy for an assistant."
+    },
+    {
+      "id": "astras-pet-apps-20261009-04",
+      "said": "Start making the twelve approved apps: Mail Snail, Stock Fox, Mine Mole, Deck Duck, Gif Giraffe, Meme Fiend, Rift Rabbit, Backup Beaver, Patch Cat, Wifi Butterfly, Mesh Moth and Raspberry Pie.",
+      "logged": "2026-10-09",
+      "status": "needs-astra",
+      "question": "May I generate art for the twelve new pets? It is one image each, billed to your OpenAI account. And what should Raspberry Pie look like? Details are on handoff card 004."
+    },
+    {
+      "id": "astras-pet-apps-20261009-05",
+      "said": "Push this and update the copy on my PC.",
+      "logged": "2026-10-09",
+      "status": "needs-astra",
+      "question": "Branch pets-roam-life-20261009 is ready for you to look at. Say \"push\" and I will put it on GitHub and bring your PC folder up to date."
+    }
+  ]
+}
