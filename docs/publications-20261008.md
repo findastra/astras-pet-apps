@@ -10,9 +10,9 @@ The update reuses the verified BSOD image for fast geometry reads and dispatches
 
 The scoped read-only benchmark on this machine measured the old search at 7.93 ms median / 12.67 ms p95, versus 0.09 ms median / 0.21 ms p95 for a cached rectangle read. These figures measure query cost while the mini is stationary, not perceived drag latency or a display frame guarantee.
 
-Patch source tag: `v0.2.1-20261008`. The rebuilt companion was restarted and verified as the only live Farmer, with continuous tracking active. Cached child-movement, fixed-size, duplicate-image and hidden-image checks passed; the 36 Cage tests and registry check also passed. Independent review found no blocking issues. The owner’s perceived drag smoothness has not yet been confirmed. Source commit and release publication are pending. The original 0.2.0 publication below is preserved as a separate immutable release.
+Patch source tag: `v0.2.1-20261008`. The rebuilt companion was restarted and verified as the only live Farmer, with continuous tracking active. Cached child-movement, fixed-size, duplicate-image and hidden-image checks passed; the 36 Cage tests and registry check also passed. Independent review found no blocking issues. The owner’s perceived drag smoothness has not yet been confirmed. Source commit `64ae43a228c0c9b69d876f448542fb4a995cb06f` and its annotated tag were pushed and verified remotely. [GitHub pre-release](https://github.com/findastra/astras-pet-apps/releases/tag/v0.2.1-20261008) was published and verified. The original 0.2.0 publication below is preserved as a separate immutable release.
 
-## Source and deployment
+## Original 0.2.0 source and deployment
 
 | Field | Recorded state |
 |---|---|
