@@ -47,7 +47,7 @@ Once source has been pushed, collaborators can use **Code, Download ZIP**, save 
 git clone https://github.com/findastra/astras-pet-apps
 ```
 
-**Source releases:** the [repository release ledger](docs/repository-releases-20261008.json) records exact source tags, commit hashes, private access and verified uploads for all 18 entries. A source release is separate from a hosted app.
+**Source releases:** the [repository release ledger](docs/repository-releases-20261008.json) records exact source tags, commit hashes, private access and verified uploads for all 18 entries. A source release is separate from a hosted app. The square pet frame fix for eight apps (2026-10-09) is on each repo's main; its `v0.1.1-20261009` tags and pre-releases are created from Astra's PC with `node scripts/publish-pet-tags-20261009.mjs`.
 
 **Get a pet:** each pet's registry entry identifies its intended app repository. The table links public repos, labels private repos, and says "not on GitHub yet" for projects without a confirmed repo. Several apps and their integrations remain planned.
 
