@@ -1,0 +1,51 @@
+# The Friendly Farmer's daily rounds (PET-FILES.md, "Rounds, self-audits and submissions").
+# Finds new pet repos, takes each pet's submissions, runs the self-audits that are due,
+# writes status/pets-status.json and rebuilds. Claude Opus 5.5 (claude-opus-5-5), 2026-10-09.
+#
+# Optional secret FARMER_TOKEN: a fine-grained token for the findastra account with read-only
+# "Contents" and "Metadata" on all repositories. Without it the Farmer sees only public repos,
+# the private pets sleep, and the Farmer turns sick to ask for it.
+name: Friendly Farmer's daily rounds
+
+on:
+  schedule:
+    - cron: '17 12 * * *'   # 06:17 in Denver in summer time, 05:17 in winter
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: farmer-rounds
+  cancel-in-progress: false
+
+jobs:
+  rounds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Do the rounds
+        id: rounds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FARMER_TOKEN: ${{ secrets.FARMER_TOKEN }}
+        run: node scripts/farmer-rounds-20261009.mjs
+      - name: Rebuild the Cage and the Farmer's desk
+        run: |
+          node scripts/build.mjs --metadata-only
+          node scripts/build-interfaces-20261008.mjs
+          npm test
+      - name: Commit as the Friendly Farmer
+        env:
+          SUMMARY: ${{ steps.rounds.outputs.summary }}
+        run: |
+          git config user.name "Friendly Farmer"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pets.json status cage-data.js ROSTER.md README.md RELATIONS.md MOOD-KEY.md apps/astras-pet-apps-20261008.html
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git commit -m "$SUMMARY"
+          git pull --rebase origin main
+          git push origin HEAD:main

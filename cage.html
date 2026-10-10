@@ -340,10 +340,18 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     return jumpOffsets[timedFrame((now() - p.jumpStarted) * 1000, jumpTiming)] * BSOD_SCALE;
   }
 
+  // The Farmer's latest round (status/pets-status.json, via cage-data.js): each pet rests in the mood its
+  // self-audit gave it, and a click shows its one-line bubble when it has something to say. Claude Opus 5.5, 2026-10-09.
+  function reportFor(app) {
+    const s = D.status && D.status.pets && app && D.status.pets[app.repo];
+    if (!s) return null;
+    const stale = s.mood === 'happy' && s.checked && Date.now() - Date.parse(s.checked) > 864e5;
+    return { mood: stale ? 'idle' : s.mood, says: s.says };
+  }
   function init() {
     const chars = pets.filter((p) => p.role === 'pet').flatMap((p) => [p.art, ...(p.companions || [])].map((id) => ({ id, app: p, lines: (p.says || {})[id] })));
     actors.pets = chars.map((c) => ({
-      id: c.id, name: c.app.pet, app: c.app, kind: kindOfArt(c.id), flying: isFlyer(c.id, kindOfArt(c.id)), lines: c.lines, status: c.app.status, x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
+      id: c.id, name: c.app.pet, app: c.app, kind: kindOfArt(c.id), flying: isFlyer(c.id, kindOfArt(c.id)), lines: c.lines, status: c.app.status, report: reportFor(c.app), x: 0, y: 0, vx: 0, vy: 0, mode: 'caged', mood: 'idle', until: 0, sleepUntil: 0, blinkAt: rand(1, 4),
       hop: rand(0, 6), squash: 0, t: rand(0, 5), poked: 0,
     }));
     const host = pets.find((p) => p.role === 'host');
@@ -637,7 +645,7 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
     if (want === 'closed' && actors.pets.every((p) => p.mode === 'caged')) { /* door drawn closed by doorOpen() */ }
     pickMood(actors.farmer, t, actors.farmer.until > t ? actors.farmer.mood : doorOpen() ? 'curious' : 'idle', dt);
     for (const p of actors.pets) {
-      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : p.mode === 'leave' || p.mode === 'enter' ? 'curious' : 'idle';
+      const base = p.sleepUntil > t ? 'sleep' : p.until > t ? p.mood : p.mode === 'leave' || p.mode === 'enter' ? 'curious' : (p.report && p.report.mood !== 'happy' ? p.report.mood : 'idle');
       pickMood(p, t, base, dt);
     }
     $('status').dataset.n = String(actors.pets.filter((p) => p.mode === 'out').length);
@@ -767,7 +775,8 @@ footer { margin-top: 36px; color: var(--muted); font-size: .85rem; border-top: 1
   function cancelPetClick() { if (pendingPetClick) clearTimeout(pendingPetClick.timer); pendingPetClick = null; }
   function cheerPet(p) {
     p.mood = 'happy'; p.until = now() + jumpDuration; p.sleepUntil = 0; p.poked = 3; startJump(p);
-    const line = p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
+    const urgent = p.report && ['sick', 'alarmed', 'worried', 'sad'].includes(p.report.mood);
+    const line = urgent ? p.report.says : p.lines ? p.lines[Math.floor(Math.random() * p.lines.length)] : `${p.name} (${p.status})`;
     showBubble(p, line); say(`${p.name} is happy.`); step(0); draw();
   }
   function doubleClickPet(p) {

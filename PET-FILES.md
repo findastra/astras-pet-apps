@@ -6,7 +6,7 @@ Every pet app is its own repo under `findastra`, named in lowercase words joined
 
 | File or setting | Rule |
 |---|---|
-| **`pet.json`** | See below. |
+| **`pet.json`** | See below. Includes an `audit` block. |
 | **GitHub topic** | `pet-app`. Added in the repo's About box (the gear). The Cage finds pets by this topic. |
 | **`README.md`** | Title is the repo name in Title Case. The first lines include `*A pet app by Astra.*`. Has a "how to run it" section and a "limits" section that says plainly what is not done. |
 | **`AGENTS.md` and `CLAUDE.md`** | Rules so any assistant can pick the repo up. |
@@ -29,7 +29,8 @@ Public credit is always **Astra**. No keys, `.env` files or personal data in a r
   "entry": "index.html",
   "status": "hatching",
   "cage": { "topic": "pet-app", "home": "README.md" },
-  "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07"
+  "built_with": "Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07",
+  "audit": { "cadence": "weekly", "subject": "the findastra GitHub account", "needs": "a GitHub token that can read the private repos" }
 }
 ```
 
@@ -146,8 +147,78 @@ Play never changes a pet's mood: moods report the app's state (below), not the g
 
 ## Adding a pet to the Cage
 
-1. Add the entry to `pets.json` (`repo`, `pet`, `role: "pet"`, `kind`, `status`, `job`, `art`, `published`, `added`). `kind` decides how it moves; see "How pets move in the Cage". Set `asset_date` to the owner's America/Denver date, such as `20261008`, for new assets.
-2. Add its prompt to `PETS` in `scripts/generate-pets.mjs` and supply the 3×3 mood sheet. With `asset_date: "20261008"`, a ghost's sheet is `art/sheets/ghost-protocol-20261008.png` and its frames are `art/frames/ghost-protocol/idle-20261008.png`, etc. Existing assets are not renamed.
-3. `npm run build`, then `npm run check`.
-4. Create the pet's repo, add the topic `pet-app`, and set `published` to `true` when it is on GitHub.
-5. Run the GitHub Goldfish. It flags any pet missing from the registry or missing its files.
+Saving goes upward: the pet's repo first, then the Farmer, then everything generated ([RELATIONS.md](RELATIONS.md) has the picture).
+
+1. **In the new pet's repo:** `pet.json` (with an `audit` block, below), the `pet-app` topic, README, AGENTS.md and CLAUDE.md. AGENTS.md links this repo (`findastra/astras-pet-apps`) and says changes are submitted to the Farmer.
+2. **The Farmer's daily round finds it** and adds it to `pipeline` in pets.json, so the Cage, the Farmer's desk and Astra's profile know about it the next morning. To do it straight away, add the `pipeline` entry yourself and leave a card `NNN-farmer-register-<repo>.md`.
+3. **Registering it** (moving it from `pipeline` to `pets`) needs its art. Add its prompt to `PETS` in `scripts/generate-pets.mjs`, then ask Astra first: generating costs money. With `asset_date: "20261009"`, its sheet is `art/sheets/<art>-20261009.png` and its frames are `art/frames/<art>/idle-20261009.png`, etc. The entry needs `repo`, `pet`, `role: "pet"`, `kind` (how it moves), `status`, `job`, `art`, `published`, `added` and `audit`.
+4. `npm run build`, `npm run check`, `npm test`.
+5. The GitHub Goldfish's weekly audit checks the files and the registry from then on.
+
+## Rounds, self-audits and submissions
+
+Every pet checks itself on a schedule and reports in the same nine moods, so Astra can read any pet's face the same way. The Friendly Farmer runs it all from one place: `scripts/farmer-rounds-20261009.mjs`, every morning, from `.github/workflows/farmer-daily-rounds.yml`.
+
+**The daily round:**
+
+1. Finds pet repos on GitHub the Cage does not know (a `pet.json` or the `pet-app` topic) and adds them to `pipeline`.
+2. Takes each pet's **submission** (below).
+3. Runs the **self-audits** that are due. Each pet runs on its `audit.cadence`: `weekly` pets on their own day of the week (spread across the week, listed in [MOOD-KEY.md](MOOD-KEY.md)); the Farmer every day.
+4. Writes `status/pets-status.json`: each pet's mood, a one-line bubble, and what it needs from Astra. The Cage page rests each pet in that mood and shows the bubble when clicked; the Farmer's desk lists everyone who **Needs you**.
+5. Rebuilds, and commits as the Friendly Farmer.
+
+**What a self-audit checks:** the pet files above (pet.json, README credit line, "how to run it" and "Limits", AGENTS.md pointing at the Cage, CLAUDE.md, LICENSE and the `pet-app` topic for public repos), plus anything only Astra can answer.
+
+**How the mood is chosen, the same way for every pet:**
+
+| Mood | When | Bubble |
+|---|---|---|
+| `sleep` | Not checked yet, or the Farmer cannot see the repo | Not checked yet. |
+| `curious` | Being checked right now | |
+| `happy` | Checked today, nothing to fix | All good. |
+| `idle` | Clean, last checked more than a day ago | |
+| `worried` | 1 to 5 things to fix | `3 to fix: my README needs "Limits", …` |
+| `alarmed` | More than 5, or a broken pet.json | same |
+| `sick` | **Only Astra can unblock it:** its job is still a placeholder, or one of its cards says `waiting on Astra: …` or is `for: astra` | `Need: the brand and model of each light` |
+| `sad` | The check itself failed | |
+
+So to ask Astra for something, a pet leaves a card with `status: open (waiting on Astra: <what you need>)`. The words after the colon become its bubble.
+
+**What each mood means for each pet** comes from `mood_key` in pets.json, filled in with the pet's `audit.subject` (what it checks) and `audit.needs` (what it asks for when sick). The full key is in [MOOD-KEY.md](MOOD-KEY.md) and on the Farmer's desk.
+
+### The audit block
+
+In pets.json, and copied into the pet's own pet.json:
+
+```json
+"audit": { "cadence": "weekly", "subject": "your RGB lights and scenes", "needs": "the brand and model of each light" }
+```
+
+`cadence` is `daily`, `weekly` or `monthly`.
+
+### Submitting a change to the Farmer
+
+A pet owns its own name, job, status, bubble lines, mood lines and audit. When it changes any of them, it **submits** the change in its own pet.json, with the date:
+
+```json
+"cage": {
+  "topic": "pet-app",
+  "home": "README.md",
+  "submit": {
+    "date": "2026-10-10",
+    "job": "One sentence on what it does now.",
+    "status": "growing",
+    "says": ["bzz", "all lights on the same page"],
+    "moods": { "happy": "Every light took the scene." },
+    "audit": { "cadence": "weekly", "needs": "the brand and model of each light" }
+  }
+}
+```
+
+Include only what changed. The next daily round takes it (once per date), updates pets.json, and the Cage, the desk, MOOD-KEY.md and the profile follow. Art, `kind`, friends and relations belong to the Farmer: ask for those with a card in this repo's `handoffs/`, because new art costs money and needs Astra's OK.
+
+A pet that changes its job in pet.json **without** submitting gets a note in its self-audit, so the two never drift apart unnoticed.
+
+### Who tells whom
+
+`relations` in pets.json lists which pet passes what to which: registry, status, findings, cards, key notes, ideas, what shipped, live cues, art. [RELATIONS.md](RELATIONS.md) draws it. Health Hummy, Finance Finch and Meme Fiend are private: their data never leaves the PC and no other pet reads from them.

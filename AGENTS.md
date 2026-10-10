@@ -7,6 +7,7 @@ Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6), 2026-10-
 Cage movement by kind (zones, flocks, friends, tag and chases from `cage_life` in pets.json) added with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 Square pet well for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 Pet words (`PET-WORDS.md`, `words` in pets.json, `test/pet-words-test-20261009.mjs`) and public-repo labels with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+The Farmer's rounds (self-audits, mood key, submissions, pipeline, relations, profile round; `scripts/farmer-rounds-20261009.mjs`, `scripts/farmer-profile-20261009.mjs`, `scripts/relations-20261009.mjs`, `.github/workflows/farmer-daily-rounds.yml`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 
 ## What this is
 The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
@@ -42,6 +43,8 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - Pet file rules: [PET-FILES.md](PET-FILES.md).
 - **Pet words:** one name per part (pet, app, desktop pet, bubble, quick chat, app icon, pet well). Use [PET-WORDS.md](PET-WORDS.md); `words` in pets.json is its machine-readable copy for the Goldfish. When a new part needs a name, add it to both and run `npm test`.
 - The GitHub Goldfish (`findastra/github-goldfish`) audits this repo and the whole account.
+- **The Farmer's rounds** run daily (PET-FILES.md, "Rounds, self-audits and submissions"). Pets submit changes to their own name, job, status, bubble lines, mood lines and audit through `cage.submit` in their pet.json; the round takes them. Do not hand-edit `status/pets-status.json`, `RELATIONS.md` or `MOOD-KEY.md`: they are generated.
+- **The pipeline** in pets.json holds pets that are on GitHub but not registered (no art yet). Registering one moves it to `pets`.
 - **Handoffs:** work left for another assistant is a card in `handoffs/` ([skills/handoff/SKILL.md](skills/handoff/SKILL.md)). "Tell the Farmer" means a card here.
 
 ## Commands
