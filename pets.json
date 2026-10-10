@@ -2,7 +2,7 @@
   "cage": "astras-pet-apps",
   "owner": "Astra",
   "topic": "pet-app",
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "mascots": [],
   "cage_life": {
     "about": "How the pets move in the Cage. Each pet's kind picks a row in kinds. Names in friends, tag and chases can be an art id or a kind, so a new pet of a known kind (another bug, say) joins in with no code change.",
