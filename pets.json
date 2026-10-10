@@ -146,6 +146,272 @@
       }
     ]
   },
+  "mood_key": {
+    "about": "What each mood means for every pet. {subject} and {needs} come from the pet's audit block; a pet can override any line with \"moods\" in its pet.json.",
+    "sleep": "I haven't checked {subject} yet.",
+    "idle": "{Subject} was fine at my last check.",
+    "blink": "Just blinking.",
+    "curious": "Checking {subject} now.",
+    "happy": "Checked {subject}: nothing wrong.",
+    "worried": "Found a few problems in {subject}.",
+    "alarmed": "Found a lot of problems in {subject}.",
+    "sick": "I need you: {needs}.",
+    "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
+  },
+  "rounds": {
+    "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild. Each pet audits itself on its cadence and day.",
+    "status_file": "status/pets-status.json",
+    "submit_keys": [
+      "pet",
+      "job",
+      "status",
+      "says",
+      "moods",
+      "audit"
+    ],
+    "cadences": {
+      "daily": 1,
+      "weekly": 7,
+      "monthly": 30
+    }
+  },
+  "relations": {
+    "about": "Who tells whom what. state: now (works today), planned (in a plan or card), idea (suggested, not agreed). RELATIONS.md is generated from this.",
+    "carries": {
+      "registry": "who exists, and each pet's name, job, status, moods and lines",
+      "status": "a pet's mood and its one-line bubble",
+      "findings": "problems found by an audit",
+      "card": "a task left in a handoffs/ folder",
+      "keys": "which API keys a pet uses (never the key itself)",
+      "idea": "a project idea",
+      "shipped": "what changed: new repos, new pets, status changes",
+      "cue": "a live trigger: a scene, a beat, a button",
+      "art": "drawings and mood frames"
+    },
+    "links": [
+      {
+        "from": "pets",
+        "to": "astras-pet-apps",
+        "carries": "registry",
+        "state": "now",
+        "why": "Every pet submits changes to its name, job, status, moods and lines through its own pet.json; the Farmer's daily round takes them."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "pets",
+        "carries": "status",
+        "state": "now",
+        "why": "The daily round runs each pet's self-audit on its day and writes its mood and bubble."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "astra",
+        "carries": "status",
+        "state": "now",
+        "why": "Every sick pet's need is listed on the Farmer's desk under Needs you."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "profile",
+        "carries": "shipped",
+        "state": "now",
+        "why": "The profile round keeps findastra/findastra matched to the repos on GitHub."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "github-goldfish",
+        "carries": "registry",
+        "state": "now",
+        "why": "The Goldfish reads pets.json, the pet words and the profile style."
+      },
+      {
+        "from": "github-goldfish",
+        "to": "astras-pet-apps",
+        "carries": "findings",
+        "state": "now",
+        "why": "Account-wide problems go to the Farmer as cards."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "file-master",
+        "carries": "registry",
+        "state": "now",
+        "why": "File Master uses the pet words and file names."
+      },
+      {
+        "from": "file-master",
+        "to": "astras-pet-apps",
+        "carries": "idea",
+        "state": "planned",
+        "why": "New project folders on the PC become candidates."
+      },
+      {
+        "from": "project-parrot",
+        "to": "astras-pet-apps",
+        "carries": "idea",
+        "state": "planned",
+        "why": "An idea Astra says yes to becomes a new pet repo."
+      },
+      {
+        "from": "github-goldfish",
+        "to": "vscode-angel",
+        "carries": "findings",
+        "state": "idea",
+        "why": "Code findings become worklist items."
+      },
+      {
+        "from": "github-goldfish",
+        "to": "ghost-protocol",
+        "carries": "findings",
+        "state": "idea",
+        "why": "A secret found in a repo becomes a checklist step."
+      },
+      {
+        "from": "api-fairy",
+        "to": "ghost-protocol",
+        "carries": "keys",
+        "state": "idea",
+        "why": "An old or exposed key becomes a checklist step."
+      },
+      {
+        "from": "rgbee",
+        "to": "api-fairy",
+        "carries": "keys",
+        "state": "planned",
+        "why": "Cloud light APIs (Govee and others) need keys; API Fairy keeps the notes."
+      },
+      {
+        "from": "claude-bot",
+        "to": "api-fairy",
+        "carries": "keys",
+        "state": "idea",
+        "why": "Quick chat uses an Anthropic key."
+      },
+      {
+        "from": "data-dealer",
+        "to": "api-fairy",
+        "carries": "keys",
+        "state": "idea",
+        "why": "Data Dealer uses several service keys."
+      },
+      {
+        "from": "github-goldfish",
+        "to": "api-fairy",
+        "carries": "keys",
+        "state": "idea",
+        "why": "The Goldfish uses a GitHub token."
+      },
+      {
+        "from": "astras-pet-apps",
+        "to": "portfolio-puffer",
+        "carries": "shipped",
+        "state": "idea",
+        "why": "What the daily round saw change becomes draft portfolio updates."
+      },
+      {
+        "from": "claude-bot",
+        "to": "findastra-discord-presence",
+        "carries": "status",
+        "state": "idea",
+        "why": "Claude Bot's status feeds the Anthropic presence card."
+      },
+      {
+        "from": "mommys",
+        "to": "rgbee",
+        "carries": "cue",
+        "state": "idea",
+        "why": "A class or show starts its lighting scene."
+      },
+      {
+        "from": "mommys",
+        "to": "drum-dog",
+        "carries": "cue",
+        "state": "idea",
+        "why": "A session pulls its track list."
+      },
+      {
+        "from": "drum-dog",
+        "to": "rgbee",
+        "carries": "cue",
+        "state": "idea",
+        "why": "Lights follow the track's beat (RGBee v3)."
+      },
+      {
+        "from": "deck-duck",
+        "to": "rgbee",
+        "carries": "cue",
+        "state": "idea",
+        "why": "Stream Deck buttons switch scenes."
+      },
+      {
+        "from": "deck-duck",
+        "to": "claude-bot",
+        "carries": "cue",
+        "state": "idea",
+        "why": "A Stream Deck button opens quick chat."
+      },
+      {
+        "from": "rift-rabbit",
+        "to": "unity-unicorn",
+        "carries": "findings",
+        "state": "idea",
+        "why": "VR performance notes feed world build tasks."
+      },
+      {
+        "from": "astras-gif-maker",
+        "to": "meme-fiend",
+        "carries": "art",
+        "state": "idea",
+        "why": "GIFs Gif Giraffe makes go to the meme collection."
+      },
+      {
+        "from": "file-master",
+        "to": "backup-beaver",
+        "carries": "findings",
+        "state": "idea",
+        "why": "What File Master finds unprotected is what Backup Beaver should copy."
+      }
+    ],
+    "private": [
+      "health-hummy",
+      "finance-finch",
+      "meme-fiend"
+    ],
+    "private_rule": "These pets' data never leaves the PC. Other pets do not read from them, and the self-audit checks only their repo files.",
+    "groups": {
+      "Keepers": [
+        "astras-pet-apps",
+        "github-goldfish",
+        "file-master"
+      ],
+      "Safety": [
+        "api-fairy",
+        "ghost-protocol",
+        "backup-beaver"
+      ],
+      "Making": [
+        "project-parrot",
+        "vscode-angel",
+        "portfolio-puffer",
+        "unity-unicorn",
+        "rift-rabbit",
+        "astras-gif-maker",
+        "meme-fiend"
+      ],
+      "Stage": [
+        "mommys",
+        "drum-dog",
+        "rgbee",
+        "deck-duck",
+        "claude-bot",
+        "findastra-discord-presence"
+      ],
+      "Private": [
+        "health-hummy",
+        "finance-finch"
+      ]
+    }
+  },
   "pets": [
     {
       "repo": "astras-pet-apps",
@@ -161,7 +427,12 @@
       "added": "2026-10-07",
       "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
       "interface_local_url": "apps/astras-pet-apps-20261008.html",
-      "interface_url": "apps/astras-pet-apps-20261008.html"
+      "interface_url": "apps/astras-pet-apps-20261008.html",
+      "audit": {
+        "cadence": "daily",
+        "subject": "the Cage and the pet registry",
+        "needs": "a FARMER_TOKEN secret so I can see the private pet repos"
+      }
     },
     {
       "repo": "github-goldfish",
@@ -177,7 +448,12 @@
       "interface_url": "apps/github-goldfish-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "c77f326d16d85dcf2d2328683e798605e3253a6c"
+      "source_commit": "c77f326d16d85dcf2d2328683e798605e3253a6c",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the findastra GitHub account",
+        "needs": "a GitHub token that can read the private repos"
+      }
     },
     {
       "repo": "data-dealer",
@@ -197,7 +473,12 @@
       "interface_url": "apps/data-dealer-20261008.html",
       "interface_live_url": "https://claude.ai/artifact/CzBXnEWyRjq5Tui7o3oRS8",
       "source_tag": "v0.1.0-20261008-pets",
-      "source_commit": "4f876dd7b22a7caebf0bb3fbb021539f5b474041"
+      "source_commit": "4f876dd7b22a7caebf0bb3fbb021539f5b474041",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "Data Dealer's repo",
+        "needs": "your answer to a decision on the ops dashboard"
+      }
     },
     {
       "repo": "api-fairy",
@@ -214,7 +495,12 @@
       "interface_url": "apps/api-fairy-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "a63b027fca258816996767eff5d6e3a75431a1fb"
+      "source_commit": "a63b027fca258816996767eff5d6e3a75431a1fb",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the notes about your API keys",
+        "needs": "a key renewed or a note confirmed"
+      }
     },
     {
       "repo": "unity-unicorn",
@@ -230,7 +516,12 @@
       "interface_url": "apps/unity-unicorn-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "c5269d03946aae73ebb00fb0e47dea74dee9182c"
+      "source_commit": "c5269d03946aae73ebb00fb0e47dea74dee9182c",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your Unity and VRChat project notes",
+        "needs": "a project opened in Unity so I can check it"
+      }
     },
     {
       "repo": "learn-python",
@@ -247,7 +538,12 @@
       "interface_url": "apps/learn-python-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008-pets",
-      "source_commit": "d5088d07566f7c698818e6a2c93a91ca68bfa5e1"
+      "source_commit": "d5088d07566f7c698818e6a2c93a91ca68bfa5e1",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your Python lessons",
+        "needs": "you to do the next lesson"
+      }
     },
     {
       "repo": "vrchat-ai-astra",
@@ -264,7 +560,12 @@
       "interface_url": "apps/vrchat-ai-astra-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008-pets",
-      "source_commit": "5e15125a7d35144f883117c51b9f3cd2faf26c40"
+      "source_commit": "5e15125a7d35144f883117c51b9f3cd2faf26c40",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the AI Astra backend and bridge",
+        "needs": "the AI Astra app started on your PC"
+      }
     },
     {
       "repo": "health-hummy",
@@ -281,7 +582,12 @@
       "interface_url": "apps/health-hummy-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "9ef38ebb911b9f49586f6c6502e1040afd8f354c"
+      "source_commit": "9ef38ebb911b9f49586f6c6502e1040afd8f354c",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my own files (never your check-ins)",
+        "needs": "a check-in only you can make"
+      }
     },
     {
       "repo": "finance-finch",
@@ -297,7 +603,12 @@
       "interface_url": "apps/finance-finch-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "8c184fbd7ca8ad492deacd17183b1e810e2eea15"
+      "source_commit": "8c184fbd7ca8ad492deacd17183b1e810e2eea15",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my own files (never your entries)",
+        "needs": "an entry only you can add"
+      }
     },
     {
       "repo": "mommys",
@@ -330,7 +641,12 @@
       "interface_url": "apps/mommys-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "a0a8275aca9feba005d01f4a762752b2cd55626b"
+      "source_commit": "a0a8275aca9feba005d01f4a762752b2cd55626b",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "Mommy's classes and events",
+        "needs": "a date or teacher confirmed for a session"
+      }
     },
     {
       "repo": "paper-girl",
@@ -348,7 +664,12 @@
       "interface_live_url": "https://findastra.github.io/paper-girl/",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008-pets",
-      "source_commit": "170225bcb74129ddb11208764c323e30351d5659"
+      "source_commit": "170225bcb74129ddb11208764c323e30351d5659",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the science desk and its live site",
+        "needs": "a look at the live site"
+      }
     },
     {
       "repo": "file-master",
@@ -365,7 +686,12 @@
       "interface_url": "apps/file-master-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.1-20261008-pets",
-      "source_commit": "77f2853ee3e8b6865fee0cf9b2e3ce09af79a77d"
+      "source_commit": "77f2853ee3e8b6865fee0cf9b2e3ce09af79a77d",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your PC's folders and projects",
+        "needs": "the scanner run on your PC"
+      }
     },
     {
       "repo": "findastra-discord-presence",
@@ -382,7 +708,12 @@
       "interface_url": "apps/findastra-discord-presence-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.1-20261008-pets",
-      "source_commit": "25bfb4031ee98e5f496b052643189f56cfec92be"
+      "source_commit": "25bfb4031ee98e5f496b052643189f56cfec92be",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the OpenAI and Anthropic presence apps",
+        "needs": "Discord open with activity sharing on"
+      }
     },
     {
       "repo": "portfolio-puffer",
@@ -399,7 +730,12 @@
       "interface_url": "apps/portfolio-puffer-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "aef38db6544322c54e01b0ef9a1cf8dff1a8fcf1"
+      "source_commit": "aef38db6544322c54e01b0ef9a1cf8dff1a8fcf1",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your updates worth sharing",
+        "needs": "a drafted update approved or posted"
+      }
     },
     {
       "repo": "drum-dog",
@@ -416,7 +752,12 @@
       "interface_url": "apps/drum-dog-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "f6f9470a5cdea6eb8e620696cf5eb2876dbf764e"
+      "source_commit": "f6f9470a5cdea6eb8e620696cf5eb2876dbf764e",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your track ideas and samples",
+        "needs": "a sample permission confirmed"
+      }
     },
     {
       "repo": "vscode-angel",
@@ -433,7 +774,12 @@
       "interface_url": "apps/vscode-angel-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "37c1727f7ba304e835b6f65f53d04d3a308d9126"
+      "source_commit": "37c1727f7ba304e835b6f65f53d04d3a308d9126",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your code cleanup worklist",
+        "needs": "a finding reviewed"
+      }
     },
     {
       "repo": "ghost-protocol",
@@ -452,7 +798,12 @@
       "interface_live_url": "https://findastra.github.io/ghost-protocol/",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008-pets",
-      "source_commit": "1b2ba2723b4508891281fe2e8a3bced0cb3e3b6a"
+      "source_commit": "1b2ba2723b4508891281fe2e8a3bced0cb3e3b6a",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your security checklist",
+        "needs": "a security step only you can do"
+      }
     },
     {
       "repo": "project-parrot",
@@ -470,7 +821,201 @@
       "interface_url": "apps/project-parrot-20261008.html",
       "visibility": "public",
       "source_tag": "v0.1.0-20261008",
-      "source_commit": "43f2bc7eee8d4bf4cec96a99e2f2ac4518c8f2cb"
+      "source_commit": "43f2bc7eee8d4bf4cec96a99e2f2ac4518c8f2cb",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your project ideas",
+        "needs": "a yes or no on an idea that is due"
+      }
+    }
+  ],
+  "pipeline": [
+    {
+      "repo": "claude-bot",
+      "pet": "Claude Bot",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "A small floating Claude control on the Windows desktop: an orange face, a status bubble and a quick-chat box.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the Claude Bot plan and build",
+        "needs": "a decision on the plan"
+      },
+      "note": "Cards 001-003."
+    },
+    {
+      "repo": "rgbee",
+      "pet": "RGBee",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Plans and previews lighting scenes for every RGB light in the room: room lights, mouse pad, mouse, PC and keyboard. Sending scenes to the real lights is planned.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your RGB lights and scenes",
+        "needs": "the brand and model of each light"
+      },
+      "note": "Card 004. Art waits on Astra."
+    },
+    {
+      "repo": "mine-mole",
+      "pet": "Mine Mole",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Researching whether mining crypto on Astra's own PC is worth the power.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the crypto mining research",
+        "needs": "your power price and graphics card model"
+      }
+    },
+    {
+      "repo": "mail-snail",
+      "pet": "Mail Snail",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Placeholder: a mail pet. The job is not decided yet, and it connects to no mail account.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should Mail Snail do?"
+      },
+      "note": "Card 007."
+    },
+    {
+      "repo": "patch-cat",
+      "pet": "Patch Cat",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder. The job is not decided yet.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should Patch Cat do?"
+      }
+    },
+    {
+      "repo": "meme-fiend",
+      "pet": "Meme Fiend",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Meme saver and maker. Your memes stay on your PC.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your saved memes (on your PC only)",
+        "needs": "a meme folder chosen"
+      }
+    },
+    {
+      "repo": "astras-gif-maker",
+      "pet": "Gif Giraffe",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder for a pet app that will make GIFs.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what kind of GIFs should I make?"
+      },
+      "note": "Was a candidate; now a pet repo."
+    },
+    {
+      "repo": "backup-beaver",
+      "pet": "Backup Beaver",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder: a backup pet. The job is not decided yet.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should Backup Beaver back up?"
+      }
+    },
+    {
+      "repo": "rift-rabbit",
+      "pet": "Rift Rabbit",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "A white rabbit that preps and tracks VR software and performance.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "your VR software and performance notes",
+        "needs": "your headset and PC details"
+      }
+    },
+    {
+      "repo": "fuzzboi-friend",
+      "pet": "Fuzzboi Friend",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Makes your own Fuzzboi: type a six-digit hex code and get that exact Fuzzboi as a PNG.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the Fuzzboi maker and its live site",
+        "needs": "your OK to register me in the Cage"
+      },
+      "note": "Card 006: patch and paid sheet ready."
+    },
+    {
+      "repo": "wifi-butterfly",
+      "pet": "Wifi Butterfly",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder: a monarch butterfly pet. What it does is not decided yet.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should Wifi Butterfly do?"
+      }
+    },
+    {
+      "repo": "deck-duck",
+      "pet": "Deck Duck",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Placeholder: an Elgato Stream Deck inspired pet. The job is not decided yet.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should Deck Duck do?"
+      }
+    },
+    {
+      "repo": "mesh-moth",
+      "pet": "Mesh Moth",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder for a pet that stands for a Meshtastic node: it will show the node's place in a radio mesh.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "the Meshtastic node plan",
+        "needs": "a job: what should Mesh Moth watch?"
+      }
+    },
+    {
+      "repo": "raspberry-berry",
+      "pet": "Raspberry Pi",
+      "visibility": "private",
+      "status": "hatching",
+      "job": "Placeholder for a raspberry-berry pet. It will be a small companion for a Raspberry Pi.",
+      "added": "2026-10-09",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "my plan",
+        "needs": "a job: what should the Raspberry Pi pet do?"
+      }
     }
   ],
   "candidates": [
@@ -483,11 +1028,6 @@
       "name": "Piranesi House",
       "repo": "piranesi-house",
       "why": "Local VRChat world project, not published."
-    },
-    {
-      "name": "Astra's GIF Maker",
-      "repo": "astras-gif-maker",
-      "why": "Local single-file tool, not published."
     },
     {
       "name": "Image Bridge",

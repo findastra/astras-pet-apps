@@ -33,6 +33,16 @@ Write results to <path>, set status: done, commit.
 ```
 Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 
+## Hatching or changing a pet
+- A new pet repo needs `pet.json` with an `audit` block, the `pet-app` topic, and an AGENTS.md that links
+  `findastra/astras-pet-apps` and its PET-FILES.md. The Farmer's daily round finds it and adds it to the
+  pipeline; leave a `farmer-register-<repo>` card in `astras-pet-apps/handoffs/` too.
+- Changing a pet's name, job, status, bubble lines (`says`), mood lines (`moods`) or audit: also put the change in
+  `cage.submit` in its pet.json with today's date, so the Farmer picks it up. See PET-FILES.md, "Submitting a
+  change to the Farmer".
+- To ask Astra for something, leave a card with `status: open (waiting on Astra: <what you need>)`. The pet
+  turns sick and that text becomes its bubble on the Cage and the Farmer's desk.
+
 ## Rules
 - One card, one deliverable. Name the files to read. Never paste keys or personal data.
 - Before starting a card, set `status: taken by <who>` and commit, so two assistants do not

@@ -1,0 +1,564 @@
+{
+  "pets": {
+    "github-goldfish": {
+      "pet": "GitHub Goldfish",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "data-dealer": {
+      "pet": "Chip",
+      "mood": "sick",
+      "says": "Need: card 001 (judge calibration) (+1 more)",
+      "needs": [
+        "card 001 (judge calibration)",
+        "card 004 (discovery calls)"
+      ],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "api-fairy": {
+      "pet": "API Fairy",
+      "mood": "worried",
+      "says": "To fix: my README needs \"Limits\"",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "unity-unicorn": {
+      "pet": "Unity Unicorn",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "learn-python": {
+      "pet": "Python Panther",
+      "mood": "worried",
+      "says": "3 to fix: my README needs \"how to run it\", …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"how to run it\" section.",
+          "label": "my README needs \"how to run it\""
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "vrchat-ai-astra": {
+      "pet": "Astra Wisp",
+      "mood": "worried",
+      "says": "3 to fix: my README needs the credit line, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "health-hummy": {
+      "pet": "Health Hummy",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "finance-finch": {
+      "pet": "Finance Finch",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "mommys": {
+      "pet": "Mommy's Mommies",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "paper-girl": {
+      "pet": "Paper Girl",
+      "mood": "worried",
+      "says": "3 to fix: my README needs the credit line, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "file-master": {
+      "pet": "File Master",
+      "mood": "worried",
+      "says": "2 to fix: my README needs the credit line, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "findastra-discord-presence": {
+      "pet": "Discord Damsel",
+      "mood": "worried",
+      "says": "3 to fix: my README needs the credit line, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "portfolio-puffer": {
+      "pet": "Portfolio Puffer",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "drum-dog": {
+      "pet": "Drum Dog",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "vscode-angel": {
+      "pet": "VSCode Angel",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "ghost-protocol": {
+      "pet": "Ghost Protocol",
+      "mood": "worried",
+      "says": "3 to fix: my README needs the credit line, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "project-parrot": {
+      "pet": "Project Parrot",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "claude-bot": {
+      "pet": "Claude Bot",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "rgbee": {
+      "pet": "RGBee",
+      "mood": "sick",
+      "says": "Need: the brand and model of each light",
+      "needs": [
+        "the brand and model of each light"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "mine-mole": {
+      "pet": "Mine Mole",
+      "mood": "worried",
+      "says": "3 to fix: my README needs \"how to run it\", …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"how to run it\" section.",
+          "label": "my README needs \"how to run it\""
+        },
+        {
+          "sev": "warn",
+          "msg": "README has no \"Limits\" section.",
+          "label": "my README needs \"Limits\""
+        },
+        {
+          "sev": "note",
+          "msg": "No CLAUDE.md.",
+          "label": "add CLAUDE.md"
+        },
+        {
+          "sev": "warn",
+          "msg": "No LICENSE.",
+          "label": "add a LICENSE"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "mail-snail": {
+      "pet": "Mail Snail",
+      "mood": "sick",
+      "says": "Need: a job: what should Mail Snail do",
+      "needs": [
+        "a job: what should Mail Snail do"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "patch-cat": {
+      "pet": "Patch Cat",
+      "mood": "sick",
+      "says": "Need: a job: what should Patch Cat do",
+      "needs": [
+        "a job: what should Patch Cat do"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "meme-fiend": {
+      "pet": "Meme Fiend",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "astras-gif-maker": {
+      "pet": "Gif Giraffe",
+      "mood": "sick",
+      "says": "Need: a job: what kind of GIFs should I make",
+      "needs": [
+        "a job: what kind of GIFs should I make"
+      ],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "backup-beaver": {
+      "pet": "Backup Beaver",
+      "mood": "sick",
+      "says": "Need: a job: what should Backup Beaver back up",
+      "needs": [
+        "a job: what should Backup Beaver back up"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "rift-rabbit": {
+      "pet": "Rift Rabbit",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "fuzzboi-friend": {
+      "pet": "Fuzzboi Friend",
+      "mood": "sick",
+      "says": "Need: what letters A–F mean",
+      "needs": [
+        "what letters A–F mean"
+      ],
+      "findings": [
+        {
+          "sev": "note",
+          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
+          "label": "my job wording differs from the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "wifi-butterfly": {
+      "pet": "Wifi Butterfly",
+      "mood": "sick",
+      "says": "Need: a job: what should Wifi Butterfly do",
+      "needs": [
+        "a job: what should Wifi Butterfly do"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "deck-duck": {
+      "pet": "Deck Duck",
+      "mood": "sick",
+      "says": "Need: a job: what should Deck Duck do",
+      "needs": [
+        "a job: what should Deck Duck do"
+      ],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
+          "label": "my AGENTS.md should point at the Cage"
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "mesh-moth": {
+      "pet": "Mesh Moth",
+      "mood": "sick",
+      "says": "Need: a job: what should Mesh Moth watch",
+      "needs": [
+        "a job: what should Mesh Moth watch"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "raspberry-berry": {
+      "pet": "Raspberry Pi",
+      "mood": "sick",
+      "says": "Need: a job: what should the Raspberry Pi pet do",
+      "needs": [
+        "a job: what should the Raspberry Pi pet do"
+      ],
+      "findings": [],
+      "checked": "2026-10-10T05:48:42.552Z"
+    },
+    "astras-pet-apps": {
+      "pet": "Friendly Farmer",
+      "mood": "worried",
+      "says": "14 pets on GitHub wait to be registered in the Cage.",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "warn",
+          "msg": "14 pets on GitHub wait to be registered in the Cage."
+        }
+      ],
+      "checked": "2026-10-10T05:48:42.552Z"
+    }
+  },
+  "updated": "2026-10-10T05:48:42.552Z",
+  "needs_astra": [
+    {
+      "repo": "data-dealer",
+      "pet": "Chip",
+      "need": "card 001 (judge calibration)"
+    },
+    {
+      "repo": "rgbee",
+      "pet": "RGBee",
+      "need": "the brand and model of each light"
+    },
+    {
+      "repo": "mail-snail",
+      "pet": "Mail Snail",
+      "need": "a job: what should Mail Snail do"
+    },
+    {
+      "repo": "patch-cat",
+      "pet": "Patch Cat",
+      "need": "a job: what should Patch Cat do"
+    },
+    {
+      "repo": "astras-gif-maker",
+      "pet": "Gif Giraffe",
+      "need": "a job: what kind of GIFs should I make"
+    },
+    {
+      "repo": "backup-beaver",
+      "pet": "Backup Beaver",
+      "need": "a job: what should Backup Beaver back up"
+    },
+    {
+      "repo": "fuzzboi-friend",
+      "pet": "Fuzzboi Friend",
+      "need": "what letters A–F mean"
+    },
+    {
+      "repo": "wifi-butterfly",
+      "pet": "Wifi Butterfly",
+      "need": "a job: what should Wifi Butterfly do"
+    },
+    {
+      "repo": "deck-duck",
+      "pet": "Deck Duck",
+      "need": "a job: what should Deck Duck do"
+    },
+    {
+      "repo": "mesh-moth",
+      "pet": "Mesh Moth",
+      "need": "a job: what should Mesh Moth watch"
+    },
+    {
+      "repo": "raspberry-berry",
+      "pet": "Raspberry Pi",
+      "need": "a job: what should the Raspberry Pi pet do"
+    }
+  ]
+}
