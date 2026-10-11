@@ -2,7 +2,7 @@
 
 *The running list of everyone who lives in the Cage. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*
 
-**19 pet apps so far, drawn as 19 characters (19 app pets, 0 companions, 0 mascots). 18 of the 19 pet apps have a repo on GitHub.**
+**19 pet apps so far, drawn as 19 characters (19 app pets, 0 companions, 0 mascots). 19 of the 19 pet apps have a repo on GitHub.**
 
 Whether each of those repos carries its `pet.json` and the `pet-app` topic is not recorded here. Run `npm run check -- --online` to ask GitHub.
 
@@ -34,7 +34,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | 16 | **VSCode Angel** | pet | hatching | [vscode-angel](https://github.com/findastra/vscode-angel) | Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned. | <img src="art/frames/vscode-angel/idle.png" width="48" height="48" alt="vscode-angel idle"> |
 | 17 | **Ghost Protocol** | pet | hatching | [ghost-protocol](https://github.com/findastra/ghost-protocol) | A personal cybersecurity checklist for reviewing your own security habits and tracking the steps you complete. | <img src="art/frames/ghost-protocol/idle-20261008.png" width="48" height="48" alt="ghost-protocol idle"> |
 | 18 | **Project Parrot** | pet | hatching | [project-parrot](https://github.com/findastra/project-parrot) | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | <img src="art/frames/project-parrot/idle-20261008.png" width="48" height="48" alt="project-parrot idle"> |
-| 19 | **Voicemeeter Bug** | pet | growing | not yet | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
+| 19 | **Voicemeeter Bug** | pet | growing | private repo | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
 
 ## Every mood
 
@@ -184,7 +184,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 
 ### Voicemeeter Bug
 
-*DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Made with OpenAI Codex (GPT-6) on 2026-10-08. Audio repair runs in the separate local Windows app; browser moods do not measure audio health. Not on GitHub yet.*
+*DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Made with OpenAI Codex (GPT-6) on 2026-10-08. Audio repair runs in the separate local Windows app; browser moods do not measure audio health. Source in the private repo findastra/voicemeeter-bug since 2026-10-11.*
 
 | idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|

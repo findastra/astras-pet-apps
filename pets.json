@@ -837,17 +837,18 @@
       "asset_date": "20261008",
       "display_scale": 1,
       "status": "growing",
-      "published": false,
+      "published": true,
       "job": "A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app.",
       "added": "2026-10-08",
-      "note": "DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Made with OpenAI Codex (GPT-6) on 2026-10-08. Audio repair runs in the separate local Windows app; browser moods do not measure audio health. Not on GitHub yet.",
+      "note": "DRAFT. A compact neckless grey bug with red and black details, shown at the standard pet height. Made with OpenAI Codex (GPT-6) on 2026-10-08. Audio repair runs in the separate local Windows app; browser moods do not measure audio health. Source in the private repo findastra/voicemeeter-bug since 2026-10-11.",
       "interface_local_url": "apps/voicemeeter-bug-20261008.html",
       "interface_url": "apps/voicemeeter-bug-20261008.html",
       "audit": {
         "cadence": "weekly",
         "subject": "your Voicemeeter audio",
         "needs": "the Bug running on your PC"
-      }
+      },
+      "visibility": "private"
     }
   ],
   "pipeline": [
