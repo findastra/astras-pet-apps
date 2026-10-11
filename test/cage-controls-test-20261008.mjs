@@ -153,7 +153,7 @@ test('Every pet has a known kind, and every rule names a real pet or kind', () =
 
 test('Sky pets stay high, the fish swims mid-height, and ground pets stay on the floor', () => {
   const t = boot({ reduced: false }); outside(t);
-  for (const p of t.api.actors.pets) if (p.kind === 'bird') p.mode = 'caged'; // no one chasing the fish
+  for (const p of t.api.actors.pets) if (p.kind === 'bird' || p.kind === 'bug') p.mode = 'caged'; // no one chasing the fish, and nothing for the fish to chase
   run(t, 20);
   for (const p of t.api.actors.pets) {
     const b = t.api.petBounds(p), zone = life.kinds[p.kind].zone, h = b.y1 - b.y0, at = (p.y - b.y0) / h;
@@ -167,6 +167,7 @@ test('Sky pets stay high, the fish swims mid-height, and ground pets stay on the
 test('Birds fly together and the friend groups hang out', () => {
   const t = boot({ reduced: false }); outside(t);
   pet(t, 'goldfish').mode = 'caged'; // keep the birds from chasing the fish for this check
+  for (const p of t.api.actors.pets) if (p.kind === 'bug') p.mode = 'caged'; // or a bug
   run(t, 25);
   const birds = t.api.actors.pets.filter(p => p.kind === 'bird');
   const spread = Math.max(...birds.map(p => p.x)) - Math.min(...birds.map(p => p.x));
