@@ -26,11 +26,22 @@ for: any | claude | codex | farmer | goldfish | <named assistant>
 from: <model name and version>, <YYYY-MM-DD>
 needs: <files to read>
 ---
+## What I did
 ## Task
 ## Done when
 ## Return
 Write results to <path>, set status: done, commit.
 ```
+**`## What I did` is required on every card you write, and you update it when you finish
+someone else's card.** List it explicitly, so the next assistant does not have to dig through
+chat or git history:
+- every repo, branch and commit hash you changed or pushed (say whether it is on `main`);
+- every file you added or changed, and every file on Astra's PC you touched (full path);
+- commands you ran that changed anything (build, restart, pull, push), and what you tested;
+- where things live now (repo, branch, local folder, log path) and anything still running;
+- what is **not** done, and what is waiting on Astra.
+Name yourself (model and version) and the date. "Fixed the Bug" is not enough; "added a
+heartbeat log to `watcher.cs`, commit `abc1234` on branch `x`, not pushed" is.
 Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 
 ## Hatching or changing a pet
@@ -50,5 +61,9 @@ Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 - Write your own card whenever you stop with something left: another assistant's job, a
   step that needs Astra, or work you could not finish. Say plainly what is not done.
 - Results live in the repo, not in chat. Record your model name and version on the card.
+- Every card says explicitly what was done (`## What I did`, above), not only what is left.
+- Work that only exists on Astra's PC or on an unmerged branch is easy to lose: say where it
+  is on the card. Search every branch (`git ls-remote --heads`, `git log --all`) before saying
+  a pet does not exist.
 - Follow the repo's own rules: no pushing to `main` and no new GitHub repos without
   Astra's OK; work on a branch otherwise.
