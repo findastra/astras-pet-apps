@@ -12,13 +12,45 @@ const args = process.argv.slice(2);
 const external = args[0] === '--directory' ? args[1] : null;
 const ids = external ? [basename(resolve(external))] : args;
 if (!ids.length) throw new Error('Pass one or more desktop-art pet directory names.');
+
+// Generated sheets can have uneven rows and columns. Cut through transparent
+// gutters instead of clipping a limb that happens to cross an exact third.
+function gutterCuts(src, axis) {
+  const length = axis === 'x' ? src.width : src.height;
+  const cross = axis === 'x' ? src.height : src.width;
+  const empty = Array.from({ length }, (_, p) => {
+    for (let q = 0; q < cross; q++) {
+      const x = axis === 'x' ? p : q, y = axis === 'x' ? q : p;
+      if (src.rgba[(y * src.width + x) * 4 + 3] >= 32) return false;
+    }
+    return true;
+  });
+  const cuts = [0];
+  for (const fraction of [1 / 3, 2 / 3]) {
+    const target = length * fraction;
+    const start = Math.ceil(target - length * 0.1);
+    const end = Math.floor(target + length * 0.1);
+    const gaps = [];
+    for (let p = start; p <= end; p++) {
+      if (!empty[p]) continue;
+      const left = p;
+      while (p < end && empty[p + 1]) p++;
+      if (p - left >= 2) gaps.push(Math.round((left + p) / 2));
+    }
+    if (!gaps.length) throw new Error(`No clear ${axis} gutter near ${Math.round(target)}px; use a sheet with separated rows and columns.`);
+    cuts.push(gaps.sort((a, b) => Math.abs(a - target) - Math.abs(b - target))[0]);
+  }
+  return [...cuts, length];
+}
+
 for (const id of ids) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) throw new Error('Invalid pet id.');
   const dir = external ? resolve(external) : resolve(root, 'desktop-art', id);
   const src = decodePng(readFileSync(resolve(dir, 'sheet-20261011.png')));
+  const xs = gutterCuts(src, 'x'), ys = gutterCuts(src, 'y');
   const cells = MOODS.map((mood, i) => {
-    const x0 = Math.round((i % 3) * src.width / 3), y0 = Math.round(Math.floor(i / 3) * src.height / 3);
-    const x1 = Math.round((i % 3 + 1) * src.width / 3), y1 = Math.round((Math.floor(i / 3) + 1) * src.height / 3);
+    const x0 = xs[i % 3], y0 = ys[Math.floor(i / 3)];
+    const x1 = xs[i % 3 + 1], y1 = ys[Math.floor(i / 3) + 1];
     let left = x1, top = y1, right = x0, bottom = y0;
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
       if (src.rgba[(y * src.width + x) * 4 + 3] < 32) continue;
