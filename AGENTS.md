@@ -57,3 +57,7 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
 
 Desktop roster/art publication and floor lineup: OpenAI Codex (GPT-6), 2026-10-11. Star double-click lines up ground pets below flyers; right-click resumes roaming. All sparkle code removed. Generated sprite alpha is thresholded for Windows color-key transparency. Desktop/private draft roster is local-only. See docs/pet-release-20261011.md.
+
+Desktop revision by OpenAI Codex (GPT-6), 2026-10-11: double-click star toggles lineup/roam; per-pixel wing/fin/ghost transparency, animated RGBee bands, original-layer random jagged Fuzzboi, revised desktop art and sizes. Details: docs/pet-revisions-20261011.md. Preserve native layered rendering; never reintroduce sparkle trails.
+
+Latest owner follow-up, OpenAI Codex (GPT-6), 2026-10-11: use docs/pet-revisions-20261011.md as the current cross-repo handoff, including all 30 corresponding repo commits. Fuzzboi triple-click cycles original body styles; star tray/desktop share a black-outline raster; Claude Bot enlarged to BSOD size; Paper Girl and File Master have equal heights; Duck RGB keys; smaller Bee/Moth/Berry; soles-facing feet on Penguin/Finch/Duck. Preserve the final sizes and source sheets recorded there.

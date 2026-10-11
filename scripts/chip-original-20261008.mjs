@@ -68,7 +68,7 @@ export function chipLayout(size = 256) {
 }
 
 /** A deterministic pixel rendering of the original yellow pocket-launcher shell. */
-export function chipOriginalSprite({ size = 256 } = {}) {
+export function chipOriginalSprite({ size = 256, screenFace = false } = {}) {
   const layout = chipLayout(size), s = layout.scale;
   const { x, y, screenX, screenY, lcdX, lcdY } = layout;
   const frames = {};
@@ -97,9 +97,20 @@ export function chipOriginalSprite({ size = 256 } = {}) {
     rounded(screenX, screenY, 52 * s, 39 * s, 9 * s, 9 * s, CHIP_COLOURS.shellInk);
     rounded(screenX + 3 * s, screenY + 3 * s, 46 * s, 33 * s, 6 * s, 6 * s, CHIP_COLOURS.lcd);
     const state = CHIP_MOODS[mood];
-    const original = originalChipPixels(state.face, state);
-    for (let cy = 0; cy < 24; cy++) for (let cx = 0; cx < 32; cx++) {
-      for (let dy = 0; dy < s; dy++) for (let dx = 0; dx < s; dx++) pixel(lcdX + cx * s + dx, lcdY + cy * s + dy, original[cy * 32 + cx]);
+    if (screenFace) {
+      // Owner's desktop revision: the LCD itself is the face, no tiny character inside.
+      const dot=(cx,cy,w=1,h=1)=>{for(let yy=0;yy<h*s;yy++)for(let xx=0;xx<w*s;xx++)pixel(screenX+cx*s+xx,screenY+cy*s+yy,CHIP_COLOURS.ink);};
+      const shut=state.blink||state.face==='sleep';
+      for(const cx of [16,33])dot(cx,15,3,shut?1:4);
+      if(state.face==='hungry'){dot(24,24,4,1);dot(24,27,4,1);dot(24,24,1,4);dot(27,24,1,4);}
+      else if(state.face==='worried'){dot(23,25,6,1);dot(22,26);dot(29,26);}
+      else if(state.face==='think'||state.face==='sleep')dot(24,25,4,1);
+      else {dot(22,24);dot(23,25,6,1);dot(29,24);}
+    } else {
+      const original = originalChipPixels(state.face, state);
+      for (let cy = 0; cy < 24; cy++) for (let cx = 0; cx < 32; cx++) {
+        for (let dy = 0; dy < s; dy++) for (let dx = 0; dx < s; dx++) pixel(lcdX + cx * s + dx, lcdY + cy * s + dy, original[cy * 32 + cx]);
+      }
     }
     drawText(rgba, size, 'CHIP', Math.floor((size - textWidth('CHIP', s)) / 2), screenY + 45 * s, CHIP_COLOURS.shellInk, s);
     const pal = {}, keys = new Map(), alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

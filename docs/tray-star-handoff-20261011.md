@@ -61,3 +61,6 @@ Saved desktop-art/mommys-mommies-interactions/sheet-20261011.png and nine derive
 
 ## Publication and floor lineup
 Owner approved pushing all pet work and syncing corresponding repos. Double-click desktop star now shows pets and lines up ground pets on the working-area floor, flying pets above; no resizing. Crowded rows wrap upward. Single click retains show/hide. Right-click Let the pets roam resumes motion; blinking continues while lined up. Tested no overlaps, negative-monitor bounds and flyer separation, and double-click action. Sugarcube art now exists; local drafts manifest has 16 drafts, for 35 total pets. All character and renderer updates are included in this publication.
+
+## Latest desktop revision
+See docs/pet-revisions-20261011.md for the final star toggle, sizes, native transparency, RGBee bands and original jagged Fuzzboi randomization. OpenAI Codex (GPT-6), 2026-10-11.

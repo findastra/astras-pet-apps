@@ -49,7 +49,11 @@ namespace AstraDesktopPets {
     internal string Id,Name,Role,Interface,Kind;
     internal Bitmap Idle,Blink;
     internal bool DesktopArt;
-    Bitmap idleInk,blinkInk;
+    Bitmap idleInk,blinkInk,idleBands,blinkBands;
+    internal bool Rainbow { get { return Id=="rgbee"||Id=="deck-duck"; } }
+    internal bool Layered { get { return Id=="ghost-protocol"||Id=="goldfish"||Id=="api-fairy"||Id=="astra-wisp"||Rainbow||Id=="wifi-butterfly"||Id=="mesh-moth"||Id=="vscode-angel"; } }
+    internal string FuzzStyle;
+    Dictionary<string,object> draftEntry;
     internal Rectangle Crop;
     internal RectangleF Hit;
     internal static PetSprite Load(Dictionary<string,object> entry,Dictionary<string,object> framesIndex) {
@@ -58,7 +62,7 @@ namespace AstraDesktopPets {
       var paths=(Dictionary<string,object>)((Dictionary<string,object>)raw)["frames"];
       string idle=PetFiles.SafePath(PetFiles.Text(paths,"idle")),blink=PetFiles.SafePath(PetFiles.Text(paths,"blink"));
       // Desktop-only drafts: the shared registry and website art keep their own assets.
-      if(pet.Id=="health-hummy"||pet.Id=="farmer"||pet.Id=="discord-damsel"||pet.Id=="drum-dog"||pet.Id=="mommys-mommies") {
+      if(pet.Id=="health-hummy"||pet.Id=="farmer"||pet.Id=="discord-damsel"||pet.Id=="drum-dog"||pet.Id=="mommys-mommies"||pet.Id=="finance-finch"||pet.Id=="python-panther"||pet.Id=="paper-girl"||pet.Id=="chip"||pet.Id=="file-master"||pet.Id=="astra-wisp"||pet.Id=="project-parrot"||pet.Id=="portfolio-puffer"||pet.Id=="vscode-angel"||pet.Id=="voicemeeter-bug") {
         string localIdle=PetFiles.SafePath("desktop-art/"+pet.Id+"/idle-20261011.png"),localBlink=PetFiles.SafePath("desktop-art/"+pet.Id+"/blink-20261011.png");
         if(File.Exists(localIdle)!=File.Exists(localBlink))throw new InvalidDataException("Incomplete desktop artwork for "+pet.Name);
         if(File.Exists(localIdle)){idle=localIdle;blink=localBlink;pet.DesktopArt=true;}
@@ -66,16 +70,62 @@ namespace AstraDesktopPets {
       pet.Idle=Detached(idle);pet.Blink=Detached(blink);
       if(pet.DesktopArt) { CrispTransparency(pet.Idle);CrispTransparency(pet.Blink); }
       if(pet.Id=="portfolio-puffer") { PinkBelly(pet.Idle);PinkBelly(pet.Blink); }
-      pet.idleInk=BlackMask(pet.Idle);pet.blinkInk=BlackMask(pet.Blink);
       pet.Crop=Rectangle.Union(AlphaBounds(pet.Idle),AlphaBounds(pet.Blink));
+      pet.PrepareEffects();pet.idleInk=BlackMask(pet.Idle);pet.blinkInk=BlackMask(pet.Blink);
       return pet;
     }
-    internal static PetSprite LoadDraft(Dictionary<string,object> entry) {
+    internal static PetSprite LoadDraft(Dictionary<string,object> entry,string style="B") {
       var pet=new PetSprite { Id=PetFiles.Text(entry,"id"),Name=PetFiles.Text(entry,"name")+" (draft)",Role="pet",Interface=PetFiles.Text(entry,"interface"),DesktopArt=true };
-      pet.Idle=Detached(PetFiles.Text(entry,"idle"));pet.Blink=Detached(PetFiles.Text(entry,"blink"));
+      object variants;
+      if(pet.Id=="fuzzboi-friend"&&entry.TryGetValue("variants",out variants)&&((ArrayList)variants).Count>0) {
+        pet.draftEntry=entry;pet.FuzzStyle=style;
+        var choices=new List<Dictionary<string,object>>();foreach(Dictionary<string,object> variant in (ArrayList)variants)if(PetFiles.Text(variant,"style","B")==style)choices.Add(variant);
+        if(choices.Count==0)throw new InvalidDataException("No original Fuzzboi recipes for style "+style);
+        var choice=choices[new Random(Guid.NewGuid().GetHashCode()).Next(choices.Count)];
+        pet.Idle=new Bitmap(256,256,PixelFormat.Format32bppArgb);
+        using(var canvas=Graphics.FromImage(pet.Idle))foreach(string path in (ArrayList)choice["layers"]){
+          using(var layer=Detached(path)) {
+            if(Path.GetFileName(path)=="outlineB.png")using(var ink=new ImageAttributes()){
+              var black=new ColorMatrix();black.Matrix00=black.Matrix11=black.Matrix22=0;ink.SetColorMatrix(black);
+              canvas.DrawImage(layer,new Rectangle(0,0,256,256),0,0,layer.Width,layer.Height,GraphicsUnit.Pixel,ink);
+            }else canvas.DrawImage(layer,new Rectangle(0,0,256,256));
+          }
+        }
+        pet.Blink=new Bitmap(pet.Idle);pet.Name+=" "+style+" #"+PetFiles.Text(choice,"code");
+      }else {pet.Idle=Detached(PetFiles.Text(entry,"idle"));pet.Blink=Detached(PetFiles.Text(entry,"blink"));}
       CrispTransparency(pet.Idle);CrispTransparency(pet.Blink);
-      pet.idleInk=BlackMask(pet.Idle);pet.blinkInk=BlackMask(pet.Blink);
-      pet.Crop=Rectangle.Union(AlphaBounds(pet.Idle),AlphaBounds(pet.Blink));return pet;
+      pet.Crop=Rectangle.Union(AlphaBounds(pet.Idle),AlphaBounds(pet.Blink));
+      pet.PrepareEffects();pet.idleInk=BlackMask(pet.Idle);pet.blinkInk=BlackMask(pet.Blink);return pet;
+    }
+    internal void NextFuzzStyle() {
+      if(draftEntry==null)return;
+      var next=LoadDraft(draftEntry,FuzzStyle=="B"?"C":FuzzStyle=="C"?"A":"B");
+      Dispose();Idle=next.Idle;Blink=next.Blink;idleInk=next.idleInk;blinkInk=next.blinkInk;idleBands=next.idleBands;blinkBands=next.blinkBands;Crop=next.Crop;Name=next.Name;FuzzStyle=next.FuzzStyle;
+    }
+    void PrepareEffects() {
+      idleBands=ApplyEffects(Idle);blinkBands=ApplyEffects(Blink);
+    }
+    Bitmap ApplyEffects(Bitmap frame) {
+      if(!Layered)return null;
+      var bands=Rainbow?new Bitmap(frame.Width,frame.Height,PixelFormat.Format32bppArgb):null;
+      for(int y=Crop.Top;y<Crop.Bottom;y++)for(int x=Crop.Left;x<Crop.Right;x++) {
+        Color c=frame.GetPixel(x,y);if(c.A==0)continue;
+        float nx=(x-Crop.Left)/(float)Crop.Width,ny=(y-Crop.Top)/(float)Crop.Height;float opacity=1;
+        if(Id=="ghost-protocol")opacity=.38f;
+        else if(Id=="goldfish"&&c.R>150&&c.B>60&&c.G<160&&(ny<.27f||ny>.65f||nx<.27f||nx>.73f))opacity=.7f;
+        else if(Id=="api-fairy"&&c.B>140&&c.G>100&&c.R>100&&(nx<.32f||nx>.68f))opacity=.65f;
+        else if(Id=="astra-wisp"&&(nx<.28f||nx>.72f)&&ny>.18f&&ny<.8f)opacity=.65f;
+        else if(Id=="wifi-butterfly"&&(nx<.40f||nx>.60f)&&ny>.18f)opacity=.72f;
+        else if(Id=="rgbee"&&(nx<.30f||nx>.70f)&&ny>.18f&&c.B>160&&c.G>140)opacity=.6f;
+        else if(Id=="vscode-angel"&&ny>.24f&&ny<.92f&&nx>.24f&&nx<.76f&&c.R>170&&c.G>170&&c.B>170&&Math.Max(c.R,Math.Max(c.G,c.B))-Math.Min(c.R,Math.Min(c.G,c.B))<45)opacity=.6f;
+        else if(Id=="mesh-moth"&&(nx<.37f||nx>.63f)&&ny>.18f&&Math.Max(c.R,Math.Max(c.G,c.B))-Math.Min(c.R,Math.Min(c.G,c.B))<40)opacity=.7f;
+        if(opacity<1)frame.SetPixel(x,y,Color.FromArgb((int)(c.A*opacity),c.R,c.G,c.B));
+        // Only saturated abdomen bands cycle; pale blue/white wings stay unchanged.
+        if((Id=="rgbee"&&ny>.47f&&nx>.24f&&nx<.76f&&Math.Max(c.R,Math.Max(c.G,c.B))>180&&Math.Min(c.R,Math.Min(c.G,c.B))<50)||(Id=="deck-duck"&&ny>.5f&&ny<.85f&&nx>.2f&&nx<.8f&&c.R>150&&c.G<90&&c.B<90)) {
+          bands.SetPixel(x,y,c);frame.SetPixel(x,y,Color.Transparent);
+        }
+      }
+      return bands;
     }
     // WinForms color-key transparency cannot display partial alpha: it blends with
     // the magenta window background and leaves pink flecks around generated sprites.
@@ -103,11 +153,36 @@ namespace AstraDesktopPets {
     }
     internal void Draw(Graphics g,bool blink,RectangleF bounds) {
       var mask=blink?blinkInk:idleInk;
-      // One logical pixel, independent of source resolution or the pet's proportions.
-      for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(x!=0||y!=0) {
-        var edge=bounds;edge.Offset(x,y);g.DrawImage(mask,edge,Crop,GraphicsUnit.Pixel);
+      // Generated desktop sprites already include ink. Do not double their outline.
+      // Legacy sprites receive one physical pixel, regardless of display scaling.
+      float inkPixel=1;using(var transform=g.Transform)inkPixel=1/Math.Max(1,transform.Elements[0]);
+      if(!DesktopArt&&!Layered)for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(x!=0||y!=0) {
+        var edge=bounds;edge.Offset(x*inkPixel,y*inkPixel);g.DrawImage(mask,edge,Crop,GraphicsUnit.Pixel);
       }
       g.DrawImage(blink?Blink:Idle,bounds,Crop,GraphicsUnit.Pixel);
+      if(Rainbow) {
+        using(var colors=new ImageAttributes()) {
+          colors.SetColorMatrix(RgbCycle(Environment.TickCount & Int32.MaxValue));
+          g.DrawImage(blink?blinkBands:idleBands,new PointF[]{new PointF(bounds.Left,bounds.Top),new PointF(bounds.Right,bounds.Top),new PointF(bounds.Left,bounds.Bottom)},Crop,GraphicsUnit.Pixel,colors);
+        }
+      }
+    }
+    internal static ColorMatrix RgbCycle(long milliseconds) {
+      double phase=(milliseconds%6000)/2000.0;int step=(int)phase;float blend=(float)(phase-step);
+      var matrix=new float[5][];for(int i=0;i<5;i++)matrix[i]=new float[5];
+      for(int channel=0;channel<3;channel++){matrix[channel][(channel+step)%3]=1-blend;matrix[channel][(channel+step+1)%3]=blend;}
+      matrix[3][3]=matrix[4][4]=1;return new ColorMatrix(matrix);
+    }
+    internal bool HasPixel(bool blink,int x,int y) { return (blink?Blink:Idle).GetPixel(x,y).A>0||(Rainbow&&(blink?blinkBands:idleBands).GetPixel(x,y).A>0); }
+    internal void ValidateEffects() {
+      if(!Layered)return;int translucent=0,bands=0;
+      for(int y=Crop.Top;y<Crop.Bottom;y++)for(int x=Crop.Left;x<Crop.Right;x++) {
+        int alpha=Idle.GetPixel(x,y).A;if(alpha>0&&alpha<255)translucent++;
+        if(Id=="ghost-protocol"&&alpha>100)throw new Exception("Ghost must remain see-through.");
+        if(idleBands!=null&&idleBands.GetPixel(x,y).A>0)bands++;
+      }
+      if(translucent==0&&Id!="deck-duck")throw new Exception("Missing translucent pixels: "+Id);
+      if(Rainbow&&bands==0)throw new Exception("Missing animated rainbow bands: "+Id);
     }
     internal static Bitmap Detached(string path) { using(var original=new Bitmap(path))return new Bitmap(original); }
     internal static Rectangle AlphaBounds(Bitmap bitmap) {
@@ -115,7 +190,7 @@ namespace AstraDesktopPets {
       for(int y=0;y<bitmap.Height;y++)for(int x=0;x<bitmap.Width;x++)if(bitmap.GetPixel(x,y).A>0) { x0=Math.Min(x0,x);y0=Math.Min(y0,y);x1=Math.Max(x1,x);y1=Math.Max(y1,y); }
       if(x1<x0)throw new InvalidDataException("A pet frame is empty.");return Rectangle.FromLTRB(x0,y0,x1+1,y1+1);
     }
-    public void Dispose() { if(Idle!=null)Idle.Dispose();if(Blink!=null)Blink.Dispose();if(idleInk!=null)idleInk.Dispose();if(blinkInk!=null)blinkInk.Dispose(); }
+    public void Dispose() { if(Idle!=null)Idle.Dispose();if(Blink!=null)Blink.Dispose();if(idleInk!=null)idleInk.Dispose();if(blinkInk!=null)blinkInk.Dispose();if(idleBands!=null)idleBands.Dispose();if(blinkBands!=null)blinkBands.Dispose(); }
   }
 
   // Uses mouse-down times and Windows' configured interval/rectangle. Nothing is
@@ -143,7 +218,7 @@ namespace AstraDesktopPets {
       if(!held)return;held=false;
       if(dragged||String.IsNullOrEmpty(id)||id!=pressed){Cancel();return;}
       target=id;pressed=null;count++;due=down+interval;
-      if(count>=2)Complete();else Advance(now);
+      if(count>=(id=="fuzzboi-friend"?3:2))Complete();else Advance(now);
     }
     internal void Advance(long now) { if(!held&&count>0&&now>due)Complete(); }
     internal void Cancel() { target=pressed=null;count=0;held=false; }
@@ -186,10 +261,13 @@ namespace AstraDesktopPets {
     internal int SparkleCount { get { return 0; } }
 
     bool dragging,dragged,hover,blink;
+    readonly System.Windows.Forms.Timer shimmer=new System.Windows.Forms.Timer { Interval=50 };
     Point dragMouse,dragWindow;
     internal PetWindow(PetsWindow owner,PetSprite pet,float dpi,Random random) {
       host=owner;Pet=pet;scale=dpi;roamer=new Roamer(random);
       FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;AutoScaleMode=AutoScaleMode.None;BackColor=Color.Magenta;TransparencyKey=Color.Magenta;StartPosition=FormStartPosition.Manual;Text=pet.Name+" - desktop pet";
+      if(Pet.Layered)TransparencyKey=Color.Empty;
+      shimmer.Tick+=delegate{if(Visible)Present();};
       SetStyle(ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.UserPaint,true);
       ClientSize=new Size((int)Math.Ceiling((pet.Hit.Width+padding*2)*scale),(int)Math.Ceiling((pet.Hit.Height+padding*2)*scale));
       MouseEnter+=delegate { hover=true;Cursor=Cursors.Hand; };MouseLeave+=delegate { hover=false; };
@@ -199,15 +277,16 @@ namespace AstraDesktopPets {
       var menu=new ContextMenuStrip();menu.Opening+=delegate{host.CancelClicks();};menu.Items.Add("Open "+pet.Name,null,delegate{host.OpenPet(Pet);});menu.Items.Add("Hide the pets",null,delegate{host.SetPetsOut(false);});ContextMenuStrip=menu;
     }
     protected override bool ShowWithoutActivation { get { return true; } }
-    protected override CreateParams CreateParams { get { var cp=base.CreateParams;cp.ExStyle|=0x08000080;return cp; } }
+    protected override CreateParams CreateParams { get { var cp=base.CreateParams;cp.ExStyle|=0x08000080;if(Pet!=null&&Pet.Layered)cp.ExStyle|=0x00080000;return cp; } }
     protected override void OnMouseCaptureChanged(EventArgs e) { base.OnMouseCaptureChanged(e);if(dragging&&!Capture){dragging=false;dragged=true;host.CancelClicks();} }
-    protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e); }
+    protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e);if(Pet!=null&&Pet.Layered&&Visible)Present();if(Pet!=null&&Pet.Rainbow)shimmer.Enabled=Visible; }
+    internal void RefreshSize() { ClientSize=new Size((int)Math.Ceiling((Pet.Hit.Width+padding*2)*scale),(int)Math.Ceiling((Pet.Hit.Height+padding*2)*scale));Text=Pet.Name+" - desktop pet";Location=PetsWindow.Clamp(Location,Size,Screen.FromRectangle(Bounds).WorkingArea);Invalidate(); }
     internal bool HitPet(Point client) {
       float x=client.X/scale,y=client.Y/scale;var frame=blink?Pet.Blink:Pet.Idle;
       // Include the existing one-pixel black outline; sparkles never become input targets.
       for(int oy=-1;oy<=1;oy++)for(int ox=-1;ox<=1;ox++) {
         float px=(x+ox-padding)/Pet.Hit.Width,py=(y+oy-padding)/Pet.Hit.Height;
-        if(px>=0&&px<1&&py>=0&&py<1&&frame.GetPixel(Pet.Crop.X+(int)(px*Pet.Crop.Width),Pet.Crop.Y+(int)(py*Pet.Crop.Height)).A>0)return true;
+        if(px>=0&&px<1&&py>=0&&py<1&&Pet.HasPixel(blink,Pet.Crop.X+(int)(px*Pet.Crop.Width),Pet.Crop.Y+(int)(py*Pet.Crop.Height)))return true;
       }
       return false;
     }
@@ -218,15 +297,35 @@ namespace AstraDesktopPets {
       }
       base.WndProc(ref message);
     }
-    protected override void OnPaint(PaintEventArgs e) { base.OnPaint(e);var g=e.Graphics;g.ScaleTransform(scale,scale);g.InterpolationMode=InterpolationMode.NearestNeighbor;g.PixelOffsetMode=PixelOffsetMode.Half;Pet.Draw(g,blink,Body); }
+    protected override void OnPaint(PaintEventArgs e) { if(Pet.Layered){Present();return;}base.OnPaint(e);DrawPet(e.Graphics); }
+    void DrawPet(Graphics g) { g.ScaleTransform(scale,scale);g.InterpolationMode=InterpolationMode.NearestNeighbor;g.PixelOffsetMode=PixelOffsetMode.Half;Pet.Draw(g,blink,Body); }
+    [StructLayout(LayoutKind.Sequential,Pack=1)] struct Blend { public byte operation,flags,alpha,format; }
+    [DllImport("user32.dll",SetLastError=true)] static extern bool UpdateLayeredWindow(IntPtr window,IntPtr screen,ref Point location,ref Size size,IntPtr source,ref Point origin,int key,ref Blend blend,int flags);
+    [DllImport("user32.dll")] static extern IntPtr GetDC(IntPtr window);
+    [DllImport("user32.dll")] static extern int ReleaseDC(IntPtr window,IntPtr dc);
+    [DllImport("gdi32.dll")] static extern IntPtr CreateCompatibleDC(IntPtr dc);
+    [DllImport("gdi32.dll")] static extern IntPtr SelectObject(IntPtr dc,IntPtr value);
+    [DllImport("gdi32.dll")] static extern bool DeleteObject(IntPtr value);
+    [DllImport("gdi32.dll")] static extern bool DeleteDC(IntPtr dc);
+    void Present() {
+      if(!Pet.Layered||!Visible||!IsHandleCreated)return;
+      using(var bitmap=new Bitmap(Width,Height,PixelFormat.Format32bppArgb)) {
+        using(var canvas=Graphics.FromImage(bitmap)){canvas.Clear(Color.Transparent);DrawPet(canvas);}
+        IntPtr screen=GetDC(IntPtr.Zero),memory=CreateCompatibleDC(screen),native=bitmap.GetHbitmap(Color.FromArgb(0)),previous=IntPtr.Zero;
+        try {
+          previous=SelectObject(memory,native);var at=Location;var size=Size;var origin=Point.Empty;var blend=new Blend{alpha=255,format=1};
+          if(!UpdateLayeredWindow(Handle,screen,ref at,ref size,memory,ref origin,0,ref blend,2))throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+        }finally{if(previous!=IntPtr.Zero)SelectObject(memory,previous);DeleteObject(native);DeleteDC(memory);ReleaseDC(IntPtr.Zero,screen);}
+      }
+    }
     internal void Step(bool nextBlink) {
       if(!Visible)return;
-      if(blink!=nextBlink){blink=nextBlink;Invalidate();}
+      if(blink!=nextBlink||Pet.Rainbow){blink=nextBlink;Invalidate();}
       Point before=Location;
       if(!host.LinedUp&&!dragging&&!hover&&!host.ClickPending(Pet.Id))Location=roamer.Next(Location,Size,Screen.FromRectangle(Bounds).WorkingArea,Math.Max(1,(int)Math.Round(scale)));
-
+      if(Pet.Layered)Present();
     }
-    protected override void Dispose(bool disposing) { if(disposing){if(ContextMenuStrip!=null)ContextMenuStrip.Dispose();}base.Dispose(disposing); }
+    protected override void Dispose(bool disposing) { if(disposing){shimmer.Dispose();if(ContextMenuStrip!=null)ContextMenuStrip.Dispose();}base.Dispose(disposing); }
   }
 
   // The star and the Friendly Farmer. The star shows or hides every pet at once; while the
@@ -349,9 +448,9 @@ namespace AstraDesktopPets {
     void LayoutPets() {
       // Every pet stands the same height; wide art is fitted without distortion.
       foreach(var pet in pets) { float h=pet.Id=="voicemeeter-bug"?BugHeight:NormalHeight;float w=h*pet.Crop.Width/pet.Crop.Height;if(w>MaxPetWidth){h*=MaxPetWidth/w;w=MaxPetWidth;}float size=1;
-        switch(pet.Id) { case "paper-girl":size=0.78f;break;case "health-hummy":size=0.96f;break;case "voicemeeter-bug":case "portfolio-puffer":case "ghost-protocol":size=0.8f;break;case "finance-finch":size=0.85f;break;case "file-master":size=0.6f;break; }
+        switch(pet.Id) { case "wifi-butterfly":size=0.7f;break;case "fuzzboi-friend":size=0.75f;break;case "paper-girl":h=NormalHeight;w=h*pet.Crop.Width/pet.Crop.Height;size=0.72f;break;case "claude-bot":h=NormalHeight;w=h*pet.Crop.Width/pet.Crop.Height;size=1.5f;break;case "rift-rabbit":case "chat-rat":size=0.9f;break;case "meme-fiend":case "raspberry-berry":size=0.8f;break;case "rgbee":size=0.7f;break;case "mesh-moth":size=0.64f;break;case "spoonfed-sugarcube":size=0.7f;break;case "health-hummy":size=0.7776f;break;case "voicemeeter-bug":case "mail-snail":case "portfolio-puffer":case "ghost-protocol":size=0.8f;break;case "finance-finch":case "backup-beaver":case "patch-cat":size=0.85f;break;case "file-master":h=NormalHeight;w=h*pet.Crop.Width/pet.Crop.Height;size=0.72f;break; }
         pet.Hit=new RectangleF(0,0,w*size,h*size); }
-      float fh=NormalHeight,fw=fh*farmer.Crop.Width/farmer.Crop.Height;farmer.Hit=new RectangleF(0,0,fw,fh);
+      float fh=NormalHeight*0.9f,fw=fh*farmer.Crop.Width/farmer.Crop.Height;farmer.Hit=new RectangleF(0,0,fw,fh);
     }
     void CreatePetWindows(Rectangle area) { ClosePetWindows();LayoutPets();foreach(var pet in pets)roaming.Add(new PetWindow(this,pet,scale,random));roaming.Add(new PetWindow(this,farmer,scale,random));Scatter(area); }
     void ClosePetWindows() { foreach(var window in roaming){window.Close();window.Dispose();}roaming.Clear(); }
@@ -407,7 +506,7 @@ namespace AstraDesktopPets {
     void Press(object sender,MouseEventArgs e) { if(e.Button!=MouseButtons.Left)return;dragging=true;dragged=false;dragMouse=Cursor.Position;dragWindow=Location;Capture=true;var pet=At(e.Location);if(HitStar(e.Location))PetPress("star",Cursor.Position);else if(pet!=null)PetPress(pet.Id,Cursor.Position);else CancelClicks(); }
     void TrackPointer(object sender,MouseEventArgs e) {
       if(dragging) { Point delta=new Point(Cursor.Position.X-dragMouse.X,Cursor.Position.Y-dragMouse.Y);if(IsDrag(delta)){dragged=true;CancelClicks();}if(dragged){Location=Clamp(new Point(dragWindow.X+delta.X,dragWindow.Y+delta.Y),Size,Screen.FromPoint(Cursor.Position).WorkingArea);if(Compact)expandedLocation=new Point(Location.X,Location.Y-(int)(StarDrop*scale));}return; }
-      bool star=HitStar(e.Location);PetSprite pet=At(e.Location);if(pet!=hover||star!=hoverStar){hover=pet;hoverStar=star;tooltip.SetToolTip(this,star?"Click to "+(petsOut?"hide":"show")+" pets; double-click to line up":pet==null?"Drag to move the star ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· right-click for options":farmer.Name+" ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· double-click for his desk");Cursor=pet==null&&!star?Cursors.SizeAll:Cursors.Hand;}
+      bool star=HitStar(e.Location);PetSprite pet=At(e.Location);if(pet!=hover||star!=hoverStar){hover=pet;hoverStar=star;tooltip.SetToolTip(this,star?"Click to "+(petsOut?"hide":"show")+" pets; double-click to line up / roam":pet==null?"Drag to move the star ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· right-click for options":farmer.Name+" ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· double-click for his desk");Cursor=pet==null&&!star?Cursors.SizeAll:Cursors.Hand;}
     }
     void Release(object sender,MouseEventArgs e) {
       if(e.Button!=MouseButtons.Left||!dragging)return;dragging=false;Capture=false;
@@ -421,7 +520,13 @@ namespace AstraDesktopPets {
     internal bool ClickPending(string id) { return clicks.PendingFor(id); }
     internal void CancelClicks() { clicks.Cancel();clickTimer.Stop(); }
     void ResolveClicks(string id,int count) {
-      if(id=="star") { if(count>=2)LineUp();else SetPetsOut(!petsOut);return; }
+      if(id=="fuzzboi-friend"&&count>=3) {
+        var fuzz=pets.Find(p=>p.Id==id);if(fuzz==null)return;fuzz.NextFuzzStyle();LayoutPets();
+        var window=roaming.Find(p=>p.Pet==fuzz);if(window!=null)window.RefreshSize();
+        if(LinedUp)ArrangeFloor(Screen.FromRectangle(Bounds).WorkingArea);
+        testActions.Add("reroll:"+fuzz.FuzzStyle);WriteStatus();return;
+      }
+      if(id=="star") { if(count>=2){if(LinedUp){LinedUp=false;ShowPets();}else LineUp();}else SetPetsOut(!petsOut);return; }
       if(id==farmer.Id) { if(count>=2)OpenPet(farmer); }
       else { var pet=pets.Find(p=>p.Id==id);if(pet==null)return;if(count>=2)OpenPet(pet);else if(id=="voicemeeter-bug"){testActions.Add("repair:voicemeeter-bug");if(!test)PetFiles.StartBug("--repair");} }
       WriteStatus();
@@ -452,12 +557,12 @@ namespace AstraDesktopPets {
     }
     // Same puffy 40-pixel star and sparkle geometry as Voicemeeter Bug's launcher.
     static void DrawStar(Graphics g,bool sparkles=false) {
-      var saved=g.Save();g.SmoothingMode=SmoothingMode.AntiAlias;
+      var saved=g.Save();g.SmoothingMode=SmoothingMode.None;
       var points=new PointF[10];
       for(int i=0;i<10;i++) { double a=-Math.PI/2+i*Math.PI/5;double r=i%2==0?19:9.5;
         points[i]=new PointF(20+(float)(Math.Cos(a)*r),20+(float)(Math.Sin(a)*r)); }
       using(var fill=new SolidBrush(Color.FromArgb(255,220,35)))g.FillPolygon(fill,points);
-      using(var edge=new Pen(Color.Black,1.25f)) { edge.LineJoin=LineJoin.Round;g.DrawPolygon(edge,points); }
+      using(var edge=new Pen(Color.Black,2.5f)) { edge.LineJoin=LineJoin.Round;g.DrawPolygon(edge,points); }
       using(var eyes=new SolidBrush(Color.Black)) { g.FillRectangle(eyes,14,17,3,4);g.FillRectangle(eyes,23,17,3,4); }
       using(var glint=new SolidBrush(Color.White)) { g.FillRectangle(glint,14,17,1,1);g.FillRectangle(glint,23,17,1,1); }
       g.Restore(saved);
@@ -479,15 +584,16 @@ namespace AstraDesktopPets {
       if(test&&!started)return;
       int needed=(int)Math.Ceiling(LogicalWidth*scale);Rectangle area=Screen.FromRectangle(dockBounds??Bounds).WorkingArea;
       int sparkleCount=0;foreach(var pet in roaming)sparkleCount+=pet.SparkleCount;
-      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,desktop_star_visible=running&&launcherVisible,tray_visible=running&&tray!=null&&tray.Visible,star_icon_pixels=starBitmap.Width,desktop_star_pixels=starBitmap.Width,pets_out=petsOut,lined_up=LinedUp,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,farmer_roaming=roaming.Exists(p=>p.Pet==farmer),dock_sample_interval_ms=16,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=pets.Find(p=>p.Id=="voicemeeter-bug").Hit.Height,normal_height=NormalHeight,paper_girl_height=pets.Find(p=>p.Id=="paper-girl").Hit.Height,paper_girl_width=pets.Find(p=>p.Id=="paper-girl").Hit.Width,file_master_height=pets.Find(p=>p.Id=="file-master").Hit.Height,file_master_width=pets.Find(p=>p.Id=="file-master").Hit.Width,desktop_art_pets=roaming.FindAll(p=>p.Pet.DesktopArt).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_pet_ids=roaming.FindAll(p=>p.HasSparkles).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_count=sparkleCount,sparkle_lifetime_ms=0,sparkle_padding=0,sparkles_allowed=false,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
+      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,desktop_star_visible=running&&launcherVisible,tray_visible=running&&tray!=null&&tray.Visible,star_icon_pixels=starBitmap.Width,desktop_star_pixels=starBitmap.Width,pets_out=petsOut,lined_up=LinedUp,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,farmer_roaming=roaming.Exists(p=>p.Pet==farmer),dock_sample_interval_ms=16,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=pets.Find(p=>p.Id=="voicemeeter-bug").Hit.Height,normal_height=NormalHeight,paper_girl_height=pets.Find(p=>p.Id=="paper-girl").Hit.Height,paper_girl_width=pets.Find(p=>p.Id=="paper-girl").Hit.Width,file_master_height=pets.Find(p=>p.Id=="file-master").Hit.Height,file_master_width=pets.Find(p=>p.Id=="file-master").Hit.Width,desktop_art_pets=roaming.FindAll(p=>p.Pet.DesktopArt).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_pet_ids=roaming.FindAll(p=>p.HasSparkles).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_count=sparkleCount,sparkle_lifetime_ms=0,sparkle_padding=0,sparkles_allowed=false,translucent_pet_ids=pets.FindAll(p=>p.Layered).ConvertAll(p=>p.Id).ToArray(),fuzzboi_variant=pets.Find(p=>p.Id=="fuzzboi-friend")==null?null:pets.Find(p=>p.Id=="fuzzboi-friend").Name,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
     }
     internal void SelfTest() {
       if(pets.Count<1||farmer==null)throw new Exception("Roster test failed.");
+      foreach(var pet in pets)pet.ValidateEffects();
       if(BugHeight!=NormalHeight)throw new Exception("Bug standard size test failed.");
       if(StarBounds.Right>LogicalWidth||StarBounds.Bottom>LogicalHeight)throw new Exception("Star layout overflow.");
-      foreach(var pet in pets)if(pet.Hit.Height>NormalHeight+.01f||pet.Hit.Width>MaxPetWidth+.01f||pet.Hit.Width<1)throw new Exception("Pet size out of range: "+pet.Name);
+      foreach(var pet in pets)if(pet.Hit.Height>(pet.Id=="claude-bot"?NormalHeight*1.5f:NormalHeight)+.01f||pet.Hit.Width>MaxPetWidth+.01f||pet.Hit.Width<1)throw new Exception("Pet size out of range: "+pet.Name);
       var paper=pets.Find(p=>p.Id=="paper-girl");var files=pets.Find(p=>p.Id=="file-master");
-      if(Math.Abs(paper.Hit.Height-Math.Min(NormalHeight,MaxPetWidth*paper.Crop.Height/paper.Crop.Width)*.78f)>.01f||Math.Abs(files.Hit.Height-Math.Min(NormalHeight,MaxPetWidth*files.Crop.Height/files.Crop.Width)*.6f)>.01f)throw new Exception("Paper Girl or File Master resize failed.");
+      if(Math.Abs(paper.Hit.Height-NormalHeight*.72f)>.01f||Math.Abs(files.Hit.Height-NormalHeight*.72f)>.01f)throw new Exception("Paper Girl or File Master resize failed.");
 
       Rectangle left=new Rectangle(-1920,0,1920,1080);Size size=new Size(690,172);
       if(Clamp(new Point(9999,9999),size,left)!=new Point(-690,908))throw new Exception("Screen clamp failed.");
@@ -506,9 +612,11 @@ namespace AstraDesktopPets {
         if(pet.HasSparkles!=requested)throw new Exception("Sparkles assigned to the wrong pet.");
       }
       if(sparklePets!=0)throw new Exception("No pets should have sparkle trails.");
-      ArrangeFloor(left);foreach(var pet in roaming){if(!left.Contains(pet.Bounds))throw new Exception("Lineup left screen.");foreach(var other in roaming)if(pet!=other&&pet.Bounds.IntersectsWith(other.Bounds))throw new Exception("Lineup overlaps.");}foreach(var flyer in roaming.FindAll(p=>Flies(p.Pet)))foreach(var ground in roaming.FindAll(p=>!Flies(p.Pet)))if(flyer.Bottom>ground.Top)throw new Exception("Flying row must be above ground pets.");ResolveClicks("star",2);if(!LinedUp||!petsOut)throw new Exception("Star double click did not line up pets.");LinedUp=false;ScatterTests(left);ScatterTests(new Rectangle(0,0,2560,1392));RoamTests(new Rectangle(0,0,1920,1032));
+      ArrangeFloor(left);foreach(var pet in roaming){if(!left.Contains(pet.Bounds))throw new Exception("Lineup left screen.");foreach(var other in roaming)if(pet!=other&&pet.Bounds.IntersectsWith(other.Bounds))throw new Exception("Lineup overlaps.");}foreach(var flyer in roaming.FindAll(p=>Flies(p.Pet)))foreach(var ground in roaming.FindAll(p=>!Flies(p.Pet)))if(flyer.Bottom>ground.Top)throw new Exception("Flying row must be above ground pets.");LinedUp=false;ResolveClicks("star",2);if(!LinedUp||!petsOut)throw new Exception("Star double click did not line up pets.");ResolveClicks("star",2);if(LinedUp||!petsOut)throw new Exception("Second star double click did not resume roaming.");ScatterTests(left);ScatterTests(new Rectangle(0,0,2560,1392));RoamTests(new Rectangle(0,0,1920,1032));
       SetPetsOut(false);if(petsOut||!Compact)throw new Exception("The star did not hide the pets.");
       SetPetsOut(true);if(!petsOut||Compact)throw new Exception("The star did not show the pets.");
+      var fuzz=pets.Find(p=>p.Id=="fuzzboi-friend");if(fuzz!=null)foreach(string expected in new[]{"C","A","B"}){ResolveClicks(fuzz.Id,3);if(fuzz.FuzzStyle!=expected)throw new Exception("Fuzzboi body did not change to "+expected);}
+      int black=0;for(int y=0;y<starBitmap.Height;y++)for(int x=0;x<starBitmap.Width;x++){Color c=starBitmap.GetPixel(x,y);if(c.A>0&&c.R==0&&c.G==0&&c.B==0)black++;if(c.A!=0&&c.A!=255)throw new Exception("Star edge must be crisp in both tray and desktop.");}if(black<10)throw new Exception("Star black outline missing.");
       foreach(var pet in roaming)if(pet.Visible)throw new Exception("Self-test must never show a pet window.");
       if(testActions.Exists(a=>a.StartsWith("open:")||a.StartsWith("repair:")))throw new Exception("Self-test dispatched an unintended app action.");
       Console.WriteLine("PASS: roster, decoded sprites, layout, Paper Girl and File Master sizes, standard-size Bug, monitor clamping, startup quoting, asset boundaries, click classification, drag cancellation, one compact window per pet, whole-screen scatter, bounded roaming, sparkle trails disabled for all pets, transparent sparkle hit-testing and star show/hide.");
@@ -544,6 +652,9 @@ namespace AstraDesktopPets {
     }
     static void ClickTests() {
       var got=new List<string>();var classifier=new PetClicks((id,n)=>got.Add(id+":"+n),500,new Size(8,8));Point point=new Point(100,100);
+      for(int i=0;i<2;i++){classifier.Press("fuzzboi-friend",point,-2000+i*200);classifier.Release("fuzzboi-friend",-1970+i*200,false);}if(got.Count!=0)throw new Exception("Fuzzboi double click must await a possible third click.");
+      classifier.Press("fuzzboi-friend",point,-1600);classifier.Release("fuzzboi-friend",-1570,false);if(String.Join(",",got)!="fuzzboi-friend:3")throw new Exception("Fuzzboi triple-click classification failed.");got.Clear();
+      for(int i=0;i<2;i++){classifier.Press("fuzzboi-friend",point,-1000+i*200);classifier.Release("fuzzboi-friend",-970+i*200,false);}classifier.Advance(-200);if(String.Join(",",got)!="fuzzboi-friend:2")throw new Exception("Fuzzboi double-click app opening failed.");got.Clear();
       classifier.Press("farmer",point,0);classifier.Release("farmer",30,false);classifier.Advance(501);if(String.Join(",",got)!="farmer:1")throw new Exception("Single click classification failed.");got.Clear();
       classifier.Press("farmer",point,1000);classifier.Release("farmer",1030,false);classifier.Press("farmer",point,1400);classifier.Advance(1600);if(got.Count!=0)throw new Exception("Held second click dispatched early.");classifier.Release("farmer",1630,false);classifier.Advance(1901);if(String.Join(",",got)!="farmer:2")throw new Exception("Double click classification failed.");got.Clear();
       for(int i=0;i<3;i++){classifier.Press("farmer",point,2000+i*200);classifier.Release("farmer",2030+i*200,false);}classifier.Advance(3000);if(String.Join(",",got)!="farmer:2,farmer:1")throw new Exception("A third click must start a new gesture, not open the desk twice.");got.Clear();
