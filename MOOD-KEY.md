@@ -41,19 +41,20 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 | **Ghost Protocol** | your security checklist | weekly, Tuesday | a security step only you can do |
 | **Project Parrot** | your project ideas | weekly, Wednesday | a yes or no on an idea that is due |
 | **Voicemeeter Bug** | your Voicemeeter audio | weekly, Thursday | the Bug running on your PC |
-| **Claude Bot** * | the Claude Bot plan and build | weekly, Friday | a decision on the plan |
-| **RGBee** * | your RGB lights and scenes | weekly, Saturday | the brand and model of each light |
-| **Mine Mole** * | the crypto mining research | weekly, Sunday | your power price and graphics card model |
-| **Mail Snail** * | my plan | weekly, Monday | a job: what should Mail Snail do |
-| **Patch Cat** * | my plan | weekly, Tuesday | a job: what should Patch Cat do |
-| **Meme Fiend** * | your saved memes (on your PC only) | weekly, Wednesday | a meme folder chosen |
-| **Gif Giraffe** * | my plan | weekly, Thursday | a job: what kind of GIFs should I make |
-| **Backup Beaver** * | my plan | weekly, Friday | a job: what should Backup Beaver back up |
-| **Rift Rabbit** * | your VR software and performance notes | weekly, Saturday | your headset and PC details |
-| **Fuzzboi Friend** * | the Fuzzboi maker and its live site | weekly, Sunday | your OK to register me in the Cage |
-| **Wifi Butterfly** * | my plan | weekly, Monday | a job: what should Wifi Butterfly do |
-| **Deck Duck** * | my plan | weekly, Tuesday | a job: what should Deck Duck do |
-| **Mesh Moth** * | the Meshtastic node plan | weekly, Wednesday | a job: what should Mesh Moth watch |
-| **Raspberry Pi** * | my plan | weekly, Thursday | a job: what should the Raspberry Pi pet do |
+| **Sugarcube** * | Spoonfed’s restaurant discovery, saved spots, and sample-data labels | weekly, Friday | review of Sugarcube draft artwork and a live restaurant provider before real recommendations |
+| **Claude Bot** * | the Claude Bot plan and build | weekly, Saturday | a decision on the plan |
+| **RGBee** * | your RGB lights and scenes | weekly, Sunday | the brand and model of each light |
+| **Mine Mole** * | the crypto mining research | weekly, Monday | your power price and graphics card model |
+| **Mail Snail** * | my plan | weekly, Tuesday | a job: what should Mail Snail do |
+| **Patch Cat** * | my plan | weekly, Wednesday | a job: what should Patch Cat do |
+| **Meme Fiend** * | your saved memes (on your PC only) | weekly, Thursday | a meme folder chosen |
+| **Gif Giraffe** * | my plan | weekly, Friday | a job: what kind of GIFs should I make |
+| **Backup Beaver** * | my plan | weekly, Saturday | a job: what should Backup Beaver back up |
+| **Rift Rabbit** * | your VR software and performance notes | weekly, Sunday | your headset and PC details |
+| **Fuzzboi Friend** * | the Fuzzboi maker and its live site | weekly, Monday | your OK to register me in the Cage |
+| **Wifi Butterfly** * | my plan | weekly, Tuesday | a job: what should Wifi Butterfly do |
+| **Deck Duck** * | my plan | weekly, Wednesday | a job: what should Deck Duck do |
+| **Mesh Moth** * | the Meshtastic node plan | weekly, Thursday | a job: what should Mesh Moth watch |
+| **Raspberry Pi** * | my plan | weekly, Friday | a job: what should the Raspberry Pi pet do |
 
 \* in the pipeline: on GitHub, not registered in the Cage yet.

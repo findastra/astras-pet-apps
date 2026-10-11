@@ -853,6 +853,21 @@
   ],
   "pipeline": [
     {
+      "repo": "spoonfed",
+      "pet": "Sugarcube",
+      "visibility": "private",
+      "published": true,
+      "status": "hatching",
+      "job": "Helps choose where to eat by spinning restaurant choices while respecting locked preferences and keeping favorite spots.",
+      "added": "2026-10-11",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "Spoonfed’s restaurant discovery, saved spots, and sample-data labels",
+        "needs": "review of Sugarcube draft artwork and a live restaurant provider before real recommendations"
+      },
+      "note": "Private artwork-only repository published; nine draft frames ready. Application remains a local draft. Card 009."
+    },
+    {
       "repo": "claude-bot",
       "pet": "Claude Bot",
       "visibility": "public",
