@@ -63,12 +63,13 @@ command (result 0), but nothing confirms the sound came back clean. Cooldown was
   CLI's extra Workflow permission when it asked for it. The repo already existed as an empty public repo, and Codex made it private
   before pushing. The privacy scan passed across the history and all 25 files.
 - Hub: `pets.json` now has `published: true` and `visibility: "private"` for the Bug. Rebuilt and tested (this commit).
-- **Still local, not pushed:** five files in the Bug's folder had newer uncommitted changes:
-  `README.md`, `audio-recovery-20261008.cs`, `audio-recovery-tests-20261008.cs`, `pet.json`,
-  `voicemeeter-bug-20261008.cs`. Nobody has reviewed them. Check `git diff` there before committing.
+- 02:56: Codex reviewed, committed and pushed the five newer local files (`README.md`,
+  `audio-recovery-20261008.cs`, `audio-recovery-tests-20261008.cs`, `pet.json`,
+  `voicemeeter-bug-20261008.cs`) to `master` as `0dd67cd` "Fix recovery policy resets and hosted
+  alias (OpenAI Codex GPT-6)". Build, 138 self-test assertions and privacy scan passed. Nothing
+  is left uncommitted in the Bug's folder.
 
 **Not done:**
-- The five uncommitted local files above.
 - No automatic detection of scrambled audio. That needs evidence from the next failure.
 - No live listening test of a repair.
 
