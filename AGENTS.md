@@ -1,5 +1,7 @@
 # Rules for assistants working on Astra's Pet Apps (astras-pet-apps)
 
+Spoonfed Sugarcube hatching metadata and its single-pet recipe prepared with OpenAI Codex (GPT-6), 2026-10-11. Paid artwork remains pending approval.
+
 *A pet app by Astra.* Public credit is always **Astra**, never a legal name. Keep work information (including any employer's name) out of this repo.
 
 Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-07. Record your model name and version here when you change something substantial.
@@ -51,3 +53,7 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 ## Commands
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
+
+System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
+
+Desktop roster/art publication and floor lineup: OpenAI Codex (GPT-6), 2026-10-11. Star double-click lines up ground pets below flyers; right-click resumes roaming. All sparkle code removed. Generated sprite alpha is thresholded for Windows color-key transparency. Desktop/private draft roster is local-only. See docs/pet-release-20261011.md.

@@ -14,3 +14,6 @@ art/imports/
 
 # Windows companion builds are reproducible from source.
 bin/
+
+# Local Unity tool inventory, paths and execution reports never ship as source.
+apps/unity-unicorn-local-tools-*.js
