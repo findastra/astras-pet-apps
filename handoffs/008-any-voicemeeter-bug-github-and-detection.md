@@ -1,4 +1,4 @@
-status: open (waiting on Astra: OK to create the private repo findastra/voicemeeter-bug and push)
+status: open (steps 1-2 done; step 3 waits on the next scrambled-audio event)
 for: any (claude, codex)
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-11, working with OpenAI Codex (GPT-6) on Astra's PC
 needs: pets.json (voicemeeter-bug entry), PET-FILES.md, skills/handoff/SKILL.md, the Bug's local repo on Astra's PC
@@ -57,16 +57,26 @@ command (result 0), but nothing confirms the sound came back clean. Cooldown was
   (PID 8408 at the time). No audio restart was triggered while installing it. A privacy scan of the
   25 files found no keys, personal paths or usernames.
 
+**Repo (02:44-02:49, Astra approved):**
+- Codex created `findastra/voicemeeter-bug`: **private**, topic `pet-app`, branch `master`,
+  pushed commit `a9dcb50f2eafec2de054f6afb4cddcaa6138f3da` (25 files). Astra authorized the GitHub
+  CLI's extra Workflow permission when it asked for it. The repo already existed as an empty public repo, and Codex made it private
+  before pushing. The privacy scan passed across the history and all 25 files.
+- Hub: `pets.json` now has `published: true` and `visibility: "private"` for the Bug. Rebuilt and tested (this commit).
+- **Still local, not pushed:** five files in the Bug's folder had newer uncommitted changes:
+  `README.md`, `audio-recovery-20261008.cs`, `audio-recovery-tests-20261008.cs`, `pet.json`,
+  `voicemeeter-bug-20261008.cs`. Nobody has reviewed them. Check `git diff` there before committing.
+
 **Not done:**
-- No GitHub repo for the Bug. This session could not create one without Astra's explicit OK.
+- The five uncommitted local files above.
 - No automatic detection of scrambled audio. That needs evidence from the next failure.
 - No live listening test of a repair.
 
 ## Task
-1. With Astra's OK, create **private** `findastra/voicemeeter-bug`, add the `pet-app` topic, and push
+1. ~~Done 2026-10-11.~~ With Astra's OK, create **private** `findastra/voicemeeter-bug`, add the `pet-app` topic, and push
    the local repo above from Astra's PC. Codex there can run `gh repo create`. Re-run the privacy
    scan before pushing.
-2. In this hub, set the `voicemeeter-bug` entry to `published: true`, `visibility: "private"`,
+2. ~~Done 2026-10-11.~~ In this hub, set the `voicemeeter-bug` entry to `published: true`, `visibility: "private"`,
    and update its note. Then run `npm run build`, `npm test` and `npm run check`. Leave a `farmer-register` card only if the
    Farmer's round needs one.
 3. The next time the audio scrambles, Astra clicks the Bug. Read the before/after snapshot and
