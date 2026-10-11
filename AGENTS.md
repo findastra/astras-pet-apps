@@ -8,6 +8,7 @@ Cage movement by kind (zones, flocks, friends, tag and chases from `cage_life` i
 Square pet well for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 Pet words (`PET-WORDS.md`, `words` in pets.json, `test/pet-words-test-20261009.mjs`) and public-repo labels with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 The Farmer's rounds (self-audits, mood key, submissions, pipeline, relations, profile round; `scripts/farmer-rounds-20261009.mjs`, `scripts/farmer-profile-20261009.mjs`, `scripts/relations-20261009.mjs`, `.github/workflows/farmer-daily-rounds.yml`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+Voicemeeter Bug (made with OpenAI Codex (GPT-6) on 2026-10-08) registered on main from the unmerged roam-free branch, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. His Windows app and source are still only on Astra's PC.
 
 ## What this is
 The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.

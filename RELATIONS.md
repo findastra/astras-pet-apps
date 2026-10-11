@@ -151,4 +151,4 @@ Health Hummy, Finance Finch, Meme Fiend *. These pets' data never leaves the PC.
 
 ### On their own so far
 
-Python Panther, Astra Wisp, Paper Girl, Mine Mole *, Mail Snail *, Patch Cat *, Fuzzboi Friend *, Wifi Butterfly *, Mesh Moth *, Raspberry Pi *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
+Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Mine Mole *, Mail Snail *, Patch Cat *, Fuzzboi Friend *, Wifi Butterfly *, Mesh Moth *, Raspberry Pi *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
