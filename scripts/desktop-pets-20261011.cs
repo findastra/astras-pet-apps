@@ -247,6 +247,55 @@ namespace AstraDesktopPets {
     }
   }
 
+  // Paper Girl and File Master travel as one small group. After an owner moves either
+  // pet, that pet waits while its companion walks back beside it, then they roam again.
+  // Geometry is separate from Forms so bounds, pauses and catch-up can be tested unseen.
+  internal sealed class PetPair {
+    readonly Roamer walker;
+    internal PetPair(Random random) { walker=new Roamer(random); }
+    internal static Point Beside(Point leader,Size leaderSize,Point follower,Size followerSize,Rectangle area,int gap) {
+      Point[] choices={new Point(leader.X+leaderSize.Width+gap,leader.Y+leaderSize.Height-followerSize.Height),new Point(leader.X-followerSize.Width-gap,leader.Y+leaderSize.Height-followerSize.Height),new Point(leader.X,leader.Y+leaderSize.Height+gap),new Point(leader.X,leader.Y-followerSize.Height-gap)};
+      Point best=choices[0];double distance=Double.MaxValue;
+      foreach(var choice in choices)if(area.Contains(new Rectangle(choice,followerSize))) { double d=Distance(choice,follower);if(d<distance){best=choice;distance=d;} }
+      // A display normally has room for a pair; preserve its bounds even on unusually
+      // small working areas where no separate position can physically fit.
+      return distance==Double.MaxValue?PetsWindow.Clamp(best,followerSize,area):best;
+    }
+    internal Point[] Next(Point leader,Size leaderSize,Point follower,Size followerSize,Rectangle area,Rectangle travelArea,int gap,int step,bool paused,bool wander) {
+      if(paused)return new[]{leader,follower};
+      Point target=Beside(leader,leaderSize,follower,followerSize,area,gap);
+      if(follower!=target) {
+        int catchUp=Math.Max(step*4,Math.Min(step*30,(int)Math.Ceiling(Distance(follower,target)*.12)));
+        return new[]{leader,WalkTo(follower,target,followerSize,new Rectangle(leader,leaderSize),travelArea,catchUp)};
+      }
+      if(!wander)return new[]{leader,follower};
+      Rectangle group=Rectangle.Union(new Rectangle(leader,leaderSize),new Rectangle(follower,followerSize));
+      Point next=walker.Next(group.Location,group.Size,area,step);int dx=next.X-group.X,dy=next.Y-group.Y;
+      return new[]{new Point(leader.X+dx,leader.Y+dy),new Point(follower.X+dx,follower.Y+dy)};
+    }
+    internal static double Distance(Point a,Point b) { double x=(double)a.X-b.X,y=(double)a.Y-b.Y;return Math.Sqrt(x*x+y*y); }
+    static Point Toward(Point at,Point target,int step) { double distance=Distance(at,target);if(distance<=step)return target;return new Point(at.X+(int)Math.Round((target.X-at.X)*step/distance),at.Y+(int)Math.Round((target.Y-at.Y)*step/distance)); }
+    static bool ClearSegment(Point a,Point b,Rectangle obstacle) {
+      // Clip a segment against the forbidden top-left positions of the follower.
+      double enter=0,leave=1;int[] start={a.X,a.Y},delta={b.X-a.X,b.Y-a.Y},low={obstacle.Left,obstacle.Top},high={obstacle.Right,obstacle.Bottom};
+      for(int axis=0;axis<2;axis++) { if(delta[axis]==0){if(start[axis]<=low[axis]||start[axis]>=high[axis])return true;continue;}double first=(low[axis]-start[axis])/(double)delta[axis],last=(high[axis]-start[axis])/(double)delta[axis];if(first>last){double swap=first;first=last;last=swap;}enter=Math.Max(enter,first);leave=Math.Min(leave,last);if(enter>=leave)return true; }
+      return leave<=0||enter>=1;
+    }
+    static Point WalkTo(Point at,Point target,Size size,Rectangle leader,Rectangle travelArea,int step) {
+      // The four outside corners are enough to take the shortest unobstructed route
+      // around a rectangular companion. Never cut through it on the way to its side.
+      if(new Rectangle(at,size).IntersectsWith(leader))return PetsWindow.Clamp(Toward(at,target,step),size,travelArea);
+      Rectangle obstacle=new Rectangle(leader.Left-size.Width,leader.Top-size.Height,leader.Width+size.Width,leader.Height+size.Height);
+      var nodes=new List<Point>{at,target};
+      foreach(var p in new[]{new Point(obstacle.Left-2,obstacle.Top-2),new Point(obstacle.Right+2,obstacle.Top-2),new Point(obstacle.Left-2,obstacle.Bottom+2),new Point(obstacle.Right+2,obstacle.Bottom+2)})if(travelArea.Contains(new Rectangle(p,size)))nodes.Add(p);
+      var distance=new double[nodes.Count];var previous=new int[nodes.Count];var visited=new bool[nodes.Count];for(int i=0;i<nodes.Count;i++){distance[i]=Double.MaxValue;previous[i]=-1;}distance[0]=0;
+      for(int run=0;run<nodes.Count;run++) { int from=-1;for(int i=0;i<nodes.Count;i++)if(!visited[i]&&(from<0||distance[i]<distance[from]))from=i;if(from<0||distance[from]==Double.MaxValue)break;visited[from]=true;for(int to=0;to<nodes.Count;to++)if(!visited[to]&&ClearSegment(nodes[from],nodes[to],obstacle)){double candidate=distance[from]+Distance(nodes[from],nodes[to]);if(candidate<distance[to]){distance[to]=candidate;previous[to]=from;}} }
+      if(previous[1]<0)return at;int next=1;while(previous[next]>0)next=previous[next];
+      Point result=PetsWindow.Clamp(Toward(at,nodes[next],step),size,travelArea);
+      return new Rectangle(result,size).IntersectsWith(leader)?at:result;
+    }
+  }
+
   // One small input surface per pet. Transparent pixels pass through; there is never a
   // desktop-sized interception window.
   internal sealed class PetWindow : Form {
@@ -261,6 +310,7 @@ namespace AstraDesktopPets {
     internal int SparkleCount { get { return 0; } }
 
     bool dragging,dragged,hover,blink;
+    internal bool InteractionActive { get { return dragging||hover||host.ClickPending(Pet.Id)||(ContextMenuStrip!=null&&ContextMenuStrip.Visible); } }
     readonly System.Windows.Forms.Timer shimmer=new System.Windows.Forms.Timer { Interval=50 };
     Point dragMouse,dragWindow;
     internal PetWindow(PetsWindow owner,PetSprite pet,float dpi,Random random) {
@@ -273,12 +323,12 @@ namespace AstraDesktopPets {
       MouseEnter+=delegate { hover=true;Cursor=Cursors.Hand; };MouseLeave+=delegate { hover=false; };
       MouseDown+=delegate(object s,MouseEventArgs e) { if(e.Button!=MouseButtons.Left)return;dragging=true;dragged=false;dragMouse=Cursor.Position;dragWindow=Location;Capture=true;host.PetPress(Pet.Id,Cursor.Position); };
       MouseMove+=delegate { if(!dragging)return;Point delta=new Point(Cursor.Position.X-dragMouse.X,Cursor.Position.Y-dragMouse.Y);if(PetsWindow.IsDrag(delta)){dragged=true;host.CancelClicks();}if(dragged)Location=PetsWindow.Clamp(new Point(dragWindow.X+delta.X,dragWindow.Y+delta.Y),Size,Screen.FromPoint(Cursor.Position).WorkingArea); };
-      MouseUp+=delegate(object s,MouseEventArgs e) { if(e.Button!=MouseButtons.Left||!dragging)return;dragging=false;Capture=false;host.PetRelease(ClientRectangle.Contains(e.Location)?Pet.Id:null,dragged); };
+      MouseUp+=delegate(object s,MouseEventArgs e) { if(e.Button!=MouseButtons.Left||!dragging)return;dragging=false;Capture=false;if(dragged)host.PairDragEnded(Pet.Id);host.PetRelease(ClientRectangle.Contains(e.Location)?Pet.Id:null,dragged); };
       var menu=new ContextMenuStrip();menu.Opening+=delegate{host.CancelClicks();};menu.Items.Add("Open "+pet.Name,null,delegate{host.OpenPet(Pet);});menu.Items.Add("Hide the pets",null,delegate{host.SetPetsOut(false);});ContextMenuStrip=menu;
     }
     protected override bool ShowWithoutActivation { get { return true; } }
     protected override CreateParams CreateParams { get { var cp=base.CreateParams;cp.ExStyle|=0x08000080;if(Pet!=null&&Pet.Layered)cp.ExStyle|=0x00080000;return cp; } }
-    protected override void OnMouseCaptureChanged(EventArgs e) { base.OnMouseCaptureChanged(e);if(dragging&&!Capture){dragging=false;dragged=true;host.CancelClicks();} }
+    protected override void OnMouseCaptureChanged(EventArgs e) { base.OnMouseCaptureChanged(e);if(dragging&&!Capture){dragging=false;dragged=true;host.CancelClicks();host.PairDragEnded(Pet.Id);} }
     protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e);if(Pet!=null&&Pet.Layered&&Visible)Present();if(Pet!=null&&Pet.Rainbow)shimmer.Enabled=Visible; }
     internal void RefreshSize() { ClientSize=new Size((int)Math.Ceiling((Pet.Hit.Width+padding*2)*scale),(int)Math.Ceiling((Pet.Hit.Height+padding*2)*scale));Text=Pet.Name+" - desktop pet";Location=PetsWindow.Clamp(Location,Size,Screen.FromRectangle(Bounds).WorkingArea);Invalidate(); }
     internal bool HitPet(Point client) {
@@ -321,8 +371,7 @@ namespace AstraDesktopPets {
     internal void Step(bool nextBlink) {
       if(!Visible)return;
       if(blink!=nextBlink||Pet.Rainbow){blink=nextBlink;Invalidate();}
-      Point before=Location;
-      if(!host.LinedUp&&!dragging&&!hover&&!host.ClickPending(Pet.Id))Location=roamer.Next(Location,Size,Screen.FromRectangle(Bounds).WorkingArea,Math.Max(1,(int)Math.Round(scale)));
+      if(!host.LinedUp&&!host.IsPaired(Pet.Id)&&!InteractionActive)Location=roamer.Next(Location,Size,Screen.FromRectangle(Bounds).WorkingArea,Math.Max(1,(int)Math.Round(scale)));
       if(Pet.Layered)Present();
     }
     protected override void Dispose(bool disposing) { if(disposing){shimmer.Dispose();if(ContextMenuStrip!=null)ContextMenuStrip.Dispose();}base.Dispose(disposing); }
@@ -341,6 +390,9 @@ namespace AstraDesktopPets {
     readonly Stopwatch clickClock=Stopwatch.StartNew();
     readonly PetClicks clicks;
     readonly Random random;
+    readonly PetPair pair;
+    string pairLeader="file-master";
+    bool pairRejoining;
     readonly List<string> testActions=new List<string>();
     readonly object dockGate=new object();
     PetDockTracker tracker;
@@ -363,7 +415,7 @@ namespace AstraDesktopPets {
     Point expandedLocation;
     bool Compact { get { return !petsOut; } }
     internal PetsWindow(bool testMode,int? seed=null) {
-      test=testMode;random=seed.HasValue?new Random(seed.Value):new Random();
+      test=testMode;random=seed.HasValue?new Random(seed.Value):new Random();pair=new PetPair(random);
       clicks=new PetClicks(ResolveClicks,SystemInformation.DoubleClickTime,SystemInformation.DoubleClickSize);LoadPets();
       if(!test)petsOut=PetFiles.PetsOutSetting();
       Text=test?"Astra's desktop pets - UI test":"Astra's desktop pets";
@@ -384,7 +436,7 @@ namespace AstraDesktopPets {
       launcherToggle.Click+=delegate { ToggleLauncher(); };menu.Items.Insert(0,launcherToggle);
       menu.Opening+=delegate { launcherToggle.Text=launcherVisible?"Hide desktop star":"Show desktop star"; };
       ContextMenuStrip=menu;
-      timer.Tick+=delegate { if(Compact)return;ticks++;bool next=ticks%20==0;if(next!=blink){blink=next;Invalidate();}foreach(var pet in roaming)pet.Step(blink); };
+      timer.Tick+=delegate { if(Compact)return;ticks++;bool next=ticks%20==0;if(next!=blink){blink=next;Invalidate();}StepPair();foreach(var pet in roaming)pet.Step(blink); };
       clickTimer.Tick+=delegate { clicks.Advance(clickClock.ElapsedMilliseconds);if(!clicks.Pending)clickTimer.Stop(); };
       MouseDown+=Press;MouseMove+=TrackPointer;MouseUp+=Release;
       MouseLeave+=delegate { hover=null;hoverStar=false;tooltip.SetToolTip(this,null);Cursor=Cursors.Default; };
@@ -471,21 +523,49 @@ namespace AstraDesktopPets {
       }
       return points;
     }
-    void Scatter(Rectangle area) { var points=ScatterPoints(roaming.ConvertAll(p=>p.Size),area,random);for(int i=0;i<roaming.Count;i++)roaming[i].Location=points[i]; }
+    int PairGap { get { return Math.Max(4,(int)Math.Round(6*scale)); } }
+    internal bool IsPaired(string id) { return id=="paper-girl"||id=="file-master"; }
+    internal void PairDragEnded(string id) { if(!IsPaired(id))return;pairLeader=id;pairRejoining=true; }
+    void StepPair() {
+      var leader=roaming.Find(p=>p.Pet.Id==pairLeader);var follower=roaming.Find(p=>IsPaired(p.Pet.Id)&&p.Pet.Id!=pairLeader);
+      if(leader==null||follower==null||!leader.Visible||!follower.Visible||(LinedUp&&!pairRejoining))return;
+      Rectangle area=Screen.FromRectangle(leader.Bounds).WorkingArea,travel=area;
+      // The virtual working rectangle permits smooth travel between screens, including
+      // left/above monitors. Ordinary wandering remains inside the leader's display.
+      foreach(var screen in Screen.AllScreens)travel=Rectangle.Union(travel,screen.WorkingArea);
+      var next=pair.Next(leader.Location,leader.Size,follower.Location,follower.Size,area,travel,PairGap,Math.Max(1,(int)Math.Round(scale)),leader.InteractionActive||follower.InteractionActive,!LinedUp);
+      leader.Location=next[0];follower.Location=next[1];
+      if(follower.Location==PetPair.Beside(leader.Location,leader.Size,follower.Location,follower.Size,area,PairGap))pairRejoining=false;
+    }
+    void Scatter(Rectangle area) {
+      var paper=roaming.Find(p=>p.Pet.Id=="paper-girl");var files=roaming.Find(p=>p.Pet.Id=="file-master");
+      var units=roaming.FindAll(p=>paper==null||files==null||p!=paper);
+      var sizes=units.ConvertAll(p=>p==files&&paper!=null?new Size(p.Width+PairGap+paper.Width,Math.Max(p.Height,paper.Height)):p.Size);
+      var points=ScatterPoints(sizes,area,random);for(int i=0;i<units.Count;i++)units[i].Location=points[i];
+      if(paper!=null&&files!=null) { int bottom=files.Top+Math.Max(files.Height,paper.Height);files.Top=bottom-files.Height;paper.Location=new Point(files.Right+PairGap,bottom-paper.Height);pairLeader="file-master";pairRejoining=false; }
+    }
     static bool Flies(PetSprite pet) { return pet.Kind=="bird"||pet.Kind=="ghost"||pet.Kind=="angel"||pet.Kind=="fairy"||pet.Kind=="sprite"||pet.Id=="rgbee"||pet.Id=="wifi-butterfly"||pet.Id=="mesh-moth"; }
     internal void LineUp() { ShowPets();ArrangeFloor(Screen.FromRectangle(Bounds).WorkingArea);WriteStatus(); }
     void ArrangeFloor(Rectangle area) {
-      LinedUp=true;int gap=Math.Max(4,(int)(6*scale)),bottom=area.Bottom;
+      LinedUp=true;int gap=PairGap,bottom=area.Bottom;
       foreach(bool flying in new bool[]{false,true}) {
         var group=roaming.FindAll(p=>Flies(p.Pet)==flying);int index=0;
+        var paper=group.Find(p=>p.Pet.Id=="paper-girl");var files=group.Find(p=>p.Pet.Id=="file-master");
+        if(paper!=null&&files!=null){group.Remove(paper);group.Insert(group.IndexOf(files)+1,paper);}
         while(index<group.Count) {
           int end=index,width=0,height=0;
-          while(end<group.Count&&(end==index||width+gap+group[end].Width<=area.Width)) { width+=(end==index?0:gap)+group[end].Width;height=Math.Max(height,group[end].Height);end++; }
+          while(end<group.Count) {
+            bool paired=group[end]==files&&paper!=null&&end+1<group.Count&&group[end+1]==paper;
+            int unitWidth=group[end].Width+(paired?gap+paper.Width:0);
+            if(end>index&&width+gap+unitWidth>area.Width)break;
+            width+=(end==index?0:gap)+unitWidth;height=Math.Max(height,group[end].Height);if(paired)height=Math.Max(height,paper.Height);end+=paired?2:1;
+          }
           int x=area.Left+Math.Max(0,(area.Width-width)/2);
           for(int i=index;i<end;i++){var pet=group[i];pet.Location=Clamp(new Point(x,bottom-pet.Height),pet.Size,area);x+=pet.Width+gap;}
           bottom-=height+gap;index=end;
         }
       }
+      pairRejoining=false;
     }
     RectangleF ExpandedStarBounds { get { return new RectangleF(0,StarDrop,20,20); } }
     RectangleF StarBounds { get { return Compact?new RectangleF(0,0,20,20):ExpandedStarBounds; } }
@@ -580,11 +660,19 @@ namespace AstraDesktopPets {
         bitmap.Save(path,ImageFormat.Png);
       }
     }
+    object PairStatus() {
+      var paper=roaming.Find(p=>p.Pet.Id=="paper-girl");var files=roaming.Find(p=>p.Pet.Id=="file-master");
+      bool available=paper!=null&&files!=null,paused=available&&(paper.InteractionActive||files.InteractionActive);
+      var leader=pairLeader=="paper-girl"?paper:files;var follower=pairLeader=="paper-girl"?files:paper;
+      bool together=available&&follower.Location==PetPair.Beside(leader.Location,leader.Size,follower.Location,follower.Size,Screen.FromRectangle(leader.Bounds).WorkingArea,PairGap);
+      string state=!available?"unavailable":!petsOut?"hidden":paused?"paused":LinedUp&&!pairRejoining?"lined-up":together?"together":"catching-up";
+      return new { leader=pairLeader,state,following_enabled=true,paper_girl=paper==null?null:new { x=paper.Left,y=paper.Top,width=paper.Width,height=paper.Height },file_master=files==null?null:new { x=files.Left,y=files.Top,width=files.Width,height=files.Height },center_distance_px=available?(double?)PetPair.Distance(new Point(paper.Left+paper.Width/2,paper.Top+paper.Height/2),new Point(files.Left+files.Width/2,files.Top+files.Height/2)):null,gap_px=PairGap };
+    }
     internal void WriteStatus(bool running=true) {
       if(test&&!started)return;
       int needed=(int)Math.Ceiling(LogicalWidth*scale);Rectangle area=Screen.FromRectangle(dockBounds??Bounds).WorkingArea;
       int sparkleCount=0;foreach(var pet in roaming)sparkleCount+=pet.SparkleCount;
-      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,desktop_star_visible=running&&launcherVisible,tray_visible=running&&tray!=null&&tray.Visible,star_icon_pixels=starBitmap.Width,desktop_star_pixels=starBitmap.Width,pets_out=petsOut,lined_up=LinedUp,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,farmer_roaming=roaming.Exists(p=>p.Pet==farmer),dock_sample_interval_ms=16,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=pets.Find(p=>p.Id=="voicemeeter-bug").Hit.Height,normal_height=NormalHeight,paper_girl_height=pets.Find(p=>p.Id=="paper-girl").Hit.Height,paper_girl_width=pets.Find(p=>p.Id=="paper-girl").Hit.Width,file_master_height=pets.Find(p=>p.Id=="file-master").Hit.Height,file_master_width=pets.Find(p=>p.Id=="file-master").Hit.Width,desktop_art_pets=roaming.FindAll(p=>p.Pet.DesktopArt).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_pet_ids=roaming.FindAll(p=>p.HasSparkles).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_count=sparkleCount,sparkle_lifetime_ms=0,sparkle_padding=0,sparkles_allowed=false,translucent_pet_ids=pets.FindAll(p=>p.Layered).ConvertAll(p=>p.Id).ToArray(),fuzzboi_variant=pets.Find(p=>p.Id=="fuzzboi-friend")==null?null:pets.Find(p=>p.Id=="fuzzboi-friend").Name,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
+      PetFiles.WriteStatus(new { running,test_mode=test,process_id=Process.GetCurrentProcess().Id,window_title=Text,visible=running&&Visible,desktop_star_visible=running&&launcherVisible,tray_visible=running&&tray!=null&&tray.Visible,star_icon_pixels=starBitmap.Width,desktop_star_pixels=starBitmap.Width,pets_out=petsOut,lined_up=LinedUp,compact=Compact,roaming_pet_count=roaming.Count,roaming_pet_visible_count=roaming.FindAll(p=>p.Visible).Count,pending_clicks=clicks.Pending,last_action=testActions.Count>0?testActions[testActions.Count-1]:null,actions=test?testActions.ToArray():null,pet_count=pets.Count+1,farmer_roaming=roaming.Exists(p=>p.Pet==farmer),dock_sample_interval_ms=16,bug_present=pets.Exists(p=>p.Id=="voicemeeter-bug"),bug_height=pets.Find(p=>p.Id=="voicemeeter-bug").Hit.Height,normal_height=NormalHeight,paper_girl_height=pets.Find(p=>p.Id=="paper-girl").Hit.Height,paper_girl_width=pets.Find(p=>p.Id=="paper-girl").Hit.Width,file_master_height=pets.Find(p=>p.Id=="file-master").Hit.Height,file_master_width=pets.Find(p=>p.Id=="file-master").Hit.Width,pet_pair=PairStatus(),desktop_art_pets=roaming.FindAll(p=>p.Pet.DesktopArt).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_pet_ids=roaming.FindAll(p=>p.HasSparkles).ConvertAll(p=>p.Pet.Id).ToArray(),sparkle_count=sparkleCount,sparkle_lifetime_ms=0,sparkle_padding=0,sparkles_allowed=false,translucent_pet_ids=pets.FindAll(p=>p.Layered).ConvertAll(p=>p.Id).ToArray(),fuzzboi_variant=pets.Find(p=>p.Id=="fuzzboi-friend")==null?null:pets.Find(p=>p.Id=="fuzzboi-friend").Name,animation_interval_ms=timer.Interval,animation_running=running&&timer.Enabled,startup_enabled=PetFiles.StartupEnabled(),dpi_scale=scale,width=Width,height=Height,docked=dockBounds.HasValue,dock_has_room=!spaceConstrained,dock_required_width_px=needed,dock_available_width_px=area.Right-expandedLocation.X,dock_star_left_must_be_at_or_before_px=area.Right-needed,on_screen=Screen.FromRectangle(Bounds).WorkingArea.IntersectsWith(Bounds),updated_utc=DateTime.UtcNow.ToString("o")},test);
     }
     internal void SelfTest() {
       if(pets.Count<1||farmer==null)throw new Exception("Roster test failed.");
@@ -613,13 +701,14 @@ namespace AstraDesktopPets {
       }
       if(sparklePets!=0)throw new Exception("No pets should have sparkle trails.");
       ArrangeFloor(left);foreach(var pet in roaming){if(!left.Contains(pet.Bounds))throw new Exception("Lineup left screen.");foreach(var other in roaming)if(pet!=other&&pet.Bounds.IntersectsWith(other.Bounds))throw new Exception("Lineup overlaps.");}foreach(var flyer in roaming.FindAll(p=>Flies(p.Pet)))foreach(var ground in roaming.FindAll(p=>!Flies(p.Pet)))if(flyer.Bottom>ground.Top)throw new Exception("Flying row must be above ground pets.");LinedUp=false;ResolveClicks("star",2);if(!LinedUp||!petsOut)throw new Exception("Star double click did not line up pets.");ResolveClicks("star",2);if(LinedUp||!petsOut)throw new Exception("Second star double click did not resume roaming.");ScatterTests(left);ScatterTests(new Rectangle(0,0,2560,1392));RoamTests(new Rectangle(0,0,1920,1032));
+      PairTests();
       SetPetsOut(false);if(petsOut||!Compact)throw new Exception("The star did not hide the pets.");
       SetPetsOut(true);if(!petsOut||Compact)throw new Exception("The star did not show the pets.");
       var fuzz=pets.Find(p=>p.Id=="fuzzboi-friend");if(fuzz!=null)foreach(string expected in new[]{"C","A","B"}){ResolveClicks(fuzz.Id,3);if(fuzz.FuzzStyle!=expected)throw new Exception("Fuzzboi body did not change to "+expected);}
       int black=0;for(int y=0;y<starBitmap.Height;y++)for(int x=0;x<starBitmap.Width;x++){Color c=starBitmap.GetPixel(x,y);if(c.A>0&&c.R==0&&c.G==0&&c.B==0)black++;if(c.A!=0&&c.A!=255)throw new Exception("Star edge must be crisp in both tray and desktop.");}if(black<10)throw new Exception("Star black outline missing.");
       foreach(var pet in roaming)if(pet.Visible)throw new Exception("Self-test must never show a pet window.");
       if(testActions.Exists(a=>a.StartsWith("open:")||a.StartsWith("repair:")))throw new Exception("Self-test dispatched an unintended app action.");
-      Console.WriteLine("PASS: roster, decoded sprites, layout, Paper Girl and File Master sizes, standard-size Bug, monitor clamping, startup quoting, asset boundaries, click classification, drag cancellation, one compact window per pet, whole-screen scatter, bounded roaming, sparkle trails disabled for all pets, transparent sparkle hit-testing and star show/hide.");
+      Console.WriteLine("PASS: roster, decoded sprites, layout, Paper Girl and File Master sizes and paired following, paired scatter/lineup, drag leadership and bounded catch-up, pair interaction pauses, standard-size Bug, monitor clamping, startup quoting, asset boundaries, click classification, drag cancellation, one compact window per pet, whole-screen scatter, bounded roaming, sparkle trails disabled for all pets, transparent sparkle hit-testing and star show/hide.");
     }
     void ScatterTests(Rectangle area) {
       for(int run=0;run<25;run++) {
@@ -637,6 +726,53 @@ namespace AstraDesktopPets {
         foreach(int n in quadrants)if(n==0)throw new Exception("A quarter of the screen started empty.");
         for(int i=0;i<boxes.Count;i++)for(int j=i+1;j<boxes.Count;j++)if(Rectangle.Intersect(boxes[i],boxes[j]).Width*Rectangle.Intersect(boxes[i],boxes[j]).Height>boxes[i].Width*boxes[i].Height/2)throw new Exception("Two pets started on top of each other.");
       }
+    }
+    void PairTests() {
+      Size leaderSize=new Size(71,59),followerSize=new Size(55,77);const int gap=9,step=2;
+      foreach(Rectangle area in new[]{new Rectangle(-1920,-300,1920,1080),new Rectangle(0,0,2560,1392)}) {
+        var friends=new PetPair(new Random(11));Point leader=new Point(area.Left+400,area.Top+300),follower=PetPair.Beside(leader,leaderSize,leader,followerSize,area,gap);
+        int moved=0;
+        for(int tick=0;tick<10000;tick++) {
+          var next=friends.Next(leader,leaderSize,follower,followerSize,area,area,gap,step,false,true);
+          Rectangle a=new Rectangle(next[0],leaderSize),b=new Rectangle(next[1],followerSize);
+          if(!area.Contains(a)||!area.Contains(b)||a.IntersectsWith(b))throw new Exception("Paired roaming overlapped or left its monitor.");
+          if(PetPair.Distance(leader,next[0])>5||PetPair.Distance(follower,next[1])>5)throw new Exception("Together pets jumped while wandering.");
+          if(Rectangle.Union(a,b).Width>leaderSize.Width+followerSize.Width+gap||Rectangle.Union(a,b).Height>leaderSize.Height+followerSize.Height+gap)throw new Exception("Paired pets drifted apart.");
+          if(next[0]!=leader)moved++;leader=next[0];follower=next[1];
+        }
+        if(moved<100)throw new Exception("Paired pets never wandered.");
+        // Simulate owner drops at corners, against edges and directly over the other
+        // pet; catch-up must finish without moving the newly dragged leader.
+        var drops=new List<Point>{new Point(area.Left,area.Top),new Point(area.Right-leaderSize.Width,area.Top),new Point(area.Left,area.Bottom-leaderSize.Height),new Point(area.Right-leaderSize.Width,area.Bottom-leaderSize.Height),new Point(area.Left+45,area.Top+400),new Point(area.Left+600,area.Top+400)};
+        var dropRandom=new Random(17);for(int i=0;i<64;i++)drops.Add(new Point(area.Left+dropRandom.Next(area.Width-leaderSize.Width),area.Top+dropRandom.Next(area.Height-leaderSize.Height)));
+        foreach(var drop in drops) {
+          leader=drop;follower=PetsWindow.Clamp(new Point(area.Left+600,area.Top+400),followerSize,area);
+          var paused=friends.Next(leader,leaderSize,follower,followerSize,area,area,gap,step,true,true);
+          if(paused[0]!=leader||paused[1]!=follower)throw new Exception("A hover or click failed to pause the pair.");
+          bool clear=!new Rectangle(leader,leaderSize).IntersectsWith(new Rectangle(follower,followerSize)),arrived=false;
+          for(int tick=0;tick<180;tick++) {
+            var next=friends.Next(leader,leaderSize,follower,followerSize,area,area,gap,step,false,false);
+            if(next[0]!=leader||PetPair.Distance(follower,next[1])>step*30+1||!area.Contains(new Rectangle(next[1],followerSize)))throw new Exception("Dragged pair jumped, moved its leader or left the monitor.");
+            bool overlap=new Rectangle(leader,leaderSize).IntersectsWith(new Rectangle(next[1],followerSize));if(clear&&overlap)throw new Exception("Catch-up walked through the pair leader.");if(!overlap)clear=true;
+            follower=next[1];if(follower==PetPair.Beside(leader,leaderSize,follower,followerSize,area,gap)){arrived=true;break;}
+          }
+          if(!arrived||!clear)throw new Exception("The companion failed to catch up after a drag.");
+          var lined=friends.Next(leader,leaderSize,follower,followerSize,area,area,gap,step,false,false);if(lined[0]!=leader||lined[1]!=follower)throw new Exception("A reunited lineup pair started roaming.");
+        }
+      }
+      // A drag across a contiguous display boundary is gradual, not a screen jump.
+      var cross=new PetPair(new Random(12));Rectangle destination=new Rectangle(0,-200,2560,1392),virtualArea=new Rectangle(-1920,-200,4480,1392);Point lead=new Point(1800,300),follow=new Point(-1800,300);bool caught=false;
+      for(int tick=0;tick<180;tick++) { var next=cross.Next(lead,leaderSize,follow,followerSize,destination,virtualArea,gap,step,false,false);if(next[0]!=lead||PetPair.Distance(follow,next[1])>61||!virtualArea.Contains(new Rectangle(next[1],followerSize)))throw new Exception("Cross-monitor catch-up jumped or escaped desktop bounds.");follow=next[1];if(follow==PetPair.Beside(lead,leaderSize,follow,followerSize,destination,gap)){caught=true;break;} }
+      if(!caught)throw new Exception("The pair did not reunite across negative-coordinate monitors.");
+      var paper=roaming.Find(p=>p.Pet.Id=="paper-girl");var files=roaming.Find(p=>p.Pet.Id=="file-master");
+      foreach(string id in new[]{"paper-girl","file-master"}) { PairDragEnded(id);if(pairLeader!=id||!pairRejoining)throw new Exception("Dragging either friend must make it the leader."); }
+      PairDragEnded("farmer");if(pairLeader!="file-master")throw new Exception("Dragging another pet changed the pair leader.");
+      PetPress("paper-girl",Point.Empty);if(!(paper.InteractionActive||files.InteractionActive))throw new Exception("Paper Girl click did not pause the pair.");CancelClicks();
+      PetPress("file-master",Point.Empty);if(!(paper.InteractionActive||files.InteractionActive))throw new Exception("File Master click did not pause the pair.");CancelClicks();
+      Point paperBefore=paper.Location,filesBefore=files.Location;StepPair();if(paper.Location!=paperBefore||files.Location!=filesBefore)throw new Exception("Hidden friends should not move.");
+      foreach(int width in new[]{320,420,1920}) { Rectangle floor=new Rectangle(-1920,-300,width,4000);ArrangeFloor(floor);if(paper.Bottom!=files.Bottom||paper.Left-files.Right!=PairGap)throw new Exception("Lineup split Paper Girl from File Master.");foreach(var pet in roaming)if(!floor.Contains(pet.Bounds))throw new Exception("Paired lineup escaped the display."); }
+      Size original=paper.Size;try { paper.Height+=13;Scatter(new Rectangle(-1920,-300,1920,1080));if(paper.Bottom!=files.Bottom||paper.Top<-300||files.Top<-300)throw new Exception("Unequal-size paired scatter failed."); }finally { paper.Size=original; }
+      LinedUp=false;Scatter(new Rectangle(-1920,-300,1920,1080));if(pairLeader!="file-master"||paper.Bottom!=files.Bottom||paper.Left-files.Right!=PairGap)throw new Exception("The pair must scatter together, with File Master leading.");
     }
     void RoamTests(Rectangle area) {
       var walker=new Roamer(new Random(7));Point at=new Point(area.Left+area.Width/2,area.Top+area.Height/2);Size size=new Size(70,70);

@@ -11,6 +11,7 @@ Prepared by OpenAI Codex (GPT-6) for Astra. This is the current desktop handoff;
 - Duck's 5-by-3 chest keys and Bee's abdomen cycle RGB every six seconds, refreshed every 50ms. Duck's yellow body/orange feet and Bee's pale wings retain their color.
 - Native layered Windows rendering supplies actual alpha: Ghost 38% opacity; fins, fairy wings, butterfly wings, Moth's monochrome static wings and Angel's silver-white hair partly transparent. Angel's blue dress remains visually distinct.
 - No sparkle trails or pink transparency flecks. Generated art already contains outlines; do not add another thick border. Color-key sprites use thresholded alpha; transparent pets use layered windows.
+- Paper Girl and File Master travel together. File Master initially leads; dragging either changes the leader and its companion catches up. Both pause during interaction and remain neighbors in the floor lineup. See [the partner revision](pet-partners-20261011.md) for validation and implementation details.
 
 ## Final art and size inventory
 
@@ -30,8 +31,8 @@ Scales below multiply the standard 58.75 logical-pixel height, subject to the ex
 | deck-duck | 1 | Yellow duck with forward-facing orange soles and 5-by-3 chest key grid cycling RGB; body colors stay fixed. |
 | wifi-butterfly | 0.7 | Smaller monarch with slim dark body and translucent wings. |
 | patch-cat | 0.85 | Smaller cat, white X eye bandage and cast. |
-| paper-girl | 0.72 | Pink NEWS newspaper with lashes, folded corner and columns; same 42.3 logical-pixel height as File Master. |
-| file-master | 0.72 | Manila folder; height 42.3 logical pixels, 20% larger than prior .6 scale. |
+| paper-girl | 0.72 | Pink newspaper without lettering or lashes, folded corner and columns; small rectangular highlighted eyes matching File Master. Same 42.3 logical-pixel height. |
+| file-master | 0.72 | Commanding manila folder with gold crown and stern eyebrows; small rectangular highlighted eyes. Height remains 42.3 logical pixels. |
 | rgbee | 0.7 | Smaller bee; no antenna balls; six-second RGB abdomen cycle; pale translucent wings retain their color. |
 | spoonfed-sugarcube | 0.7 | Smaller white sugarcube holding one silver spoon. |
 | chip | 1 | Desktop screen is the face; original drawing retained as default. |
@@ -85,8 +86,8 @@ The hub commit containing this document is the hub release record. Each linked c
 | deck-duck | main | [0265064](https://github.com/findastra/deck-duck/commit/026506488a349372c93360eae161207b8e203c2d) |
 | wifi-butterfly | main | [f1258fb](https://github.com/findastra/wifi-butterfly/commit/f1258fb74d3ef0bd57d1775e39c71813e040d919) |
 | patch-cat | main | [c9ae49c](https://github.com/findastra/patch-cat/commit/c9ae49c20269855e3e8d7012de6e399e910ffe11) |
-| paper-girl | main | [9a3bae9](https://github.com/findastra/paper-girl/commit/9a3bae980ea56755af18eab898ff5dad99069715) |
-| file-master | main | [620ff98](https://github.com/findastra/file-master/commit/620ff9803cb60197fbc4e873bf89bb34501c81cf) |
+| paper-girl | main | [ad01a52](https://github.com/findastra/paper-girl/commit/ad01a5224b5f611c44b4fb31f72fca011fd00fbf) |
+| file-master | main | [a82b0d2](https://github.com/findastra/file-master/commit/a82b0d2972a52bdc6270c842408bc2594ef94755) |
 | rgbee | main | [f20a4ed](https://github.com/findastra/rgbee/commit/f20a4edd53c4e960345afc0e3377d2dd0b868906) |
 | spoonfed | main | [9b060d9](https://github.com/findastra/spoonfed/commit/9b060d930a89e88ed965b4f609295d8efbbec75a) |
 | data-dealer | main | [6b7d7c9](https://github.com/findastra/data-dealer/commit/6b7d7c9cb51c7e49d89c2d639d9f4d31b23beec2) |
