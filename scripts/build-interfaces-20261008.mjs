@@ -13,6 +13,7 @@ const configs = [
   { repo: 'file-master', type: 'files', title: 'File Master', subtitle: 'Review a cleanup plan', lead: 'Import the scanner’s plan.csv, inspect each proposed action, and export your approval choices.', accent: '#efbf7b', limit: 'This reviewer never moves, renames, or deletes files. Changes happen only when you separately run the existing File Master tools.' },
   { repo: 'findastra-discord-presence', type: 'discord', title: 'Discord Damsel', subtitle: 'Your presence control room', lead: 'Open the installed OpenAI or Anthropic companion, and keep a short setup checklist.', accent: '#bcb9ff', limit: 'The two existing controllers run on your own PC. This hub does not start them or change Discord activity by itself.' },
   { repo: 'paper-girl', type: 'paper', title: 'Paper Girl', subtitle: 'Your daily science rabbit hole', lead: 'The original science-discovery desk is available below.', accent: '#dfa7c1', live: 'https://findastra.github.io/paper-girl/', limit: 'The original app needs an internet connection. This package preserves its live interface instead of substituting a new reading app.' },
+  { repo: 'voicemeeter-bug', type: 'audio', title: 'Voicemeeter Bug', subtitle: 'Your local audio helper', lead: 'Open the small Windows Bug when Voicemeeter audio needs repair.', accent: '#ef7d83', launchPath: '%USERPROFILE%\\Documents\\ChatGPT\\Voicemeeter Bug\\voicemeeter-bug-20261008.exe', limit: 'This browser companion cannot start a Windows program, restart audio, or inspect the desktop Bug. Audio repair runs in the installed Windows app. Pet expressions are animations, not audio-health readings.' },
 ];
 
 function clientMain() {
@@ -31,12 +32,13 @@ function clientMain() {
   const field = (parent, label, name, options) => { const wrap = h('label', label, '', parent); const input = h(options ? 'select' : name === 'notes' ? 'textarea' : 'input', undefined, '', wrap); input.name = name; if (options) for (const value of options) { const o = h('option', value, '', input); o.value = value; } return input; };
   const toolbar = h('div', undefined, 'toolbar', document.querySelector('header'));
   button(toolbar, 'Export local notes', () => download(JSON.stringify({ app: cfg.repo, exported: new Date().toISOString(), ...state }, null, 2)), 'secondary');
-  link(toolbar, 'Source repository', 'https://github.com/findastra/' + cfg.repo);
+  if (cfg.published === false) h('p', 'Local app · not published on GitHub', 'badge', toolbar);
+  else link(toolbar, 'Source repository', 'https://github.com/findastra/' + cfg.repo);
   const notesCard = () => { const box = card('Session notes', 'Keep the next useful step close to the work.'); const n = field(box, 'Notes', 'notes'); n.value = state.notes; n.onchange = () => { state.notes = n.value; save(); }; };
   const checklist = (title, items) => { const box = card(title, 'Check a step after you have verified it yourself.'); for (const [id, text] of items.entries()) { const row = h('label', undefined, 'check', box); const input = h('input', undefined, '', row); input.type = 'checkbox'; input.checked = state.checks[id] === true; h('span', text, '', row); input.onchange = () => { state.checks[id] = input.checked; save(); }; } return box; };
 
   if (cfg.type === 'manager') {
-    const box = card('All 18 apps', 'Each card opens its real application or its local companion interface.');
+    const box = card('All ' + cfg.pets.length + ' apps', 'Each card opens its real application or its local companion interface.');
     const search = field(box, 'Find an app', 'search'); search.type = 'search';
     const grid = h('div', undefined, 'app-grid', box);
     const render = () => { grid.replaceChildren(); for (const pet of cfg.pets.filter((p) => (p.pet + ' ' + p.job).toLowerCase().includes(search.value.toLowerCase()))) {
@@ -113,6 +115,16 @@ function clientMain() {
     checklist('Presence checklist', ['Discord desktop is running.', 'Activity sharing is enabled in Discord.', 'The intended companion is running.', 'The profile card was inspected in Discord.', 'If both apps are running, the visible result was checked rather than assumed.']); notesCard();
   }
 
+  if (cfg.type === 'audio') {
+    const launch = card('Open the Windows Bug', 'Press Windows + R, paste this path, and press Enter.');
+    h('code', cfg.launchPath, '', launch);
+    h('p', 'Single-click the Bug among the desktop pets to repair Voicemeeter audio. If the app is already running, use that desktop pet or its tray controls.', 'muted', launch);
+    const status = card('Desktop status', 'Not checked by this browser page.');
+    h('p', 'Use the Windows Bug to see the result of a repair, then listen to your audio to confirm it sounds normal.', '', status);
+    h('p', 'If the executable cannot be found, the Windows app needs to be installed or restored at the location above.', 'muted', status);
+    notesCard();
+  }
+
   if (cfg.type === 'paper') {
     const box = card('Original Paper Girl', 'Use the original app directly if it cannot appear in the embedded view.'); link(box, 'Open original Paper Girl', cfg.live, 'button'); const frame = h('iframe', undefined, 'original-app', box); frame.src = cfg.live; frame.title = 'Paper Girl original application'; frame.referrerPolicy = 'no-referrer';
   }
@@ -131,11 +143,11 @@ for (const config of configs) {
   if (requested.size && !requested.has(config.repo)) continue;
   const output = `apps/${config.repo}-20261008.html`;
   // Published companions retain their exact source bytes and version footer.
-  // The Farmer's manager is generated from the current Cage registry.
+  // The Farmer's manager is generated from the current pet registry.
   if (config.type !== 'manager' && existsSync(output) && !refreshExisting) { preserved++; continue; }
   const pet = registry.pets.find((p) => p.repo === config.repo);
   const image = 'data:image/png;base64,' + readFileSync(art.pets[pet.art].frames.idle).toString('base64');
-  const data = { ...config, ...(config.type === 'manager' ? { pets: registry.pets } : {}) };
+  const data = { ...config, published: pet.published, ...(config.type === 'manager' ? { pets: registry.pets } : {}) };
   const serialized = JSON.stringify(data).replaceAll('<', '\\u003c');
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="author" content="Astra; OpenAI Codex GPT-6"><title>${esc(config.title)} · Astra's Pet Apps</title><style>${css}</style></head><body style="--accent:${config.accent}"><header><img src="${image}" alt="${esc(pet.pet)}"><p class="eyebrow">${esc(config.subtitle)}</p><h1>${esc(config.title)}</h1><p>${esc(config.lead)}</p><p id="feedback" role="status" aria-live="polite"></p></header><main></main><footer><p class="limit">${esc(config.limit)}</p><p>Made by Astra · Local companion interface · 2026-10-08 · Built with OpenAI Codex (GPT-6)</p></footer><script>window.APP_CONFIG=${serialized};(${clientMain.toString()})();</script></body></html>`;
   writeFileSync(output, html);

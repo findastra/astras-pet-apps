@@ -16,7 +16,7 @@ export function buildRoster(registry, moods, names = {}, frames = {}) {
   const img = (id, mood, w = 64) => `<img src="${frames[id]?.[mood] || assetPaths(registry, id).frame(mood)}" width="${w}" height="${w}" alt="${id} ${mood}">`;
   const n = counts(registry);
   const out = [];
-  out.push('# Roster', '', '*The running list of everyone who lives in the Cage. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*', '');
+  out.push('# Roster', '', "*The running list of every pet in Astra's Pet Apps. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*", '');
   out.push(`**${n.apps} pet apps so far, drawn as ${n.characters} characters (${n.apps} app pets, ${n.companions} companion${n.companions === 1 ? '' : 's'}, ${n.mascots} mascot${n.mascots === 1 ? '' : 's'}). ${n.published} of the ${n.apps} pet apps have a repo on GitHub.**`, '');
   out.push(`Whether each of those repos carries its \`pet.json\` and the \`pet-app\` topic is not recorded here. Run \`npm run check -- --online\` to ask GitHub.`, '');
   out.push(`Last updated ${registry.updated}. Drawings below are **drafts** unless their notes record Astra's approval. The pets are generated pixel art; how they are made is in [PET-FILES.md](PET-FILES.md).`, '');
