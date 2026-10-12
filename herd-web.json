@@ -1400,5 +1400,505 @@
     "model": 5,
     "harness": 5,
     "assistant": 0
+  },
+  "code": {
+    "about": "Languages in each pet's repo, measured by file size like GitHub's language bar, on 2026-10-12 from the main branch, with why each pet uses each one. Re-measure when a repo changes.",
+    "checked": "2026-10-12",
+    "repos": {
+      "anthropic-discord-presence": {
+        "languages": [
+          {
+            "language": "JavaScript",
+            "percent": 82.3,
+            "why": "A small Node server that detects Claude Code and talks to Discord's local RPC."
+          },
+          {
+            "language": "CSS",
+            "percent": 6.7,
+            "why": "Control panel styling."
+          },
+          {
+            "language": "HTML",
+            "percent": 6.4,
+            "why": "The control panel."
+          },
+          {
+            "language": "PowerShell",
+            "percent": 3.9,
+            "why": "The system-tray icon."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.8,
+            "why": "Double-click start and automatic startup."
+          }
+        ]
+      },
+      "api-fairy": {
+        "languages": [
+          {
+            "language": "C#",
+            "percent": 85.2,
+            "why": "A Windows desktop app: a dashboard window and a scanner that watches where keys are kept. Native C# can sit in the desktop corner and read local files."
+          },
+          {
+            "language": "HTML",
+            "percent": 13.9,
+            "why": "Its browser app page for key notes."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.9,
+            "why": "Double-click build and start."
+          }
+        ]
+      },
+      "astras-gif-maker": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "astras-pet-apps": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 81.9,
+            "why": "The Cage, every pet's app page in apps/, and the Herd Web: pages that open by double-click."
+          },
+          {
+            "language": "JavaScript",
+            "percent": 12.5,
+            "why": "Node scripts with built-in modules only (the repo's no-dependency rule): the build, the Farmer's daily round on GitHub Actions, and cage-data.js."
+          },
+          {
+            "language": "C#",
+            "percent": 5.4,
+            "why": "The Windows desktop host: the tray Star and the pets on your real desktop need native transparent windows, which C# on Windows gives."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.1,
+            "why": "A double-click launcher for the Farmer's dock."
+          },
+          {
+            "language": "PowerShell",
+            "percent": 0.1,
+            "why": "Builds the desktop app with the C# compiler that ships with Windows, so nothing extra is installed."
+          }
+        ]
+      },
+      "backup-beaver": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "claude-bot": {
+        "languages": [],
+        "note": "No code yet: building v0 is handoff card 001 in its repo."
+      },
+      "data-dealer": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 99.1,
+            "why": "Data Dealer's dashboard pages and Chip's app."
+          },
+          {
+            "language": "Python",
+            "percent": 0.9,
+            "why": "A small build script that bakes the agent definitions and skills into the dashboard page."
+          }
+        ]
+      },
+      "deck-duck": {
+        "languages": [
+          {
+            "language": "PowerShell",
+            "percent": 93.8,
+            "why": "A script that draws Deck Duck's art; the pet's job is not decided yet."
+          },
+          {
+            "language": "HTML",
+            "percent": 6.2,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "drum-dog": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "file-master": {
+        "languages": [
+          {
+            "language": "PowerShell",
+            "percent": 58.2,
+            "why": "Scans Windows and applies cleanup plans with undo. PowerShell is Windows' own scripting language with full file-system access, and runs without installing anything."
+          },
+          {
+            "language": "HTML",
+            "percent": 41.4,
+            "why": "The web app where you import plan.csv and review each change before anything runs."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.4,
+            "why": "run-scan.cmd: a double-click start for the scan."
+          }
+        ]
+      },
+      "finance-finch": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
+          }
+        ]
+      },
+      "findastra-discord-presence": {
+        "languages": [
+          {
+            "language": "JavaScript",
+            "percent": 69.3,
+            "why": "The two presence apps are small Node servers on your PC that detect Codex or Claude Code and talk to Discord's local RPC."
+          },
+          {
+            "language": "HTML",
+            "percent": 20.1,
+            "why": "Discord Damsel's app page and the presence apps' control panels."
+          },
+          {
+            "language": "CSS",
+            "percent": 6.2,
+            "why": "Styling for the control panels."
+          },
+          {
+            "language": "PowerShell",
+            "percent": 3.6,
+            "why": "The Windows system-tray icon for each presence app."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.7,
+            "why": "Double-click start and the automatic-startup switch."
+          }
+        ]
+      },
+      "fuzzboi-friend": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Type a hex code and the page draws that exact Fuzzboi as a PNG, right in the browser."
+          }
+        ]
+      },
+      "ghost-protocol": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "The security checklist and its content pages, saved in your browser."
+          }
+        ]
+      },
+      "github-goldfish": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 84.1,
+            "why": "Its app page, where you read the audit."
+          },
+          {
+            "language": "JavaScript",
+            "percent": 15.9,
+            "why": "A Node command-line audit engine with tests, so the same checks can run on your PC or in a GitHub workflow."
+          }
+        ]
+      },
+      "health-hummy": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
+          }
+        ]
+      },
+      "learn-python": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "A Python practice desk that checks your answers in the browser, so you can practise without installing Python."
+          }
+        ]
+      },
+      "meme-fiend": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "mesh-moth": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "mine-mole": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "mommys": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "openai-discord-presence": {
+        "languages": [
+          {
+            "language": "JavaScript",
+            "percent": 70.6,
+            "why": "A small Node server that detects Codex and talks to Discord's local RPC."
+          },
+          {
+            "language": "CSS",
+            "percent": 13.3,
+            "why": "Control panel styling."
+          },
+          {
+            "language": "HTML",
+            "percent": 11.4,
+            "why": "The control panel and its docs page."
+          },
+          {
+            "language": "PowerShell",
+            "percent": 3.9,
+            "why": "The system-tray icon."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.8,
+            "why": "Double-click start and automatic startup."
+          }
+        ]
+      },
+      "paper-girl": {
+        "languages": [
+          {
+            "language": "TypeScript",
+            "percent": 69.5,
+            "why": "A full web app (React pages plus server code) that searches real research and stores a library: TypeScript catches mistakes in a codebase that size."
+          },
+          {
+            "language": "JavaScript",
+            "percent": 12.1,
+            "why": "Build and install scripts."
+          },
+          {
+            "language": "CSS",
+            "percent": 7.1,
+            "why": "Tailwind and shadcn styling."
+          },
+          {
+            "language": "HTML",
+            "percent": 6.8,
+            "why": "The pet app page and a static copy of the site."
+          },
+          {
+            "language": "Shell",
+            "percent": 4.2,
+            "why": "Install scripts for continuous integration."
+          },
+          {
+            "language": "SQL",
+            "percent": 0.4,
+            "why": "Database migrations for its saved library."
+          }
+        ]
+      },
+      "patch-cat": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "portfolio-puffer": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "project-parrot": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "raspberry-berry": {
+        "languages": [
+          {
+            "language": "JavaScript",
+            "percent": 77.3,
+            "why": "Sprite and drawing scripts for its art."
+          },
+          {
+            "language": "HTML",
+            "percent": 22.7,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "rgbee": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Plans and previews lighting scenes in the browser; sending them to real lights is planned."
+          }
+        ]
+      },
+      "rift-rabbit": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "spoonfed": {
+        "languages": [],
+        "note": "No code in the repo yet: art and its provenance only."
+      },
+      "unity-unicorn": {
+        "languages": [
+          {
+            "language": "Python",
+            "percent": 49.6,
+            "why": "Blender and audit scripts for avatars and worlds (for example the neck blender and the masonry audit). Blender's scripting language is Python."
+          },
+          {
+            "language": "HTML",
+            "percent": 46.3,
+            "why": "Its desk page: avatar plans, the tool library and history."
+          },
+          {
+            "language": "JavaScript",
+            "percent": 4.1,
+            "why": "A Node test that keeps the tool library valid."
+          }
+        ]
+      },
+      "voicemeeter-bug": {
+        "languages": [
+          {
+            "language": "C#",
+            "percent": 98.7,
+            "why": "A Windows desktop pet that restarts Voicemeeter's audio engine. It needs native Windows calls, so it is C#."
+          },
+          {
+            "language": "PowerShell",
+            "percent": 1.3,
+            "why": "Builds it with the C# compiler that ships with Windows."
+          }
+        ]
+      },
+      "vrchat-ai-astra": {
+        "languages": [
+          {
+            "language": "Python",
+            "percent": 90.6,
+            "why": "The AI Astra backend and its API: the bridge logic that talks to the AI and to VRChat over OSC."
+          },
+          {
+            "language": "JavaScript",
+            "percent": 5.3,
+            "why": "The Electron desktop front end (main.js and the renderer)."
+          },
+          {
+            "language": "HTML",
+            "percent": 3.0,
+            "why": "The renderer's screens and the pet app page."
+          },
+          {
+            "language": "CSS",
+            "percent": 1.0,
+            "why": "Styling for the desktop front end."
+          },
+          {
+            "language": "Batchfile",
+            "percent": 0.1,
+            "why": "Run_AIAstra.bat and the test launcher."
+          }
+        ]
+      },
+      "vscode-angel": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
+          }
+        ]
+      },
+      "wifi-butterfly": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file until the job is decided."
+          }
+        ]
+      },
+      "mail-snail": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "Placeholder page only: one HTML file. Finding unpaid bills is planned and not built yet."
+          }
+        ]
+      }
+    }
   }
 }
