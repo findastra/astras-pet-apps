@@ -2,6 +2,23 @@
 
 Spoonfed Sugarcube hatching metadata and its single-pet recipe prepared with OpenAI Codex (GPT-6), 2026-10-11. Paid artwork remains pending approval.
 
+## Read first: ASTRA_PET_OS (2026-10-11)
+Astra approved **ASTRA_PET_OS** as the direction for this project. The one canonical
+architecture document is [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md)
+(master handoff v5.2); where it disagrees with anything below, it wins. Always write the name
+exactly `ASTRA_PET_OS`.
+- Migration is planned in [docs/migration/PLAN.md](docs/migration/PLAN.md), with the
+  [audit](docs/migration/AUDIT.md) and [gap analysis](docs/migration/GAP-ANALYSIS.md). The plan
+  is a **draft until Astra approves it**; until then, change only what she asks for.
+- **The Cage is retired as a product concept.** Keep `cage.html` working, but add no new Cage or
+  browser-roaming features. Pets roam on the Windows desktop only. The Farm (a simple responsive
+  website with a text box under every pet) replaces it, per the plan.
+- Nothing in the architecture is built until tests show it. Do not describe planned pets,
+  repos (`astras-farm`, `astras-kennel`, `astra-pet-sdk`) or features as existing.
+- Ask Astra before creating repos, publishing, accounts or paid services, installing
+  software, deleting, force-pushing or repository transfers.
+- Who edits what while Claude and Codex work in parallel: see "Who edits what" in the plan.
+
 *A pet app by Astra.* Public credit is always **Astra**, never a legal name. Keep work information (including any employer's name) out of this repo.
 
 Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-07. Record your model name and version here when you change something substantial.
@@ -10,10 +27,11 @@ Cage movement by kind (zones, flocks, friends, tag and chases from `cage_life` i
 Square pet well for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 Pet words (`PET-WORDS.md`, `words` in pets.json, `test/pet-words-test-20261009.mjs`) and public-repo labels with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 The Farmer's rounds (self-audits, mood key, submissions, pipeline, relations, profile round; `scripts/farmer-rounds-20261009.mjs`, `scripts/farmer-profile-20261009.mjs`, `scripts/relations-20261009.mjs`, `.github/workflows/farmer-daily-rounds.yml`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+ASTRA_PET_OS v5.2 filed as the canonical architecture, with the Phase 0 audit, gap analysis and migration plan, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11.
 Voicemeeter Bug (made with OpenAI Codex (GPT-6) on 2026-10-08) registered on main from the unmerged roam-free branch, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. His Windows app and source are still only on Astra's PC.
 
 ## What this is
-The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
+The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage today and will run the Farm under ASTRA_PET_OS. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
 
 ## Rules
 - **`pets.json` is the source of truth.** Never hand-edit the README table between the `pets:start` / `pets:end` markers, `ROSTER.md`, `cage-data.js` or `art/`. Run `npm run build`.

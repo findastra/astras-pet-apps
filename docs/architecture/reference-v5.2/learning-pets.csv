@@ -1,0 +1,19 @@
+Number,Pet,Area,Responsibility
+1,Linux Penguin,Linux & OS,"Linux administration, SSH, systemd, packages, permissions"
+2,Shell Squid,Linux & OS,"Bash, terminal scripting, command automation"
+3,Kernel Koala,Linux & OS,"Processes, memory, drivers, operating-system internals"
+4,Proxy Axolotl,Self-hosting,"Reverse proxies, TLS, private remote access"
+5,Cluster Crab,Self-hosting,Distributed computing and service orchestration
+6,Storage Stoat,Self-hosting,"NAS, ZFS, storage pools, snapshots"
+7,White Hat Weasel,Cybersecurity,Authorized security assessments and remediation
+8,Port Spider,Cybersecurity,"Authorized port and service discovery, exposure checks"
+9,Cipher Owl,Cybersecurity,"Encryption, keys, certificates, cryptography"
+10,Forensic Ferret,Cybersecurity,Digital forensics and incident investigation
+11,Llama Librarian,Local AI,"Local model inventory, downloads, quantization"
+12,Inference Iguana,Local AI,"Inference benchmarks, GPU usage, optimization"
+13,Agent Ant,Local AI,"Agent experiments, tool calling, evaluations"
+14,Roaming Raven,Digital nomad,"VPN, travel connectivity, remote access"
+15,Cache Coyote,Digital nomad,"Offline files, cached documentation, queued tasks"
+16,Sync Mink,Digital nomad,"Cross-device synchronization, conflict resolution"
+17,Passport Panda,Digital nomad,"Secure ID/passport metadata, visas, residency and renewal tracking"
+18,Journal Jay,Digital nomad,"Travel diary, itineraries, memories, trip summaries"
