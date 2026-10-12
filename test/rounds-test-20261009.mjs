@@ -196,3 +196,10 @@ test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dr
   assert.ok(changes.length > 0);
   assert.deepEqual(syncProfile(text, registry, online([{ name: 'detour-into-vr', private: false, description: 'Takes detours into VR.' }, { name: 'tool-x', private: false, description: 'A small tool.' }])).changes, [], 'a second run changes nothing');
 });
+
+test('profile round finds the pet list under the Astra\'s PetOS heading too', () => {
+  const renamed = profile.replace(/^(#{2,4} ).*[Pp]et [Aa]pps.*$/m, "$1Astra's PetOS - Personal AI Agent Platform");
+  assert.notEqual(renamed, profile, 'the fixture has a pet apps heading to rename');
+  assert.doesNotThrow(() => syncProfile(renamed, registry, online([])));
+});
+
