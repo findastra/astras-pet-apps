@@ -1,6 +1,7 @@
 # ASTRA_PET_OS migration plan
 
-Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. **Draft for Astra's approval.** Nothing below
+Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. Astra asked for it to be pushed on 2026-10-11; the **open
+decisions below still need her answers** before any step that depends on them. Nothing below
 is built yet. Architecture: [docs/architecture/ASTRA_PET_OS.md](../architecture/ASTRA_PET_OS.md).
 Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 
@@ -30,6 +31,9 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
    server / Raspberry Pi you already have?
 7. **The unmerged 2026-10-09 branch** (`pets-roam-life-20261009`, never pushed): drop it, or
    keep only its request-log idea as input to the Farm inbox (recommended)?
+8. **Seeded pets:** jobs for Pole Puff, Procreate Panda, Skill Scout and PSC Sealion (and what PSC
+   stands for), whether Pole Puff and Piranesi Nessi are the pets for your two VRChat worlds, and
+   **a new name for Passport Panda** (Procreate Panda takes the panda).
 
 ## Repositories: actual and proposed
 
@@ -97,6 +101,25 @@ a phone over private access.
 | `scripts/desktop-pets-*.cs`, `desktop-art/`, `build-desktop-pets-*.ps1` (future `apps/desktop-host/`) | Codex | Codex has been doing the desktop work |
 | `pets.json`, `AGENTS.md`, `CLAUDE.md`, `handoffs/` | Shared | One change per commit, pull first, never rewrite another assistant's lines |
 | Each pet's own repo | Whoever holds that pet's open handoff card | |
+
+## Seeded pets (Astra, 2026-10-11)
+
+Approved names with nothing built, recorded under `seeds` in `pets.json`. A seed is not a pet app
+and is not counted. It moves to the pipeline when it gets a repo, then to the Farm like any pet.
+
+| Seed | What is known | Next step |
+|---|---|---|
+| Pole Puff | Probably the pet for Astra's Infinite Pole (candidate repo `astras-infinite-pole`) | Astra confirms; job |
+| Procreate Panda | Named after Procreate | Job |
+| Skill Scout | Name only | Job |
+| PSC Sealion | Name only | What PSC means; job |
+| Platform Platypus | Local draft app on Astra's PC with `pet.json`: checks a page on iPhone, Android, iPad and desktop | Repo with Astra's OK |
+| Piranesi Nessi | Probably the pet for Piranesi House (candidate repo `piranesi-house`) | Astra confirms; job |
+| Claude Bot | Already in the pipeline (`claude-bot`, cards 001–003) | Cards 001–003 |
+| Spoonfed Sugarcube | Already in the pipeline (`spoonfed`, card 009) | Card 009 |
+
+**Rename:** Passport Panda (v5.2 digital-nomad pet) keeps its job but needs a new name, because
+Procreate Panda takes the panda. Use "the passport pet" until Astra names it.
 
 ## Acceptance test matrix
 
