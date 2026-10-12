@@ -1,5 +1,5 @@
 {
-  "about": "The non-pet parts of the Herd Web (herd-web-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets are herd-wide and drawn behind their own toggle. Built by scripts/herd-web-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/herd-web-20261012.mjs.",
+  "about": "The non-pet parts of the Herd Web (herd-web-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets are herd-wide and drawn behind their own toggle. Built by scripts/herd-web-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (0 development, 1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/herd-web-20261012.mjs.",
   "states": {
     "now": "Works today",
     "planned": "Planned (decided, or in a pet's own job)",
@@ -18,7 +18,8 @@
     "infrastructure": "Infrastructure",
     "program": "Program, site or world",
     "host-machine": "Device",
-    "harness": "AI harness"
+    "harness": "AI harness",
+    "assistant": "AI assistant (builds the pets)"
   },
   "carries": {
     "builds": "code and changes made by an assistant on a branch, from a handoff card",
@@ -54,10 +55,10 @@
     },
     {
       "id": "agent-harness",
-      "name": "Agent harness framework",
+      "name": "AI harness",
       "type": "harness",
       "state": "planned",
-      "job": "The shared harness design in the Astra Pet SDK: model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet runs its own copy of it, drawn as a small ring just outside that pet. Planned (ASTRA_PET_OS section 8).",
+      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the herd. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRA_PET_OS sections 7 and 8).",
       "layer": 5
     },
     {
@@ -73,7 +74,7 @@
       "name": "Claude (Anthropic)",
       "type": "model",
       "state": "now",
-      "job": "Anthropic models. Today Claude accounts build and change pets through handoff cards and branches, and Claude Code activity shows on Anthropic Discord Presence. Planned: pet agents call Claude on demand through the agent harness.",
+      "job": "Anthropic's models, as a pet's AI model at runtime: pet agents will call Claude on demand through their harness (planned), and Claude Bot's quick chat talks to it.",
       "layer": 5
     },
     {
@@ -81,7 +82,7 @@
       "name": "OpenAI",
       "type": "model",
       "state": "now",
-      "job": "OpenAI models. Today OpenAI image generation draws every pet's mood sheet (billed to Astra's account), and Codex builds and changes pets through handoff cards. Codex activity shows on OpenAI Discord Presence.",
+      "job": "OpenAI's models, as a pet's AI model at runtime (planned, through the harness). Today OpenAI image generation is also used by the art pipeline to draw every pet's mood sheet, which is development work, not runtime.",
       "layer": 5
     },
     {
@@ -462,7 +463,7 @@
       "type": "host-machine",
       "state": "now",
       "layer": 1,
-      "job": "Your laptop. Opens the Farm like any device once it exists.",
+      "job": "Your laptop: used for streaming and recording. Linked to the pets that touch a stream: scenes, lighting, audio and buttons. Opens the Farm like any device.",
       "category": "Device"
     },
     {
@@ -516,8 +517,33 @@
       "type": "host-machine",
       "state": "now",
       "layer": 6,
-      "job": "Hardware in the planned cyberdeck. For your own or explicitly authorized systems only (ASTRA_PET_OS cyberdeck).",
+      "job": "Hardware for pentesting and miscellaneous tinkering, on things you own or are authorized to test. Most basic use: checking your own home's security, such as which of your door, gate or garage remotes, key fobs, NFC or RFID badges and IR devices can be read or copied, so you know what to lock down. Goes in the planned cyberdeck.",
       "category": "Hardware"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "type": "assistant",
+      "state": "now",
+      "layer": 0,
+      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. Development, not part of the running pets."
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "type": "assistant",
+      "state": "now",
+      "layer": 0,
+      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. Development, not part of the running pets."
+    },
+    {
+      "id": "security-key",
+      "name": "Hardware security key",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 1,
+      "category": "Device",
+      "job": "The physical key on your keychain that you tap or plug in to sign in (a FIDO2 or passkey authenticator). It proves it is really you: to your accounts, and later to the Farm and to approvals. ASTRA_PET_OS lists one in the cyberdeck for hardware-backed sign-in, not as a replacement for encrypted storage, backups or recovery codes."
     }
   ],
   "links": [
@@ -529,14 +555,14 @@
       "why": "Every pet's mood sheet is generated with OpenAI image generation through the image bridge, billed to Astra's OpenAI account (scripts/generate-pets.mjs)."
     },
     {
-      "from": "openai",
+      "from": "codex",
       "to": "astras-pet-apps",
       "carries": "builds",
       "state": "now",
       "why": "Codex picks up handoff cards and builds or changes pets on branches; its work is recorded in AGENTS.md."
     },
     {
-      "from": "claude",
+      "from": "claude-code",
       "to": "astras-pet-apps",
       "carries": "builds",
       "state": "now",
@@ -571,14 +597,14 @@
       "why": "Discord Damsel's app opens the Anthropic controls at 127.0.0.1:38762."
     },
     {
-      "from": "openai",
+      "from": "codex",
       "to": "openai-discord-presence",
       "carries": "status",
       "state": "now",
       "why": "The app detects Codex activity and model metadata and shows it on Discord."
     },
     {
-      "from": "claude",
+      "from": "claude-code",
       "to": "anthropic-discord-presence",
       "carries": "status",
       "state": "now",
@@ -1222,21 +1248,123 @@
       "why": "Cache Coyote queues work offline on the cyberdeck Pi."
     },
     {
-      "from": "white-hat-weasel",
-      "to": "flipper-zero",
-      "carries": "opens",
-      "state": "suggested",
-      "why": "No pet owns the Flipper Zero yet. White Hat Weasel does authorized security work, so it is the closest fit; or it needs its own pet."
-    },
-    {
       "from": "mesh-moth",
       "to": "raspberry-pi",
       "carries": "runs-on",
       "state": "architecture",
       "why": "The Meshtastic node runs on the Pi's LoRa HAT in the cyberdeck."
+    },
+    {
+      "from": "codex",
+      "to": "github",
+      "carries": "builds",
+      "state": "now",
+      "why": "Codex works on branches in Astra's GitHub repos."
+    },
+    {
+      "from": "claude-code",
+      "to": "github",
+      "carries": "builds",
+      "state": "now",
+      "why": "Claude Code works on branches in Astra's GitHub repos."
+    },
+    {
+      "from": "claude-code",
+      "to": "claude",
+      "carries": "model",
+      "state": "now",
+      "why": "Claude Code runs on Anthropic's Claude models."
+    },
+    {
+      "from": "codex",
+      "to": "openai",
+      "carries": "model",
+      "state": "now",
+      "why": "Codex runs on OpenAI's models."
+    },
+    {
+      "from": "white-hat-weasel",
+      "to": "flipper-zero",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The Flipper Zero is for pentesting (Astra, 2026-10-12); White Hat Weasel is the authorized security-assessment pet."
+    },
+    {
+      "from": "flipper-zero",
+      "to": "ghost-protocol",
+      "carries": "findings",
+      "state": "suggested",
+      "why": "What a check of your own home turns up (a remote or fob that can be copied) becomes a step on Ghost Protocol's checklist."
+    },
+    {
+      "from": "security-key",
+      "to": "farm",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Hardware-backed sign-in: each device signs in to the Farm once, and the key can confirm it is you."
+    },
+    {
+      "from": "security-key",
+      "to": "gatekeeper-goddess",
+      "carries": "status",
+      "state": "suggested",
+      "why": "Approve risky actions with a tap of the key, so an approval cannot be faked by a message or a prompt."
+    },
+    {
+      "from": "ghost-protocol",
+      "to": "security-key",
+      "carries": "findings",
+      "state": "suggested",
+      "why": "Checklist steps: register the key on your important accounts, keep a backup key, keep recovery codes somewhere safe."
+    },
+    {
+      "from": "security-key",
+      "to": "raspberry-pi",
+      "carries": "runs-on",
+      "state": "architecture",
+      "why": "The cyberdeck build includes a physical hardware security key."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "deck-duck",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "The laptop does streaming and recording (Astra, 2026-10-12). Stream Deck buttons drive the stream and recording."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "rgbee",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "The laptop does streaming and recording (Astra, 2026-10-12). Lighting scenes for the stream."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "voicemeeter-bug",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "The laptop does streaming and recording (Astra, 2026-10-12). Audio routing for streams and recordings, if Voicemeeter runs on the laptop."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "drum-dog",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "The laptop does streaming and recording (Astra, 2026-10-12). Music and track ideas recorded in sessions."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "mommys",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "The laptop does streaming and recording (Astra, 2026-10-12). Mommy's classes and events may be streamed or recorded."
     }
   ],
   "layers": {
+    "0": {
+      "name": "Development (outside the running system)",
+      "detail": "Assistants and scripts that build and change the pets: Claude Code, Codex and the art pipeline. They work through GitHub and handoff cards; they are not part of any pet at runtime."
+    },
     "1": {
       "name": "You",
       "detail": "You, your devices and the Farm you reach every pet from."
@@ -1270,6 +1398,7 @@
     "seed": 4,
     "roadmap": 4,
     "model": 5,
-    "harness": 5
+    "harness": 5,
+    "assistant": 0
   }
 }

@@ -10,7 +10,7 @@
   color-scheme:dark;
   --bg:#0b0a12; --panel:rgba(22,19,34,.9); --line:#2e2840; --fg:#ece8f6; --muted:#9b93b1;
   --host:#ffcc4d; --you:#ff8fd0; --pet:#9b7bff; --pipe:#3fd3e0; --seed:#b6f25a; --road:#7d86a3; --model:#ff9f43; --infra:#5ef0b0; --program:#d7d2e6; --machine:#8fb4ff;
-  --l1:#ff8fd0; --l2:#5ad1ff; --l3:#ffcc4d; --l4:#b39dff; --l5:#ff9f43; --l6:#7ee0a1;
+  --l0:#8d8a99; --l1:#ff8fd0; --l2:#5ad1ff; --l3:#ffcc4d; --l4:#b39dff; --l5:#ff9f43; --l6:#7ee0a1;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -73,7 +73,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 <section class="hud">
   <div>
     <h1>Herd <span>Web</span></h1>
-    <p class="sub">Astra's PetOS as a 3D map: every pet, model, program and piece of infrastructure, and what flows between them. Built from <b>pets.json</b> and <b>herd-web.json</b>. The Farmer sits in the centre; pets, harness rings, programs and your devices wrap around him in shells. Click a node or a line for details.</p>
+    <p class="sub">Astra's PetOS as a 3D map: every pet, model, program and piece of infrastructure, and what flows between them. Built from <b>pets.json</b> and <b>herd-web.json</b>. Shells follow the architecture layers: the neutral registry at the core, the Farmer, every pet agent, the glass AI harness around them, models and programs, and you and your devices outside. Click a node or a line for details.</p>
   </div>
   <div class="search">
     <label class="label" for="q">Search</label>
@@ -94,7 +94,8 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="shapes" id="shapeKey"></div>
   <div class="label types-h">Colour key (nodes)</div>
   <div class="legend" id="nodeLegend"></div>
-  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px">Drag to orbit, scroll or pinch to zoom. Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Herd-wide links (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
+  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> orbits, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or the whole herd). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
+  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Herd-wide links (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
 </section>
 
 <aside class="side" id="side" hidden aria-live="polite"></aside>
@@ -106,13 +107,18 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 const DATA = __DATA__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const TYPE = {
-  host:{color:css('--host'),r:.95,shape:'sphere',shell:0}, pet:{color:css('--pet'),r:.55,shape:'sphere',shell:13},
-  pipeline:{color:css('--pipe'),r:.44,shape:'sphere',shell:13}, seed:{color:css('--seed'),r:.38,shape:'sphere',shell:13},
-  roadmap:{color:css('--road'),r:.34,shape:'sphere',shell:13.8}, infrastructure:{color:css('--infra'),r:.6,shape:'gem',shell:6},
-  harness:{color:css('--l5'),r:.9,shape:'ring',shell:20}, model:{color:css('--model'),r:.7,shape:'octa',shell:20}, program:{color:css('--program'),r:.36,shape:'box',shell:27},
-  'host-machine':{color:css('--machine'),r:.55,shape:'cyl',shell:34}, you:{color:css('--you'),r:.8,shape:'sphere',shell:34},
+  host:{color:css('--host'),r:.95,shape:'sphere'}, pet:{color:css('--pet'),r:.55,shape:'sphere'},
+  pipeline:{color:css('--pipe'),r:.44,shape:'sphere'}, seed:{color:css('--seed'),r:.38,shape:'sphere'},
+  roadmap:{color:css('--road'),r:.34,shape:'sphere'}, infrastructure:{color:css('--infra'),r:.6,shape:'gem'},
+  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.36,shape:'box'},
+  'host-machine':{color:css('--machine'),r:.55,shape:'cyl'}, you:{color:css('--you'),r:.8,shape:'sphere'}, assistant:{color:css('--l0'),r:.6,shape:'tetra'},
 };
-const LAYER_COLOR = {1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
+// Shells follow the architecture layers. Neutral registry at the core (Program Manager is not the Farmer's),
+// the Farmer around it, every pet agent, the glass AI harness around all of them, the models and real programs
+// they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
+const LAYER_R = {2:2.8, 3:6.5, 4:13, 5:21, 6:28, 0:32, 1:36};
+const HARNESS_R = 17;
+const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
 const STATE = {
   now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
 };
@@ -125,11 +131,13 @@ const stage = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css('--bg'));
 stage.appendChild(renderer.domElement);
-const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .018);
+const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .0065);
 const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(0,20,82);
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; controls.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; controls.autoRotateSpeed = .4;
-controls.minDistance = 4; controls.maxDistance = 160;
+controls.minDistance = 2; controls.maxDistance = 200;
+controls.mouseButtons = {LEFT:THREE.MOUSE.ROTATE, MIDDLE:THREE.MOUSE.PAN, RIGHT:-1}; // right button is fly-look, like Unity
+controls.screenSpacePanning = true;
 scene.add(new THREE.AmbientLight(0xffffff,.55));
 const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
 const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
@@ -141,7 +149,7 @@ const pos = {};
   // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
   let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
   const ids=DATA.nodes.map(n=>n.id), P={}, R={};
-  DATA.nodes.forEach(n=>{ R[n.id]=TYPE[n.type].shell; const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
     P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
   const springs = DATA.links.filter(l=>!l.herdWide), d=new THREE.Vector3();
   for(let step=0;step<500;step++){
@@ -152,18 +160,22 @@ const pos = {};
       d.multiplyScalar(f/dist); F[ids[a]].add(d); F[ids[b]].sub(d); }
     springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const f=.04; F[e.from].addScaledVector(d,f); F[e.to].addScaledVector(d,-f); });
     const cool=1-step/560;
-    ids.forEach(i=>{ if(R[i]===0) { P[i].set(0,0,0); return; } if(F[i].length()>1.5) F[i].setLength(1.5); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
+    ids.forEach(i=>{ if(nodeById[i].type==='harness') { P[i].set(0,HARNESS_R,0); return; } if(F[i].length()>1.5) F[i].setLength(1.5); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
   }
   ids.forEach(i=>pos[i]=P[i]);
 })();
-// faint shells so the layers read as layers
-[13,20,27,34].forEach(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); });
+// faint shells so the layers read as layers, and the glass AI harness wrapped around every pet agent
+const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), new THREE.MeshBasicMaterial({color:css('--l5'),transparent:true,opacity:.055,side:THREE.DoubleSide,depthWrite:false}));
+scene.add(harnessGlass);
+const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
+scene.add(harnessWire);
+[6.5,13,21,28,36].forEach(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); });
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
 function makeAvatar(n){
   const t = TYPE[n.type], planned = n.state==='planned' && n.type!=='seed';
-  const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='ring' ? new THREE.TorusGeometry(t.r*.75,t.r*.14,12,40) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
+  const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='tetra' ? new THREE.TetrahedronGeometry(t.r*1.2) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
     : t.shape==='box' ? new THREE.BoxGeometry(t.r*1.4,t.r*1.4,t.r*1.4) : t.shape==='cyl' ? new THREE.CylinderGeometry(t.r*.8,t.r*.8,t.r*1.2,24) : new THREE.SphereGeometry(t.r,32,20);
   const mat = new THREE.MeshStandardMaterial({color:t.color, emissive:t.color, emissiveIntensity:.28, roughness:.45, metalness:.1,
     transparent:true, opacity:planned?.55:1});
@@ -184,23 +196,14 @@ const meshes = [], icons = [], labelEls = {};
 const labelsBox = document.getElementById('labels');
 DATA.nodes.forEach(n=>{
   const m = makeAvatar(n); m.position.copy(pos[n.id]); m.userData.node = n; scene.add(m); meshes.push(m); n.mesh=m;
-  if(TYPE[n.type].shape==='ring') m.lookAt(0,0,0); // harness rings face the centre
   const ic = makeIcon(n); ic.position.copy(pos[n.id]); scene.add(ic); icons.push(ic); n.iconSprite=ic;
   const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
 });
 
-// ---------- each pet agent's own harness: a small ring just outside the pet, facing the centre ----------
-const AGENT_TYPES=['pet','pipeline','seed','roadmap','host'], petRings=[];
-DATA.nodes.filter(n=>AGENT_TYPES.includes(n.type)).forEach(n=>{
-  const dir = pos[n.id].length()>.5 ? pos[n.id].clone().normalize() : new THREE.Vector3(0,1,0);
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(.42,.05,8,32), new THREE.MeshStandardMaterial({color:TYPE.harness.color,emissive:TYPE.harness.color,emissiveIntensity:.3,transparent:true,opacity:.5}));
-  ring.position.copy(pos[n.id]).addScaledVector(dir, TYPE[n.type].r+.9); ring.lookAt(0,0,0);
-  ring.userData={harnessOf:n, baseOpacity:.5}; scene.add(ring); petRings.push(ring); n.ring=ring;
-});
-
 // ---------- links: bowed curves, flow dots, and an invisible tube on each so it can be clicked ----------
 const pairKey = (a,b)=> a<b ? a+'|'+b : b+'|'+a;
-const links = DATA.links.map((l,i)=>{
+const viaGlass = l => nodeById[l.from].type==='harness' || nodeById[l.to].type==='harness';
+const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
   const a=pos[l.from], b=pos[l.to], st=STATE[l.state], col=LAYER_COLOR[l.layer];
   const mid=a.clone().add(b).multiplyScalar(.5); const out=mid.length()<.5?new THREE.Vector3(0,1,0):mid.clone().normalize();
   mid.addScaledVector(out, a.distanceTo(b)*.12 + (i%3)*.12);
@@ -231,12 +234,13 @@ Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.la
   const s=document.createElement('span'); s.title=L.detail; const d=document.createElement('i'); d.className='sw'; d.style.background=LAYER_COLOR[k]; d.style.height='4px';
   s.append(d,document.createTextNode(`${k} ${L.name} · ${n}`)); ll.appendChild(s); });
 const SHAPES=[
-  ['<circle cx="9" cy="9" r="7"/>','Sphere','a pet agent (centre: Friendly Farmer; outer edge: you)','shell 0 to 8'],
-  ['<circle cx="9" cy="9" r="6" fill="none" stroke-width="2.2"/>','Ring','an AI harness: each pet\'s own, just outside it, and the shared framework','layer 5'],
+  ['<circle cx="9" cy="9" r="7"/>','Sphere','a pet agent (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
+  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the orange dot on top','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
-  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: the Farm, Pet Directory, Program Manager, the Kennel, the desktop host','near the centre'],
+  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
   ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service','layer 6'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
+  ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
 ];
 const sk=document.getElementById('shapeKey');
 SHAPES.forEach(([svg,name,what])=>{ const d=document.createElement('div');
@@ -277,23 +281,21 @@ function apply(){
     const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
     m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
     m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
-    n.iconSprite.material.opacity = on ? 1 : .12;
-    if(n.ring) n.ring.material.opacity = on ? .5 : .06; });
+    n.iconSprite.material.opacity = on ? 1 : .12; });
 }
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
 function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
   const hn=ray.intersectObjects(iconMode?icons:meshes)[0]; if(hn) return {node:hn.object.userData.node};
-  const hr=ray.intersectObjects(petRings)[0]; if(hr) return {ring:hr.object.userData.harnessOf};
   const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link}; return null; }
 renderer.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); const n=p&&p.node||null;
   if(n!==hovered){hovered=n; if(!selected&&!selectedPair) apply();}
   renderer.domElement.style.cursor=p?'pointer':'grab';
-  if(p){ tip.hidden=false; tip.textContent = p.ring ? `${p.ring.name}'s own AI harness (planned). Click for details.` : p.node ? `${p.node.name}: ${p.node.job||''}` : `${nodeById[p.link.from].name} → ${nodeById[p.link.to].name}: ${p.link.carries}. Click for everything on this line.`;
+  if(p){ tip.hidden=false; tip.textContent = p.node ? `${p.node.name}: ${p.node.job||''}` : `${nodeById[p.link.from].name} → ${nodeById[p.link.to].name}: ${p.link.carries}. Click for everything on this line.`;
     tip.style.left=Math.min(ev.clientX+14,innerWidth-290)+'px'; tip.style.top=(ev.clientY+14)+'px'; } else tip.hidden=true; });
 renderer.domElement.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;apply();});
 let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; controls.autoRotate=false;});
-renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt) return; const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
-  const p=pick(ev); if(!p) return close(); p.ring ? selectHarness(p.ring) : p.node ? selectNode(p.node) : selectPair(p.link.pair); });
+renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0) { downAt=null; return; } const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
+  const p=pick(ev); if(!p) return close(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
 
 // ---------- detail panel ----------
 const side=document.getElementById('side');
@@ -315,22 +317,14 @@ function selectNode(n){
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
-  const list=links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.herdWide||showHub||l.from===n.id));
+  const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.herdWide||a.findIndex(x=>x.herdWide&&x.why===l.why)===i)
+    : links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.herdWide||showHub||l.from===n.id));
+  if(n.type==='harness') side.appendChild(el('p','why','Its connections are the glass shell itself: every pet agent sits inside it, and models and programs are reached through it. "Every pet" rows stand for one link per pet.'));
   const outN=list.filter(l=>l.from===n.id).length, inN=list.length-outN;
   side.appendChild(el('div','label',`${outN} sent · ${inN} received`));
   const ul=el('ul','conns'); list.forEach(l=>ul.appendChild(flowItem(l)));
   if(!list.length) ul.appendChild(el('li','why','No connections in the views that are switched on.'));
   side.appendChild(ul); side.hidden=false;
-}
-function selectHarness(n){
-  selected=n; selectedPair=null; apply();
-  head(`${n.name}'s AI harness`);
-  const c=el('span','chip','Layer 5: AI harness · planned'); c.style.color=LAYER_COLOR[5]; side.appendChild(c);
-  side.appendChild(el('p','job',`${n.name} runs its own copy of the agent harness: the AI model it calls on demand (Claude, GPT or a local model), its skills and tools, its own memory, a scheduler for its autonomous tasks, an inbox for your suggestions and messages, communication with other pets and you, and permissions and guardrails enforced by code. Not built yet for any pet (ASTRA_PET_OS sections 7 and 8).`));
-  const ul=el('ul','conns'); ['Agent harness framework','Claude (Anthropic)','OpenAI','Local models'].forEach(name=>{ const t=DATA.nodes.find(x=>x.name===name); if(!t) return;
-    const li=el('li'); const b=el('button','link',t.name); b.onclick=()=>selectNode(t); li.append(b, el('div','why',t.job)); ul.appendChild(li); });
-  const back=el('button','btn',`Back to ${n.name}`); back.onclick=()=>selectNode(n);
-  side.append(el('div','label','Built from'), ul, back); side.hidden=false;
 }
 function selectPair(pair){
   selectedPair=pair; selected=null; apply();
@@ -374,6 +368,29 @@ function flyTo(id){ const p=pos[id]; if(!p) return; controls.autoRotate=false;
   const dir=camera.position.clone().sub(controls.target).normalize();
   fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(p.length()>1?p.clone().normalize().multiplyScalar(14):dir.multiplyScalar(14))}; }
 
+// ---------- Unity-style navigation: hold right mouse to look, WASD to fly, Q/E down/up, Shift faster, F to frame ----------
+const keys = new Set(); let looking=false; const euler=new THREE.Euler(0,0,0,'YXZ');
+renderer.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+renderer.domElement.addEventListener('pointerdown',e=>{ if(e.button!==2) return; looking=true; controls.enabled=false; controls.autoRotate=false; fly=null;
+  euler.setFromQuaternion(camera.quaternion); renderer.domElement.setPointerCapture(e.pointerId); });
+addEventListener('pointerup',e=>{ if(e.button!==2||!looking) return; looking=false;
+  const dist=Math.min(Math.max(camera.position.distanceTo(controls.target),6),30);
+  controls.target.copy(camera.position).add(new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion).multiplyScalar(dist)); controls.enabled=true; });
+addEventListener('pointermove',e=>{ if(!looking) return; euler.y-=e.movementX*.0035; euler.x=Math.max(-1.5,Math.min(1.5,euler.x-e.movementY*.0035)); camera.quaternion.setFromEuler(euler); });
+const typing = () => ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName);
+addEventListener('keydown',e=>{ if(typing()) return; const k=e.key.toLowerCase();
+  if('wasdqe'.includes(k)&&k.length===1||e.key.startsWith('Arrow')||k==='shift'){ keys.add(k); controls.autoRotate=false; }
+  if(k==='f'){ const id=(selected&&selected.id)||(selectedPair&&selectedPair.split('|')[0]); if(id) flyTo(id); else { fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(0,20,82)}; } } });
+addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+addEventListener('blur',()=>keys.clear());
+function move(dt){ if(!keys.size) return;
+  const f=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion), r=new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion), u=new THREE.Vector3(0,1,0), v=new THREE.Vector3();
+  if(keys.has('w')||keys.has('arrowup')) v.add(f); if(keys.has('s')||keys.has('arrowdown')) v.sub(f);
+  if(keys.has('d')||keys.has('arrowright')) v.add(r); if(keys.has('a')||keys.has('arrowleft')) v.sub(r);
+  if(keys.has('e')) v.add(u); if(keys.has('q')) v.sub(u);
+  if(!v.lengthSq()) return; v.normalize().multiplyScalar((keys.has('shift')?40:14)*dt);
+  camera.position.add(v); if(!looking) controls.target.add(v); }
+
 // ---------- loop ----------
 function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); }
 addEventListener('resize',resize); resize();
@@ -382,7 +399,7 @@ function frame(now){
   const dt=Math.min((now-last)/1000,.05); last=now;
   if(fly){ const k=Math.min(1,(now-fly.t0)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
     controls.target.lerpVectors(fly.fromT,fly.toT,e); camera.position.lerpVectors(fly.fromC,fly.toC,e); if(k>=1) fly=null; }
-  controls.update();
+  move(dt); if(!looking) controls.update();
   links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=(l.t+dt*.25)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
   renderer.render(scene,camera);
   const W=innerWidth,H=innerHeight;
