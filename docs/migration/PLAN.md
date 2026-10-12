@@ -32,8 +32,8 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 7. **The unmerged 2026-10-09 branch** (`pets-roam-life-20261009`, never pushed): drop it, or
    keep only its request-log idea as input to the Farm inbox (recommended)?
 8. **Seeded pets:** jobs for Pole Puff, Procreate Panda, Skill Scout and PSC Sealion (and what PSC
-   stands for), whether Pole Puff and Piranesi Nessi are the pets for your two VRChat worlds, and
-   **a new name for Passport Panda** (Procreate Panda takes the panda).
+   stands for), and whether Pole Puff and Piranesi Nessi are the pets for your two VRChat worlds.
+   (Passport Panda's new name is decided: **Passport Pelican**.)
 
 ## Repositories: actual and proposed
 
@@ -118,8 +118,8 @@ and is not counted. It moves to the pipeline when it gets a repo, then to the Fa
 | Claude Bot | Already in the pipeline (`claude-bot`, cards 001–003) | Cards 001–003 |
 | Spoonfed Sugarcube | Already in the pipeline (`spoonfed`, card 009) | Card 009 |
 
-**Rename:** Passport Panda (v5.2 digital-nomad pet) keeps its job but needs a new name, because
-Procreate Panda takes the panda. Use "the passport pet" until Astra names it.
+**Rename (decided by Astra, 2026-10-11):** Passport Panda is now **Passport Pelican**, because
+Procreate Panda takes the panda. Its v5.2 job and privacy rules are unchanged.
 
 ## Acceptance test matrix
 
@@ -144,6 +144,6 @@ Status today: **not started** for every row.
 | O | White Hat Weasel and Port Spider refuse out-of-scope targets; useful findings in scope | Scope tests on owned lab hosts only | 8 |
 | P | Llama Librarian and Inference Iguana report real model, VRAM and latency; Agent Ant repeatable evals | Benchmarks on Astra's GPU | 8 |
 | Q | Cache Coyote queues work offline on the Pi; Sync Mink reconciles after reconnect | Offline/online test with conflicts | 8 |
-| R | Passport Panda alerts on synthetic deadlines without leaking; Journal Jay stays private; nothing submitted without approval | Synthetic data only | 8 |
+| R | Passport Pelican alerts on synthetic deadlines without leaking; Journal Jay stays private; nothing submitted without approval | Synthetic data only | 8 |
 
 The 64 existing tests keep running as regression throughout.

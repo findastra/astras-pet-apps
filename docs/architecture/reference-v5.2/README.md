@@ -3,7 +3,8 @@
 Received from Astra on 2026-10-11 with the master handoff, which is filed unchanged as
 [../ASTRA_PET_OS.md](../ASTRA_PET_OS.md), the one canonical architecture document.
 
-- `learning-pets.csv`: the 18 approved Linux, self-hosting, security, local-AI and nomad pets.
+- `learning-pets.csv`: the 18 approved Linux, self-hosting, security, local-AI and nomad pets, as
+  received. Row 17, Passport Panda, has since been renamed **Passport Pelican**.
 - `kennel-registry-starter/`: a starter for the community catalog. It still calls itself
   `astra-pet-registry`; the master handoff supersedes that name with **`astras-kennel`**.
   Nothing here is published. Do not create the repo without Astra's OK.

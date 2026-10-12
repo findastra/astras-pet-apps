@@ -6,7 +6,8 @@ Spoonfed Sugarcube hatching metadata and its single-pet recipe prepared with Ope
 Astra approved **ASTRA_PET_OS** as the direction for this project. The one canonical
 architecture document is [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md)
 (master handoff v5.2); where it disagrees with anything below, it wins. Always write the name
-exactly `ASTRA_PET_OS`.
+exactly `ASTRA_PET_OS`. Astra's amendments are listed at the top of that document (for example,
+Passport Panda is now **Passport Pelican**).
 - Migration is planned in [docs/migration/PLAN.md](docs/migration/PLAN.md), with the
   [audit](docs/migration/AUDIT.md) and [gap analysis](docs/migration/GAP-ANALYSIS.md). The plan
   is a **draft until Astra approves it**; until then, change only what she asks for.
