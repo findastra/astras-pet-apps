@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Herd Web</title>
+<meta name="description" content="3D map of Astra's PetOS: every pet, model, program and piece of infrastructure, and what flows between them.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Generated page: edit scripts/herd-web-template-20261012.html, then npm run build.
+   Layout: full-bleed 3D night field; controls float top-left, details dock right (bottom sheet on phones). Deliberately dark-only. */
+:root{
+  color-scheme:dark;
+  --bg:#0b0a12; --panel:rgba(22,19,34,.9); --line:#2e2840; --fg:#ece8f6; --muted:#9b93b1;
+  --host:#ffcc4d; --you:#ff8fd0; --pet:#9b7bff; --pipe:#3fd3e0; --seed:#b6f25a; --road:#7d86a3; --model:#ff9f43; --infra:#5ef0b0; --program:#d7d2e6; --machine:#8fb4ff;
+  --now:#ffcc4d; --planned:#3fd3e0; --idea:#ff7ab8; --arch:#a98bff; --sugg:#ff6b6b;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;overflow:hidden}
+#stage{position:fixed;inset:0}
+#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;font-size:11px;white-space:nowrap;color:var(--fg);text-shadow:0 0 4px #000,0 0 2px #000;will-change:transform,opacity}
+.lbl.big{font-size:13px;font-weight:500}
+.hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(370px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
+h1{font-family:var(--display);font-size:1.5rem;margin:0;line-height:1;letter-spacing:-.01em}
+h1 span{color:var(--host)}
+.sub{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:transparent;color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn[aria-pressed="true"]{background:#2a2340;border-color:#5b4d85}
+.btn:focus-visible,input:focus-visible,.res button:focus-visible{outline:2px solid var(--host);outline-offset:2px}
+.sw{width:14px;height:3px;border-radius:2px;display:inline-block}
+.sw.d{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.search{position:relative}
+.search input{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#120f1c;color:var(--fg)}
+.res{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#171324;border:1px solid var(--line);border-radius:8px;padding:4px;display:grid;z-index:2;max-height:260px;overflow-y:auto}
+.res button{font:inherit;text-align:left;background:none;border:0;color:var(--fg);padding:6px 8px;border-radius:6px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.res button:hover,.res button.on{background:#2a2340}
+.res small{color:var(--muted);margin-left:auto}
+details summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.side{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;width:min(360px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;backdrop-filter:blur(6px)}
+.side h2{font-family:var(--display);font-size:1.25rem;margin:0;overflow-wrap:anywhere}
+.chip{font-size:11px;border-radius:999px;padding:2px 8px;border:1px solid currentColor;display:inline-block;white-space:nowrap}
+.job{margin:0;line-height:1.5}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);overflow-wrap:anywhere;margin:0}
+.side a{color:var(--pipe)}
+ul.conns{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.conns li{border-top:1px solid var(--line);padding-top:8px;font-size:12.5px;line-height:1.45;display:grid;gap:3px}
+ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}
+.kind{font-family:var(--mono);font-size:11.5px}
+.why{color:var(--muted)}
+.close{justify-self:end}
+.tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
+@media (max-width:700px){
+  .hud{width:auto;right:12px;max-height:46%}
+  .hud .legend,.hud details,.hud .types-h,.hud .sub{display:none}
+  .side{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:52%;width:auto;left:12px}
+}
+</style></head><body>
+<div id="stage" aria-label="3D map of Astra's PetOS"></div>
+<div id="labels" aria-hidden="true"></div>
+
+<section class="hud">
+  <div>
+    <h1>Herd <span>Web</span></h1>
+    <p class="sub">Astra's PetOS as a 3D map: every pet, model, program and piece of infrastructure, and what flows between them. Built from <b>pets.json</b> and <b>herd-web.json</b>. Click a sphere or a line for details.</p>
+  </div>
+  <div class="search">
+    <label class="label" for="q">Search</label>
+    <input id="q" type="search" placeholder="Pet, program, job…" autocomplete="off" aria-controls="res">
+    <div class="res" id="res" hidden role="listbox"></div>
+  </div>
+  <div class="row" role="group" aria-label="View">
+    <button class="btn" id="vNow" aria-pressed="false">Works today</button>
+    <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
+    <button class="btn" id="vHub" aria-pressed="false">Herd-wide links</button>
+  </div>
+  <div class="label">Connections</div>
+  <div class="row" id="edgeToggles"></div>
+  <div class="label types-h">Node types</div>
+  <div class="legend" id="nodeLegend"></div>
+  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px">Drag to orbit, scroll or pinch to zoom. Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Herd-wide links (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
+</section>
+
+<aside class="side" id="side" hidden aria-live="polite"></aside>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DATA = __DATA__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const TYPE = {
+  host:{color:css('--host'),r:.95,shape:'sphere'}, you:{color:css('--you'),r:.8,shape:'sphere'},
+  pet:{color:css('--pet'),r:.55,shape:'sphere'}, pipeline:{color:css('--pipe'),r:.44,shape:'sphere'},
+  seed:{color:css('--seed'),r:.38,shape:'sphere'}, roadmap:{color:css('--road'),r:.34,shape:'sphere'},
+  model:{color:css('--model'),r:.7,shape:'octa'}, infrastructure:{color:css('--infra'),r:.6,shape:'torus'},
+  program:{color:css('--program'),r:.36,shape:'box'}, 'host-machine':{color:css('--machine'),r:.55,shape:'cyl'},
+};
+const STATE = {
+  now:{color:css('--now'),dashed:false}, planned:{color:css('--planned'),dashed:false},
+  idea:{color:css('--idea'),dashed:true}, architecture:{color:css('--arch'),dashed:true}, suggested:{color:css('--sugg'),dashed:true},
+};
+const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
+let showHub = false;
+const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
+
+// ---------- scene ----------
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css('--bg'));
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .018);
+const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(0,12,40);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; controls.autoRotateSpeed = .4;
+controls.minDistance = 6; controls.maxDistance = 90;
+scene.add(new THREE.AmbientLight(0xffffff,.55));
+const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
+const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
+
+// ---------- layout: force-directed. Links pull, nodes push, the Farmer is pinned at the centre.
+// Herd-wide links are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
+const pos = {};
+(function settle(){
+  let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+  const START={host:0,you:3,infrastructure:4,model:6,pet:6,pipeline:9,seed:8,program:10,'host-machine':8,roadmap:12};
+  const ids=DATA.nodes.map(n=>n.id), P={}, V={};
+  DATA.nodes.forEach(n=>{ const r=START[n.type]??10, u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+    P[n.id]=new THREE.Vector3(r*s*Math.cos(t), r*u, r*s*Math.sin(t)); V[n.id]=new THREE.Vector3(); });
+  const REST={now:3.4,planned:4,idea:4.6,architecture:4.2,suggested:4.6}, d=new THREE.Vector3();
+  const springs = DATA.links.filter(l=>!l.herdWide);
+  const host = DATA.nodes.find(n=>n.type==='host').id;
+  for(let step=0;step<700;step++){
+    const F={}; ids.forEach(i=>F[i]=P[i].clone().multiplyScalar(-.03));
+    for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){
+      d.subVectors(P[ids[a]],P[ids[b]]); const dist=Math.max(d.length(),.3), f=9/(dist*dist);
+      d.multiplyScalar(f/dist); F[ids[a]].add(d); F[ids[b]].sub(d); }
+    springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const dist=Math.max(d.length(),.01), f=.06*(dist-REST[e.state]);
+      d.multiplyScalar(f/dist); F[e.from].add(d); F[e.to].sub(d); });
+    const cool=1-step/760;
+    ids.forEach(i=>{ if(i===host) return; V[i].add(F[i]).multiplyScalar(.82); if(V[i].length()>1.2) V[i].setLength(1.2); P[i].addScaledVector(V[i],cool); });
+    P[host].set(0,0,0);
+  }
+  let max=0; ids.forEach(i=>max=Math.max(max,P[i].length()));
+  const k=17/max; ids.forEach(i=>pos[i]=P[i].multiplyScalar(k));
+})();
+
+// ---------- nodes ----------
+// makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
+function makeAvatar(n){
+  const t = TYPE[n.type], planned = n.state==='planned' && n.type!=='seed';
+  const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='torus' ? new THREE.TorusGeometry(t.r*.75,t.r*.28,12,32)
+    : t.shape==='box' ? new THREE.BoxGeometry(t.r*1.4,t.r*1.4,t.r*1.4) : t.shape==='cyl' ? new THREE.CylinderGeometry(t.r*.8,t.r*.8,t.r*1.2,24) : new THREE.SphereGeometry(t.r,32,20);
+  const mat = new THREE.MeshStandardMaterial({color:t.color, emissive:t.color, emissiveIntensity:.28, roughness:.45, metalness:.1,
+    transparent:true, opacity:planned?.55:1, wireframe:planned&&n.type==='infrastructure'});
+  const m = new THREE.Mesh(geo, mat); m.userData.baseOpacity = planned?.55:1; return m;
+}
+const meshes = [], labelEls = {};
+const labelsBox = document.getElementById('labels');
+DATA.nodes.forEach(n=>{
+  const m = makeAvatar(n); m.position.copy(pos[n.id]); m.userData.node = n; scene.add(m); meshes.push(m); n.mesh=m;
+  const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
+});
+
+// ---------- links: bowed curves, flow dots, and an invisible tube on each so it can be clicked ----------
+const pairKey = (a,b)=> a<b ? a+'|'+b : b+'|'+a;
+const links = DATA.links.map((l,i)=>{
+  const a=pos[l.from], b=pos[l.to], st=STATE[l.state];
+  const mid=a.clone().add(b).multiplyScalar(.5); mid.y += a.distanceTo(b)*.18 + (i%3)*.15;
+  const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
+  const mat = st.dashed ? new THREE.LineDashedMaterial({color:st.color,dashSize:.35,gapSize:.25,transparent:true,opacity:.6})
+                        : new THREE.LineBasicMaterial({color:st.color,transparent:true,opacity:.7});
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(40)),mat); if(st.dashed) line.computeLineDistances(); scene.add(line);
+  const hit=new THREE.Mesh(new THREE.TubeGeometry(curve,20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
+  let dot=null;
+  if(l.state==='now'||l.state==='planned'){ dot=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),new THREE.MeshBasicMaterial({color:st.color,transparent:true})); scene.add(dot); }
+  const rec={...l,curve,line,hit,dot,t:Math.random(),base:mat.opacity,pair:pairKey(l.from,l.to)}; hit.userData.link=rec; return rec;
+});
+const hits = links.map(l=>l.hit);
+
+// ---------- controls: toggles, legend ----------
+const STATE_WORD = DATA.states;
+const tg=document.getElementById('edgeToggles');
+Object.keys(STATE).forEach(k=>{
+  const n=DATA.links.filter(e=>e.state===k&&!e.herdWide).length;
+  const b=document.createElement('button'); b.className='btn'; b.setAttribute('aria-pressed','true'); b.dataset.state=k;
+  const sw=document.createElement('i'); sw.className='sw'+(STATE[k].dashed?' d':''); sw.style.background=STATE[k].color; sw.style.color=STATE[k].color;
+  b.append(sw, document.createTextNode(`${STATE_WORD[k]} (${n})`));
+  b.onclick=()=>{shown[k]=!shown[k]; b.setAttribute('aria-pressed',shown[k]); syncView(); apply();};
+  tg.appendChild(b);
+});
+const lg=document.getElementById('nodeLegend');
+Object.entries(DATA.types).forEach(([k,label])=>{ const n=DATA.nodes.filter(x=>x.type===k).length; if(!n) return;
+  const s=document.createElement('span'); const d=document.createElement('i'); d.className='dot'; d.style.background=TYPE[k].color;
+  if(TYPE[k].shape!=='sphere') d.style.borderRadius=TYPE[k].shape==='box'?'2px':TYPE[k].shape==='octa'?'1px':'50%';
+  if(TYPE[k].shape==='octa') d.style.transform='rotate(45deg) scale(.85)';
+  if(TYPE[k].shape==='torus'){ d.style.background='transparent'; d.style.border='3px solid '+TYPE[k].color; }
+  s.append(d,document.createTextNode(`${label} · ${n}`)); lg.appendChild(s); });
+function setView(onlyNow){ Object.keys(shown).forEach(k=>shown[k]=onlyNow?k==='now':true);
+  document.querySelectorAll('#edgeToggles .btn').forEach(b=>b.setAttribute('aria-pressed',shown[b.dataset.state])); syncView(); apply(); }
+function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed',Object.entries(shown).every(([k,v])=>v===(k==='now')));
+  document.getElementById('vAll').setAttribute('aria-pressed',Object.values(shown).every(Boolean)); document.getElementById('vHub').setAttribute('aria-pressed',showHub); }
+document.getElementById('vNow').onclick=()=>setView(true);
+document.getElementById('vAll').onclick=()=>setView(false);
+document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
+
+// ---------- focus: hover, selected node, selected link, search ----------
+let hovered=null, selected=null, selectedPair=null, matches=null;
+const isHubNode = id => links.some(l=>l.herdWide&&l.from===id);
+function linkVisible(l, focusId){
+  if(!shown[l.state]) return false;
+  if(!l.herdWide) return true;
+  return showHub || (focusId && (l.from===focusId || (selected && isHubNode(selected.id) && l.from===selected.id)));
+}
+function apply(){
+  const focus = selected||hovered, fid = focus&&focus.id;
+  const near=new Set();
+  if(fid){ near.add(fid); links.forEach(l=>{ if(linkVisible(l,fid)&&(l.from===fid||l.to===fid)){near.add(l.from);near.add(l.to);} }); }
+  if(selectedPair){ selectedPair.split('|').forEach(i=>near.add(i)); }
+  const anyFocus = !!(fid||selectedPair||matches);
+  links.forEach(l=>{ const vis=linkVisible(l,fid); const on = selectedPair ? l.pair===selectedPair : fid ? (l.from===fid||l.to===fid) : matches ? (matches.has(l.from)&&matches.has(l.to)) : true;
+    l.line.visible=vis; l.hit.visible=vis; l.line.material.opacity = on ? (anyFocus?.95:l.base*(l.herdWide?.5:1)) : .05; if(l.dot) l.dot.visible=vis&&on; });
+  meshes.forEach(m=>{ const n=m.userData.node; const on = selectedPair||fid ? near.has(n.id) : matches ? matches.has(n.id) : true;
+    const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
+    m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
+    m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1'; });
+}
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
+function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
+  const hn=ray.intersectObjects(meshes)[0]; if(hn) return {node:hn.object.userData.node};
+  const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link}; return null; }
+renderer.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); const n=p&&p.node||null;
+  if(n!==hovered){hovered=n; if(!selected&&!selectedPair) apply();}
+  renderer.domElement.style.cursor=p?'pointer':'grab';
+  if(p){ tip.hidden=false; tip.textContent = p.node ? `${p.node.name}: ${p.node.job||''}` : `${nodeById[p.link.from].name} → ${nodeById[p.link.to].name}: ${p.link.carries}. Click for everything on this line.`;
+    tip.style.left=Math.min(ev.clientX+14,innerWidth-290)+'px'; tip.style.top=(ev.clientY+14)+'px'; } else tip.hidden=true; });
+renderer.domElement.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;apply();});
+let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; controls.autoRotate=false;});
+renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt) return; const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
+  const p=pick(ev); if(!p) return close(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
+
+// ---------- detail panel ----------
+const side=document.getElementById('side');
+const el=(tag,cls,text)=>{const e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e;};
+function close(){ selected=null; selectedPair=null; side.hidden=true; apply(); }
+function head(title){ side.replaceChildren(); const c=el('button','btn close','Close'); c.onclick=close; side.append(c, el('h2','',title)); }
+function flowItem(l, perspective){
+  const li=el('li'); const st=el('span','chip',STATE_WORD[l.state]); st.style.color=STATE[l.state].color;
+  const top=el('div'); const from=el('button','link',nodeById[l.from].name), to=el('button','link',nodeById[l.to].name);
+  from.onclick=()=>selectNode(nodeById[l.from]); to.onclick=()=>selectNode(nodeById[l.to]);
+  top.append(from, document.createTextNode(' → '), to, document.createTextNode(' '), st);
+  const kind=el('div','kind',`${l.carries}: ${DATA.carries[l.carries]||''}`);
+  li.append(top, kind, el('div','why',l.why)); return li;
+}
+function selectNode(n){
+  selected=n; selectedPair=null; apply(); flyTo(n.id);
+  head(n.name);
+  const c=el('span','chip',DATA.types[n.type]+(n.status?` · ${n.status}`:'')+(n.state==='planned'&&!['seed','roadmap'].includes(n.type)?' · planned':'')); c.style.color=TYPE[n.type].color; side.appendChild(c);
+  side.appendChild(el('p','job',n.job||'No job recorded.'));
+  if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
+  const list=links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.herdWide||showHub||l.from===n.id));
+  const outN=list.filter(l=>l.from===n.id).length, inN=list.length-outN;
+  side.appendChild(el('div','label',`${outN} sent · ${inN} received`));
+  const ul=el('ul','conns'); list.forEach(l=>ul.appendChild(flowItem(l)));
+  if(!list.length) ul.appendChild(el('li','why','No connections in the views that are switched on.'));
+  side.appendChild(ul); side.hidden=false;
+}
+function selectPair(pair){
+  selectedPair=pair; selected=null; apply();
+  const [a,b]=pair.split('|').map(i=>nodeById[i]);
+  head(`${a.name} ⇄ ${b.name}`);
+  const flows=links.filter(l=>l.pair===pair);
+  [[a,b],[b,a]].forEach(([x,y])=>{ const f=flows.filter(l=>l.from===x.id);
+    side.appendChild(el('div','label',`${x.name} → ${y.name} · ${f.length}`));
+    const ul=el('ul','conns'); f.forEach(l=>ul.appendChild(flowItem(l)));
+    if(!f.length) ul.appendChild(el('li','why','Nothing flows this way.'));
+    side.appendChild(ul); });
+  side.hidden=false;
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+
+// ---------- search ----------
+const q=document.getElementById('q'), res=document.getElementById('res'); let resItems=[], resOn=0;
+function runSearch(){
+  const s=q.value.trim().toLowerCase();
+  if(!s){ matches=null; res.hidden=true; apply(); return; }
+  const found=DATA.nodes.filter(n=>[n.name,n.job,n.id,DATA.types[n.type]].join(' ').toLowerCase().includes(s))
+    .sort((x,y)=>(y.name.toLowerCase().startsWith(s))-(x.name.toLowerCase().startsWith(s)));
+  matches=new Set(found.map(n=>n.id)); resItems=found.slice(0,12); resOn=0; res.replaceChildren();
+  if(!found.length){ res.appendChild(el('div','why','  Nothing matches.')); }
+  resItems.forEach((n,i)=>{ const b=el('button',i===0?'on':''); b.setAttribute('role','option');
+    const d=el('i','dot'); d.style.background=TYPE[n.type].color; b.append(d, document.createTextNode(n.name), el('small','',DATA.types[n.type].split(' (')[0]));
+    b.onclick=()=>{ res.hidden=true; selectNode(n); }; res.appendChild(b); });
+  res.hidden=false; apply();
+}
+q.addEventListener('input',runSearch);
+q.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&resItems[resOn]){ res.hidden=true; selectNode(resItems[resOn]); }
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); resOn=(resOn+(e.key==='ArrowDown'?1:-1)+resItems.length)%Math.max(resItems.length,1);
+    [...res.querySelectorAll('button')].forEach((b,i)=>b.classList.toggle('on',i===resOn)); }
+  if(e.key==='Escape'){ q.value=''; runSearch(); }
+});
+
+// ---------- camera fly ----------
+let fly=null;
+function flyTo(id){ const p=pos[id]; if(!p) return; controls.autoRotate=false;
+  const dir=camera.position.clone().sub(controls.target).normalize();
+  fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(dir.multiplyScalar(14))}; }
+
+// ---------- loop ----------
+function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+addEventListener('resize',resize); resize();
+const v=new THREE.Vector3(); let last=performance.now();
+function frame(now){
+  const dt=Math.min((now-last)/1000,.05); last=now;
+  if(fly){ const k=Math.min(1,(now-fly.t0)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    controls.target.lerpVectors(fly.fromT,fly.toT,e); camera.position.lerpVectors(fly.fromC,fly.toC,e); if(k>=1) fly=null; }
+  controls.update();
+  links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=(l.t+dt*.25)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
+  renderer.render(scene,camera);
+  const W=innerWidth,H=innerHeight;
+  DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
+    if(v.z>1){lab.style.opacity=0;return;}
+    const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.15,Math.min(1,1.6-d/42))*(lab.dataset.dim?.15:1);
+    lab.style.opacity=op; lab.style.transform=`translate(${(v.x*.5+.5)*W}px,${(-v.y*.5+.5)*H}px) translate(-50%,-100%)`; });
+  requestAnimationFrame(frame);
+}
+apply(); requestAnimationFrame(frame);
+</script>
+</body></html>

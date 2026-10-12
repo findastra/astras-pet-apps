@@ -36,6 +36,12 @@ The pets move around inside the Cage. Open the door and they can use the browser
 
 The generated count and running list, with every mood of every character, are in [ROSTER.md](ROSTER.md). Ghost Protocol's [personal cybersecurity checklist](https://findastra.github.io/ghost-protocol/) is already live; Astra approved its ghost artwork on 2026-10-08.
 
+## How the herd connects
+
+![Herd Web: Astra's PetOS as a 3D map](docs/herd-web/herd-web-20261012.png)
+
+The **[Herd Web](herd-web-20261012.html)** is a 3D map of Astra's PetOS: every pet, seed and roadmap pet, the AI models, the infrastructure, the real programs they manage, and what flows between them. Open it in a browser (it loads three.js from a CDN, so it needs the internet). Search for any node; click a sphere for its job and connections, or click a line for everything that flows both ways between its two ends. Pet-to-pet links come from `relations` in [pets.json](pets.json); everything else comes from [herd-web.json](herd-web.json). `npm run build` rebuilds the page. The same links as a flat chart are in [RELATIONS.md](RELATIONS.md).
+
 ## Run it
 
 **See the Cage:** open [cage.html](cage.html) in any browser. No install, no network, no build step. It also works when you double-click it.

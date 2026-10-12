@@ -1,0 +1,936 @@
+{
+  "about": "The non-pet parts of the Herd Web (herd-web-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets are herd-wide and drawn behind their own toggle. Built by scripts/herd-web-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12.",
+  "states": {
+    "now": "Works today",
+    "planned": "Planned (decided, or in a pet's own job)",
+    "idea": "Idea (suggested, not agreed)",
+    "architecture": "In the ASTRA_PET_OS architecture",
+    "suggested": "Missing: needs planning"
+  },
+  "types": {
+    "host": "Host pet (Friendly Farmer)",
+    "you": "You",
+    "pet": "Registered pet",
+    "pipeline": "Pipeline pet (repo, no art yet)",
+    "seed": "Seed (approved name)",
+    "roadmap": "Roadmap pet (ASTRA_PET_OS v5.2)",
+    "model": "AI model",
+    "infrastructure": "Infrastructure",
+    "program": "Program, site or world",
+    "host-machine": "Computer"
+  },
+  "carries": {
+    "builds": "code and changes made by an assistant on a branch, from a handoff card",
+    "opens": "opens or controls a real program",
+    "model": "requests to an AI model and its replies",
+    "manages": "looks after a real program or world: health, updates, planned work",
+    "runs-on": "where a program runs"
+  },
+  "nodes": [
+    {
+      "id": "farm",
+      "name": "The Farm",
+      "type": "infrastructure",
+      "state": "planned",
+      "job": "The responsive website with a card and an always-visible text box for every pet, on any device. Replaces the Cage (ASTRA_PET_OS section 4)."
+    },
+    {
+      "id": "kennel",
+      "name": "The Kennel",
+      "type": "infrastructure",
+      "state": "planned",
+      "job": "astras-kennel: the community pet catalog. Developers submit a link to their own repo; review, security checks and adoption happen here. Does not exist yet (ASTRA_PET_OS, Kennel)."
+    },
+    {
+      "id": "program-manager",
+      "name": "Program Manager",
+      "type": "infrastructure",
+      "state": "planned",
+      "job": "Neutral registry of every real program: links, launchers, status and capabilities, for every pet including the Farmer (ASTRA_PET_OS section 6)."
+    },
+    {
+      "id": "agent-harness",
+      "name": "Agent harness",
+      "type": "infrastructure",
+      "state": "planned",
+      "job": "Shared plumbing under every pet agent: model adapters (Claude, OpenAI, local), tools, skills, memory, permission checks and audit (ASTRA_PET_OS section 8). Every pet agent calls models through it."
+    },
+    {
+      "id": "desktop-host",
+      "name": "Desktop host and tray Star",
+      "type": "infrastructure",
+      "state": "now",
+      "job": "The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working."
+    },
+    {
+      "id": "claude",
+      "name": "Claude (Anthropic)",
+      "type": "model",
+      "state": "now",
+      "job": "Anthropic models. Today Claude accounts build and change pets through handoff cards and branches, and Claude Code activity shows on Anthropic Discord Presence. Planned: pet agents call Claude on demand through the agent harness."
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "type": "model",
+      "state": "now",
+      "job": "OpenAI models. Today OpenAI image generation draws every pet's mood sheet (billed to Astra's account), and Codex builds and changes pets through handoff cards. Codex activity shows on OpenAI Discord Presence."
+    },
+    {
+      "id": "local-models",
+      "name": "Local models",
+      "type": "model",
+      "state": "planned",
+      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRA_PET_OS v5.2)."
+    },
+    {
+      "id": "profile",
+      "name": "GitHub profile",
+      "type": "program",
+      "state": "now",
+      "job": "findastra/findastra: the profile README the Farmer's profile round keeps matched to the repos."
+    },
+    {
+      "id": "openai-discord-presence",
+      "name": "OpenAI Discord Presence",
+      "type": "program",
+      "state": "now",
+      "job": "Windows app that shows Codex activity on Astra's Discord profile. One of Discord Damsel's programs."
+    },
+    {
+      "id": "anthropic-discord-presence",
+      "name": "Anthropic Discord Presence",
+      "type": "program",
+      "state": "now",
+      "job": "Windows app that shows Claude activity on Astra's Discord profile. One of Discord Damsel's programs."
+    },
+    {
+      "id": "voicemeeter",
+      "name": "Voicemeeter",
+      "type": "program",
+      "state": "now",
+      "job": "Audio mixer software on Astra's PC. Voicemeeter Bug restarts its audio engine when audio needs repair."
+    },
+    {
+      "id": "vrcft",
+      "name": "VRCFT (VRCFaceTracking)",
+      "type": "program",
+      "state": "now",
+      "job": "Face-tracking software. OSC Sealion will manage it; Unity Unicorn will use it to personalize an avatar's face-tracking rig."
+    },
+    {
+      "id": "oscgoesbrrr",
+      "name": "OSCGoesBrrr",
+      "type": "program",
+      "state": "now",
+      "job": "VRChat OSC software. OSC Sealion will manage it."
+    },
+    {
+      "id": "infinite-pole-world",
+      "name": "Astra's Infinite Pole (world)",
+      "type": "program",
+      "state": "now",
+      "job": "Astra's VRChat world (findastra/astras-infinite-pole). Pole Puff manages it."
+    },
+    {
+      "id": "piranesi-house-world",
+      "name": "Piranesi House (world)",
+      "type": "program",
+      "state": "now",
+      "job": "Astra's Piranesi-inspired VRChat world (findastra/piranesi-house). Piranesi Nessi manages it."
+    },
+    {
+      "id": "windows-pc",
+      "name": "Astra's Windows PC",
+      "type": "host-machine",
+      "state": "now",
+      "job": "The machine everything local runs on today: the desktop host, the Windows pet apps, the presence apps and local data for private pets."
+    },
+    {
+      "id": "gatekeeper-goddess",
+      "name": "Gatekeeper Goddess",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Security and approvals: human-facing approvals and security monitoring."
+    },
+    {
+      "id": "queue-quokka",
+      "name": "Queue Quokka",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Tasks: watches retries, stalled jobs and agent handoffs."
+    },
+    {
+      "id": "log-lynx",
+      "name": "Log Lynx",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Observability: correlates logs, traces, health and failures."
+    },
+    {
+      "id": "server-salamander",
+      "name": "Server Salamander",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Hosts: home servers, uptime, service health."
+    },
+    {
+      "id": "docker-dragon",
+      "name": "Docker Dragon",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Containers: Docker health and authorized management."
+    },
+    {
+      "id": "test-tortoise",
+      "name": "Test Tortoise",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Quality: tests and release verification."
+    },
+    {
+      "id": "token-toucan",
+      "name": "Token Toucan",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "AI cost: model tokens, budgets and inference usage."
+    },
+    {
+      "id": "packet-piranha",
+      "name": "Packet Piranha",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Network: packet loss, DNS, latency, routing."
+    },
+    {
+      "id": "calendar-crow",
+      "name": "Calendar Crow",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Calendar: scheduling, conflicts and reminders."
+    },
+    {
+      "id": "browser-bat",
+      "name": "Browser Bat",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Web and marketing operations: website QA and authorized browser work."
+    },
+    {
+      "id": "data-dragonfly",
+      "name": "Data Dragonfly",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Data engineering: data integrity, schemas, pipelines."
+    },
+    {
+      "id": "update-urchin",
+      "name": "Update Urchin",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Dependency updates: packages, compatibility, rollback prep."
+    },
+    {
+      "id": "linux-penguin",
+      "name": "Linux Penguin",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Linux administration, SSH, systemd, packages."
+    },
+    {
+      "id": "shell-squid",
+      "name": "Shell Squid",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Bash, terminal scripting and guarded automation."
+    },
+    {
+      "id": "kernel-koala",
+      "name": "Kernel Koala",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Processes, memory, drivers and OS internals."
+    },
+    {
+      "id": "proxy-axolotl",
+      "name": "Proxy Axolotl",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Reverse proxies, TLS and secure private remote access."
+    },
+    {
+      "id": "cluster-crab",
+      "name": "Cluster Crab",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Distributed services and orchestration."
+    },
+    {
+      "id": "storage-stoat",
+      "name": "Storage Stoat",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "NAS, ZFS, snapshots and capacity health."
+    },
+    {
+      "id": "white-hat-weasel",
+      "name": "White Hat Weasel",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Authorized security assessment and remediation."
+    },
+    {
+      "id": "port-spider",
+      "name": "Port Spider",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Authorized port and service exposure checks."
+    },
+    {
+      "id": "cipher-owl",
+      "name": "Cipher Owl",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Encryption, keys, certificates and crypto education."
+    },
+    {
+      "id": "forensic-ferret",
+      "name": "Forensic Ferret",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Incident timelines and log analysis."
+    },
+    {
+      "id": "llama-librarian",
+      "name": "Llama Librarian",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Local model inventory, downloads and compatibility."
+    },
+    {
+      "id": "inference-iguana",
+      "name": "Inference Iguana",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Inference benchmarks, GPU/VRAM, latency."
+    },
+    {
+      "id": "agent-ant",
+      "name": "Agent Ant",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Agent experiments and tool-use evaluation."
+    },
+    {
+      "id": "roaming-raven",
+      "name": "Roaming Raven",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Travel connectivity, VPN/tailnet and remote access."
+    },
+    {
+      "id": "cache-coyote",
+      "name": "Cache Coyote",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Offline-first documents, caches and queued actions."
+    },
+    {
+      "id": "sync-mink",
+      "name": "Sync Mink",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Cross-device sync and conflict resolution."
+    },
+    {
+      "id": "passport-pelican",
+      "name": "Passport Pelican",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Passport/ID metadata, visa research and deadlines, encrypted."
+    },
+    {
+      "id": "journal-jay",
+      "name": "Journal Jay",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Private travel diary and itineraries."
+    },
+    {
+      "id": "stock-fox",
+      "name": "Stock Fox",
+      "type": "roadmap",
+      "state": "planned",
+      "job": "Named as an established pet in ASTRA_PET_OS v5.2; no repo in the registry."
+    }
+  ],
+  "links": [
+    {
+      "from": "openai",
+      "to": "astras-pet-apps",
+      "carries": "art",
+      "state": "now",
+      "why": "Every pet's mood sheet is generated with OpenAI image generation through the image bridge, billed to Astra's OpenAI account (scripts/generate-pets.mjs)."
+    },
+    {
+      "from": "openai",
+      "to": "astras-pet-apps",
+      "carries": "builds",
+      "state": "now",
+      "why": "Codex picks up handoff cards and builds or changes pets on branches; its work is recorded in AGENTS.md."
+    },
+    {
+      "from": "claude",
+      "to": "astras-pet-apps",
+      "carries": "builds",
+      "state": "now",
+      "why": "Claude accounts pick up handoff cards and build or change pets on branches; their work is recorded in AGENTS.md."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "desktop-host",
+      "carries": "registry",
+      "state": "now",
+      "why": "The desktop host reads pets.json and the art index to put every pet on the Windows desktop."
+    },
+    {
+      "from": "desktop-host",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "The tray Star and desktop pets run on the Windows PC."
+    },
+    {
+      "from": "findastra-discord-presence",
+      "to": "openai-discord-presence",
+      "carries": "opens",
+      "state": "now",
+      "why": "Discord Damsel's app opens the OpenAI controls at 127.0.0.1:38761."
+    },
+    {
+      "from": "findastra-discord-presence",
+      "to": "anthropic-discord-presence",
+      "carries": "opens",
+      "state": "now",
+      "why": "Discord Damsel's app opens the Anthropic controls at 127.0.0.1:38762."
+    },
+    {
+      "from": "openai",
+      "to": "openai-discord-presence",
+      "carries": "status",
+      "state": "now",
+      "why": "The app detects Codex activity and model metadata and shows it on Discord."
+    },
+    {
+      "from": "claude",
+      "to": "anthropic-discord-presence",
+      "carries": "status",
+      "state": "now",
+      "why": "The app detects Claude Code activity and model metadata and shows it on Discord."
+    },
+    {
+      "from": "openai-discord-presence",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Runs locally on the PC."
+    },
+    {
+      "from": "anthropic-discord-presence",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Runs locally on the PC."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "voicemeeter",
+      "carries": "opens",
+      "state": "now",
+      "why": "Restarts Voicemeeter's audio engine when audio needs repair."
+    },
+    {
+      "from": "claude-bot",
+      "to": "claude",
+      "carries": "model",
+      "state": "planned",
+      "why": "Claude Bot is a floating Claude control: its quick chat talks to Claude."
+    },
+    {
+      "from": "pole-puff",
+      "to": "infinite-pole-world",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Pole Puff manages Astra's Infinite Pole (Astra, 2026-10-12)."
+    },
+    {
+      "from": "piranesi-nessi",
+      "to": "piranesi-house-world",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Piranesi Nessi manages Piranesi House (Astra, 2026-10-12)."
+    },
+    {
+      "from": "osc-sealion",
+      "to": "vrcft",
+      "carries": "manages",
+      "state": "planned",
+      "why": "OSC Sealion manages VRCFT (Astra, 2026-10-12)."
+    },
+    {
+      "from": "osc-sealion",
+      "to": "oscgoesbrrr",
+      "carries": "manages",
+      "state": "planned",
+      "why": "OSC Sealion manages OSCGoesBrrr (Astra, 2026-10-12)."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "vrcft",
+      "carries": "model",
+      "state": "planned",
+      "why": "Unity Unicorn will personalize an avatar's face-tracking rig in conjunction with VRCFT (Astra, 2026-10-12)."
+    },
+    {
+      "from": "mommys",
+      "to": "calendar-crow",
+      "carries": "cue",
+      "state": "planned",
+      "why": "Mommy's Mommies lists a calendar connection as planned; Calendar Crow is the calendar pet in the roadmap."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "farm",
+      "carries": "status",
+      "state": "architecture",
+      "why": "The Farmer operates the Farm website."
+    },
+    {
+      "from": "astra",
+      "to": "farm",
+      "carries": "idea",
+      "state": "architecture",
+      "why": "You reach every pet from the Farm, on any device, through the text box under each card."
+    },
+    {
+      "from": "farm",
+      "to": "kennel",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "The Farm and the Kennel cross-link but stay separate: official pets vs community pets."
+    },
+    {
+      "from": "github-goldfish",
+      "to": "kennel",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "The Goldfish checks each community pet's upstream releases against what is installed."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "kennel",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Permission and security review before a community pet is listed or adopted."
+    },
+    {
+      "from": "test-tortoise",
+      "to": "kennel",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Validates submitted pets: manifest, release, tests."
+    },
+    {
+      "from": "kennel",
+      "to": "astras-pet-apps",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "A Kennel pet moves to the official Farm only with consent, provenance and security checks."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "program-manager",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "Program Manager registers the Farmer's own app like any other pet's."
+    },
+    {
+      "from": "farm",
+      "to": "program-manager",
+      "carries": "status",
+      "state": "architecture",
+      "why": "The Farm's Open Program buttons come from Program Manager records."
+    },
+    {
+      "from": "agent-harness",
+      "to": "claude",
+      "carries": "model",
+      "state": "architecture",
+      "why": "Pet agents call Claude on demand through the harness."
+    },
+    {
+      "from": "agent-harness",
+      "to": "openai",
+      "carries": "model",
+      "state": "architecture",
+      "why": "Pet agents call OpenAI models on demand through the harness."
+    },
+    {
+      "from": "agent-harness",
+      "to": "local-models",
+      "carries": "model",
+      "state": "architecture",
+      "why": "Pet agents call local models through the harness."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "agent-harness",
+      "carries": "model",
+      "state": "architecture",
+      "why": "The Farmer's agent runs on the shared harness, like every pet agent."
+    },
+    {
+      "from": "token-toucan",
+      "to": "claude",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Tracks Claude tokens, budgets and cost."
+    },
+    {
+      "from": "token-toucan",
+      "to": "openai",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Tracks OpenAI tokens, budgets and cost."
+    },
+    {
+      "from": "llama-librarian",
+      "to": "local-models",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "Catalogs the local models: downloads, storage, compatibility."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "astra",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Approvals for consequential actions come to you."
+    },
+    {
+      "from": "ghost-protocol",
+      "to": "gatekeeper-goddess",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Security actions need permission review."
+    },
+    {
+      "from": "passport-pelican",
+      "to": "gatekeeper-goddess",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "No submission or account action without approval."
+    },
+    {
+      "from": "white-hat-weasel",
+      "to": "gatekeeper-goddess",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Security work stays in authorized scope."
+    },
+    {
+      "from": "port-spider",
+      "to": "gatekeeper-goddess",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Scans only authorized targets."
+    },
+    {
+      "from": "test-tortoise",
+      "to": "astras-pet-apps",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Tests every new pet before it is registered."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "astras-pet-apps",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Permission review before a new pet is registered."
+    },
+    {
+      "from": "github-goldfish",
+      "to": "browser-bat",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "Accurate versions for the marketing site."
+    },
+    {
+      "from": "browser-bat",
+      "to": "astras-pet-apps",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Website QA and publishing for the Farmer."
+    },
+    {
+      "from": "test-tortoise",
+      "to": "browser-bat",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Release checks for the website."
+    },
+    {
+      "from": "update-urchin",
+      "to": "github-goldfish",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Dependency updates vs release monitoring."
+    },
+    {
+      "from": "deck-duck",
+      "to": "patch-cat",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Deck Duck asks Patch Cat for diagnostics (acceptance demo B)."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "wifi-butterfly",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Investigate VR latency together."
+    },
+    {
+      "from": "data-dragonfly",
+      "to": "data-dealer",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Works alongside Chip and Data Dealer with scoped permissions."
+    },
+    {
+      "from": "queue-quokka",
+      "to": "astras-pet-apps",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Stalled jobs and handoffs."
+    },
+    {
+      "from": "log-lynx",
+      "to": "queue-quokka",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Correlates failures behind stalled tasks."
+    },
+    {
+      "from": "docker-dragon",
+      "to": "server-salamander",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Containers run on registered hosts."
+    },
+    {
+      "from": "proxy-axolotl",
+      "to": "server-salamander",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Secure private access to home servers."
+    },
+    {
+      "from": "shell-squid",
+      "to": "linux-penguin",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Linux phase 1 pair."
+    },
+    {
+      "from": "kernel-koala",
+      "to": "linux-penguin",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "OS internals under Linux administration."
+    },
+    {
+      "from": "inference-iguana",
+      "to": "llama-librarian",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Benchmarks the models it catalogs."
+    },
+    {
+      "from": "agent-ant",
+      "to": "inference-iguana",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Agent evaluations on local inference."
+    },
+    {
+      "from": "sync-mink",
+      "to": "cache-coyote",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Reconciles what Cache Coyote queued offline."
+    },
+    {
+      "from": "roaming-raven",
+      "to": "sync-mink",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Travel connectivity before syncing."
+    },
+    {
+      "from": "cache-coyote",
+      "to": "raspberry-berry",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Offline queue on the cyberdeck Pi."
+    },
+    {
+      "from": "packet-piranha",
+      "to": "wifi-butterfly",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Network diagnostics alongside Wi-Fi."
+    },
+    {
+      "from": "packet-piranha",
+      "to": "mesh-moth",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Network diagnostics alongside the LoRa mesh."
+    },
+    {
+      "from": "project-parrot",
+      "to": "astras-pet-apps",
+      "carries": "idea",
+      "state": "architecture",
+      "why": "The Farmer coordinates pet incubation with Project Parrot."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "@seeds",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "The Farmer incubates every seed: requirements, scaffold, tests, approval, registration (ASTRA_PET_OS, Farmer grows new pets)."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "@roadmap",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "The Farmer incubates every roadmap pet when its turn comes (ASTRA_PET_OS, Farmer grows new pets)."
+    },
+    {
+      "from": "platform-platypus",
+      "to": "browser-bat",
+      "carries": "findings",
+      "state": "suggested",
+      "why": "Overlap to settle: both check how pages look on phones, tablets and desktop."
+    },
+    {
+      "from": "vrchat-ai-astra",
+      "to": "osc-sealion",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "Both work through VRChat OSC: the bridge and the OSC manager should not fight over it."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "osc-sealion",
+      "carries": "findings",
+      "state": "suggested",
+      "why": "Rift Rabbit preps VR software; VRCFT and OSCGoesBrrr are VR software OSC Sealion manages."
+    },
+    {
+      "from": "backup-beaver",
+      "to": "storage-stoat",
+      "carries": "findings",
+      "state": "suggested",
+      "why": "Backups land on the storage Storage Stoat watches."
+    },
+    {
+      "from": "skill-scout",
+      "to": "unity-unicorn",
+      "carries": "idea",
+      "state": "suggested",
+      "why": "Unity Unicorn learns and sorts the skills it uses; Skill Scout's job is undecided but its name fits."
+    },
+    {
+      "from": "calendar-crow",
+      "to": "findastra-discord-presence",
+      "carries": "cue",
+      "state": "suggested",
+      "why": "Mommy's events could reach Discord through Discord Damsel when Calendar Crow schedules them."
+    },
+    {
+      "from": "github-goldfish",
+      "to": "@pets",
+      "carries": "findings",
+      "state": "now",
+      "why": "The Goldfish audits every pet repo on the account and sends account-wide problems to the Farmer as cards. Private repos need a token it may not have."
+    },
+    {
+      "from": "desktop-host",
+      "to": "@pets",
+      "carries": "art",
+      "state": "now",
+      "why": "The desktop host puts every pet with desktop art on the Windows desktop and shows its mood."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "@pets",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Approves or blocks every pet's consequential actions; approvals are enforced by code, not prompts."
+    },
+    {
+      "from": "test-tortoise",
+      "to": "@pets",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Runs unit, integration and regression tests for every pet and verifies releases."
+    },
+    {
+      "from": "queue-quokka",
+      "to": "@pets",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Watches every pet's retries, stalled jobs and handoffs."
+    },
+    {
+      "from": "log-lynx",
+      "to": "@pets",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Correlates every pet's logs, traces and health."
+    },
+    {
+      "from": "token-toucan",
+      "to": "@pets",
+      "carries": "findings",
+      "state": "architecture",
+      "why": "Tracks every pet agent's model tokens, budget and cost."
+    },
+    {
+      "from": "farm",
+      "to": "@pets",
+      "carries": "status",
+      "state": "architecture",
+      "why": "Shows a card for every pet with status, Open Program, Open Pet Console and a text box."
+    },
+    {
+      "from": "program-manager",
+      "to": "@pets",
+      "carries": "registry",
+      "state": "architecture",
+      "why": "Registers every pet's real programs, links and launchers."
+    },
+    {
+      "from": "agent-harness",
+      "to": "@pets",
+      "carries": "model",
+      "state": "architecture",
+      "why": "Every pet agent runs on the shared harness: models, tools, skills, memory and permission checks."
+    }
+  ]
+}
