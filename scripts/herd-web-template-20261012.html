@@ -102,7 +102,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="shapes" id="shapeKey"></div>
   <div class="label types-h">Colour key (nodes)</div>
   <div class="legend" id="nodeLegend"></div>
-  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> orbits, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or the whole herd). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
+  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or the whole herd). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
   <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Herd-wide links (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
 </section>
 
@@ -110,7 +110,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 <div class="tip" id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TrackballControls.js"></script>
 <script>
 const DATA = __DATA__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
@@ -143,11 +143,14 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css
 stage.appendChild(renderer.domElement);
 const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .0065);
 const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(0,20,82);
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; controls.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; controls.autoRotateSpeed = .4;
+// Trackball, not orbit: it turns freely in every direction, over the top and under the bottom, with no stops.
+const controls = new THREE.TrackballControls(camera, renderer.domElement);
+let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+controls.rotateSpeed = 2.6; controls.zoomSpeed = 1.1; controls.panSpeed = .6; controls.dynamicDampingFactor = .15;
 controls.minDistance = 2; controls.maxDistance = 200;
-controls.mouseButtons = {LEFT:THREE.MOUSE.ROTATE, MIDDLE:THREE.MOUSE.PAN, RIGHT:-1}; // right button is fly-look, like Unity
-controls.screenSpacePanning = true;
+// The switch maps mouse BUTTONS to actions: left (0) rotates, middle (1) pans, right (2) is left free for fly-look.
+controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:1};
+controls.keys = ['NoKeyA','NoKeyS','NoKeyD']; // keep A, S and D for flying, not the trackball's key modes
 scene.add(new THREE.AmbientLight(0xffffff,.55));
 const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
 const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
@@ -303,7 +306,7 @@ renderer.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); const
   if(p){ tip.hidden=false; tip.textContent = p.node ? `${p.node.name}: ${p.node.job||''}` : `${nodeById[p.link.from].name} → ${nodeById[p.link.to].name}: ${p.link.carries}. Click for everything on this line.`;
     tip.style.left=Math.min(ev.clientX+14,innerWidth-290)+'px'; tip.style.top=(ev.clientY+14)+'px'; } else tip.hidden=true; });
 renderer.domElement.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;apply();});
-let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; controls.autoRotate=false;});
+let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; autoSpin=false;});
 renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0) { downAt=null; return; } const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
   const p=pick(ev); if(!p) return close(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
 
@@ -400,14 +403,14 @@ q.addEventListener('keydown',e=>{
 
 // ---------- camera fly ----------
 let fly=null;
-function flyTo(id){ const p=pos[id]; if(!p) return; controls.autoRotate=false;
+function flyTo(id){ const p=pos[id]; if(!p) return; autoSpin=false;
   const dir=camera.position.clone().sub(controls.target).normalize();
   fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(p.length()>1?p.clone().normalize().multiplyScalar(14):dir.multiplyScalar(14))}; }
 
 // ---------- Unity-style navigation: hold right mouse to look, WASD to fly, Q/E down/up, Shift faster, F to frame ----------
 const keys = new Set(); let looking=false; const euler=new THREE.Euler(0,0,0,'YXZ');
 renderer.domElement.addEventListener('contextmenu',e=>e.preventDefault());
-renderer.domElement.addEventListener('pointerdown',e=>{ if(e.button!==2) return; looking=true; controls.enabled=false; controls.autoRotate=false; fly=null;
+renderer.domElement.addEventListener('pointerdown',e=>{ if(e.button!==2) return; looking=true; controls.enabled=false; autoSpin=false; fly=null;
   euler.setFromQuaternion(camera.quaternion); renderer.domElement.setPointerCapture(e.pointerId); });
 addEventListener('pointerup',e=>{ if(e.button!==2||!looking) return; looking=false;
   const dist=Math.min(Math.max(camera.position.distanceTo(controls.target),6),30);
@@ -415,7 +418,7 @@ addEventListener('pointerup',e=>{ if(e.button!==2||!looking) return; looking=fal
 addEventListener('pointermove',e=>{ if(!looking) return; euler.y-=e.movementX*.0035; euler.x=Math.max(-1.5,Math.min(1.5,euler.x-e.movementY*.0035)); camera.quaternion.setFromEuler(euler); });
 const typing = () => ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName);
 addEventListener('keydown',e=>{ if(typing()) return; const k=e.key.toLowerCase();
-  if('wasdqe'.includes(k)&&k.length===1||e.key.startsWith('Arrow')||k==='shift'){ keys.add(k); controls.autoRotate=false; }
+  if('wasdqe'.includes(k)&&k.length===1||e.key.startsWith('Arrow')||k==='shift'){ keys.add(k); autoSpin=false; }
   if(k==='f'){ const id=(selected&&selected.id)||(selectedPair&&selectedPair.split('|')[0]); if(id) flyTo(id); else { fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(0,20,82)}; } } });
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 addEventListener('blur',()=>keys.clear());
@@ -428,14 +431,16 @@ function move(dt){ if(!keys.size) return;
   camera.position.add(v); if(!looking) controls.target.add(v); }
 
 // ---------- loop ----------
-function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); controls.handleResize(); }
 addEventListener('resize',resize); resize();
 const v=new THREE.Vector3(); let last=performance.now();
 function frame(now){
   const dt=Math.min((now-last)/1000,.05); last=now;
   if(fly){ const k=Math.min(1,(now-fly.t0)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
     controls.target.lerpVectors(fly.fromT,fly.toT,e); camera.position.lerpVectors(fly.fromC,fly.toC,e); if(k>=1) fly=null; }
-  move(dt); if(!looking) controls.update();
+  move(dt);
+  if(autoSpin && !looking && !fly){ const off=camera.position.clone().sub(controls.target); off.applyAxisAngle(camera.up, dt*.12); camera.position.copy(controls.target).add(off); camera.lookAt(controls.target); }
+  if(!looking) controls.update();
   links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=(l.t+dt*.25)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
   renderer.render(scene,camera);
   const W=innerWidth,H=innerHeight;
