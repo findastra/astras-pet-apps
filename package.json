@@ -2,7 +2,7 @@
   "name": "astras-pet-apps",
   "version": "0.2.1-20261008",
   "private": true,
-  "description": "ASTRA_PET_OS: grow your own AI ecosystem. The development home of Astra's pet apps and the Friendly Farmer's herd, with the plan for the Farm and the Kennel.",
+  "description": "Astra's PetOS: grow your own AI ecosystem. The development home of Astra's pet apps and the Friendly Farmer's herd, with the plan for the Farm and the Kennel.",
   "license": "MIT",
   "scripts": {
     "test": "node --test test/*.mjs",

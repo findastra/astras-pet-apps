@@ -19,11 +19,12 @@ no "I'll read it if I need it". This applies to small tasks too.
    before doing anything else.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
-## Read first: ASTRA_PET_OS (2026-10-11)
-Astra approved **ASTRA_PET_OS** as the direction for this project. The one canonical
+## Read first: Astra's PetOS (`ASTRA_PET_OS`) (2026-10-11)
+Astra approved **Astra's PetOS** as the direction for this project. The one canonical
 architecture document is [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md)
-(master handoff v5.2); where it disagrees with anything below, it wins. Always write the name
-exactly `ASTRA_PET_OS`. Astra's amendments are listed at the top of that document (for example,
+(master handoff v5.2); where it disagrees with anything below, it wins. **Name:** the title people
+see is **Astra's PetOS**; in files, folders, code and identifiers write **`ASTRA_PET_OS`**
+(underscore between PET and OS), never `ASTRA_PETOS` or `PetOS` on its own. Astra's amendments are listed at the top of that document (for example,
 Passport Panda is now **Passport Pelican**).
 - Migration is planned in [docs/migration/PLAN.md](docs/migration/PLAN.md), with the
   [audit](docs/migration/AUDIT.md) and [gap analysis](docs/migration/GAP-ANALYSIS.md). The plan
