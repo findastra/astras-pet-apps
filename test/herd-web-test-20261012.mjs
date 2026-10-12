@@ -41,8 +41,10 @@ test('herd-web-20261012.html is up to date (run npm run build)', () => {
 test('every node sits on one of the six architecture layers, and every link has a layer', () => {
   const data = herdWebData(registry, extra);
   for (const n of data.nodes) assert.ok(data.layers[n.layer], `${n.id} has no layer`);
-  for (const l of data.links) assert.ok([1, 2, 3, 4, 5, 6].includes(l.layer));
+  for (const l of data.links) assert.ok([0, 1, 2, 3, 4, 5, 6].includes(l.layer));
   const pet = data.links.find((l) => l.from === 'mail-snail' && l.to === 'finance-finch');
   assert.equal(pet.layer, 4, 'pet to pet is layer 4');
-  assert.equal(data.links.find((l) => l.from === 'openai' && l.carries === 'art').layer, 5, 'AI model work is layer 5');
+  assert.equal(data.links.find((l) => l.from === 'openai' && l.carries === 'art').layer, 0, 'the art pipeline is development, not runtime');
+  assert.equal(data.links.find((l) => l.from === 'claude-bot' && l.to === 'claude').layer, 5, 'a pet calling a model is the harness layer');
+  assert.ok(!data.links.some((l) => l.carries === 'builds' && data.nodes.find((n) => n.id === l.from).type === 'model'), 'models do not build pets; assistants do');
 });

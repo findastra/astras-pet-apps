@@ -43,14 +43,16 @@ export function herdWebData(registry, extra) {
   for (const l of extra.links) push(l.from, l.to, l.carries, l.state, l.why, [l.from, l.to].includes('@pets'));
 
   // Which architecture layer a link belongs to, so its colour matches Astra's chart:
+  // 0 development (assistants building pets, the art pipeline): outside the running system;
   // 1 anything touching you, a device or the Farm; 2 the registry (Pet Directory, Program Manager);
   // 5 anything touching an AI model or the harness, or code an assistant builds; 3 anything else the
   // Farmer does; 6 anything touching a real program; 4 pet talking directly to pet.
   const L = (id) => nodes.get(id).layer;
   for (const l of links) {
     const ends = [l.from, l.to], has = (layer) => ends.some((id) => L(id) === layer);
-    l.layer = has(1) ? 1 : (l.carries === 'registry' || has(2)) ? 2
-      : (has(5) || ['model', 'builds'].includes(l.carries)) ? 5
+    l.layer = (has(0) || l.carries === 'builds' || l.carries === 'art') ? 0
+      : has(1) ? 1 : (l.carries === 'registry' || has(2)) ? 2
+      : (has(5) || l.carries === 'model') ? 5
       : ends.some((id) => nodes.get(id).type === 'host') ? 3
       : (has(6) || ['opens', 'manages', 'runs-on'].includes(l.carries)) ? 6 : 4;
   }
