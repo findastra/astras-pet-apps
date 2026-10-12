@@ -147,16 +147,28 @@
     ]
   },
   "mood_key": {
-    "about": "What each mood means for every pet. {subject} and {needs} come from the pet's audit block; a pet can override any line with \"moods\" in its pet.json.",
+    "about": "What each mood means, for every pet. The art never changes; only these meanings do. {subject}, {needs} (an answer or decision from Astra) and {blocked} (access only she can give) come from each pet's audit block. A pet can submit its own line for a mood; a new mood or new art is a paid change and needs Astra's approval card.",
     "sleep": "I haven't checked {subject} yet.",
-    "idle": "{Subject} was fine at my last check.",
+    "idle": "{Subject}: fine. Nothing needs you.",
     "blink": "Just blinking.",
-    "curious": "Checking {subject} now.",
-    "happy": "Checked {subject}: nothing wrong.",
-    "worried": "Found a few problems in {subject}.",
-    "alarmed": "Found a lot of problems in {subject}.",
-    "sick": "I need you: {needs}.",
-    "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
+    "curious": "Waiting on your answer: {needs}.",
+    "happy": "Just checked {subject}: all good.",
+    "worried": "A few things to fix in {subject}. An assistant can do them.",
+    "alarmed": "Something is broken in {subject}, or there is a lot to fix.",
+    "sick": "Blocked until you give me {blocked}.",
+    "sad": "My check of {subject} failed. I'll try again."
+  },
+  "mood_labels": {
+    "about": "What each mood indicates, in a few words: drawn under the moods on art/roster.png and shown on the Farmer's desk.",
+    "sleep": "not checked yet",
+    "idle": "fine",
+    "blink": "fine",
+    "curious": "needs your answer",
+    "happy": "all good",
+    "worried": "a few fixes",
+    "alarmed": "broken or many fixes",
+    "sick": "blocked: needs access",
+    "sad": "my check failed"
   },
   "rounds": {
     "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild. Each pet audits itself on its cadence and day.",
@@ -431,7 +443,8 @@
       "audit": {
         "cadence": "daily",
         "subject": "the Cage and the pet registry",
-        "needs": "a FARMER_TOKEN secret so I can see the private pet repos"
+        "needs": "a decision on the pets waiting to join the Cage",
+        "blocked": "a FARMER_TOKEN secret so I can see the private pet repos"
       }
     },
     {
@@ -452,7 +465,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the findastra GitHub account",
-        "needs": "a GitHub token that can read the private repos"
+        "needs": "a decision on a finding",
+        "blocked": "a GitHub token that can read the private repos"
       }
     },
     {
@@ -477,7 +491,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "Data Dealer's repo",
-        "needs": "your answer to a decision on the ops dashboard"
+        "needs": "your answer to a decision on the ops dashboard",
+        "blocked": "access to a service Data Dealer uses"
       }
     },
     {
@@ -499,7 +514,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the notes about your API keys",
-        "needs": "a key renewed or a note confirmed"
+        "needs": "whether to renew or retire a key",
+        "blocked": "a new key from the provider"
       }
     },
     {
@@ -520,7 +536,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your Unity and VRChat project notes",
-        "needs": "a project opened in Unity so I can check it"
+        "needs": "a decision on a world task",
+        "blocked": "Unity open on your PC"
       }
     },
     {
@@ -542,7 +559,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your Python lessons",
-        "needs": "you to do the next lesson"
+        "needs": "which lesson to do next",
+        "blocked": "Python installed on your PC"
       }
     },
     {
@@ -564,7 +582,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the AI Astra backend and bridge",
-        "needs": "the AI Astra app started on your PC"
+        "needs": "a decision on the bridge",
+        "blocked": "the AI Astra app started on your PC"
       }
     },
     {
@@ -586,7 +605,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "my own files (never your check-ins)",
-        "needs": "a check-in only you can make"
+        "needs": "a check-in only you can make",
+        "blocked": "my data folder on your PC"
       }
     },
     {
@@ -607,7 +627,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "my own files (never your entries)",
-        "needs": "an entry only you can add"
+        "needs": "an entry only you can add",
+        "blocked": "my data folder on your PC"
       }
     },
     {
@@ -645,7 +666,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "Mommy's classes and events",
-        "needs": "a date or teacher confirmed for a session"
+        "needs": "a date or teacher confirmed for a session",
+        "blocked": "the Mommy's calendar shared with me"
       }
     },
     {
@@ -668,7 +690,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the science desk and its live site",
-        "needs": "a look at the live site"
+        "needs": "a look at a story that will not load",
+        "blocked": "the live site back online"
       }
     },
     {
@@ -690,7 +713,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your PC's folders and projects",
-        "needs": "the scanner run on your PC"
+        "needs": "a yes or no on a cleanup plan",
+        "blocked": "the scanner run on your PC"
       }
     },
     {
@@ -712,7 +736,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the OpenAI and Anthropic presence apps",
-        "needs": "Discord open with activity sharing on"
+        "needs": "which presence app to keep running",
+        "blocked": "Discord open with activity sharing on"
       }
     },
     {
@@ -734,7 +759,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your updates worth sharing",
-        "needs": "a drafted update approved or posted"
+        "needs": "a drafted update approved",
+        "blocked": "your LinkedIn or GitHub sign-in"
       }
     },
     {
@@ -756,7 +782,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your track ideas and samples",
-        "needs": "a sample permission confirmed"
+        "needs": "a sample permission confirmed",
+        "blocked": "Ableton Live open on your PC"
       }
     },
     {
@@ -778,7 +805,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your code cleanup worklist",
-        "needs": "a finding reviewed"
+        "needs": "a finding reviewed",
+        "blocked": "VS Code open on the project"
       }
     },
     {
@@ -802,7 +830,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your security checklist",
-        "needs": "a security step only you can do"
+        "needs": "a security choice only you can make",
+        "blocked": "a security step only you can do"
       }
     },
     {
@@ -825,7 +854,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your project ideas",
-        "needs": "a yes or no on an idea that is due"
+        "needs": "a yes or no on an idea that is due",
+        "blocked": "OneNote shared with me"
       }
     }
   ],
@@ -840,7 +870,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the Claude Bot plan and build",
-        "needs": "a decision on the plan"
+        "needs": "a decision on the plan",
+        "blocked": "an Anthropic API key"
       },
       "note": "Cards 001-003."
     },
@@ -854,7 +885,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your RGB lights and scenes",
-        "needs": "the brand and model of each light"
+        "needs": "the brand and model of each light",
+        "blocked": "OpenRGB running on your PC"
       },
       "note": "Card 004. Art waits on Astra."
     },
@@ -868,7 +900,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the crypto mining research",
-        "needs": "your power price and graphics card model"
+        "needs": "your power price and graphics card model",
+        "blocked": "the miner running on your PC"
       }
     },
     {
@@ -876,27 +909,31 @@
       "pet": "Mail Snail",
       "visibility": "public",
       "status": "hatching",
-      "job": "Placeholder: a mail pet. The job is not decided yet, and it connects to no mail account.",
+      "job": "A snail that will look after mail. What it does is still to be decided; it connects to no mail account.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should Mail Snail do?"
+        "needs": "what Mail Snail should do with your mail",
+        "blocked": "a mail account shared with me"
       },
-      "note": "Card 007."
+      "note": "Card 007.",
+      "job_decided": false
     },
     {
       "repo": "patch-cat",
       "pet": "Patch Cat",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder. The job is not decided yet.",
+      "job": "A cat pet. What it does is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should Patch Cat do?"
-      }
+        "needs": "what Patch Cat should do",
+        "blocked": "access only you can give"
+      },
+      "job_decided": false
     },
     {
       "repo": "meme-fiend",
@@ -908,7 +945,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your saved memes (on your PC only)",
-        "needs": "a meme folder chosen"
+        "needs": "a meme folder chosen",
+        "blocked": "the meme folder on your PC"
       }
     },
     {
@@ -916,27 +954,31 @@
       "pet": "Gif Giraffe",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder for a pet app that will make GIFs.",
+      "job": "A giraffe that will make GIFs. What kind is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what kind of GIFs should I make?"
+        "needs": "what kind of GIFs I should make",
+        "blocked": "access only you can give"
       },
-      "note": "Was a candidate; now a pet repo."
+      "note": "Was a candidate; now a pet repo.",
+      "job_decided": false
     },
     {
       "repo": "backup-beaver",
       "pet": "Backup Beaver",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder: a backup pet. The job is not decided yet.",
+      "job": "A beaver that will look after backups. What it backs up is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should Backup Beaver back up?"
-      }
+        "needs": "what Backup Beaver should back up",
+        "blocked": "the backup drive plugged in"
+      },
+      "job_decided": false
     },
     {
       "repo": "rift-rabbit",
@@ -948,7 +990,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "your VR software and performance notes",
-        "needs": "your headset and PC details"
+        "needs": "your headset and PC details",
+        "blocked": "SteamVR running on your PC"
       }
     },
     {
@@ -961,7 +1004,8 @@
       "audit": {
         "cadence": "weekly",
         "subject": "the Fuzzboi maker and its live site",
-        "needs": "your OK to register me in the Cage"
+        "needs": "your OK to register me in the Cage",
+        "blocked": "the live site back online"
       },
       "note": "Card 006: patch and paid sheet ready."
     },
@@ -970,52 +1014,60 @@
       "pet": "Wifi Butterfly",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder: a monarch butterfly pet. What it does is not decided yet.",
+      "job": "A monarch butterfly pet for Wi-Fi. What it does is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should Wifi Butterfly do?"
-      }
+        "needs": "what Wifi Butterfly should do with your Wi-Fi",
+        "blocked": "your router shared with me"
+      },
+      "job_decided": false
     },
     {
       "repo": "deck-duck",
       "pet": "Deck Duck",
       "visibility": "public",
       "status": "hatching",
-      "job": "Placeholder: an Elgato Stream Deck inspired pet. The job is not decided yet.",
+      "job": "A duck for the Elgato Stream Deck. What its buttons do is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should Deck Duck do?"
-      }
+        "needs": "what Deck Duck should do with the Stream Deck",
+        "blocked": "the Stream Deck plugged in"
+      },
+      "job_decided": false
     },
     {
       "repo": "mesh-moth",
       "pet": "Mesh Moth",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder for a pet that stands for a Meshtastic node: it will show the node's place in a radio mesh.",
+      "job": "Stands for a Meshtastic node and will show how it connects to its neighbours in the radio mesh.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "the Meshtastic node plan",
-        "needs": "a job: what should Mesh Moth watch?"
-      }
+        "needs": "what Mesh Moth should watch on the mesh",
+        "blocked": "the Meshtastic node switched on"
+      },
+      "job_decided": false
     },
     {
       "repo": "raspberry-berry",
       "pet": "Raspberry Pi",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder for a raspberry-berry pet. It will be a small companion for a Raspberry Pi.",
+      "job": "A small companion for a Raspberry Pi. What it runs is still to be decided.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should the Raspberry Pi pet do?"
-      }
+        "needs": "what the Raspberry Pi should run",
+        "blocked": "the Raspberry Pi switched on"
+      },
+      "job_decided": false
     }
   ],
   "candidates": [

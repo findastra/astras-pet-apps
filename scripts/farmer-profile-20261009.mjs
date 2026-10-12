@@ -5,12 +5,16 @@
 // It only touches the repo lists. The header, tagline, socials, headings and Astra's own blurbs stay as
 // she wrote them (layout rules: github-goldfish/docs/profile-style-20261009.md). It:
 //   - rewrites the pet apps list as a numbered running list, in Cage order (registered pets, then the pipeline);
-//   - drops lines for repos that are gone, and moves pets out of the other sections;
+//   - drops lines (and sub-bullets) for repos that are gone;
+//   - keeps a pet that Astra also listed in a themed section (Discord Damsel under Discord), with its sub-bullets;
 //   - adds new non-pet repos to a section (VR, Discord, else Web & More) with their GitHub description.
+// Section headers are bold lines (**Discord**), not # headings, so GitHub shows no link icons; # headings still work.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const OWNER = 'findastra';
-const BULLET = /^- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/;
+// A bullet, maybe indented (a sub-repo), maybe naming a pet:  "  - [`repo`](url) -- **Pet** · blurb"
+const BULLET = /^( *)- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (?:\*\*([^*]+)\*\* · )?(.*)$/;
+const HEADER = /^(?:#{2,4} (.+)|\*\*([^*]+)\*\*)\s*$/;
 const NUMBERED = /^\d+\. (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- \*\*([^*]+)\*\* · (.*)$/;
 const link = (repo, isPrivate) => (isPrivate ? `\`${repo}\` *(private)*` : `[\`${repo}\`](https://github.com/${OWNER}/${repo})`);
 // Astra's blurbs start lowercase and end without a full stop; names keep their capitals.
@@ -31,11 +35,13 @@ export function syncProfile(readme, registry, repos) {
   const sections = [];
   const blurbs = new Map();
   lines.forEach((ln, i) => {
-    if (/^#{2,4} /.test(ln) && !/align=/.test(ln)) sections.push({ title: ln.replace(/^#+ /, ''), start: i });
-    let m;
-    if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
-    else if ((m = BULLET.exec(ln))) blurbs.set(m[1] || m[2], m[3]);
+    const h = HEADER.exec(ln);
+    if (h && !/align=/.test(ln)) sections.push({ title: h[1] || h[2], start: i });
+    const m = BULLET.exec(ln);
+    if (m && !blurbs.has(m[2] || m[3])) blurbs.set(m[2] || m[3], m[5]);
   });
+  const petBlurbs = new Map();
+  for (const ln of lines) { const m = NUMBERED.exec(ln); if (m) { petBlurbs.set(m[1] || m[2], m[4]); blurbs.set(m[1] || m[2], m[4]); } }
   sections.forEach((s, k) => { s.end = k + 1 < sections.length ? sections[k + 1].start : lines.length; });
   const petSection = sections.find((s) => /pet apps/i.test(s.title));
   if (!petSection) throw new Error('No "pet apps" section in the profile README.');
@@ -47,12 +53,12 @@ export function syncProfile(readme, registry, repos) {
     const r = online.get(p.repo);
     const isPrivate = r ? r.private : p.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
-    const blurb = blurbs.get(p.repo) || lowerFirst(p.job);
+    const blurb = petBlurbs.get(p.repo) || blurbs.get(p.repo) || lowerFirst(p.job);
     petLines.push(`${petLines.length + 1}. ${link(p.repo, isPrivate)} -- **${p.pet}** · ${blurb}`);
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.pet} (${p.repo})`);
   }
 
-  // Every other section: keep what is still there, drop pets and repos that are gone.
+  // Every other section: keep what is still there, drop repos that are gone.
   const out = [];
   const additions = new Map(); // section start -> new lines
   for (const r of online.values()) {
@@ -79,12 +85,15 @@ export function syncProfile(readme, registry, repos) {
       continue;
     }
     const kept = [];
+    let dropIndent = -1; // drop a gone repo's sub-bullets with it
     for (const ln of body) {
-      const m = BULLET.exec(ln) || NUMBERED.exec(ln);
+      const m = BULLET.exec(ln);
       if (m) {
-        const repo = m[1] || m[2];
-        if (petRepos.has(repo)) { changes.push(`moved ${repo} to the pet apps list`); continue; }
-        if (!online.has(repo) && m[1]) { changes.push(`removed ${repo} (not on GitHub)`); continue; }
+        const indent = m[1].length;
+        if (dropIndent >= 0 && indent > dropIndent) continue;
+        dropIndent = -1;
+        const repo = m[2] || m[3];
+        if (m[2] && !online.has(repo)) { changes.push(`removed ${repo} (not on GitHub)`); dropIndent = indent; continue; }
       }
       kept.push(ln);
     }

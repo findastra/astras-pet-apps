@@ -186,8 +186,8 @@ test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dr
   assert.match(text, /- \[`astras-infinite-pole`\].* -- Astra's own words/);
   assert.ok(!/gone-repo/.test(text), 'a deleted repo is dropped');
   assert.match(text, /`secret` \*\(private\)\*/, 'a private line is kept');
-  assert.ok(!/in the wrong place/.test(text.split("### Web & More")[1]), 'a pet is moved out of Web & More');
-  assert.match(text.split("### Astra's Pet Apps")[1], /\*\*RGBee\*\* · in the wrong place/, 'and keeps its blurb in the pet list');
+  assert.match(text.split("### Web & More")[1], /rgbee.* -- in the wrong place/, 'a pet Astra cross-listed in a section stays there');
+  assert.match(text.split("### Astra's Pet Apps")[1], /\*\*RGBee\*\* · in the wrong place/, 'and is in the pet list too, with its blurb');
   assert.match(text.split('### VR & VRChat')[1].split('###')[0], /detour-into-vr.* -- takes detours into VR$/m);
   assert.match(text.split('### Web & More')[1], /tool-x.* -- a small tool$/m);
   assert.match(text, /\*\*Chip\*\*/, 'a private registered pet is listed unlinked');
@@ -195,4 +195,27 @@ test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dr
   assert.ok(text.startsWith('<h2 align="center">Hi</h2>\n\n<p align="center">tagline</p>'), 'header untouched');
   assert.ok(changes.length > 0);
   assert.deepEqual(syncProfile(text, registry, online([{ name: 'detour-into-vr', private: false, description: 'Takes detours into VR.' }, { name: 'tool-x', private: false, description: 'A small tool.' }])).changes, [], 'a second run changes nothing');
+});
+
+test('profile round: bold section headers, nested sub-repos and a cross-listed pet are kept', () => {
+  const md = `**Astra's Pet Apps**
+
+1. [\`astras-pet-apps\`](https://github.com/findastra/astras-pet-apps) -- **Friendly Farmer** · the Cage
+
+**Discord**
+
+- [\`role-fairy\`](https://github.com/findastra/role-fairy) -- a bot
+- [\`findastra-discord-presence\`](https://github.com/findastra/findastra-discord-presence) -- **Discord Damsel** · presence
+  - [\`openai-discord-presence\`](https://github.com/findastra/openai-discord-presence) -- Codex
+  - [\`anthropic-discord-presence\`](https://github.com/findastra/anthropic-discord-presence) -- Claude
+- [\`gone-bot\`](https://github.com/findastra/gone-bot) -- deleted
+  - [\`gone-child\`](https://github.com/findastra/gone-child) -- deleted too
+`;
+  const repos = ['astras-pet-apps', 'role-fairy', 'findastra-discord-presence', 'openai-discord-presence', 'anthropic-discord-presence'].map((name) => ({ name, private: false, description: '' }));
+  const { text } = syncProfile(md, registry, repos);
+  const discord = text.split('**Discord**')[1];
+  assert.match(discord, /^- \[`findastra-discord-presence`\].* -- \*\*Discord Damsel\*\* · presence\n  - \[`openai-discord-presence`\].*\n  - \[`anthropic-discord-presence`\]/m);
+  assert.ok(!/gone-/.test(text), 'a gone repo goes with its sub-bullets');
+  assert.match(text.split('**Discord**')[0], /\*\*Discord Damsel\*\* · presence/, 'the pet list takes the cross-listed blurb');
+  assert.deepEqual(syncProfile(text, registry, repos).changes, []);
 });
