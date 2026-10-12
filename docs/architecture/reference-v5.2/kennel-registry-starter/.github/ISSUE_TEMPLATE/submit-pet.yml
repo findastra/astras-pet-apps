@@ -1,0 +1,57 @@
+name: Submit a Pet
+description: Propose a community pet for the Astra Pet Registry
+title: "[Pet Submission]: "
+labels: ["pet-submission", "needs-review"]
+body:
+  - type: input
+    id: pet_name
+    attributes:
+      label: Pet name
+      placeholder: Docker Dragon
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Public GitHub repository URL
+      placeholder: https://github.com/owner/pet-name
+    validations:
+      required: true
+  - type: input
+    id: release
+    attributes:
+      label: Latest stable release tag
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: manifest
+    attributes:
+      label: Direct URL to pet.json
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What does this pet do?
+      description: Include real program integrations and capabilities.
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Pet type
+      options: [Utility with optional AI, Deterministic utility, Agent-focused application]
+    validations:
+      required: true
+  - type: checkboxes
+    id: assurances
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I have permission to submit this repository.
+          required: true
+        - label: The repository has a license, versioned release, and permission documentation.
+          required: true
+        - label: I understand listing does not mean automatic installation or security endorsement.
+          required: true

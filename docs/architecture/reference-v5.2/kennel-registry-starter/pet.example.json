@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "pet_id": "example.docker-dragon",
+  "name": "Docker Dragon",
+  "version": "1.0.0",
+  "framework": ">=1.0.0 <2.0.0",
+  "repository": "https://github.com/OWNER/REPOSITORY",
+  "license": "MIT",
+  "supported_hosts": ["windows", "linux"],
+  "capabilities": ["read-container-status"],
+  "permissions": ["docker.read"]
+}
