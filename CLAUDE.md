@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+**Before any work, read every file in AGENTS.md's "Before any work" list in full, including every
+SKILL.md on every branch, and say in your first reply which ones you read. Never skim or skip them.**
+
 Read [AGENTS.md](AGENTS.md) first. It applies to every assistant. Its first section points to
 the canonical ASTRA_PET_OS architecture and the migration plan; read both before larger work.
 

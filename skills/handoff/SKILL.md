@@ -16,7 +16,8 @@ Check GitHub **before** asking her:
    "tell the farmer" means a card in `astras-pet-apps/handoffs/`).
 2. Read `handoffs/README.md` in the likely repos and any card that is `open` and `for:` you
    or `any`.
-3. Read that repo's `AGENTS.md` and `CLAUDE.md`.
+3. Read, in full, that repo's `AGENTS.md`, `CLAUDE.md` and every `SKILL.md` (on every branch),
+   plus everything in the "Before any work" list in `astras-pet-apps/AGENTS.md`. Never skim.
 Ask Astra only what the repos do not answer, and say what you already found.
 
 ## Card format: `handoffs/NNN-short-name.md`
