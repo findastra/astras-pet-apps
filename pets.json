@@ -370,6 +370,13 @@
         "carries": "findings",
         "state": "idea",
         "why": "What File Master finds unprotected is what Backup Beaver should copy."
+      },
+      {
+        "from": "mail-snail",
+        "to": "finance-finch",
+        "carries": "findings",
+        "state": "planned",
+        "why": "Bills Astra has not paid yet, found in her mail, go to Finance Finch. Astra, 2026-10-12. Finance data stays on her PC."
       }
     ],
     "private": [
