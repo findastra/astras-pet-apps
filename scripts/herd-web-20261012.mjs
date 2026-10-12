@@ -22,6 +22,8 @@ export function herdWebData(registry, extra) {
   add({ id: 'astra', name: 'Astra (you)', type: 'you', state: 'now', job: 'Every pet reports to you, and you approve anything that matters.' });
   for (const n of extra.nodes) add({ ...n });
   for (const n of nodes.values()) {
+    const code = extra.code?.repos?.[n.repo || n.id];
+    if (code) n.code = code;
     n.layer ??= extra.type_layers[n.type];
     if (!extra.layers[n.layer]) throw new Error(`${n.id} has no layer`);
   }
@@ -62,7 +64,7 @@ export function herdWebData(registry, extra) {
     if (!carries[l.carries]) throw new Error(`unknown kind: ${l.carries}`);
     if (!states[l.state]) throw new Error(`unknown state: ${l.state}`);
   }
-  return { nodes: [...nodes.values()], links, carries, states, types: extra.types, layers: extra.layers };
+  return { nodes: [...nodes.values()], links, carries, states, types: extra.types, layers: extra.layers, codeChecked: extra.code?.checked || null };
 }
 
 /** Each pet's idle mood frame, embedded so icons also work when the page is opened by double-click. */

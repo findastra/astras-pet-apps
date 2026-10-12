@@ -59,6 +59,13 @@ ul.conns li{border-top:1px solid var(--line);padding-top:8px;font-size:12.5px;li
 ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}
 .kind{font-family:var(--mono);font-size:11.5px}
 .why{color:var(--muted)}
+.langs{display:grid;gap:8px}
+.lang{display:grid;gap:3px;font-size:12.5px;line-height:1.45}
+.lang .bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.lang .bar i{display:block;height:100%}
+.lang b{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.codechip{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:5px;background:#231d33;color:var(--fg)}
 .close{justify-self:end}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
 @media (max-width:700px){
@@ -85,6 +92,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
     <button class="btn" id="vHub" aria-pressed="false">Herd-wide links</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
+    <button class="btn" id="vCode">Code list</button>
   </div>
   <div class="label">Line colour = architecture layer</div>
   <div class="legend" id="layerLegend"></div>
@@ -122,6 +130,8 @@ const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:c
 const STATE = {
   now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
 };
+const LANG_COLOR = {'HTML':'#e34c26','JavaScript':'#f1e05a','TypeScript':'#3178c6','C#':'#178600','Python':'#3572a5','PowerShell':'#5391fe','Batchfile':'#c1f12e','CSS':'#663399','Shell':'#89e051','SQL':'#e38c00'};
+const langOf = n => (n.code?.languages||[]).map(l=>l.language).join(' ');
 const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
 let showHub = false;
 const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
@@ -317,6 +327,7 @@ function selectNode(n){
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
+  side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.herdWide||a.findIndex(x=>x.herdWide&&x.why===l.why)===i)
     : links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.herdWide||showHub||l.from===n.id));
   if(n.type==='harness') side.appendChild(el('p','why','Its connections are the glass shell itself: every pet agent sits inside it, and models and programs are reached through it. "Every pet" rows stand for one link per pet.'));
@@ -326,6 +337,31 @@ function selectNode(n){
   if(!list.length) ul.appendChild(el('li','why','No connections in the views that are switched on.'));
   side.appendChild(ul); side.hidden=false;
 }
+function codeBlock(n){
+  const box=el('div','langs');
+  const has = n.code && n.code.languages.length;
+  box.appendChild(el('div','label', has ? `Code · ${n.code.languages.length} language${n.code.languages.length===1?'':'s'}` : 'Code'));
+  if(!n.code){ box.appendChild(el('div','why', n.repo===null||!n.repo ? 'No repo yet, so no code.' : 'Not measured.')); return box; }
+  if(!has){ box.appendChild(el('div','why', n.code.note||'No code yet.')); return box; }
+  n.code.languages.forEach(l=>{ const row=el('div','lang'); const top=el('div'); const b=el('b','',l.language); top.append(b, document.createTextNode(` · ${l.percent}%`));
+    const bar=el('div','bar'); const i=el('i'); i.style.width=Math.max(l.percent,1.5)+'%'; i.style.background=LANG_COLOR[l.language]||css('--muted'); bar.appendChild(i);
+    row.append(top,bar,el('div','why',l.why)); box.appendChild(row); });
+  return box;
+}
+function showCodeList(){
+  selected=null; selectedPair=null; apply();
+  head('Code list');
+  side.appendChild(el('p','why',`What each pet is written in and why, measured from each repo's main branch${DATA.codeChecked?' on '+DATA.codeChecked:''}. Click a pet for the reasons.`));
+  const totals={}; DATA.nodes.forEach(n=>(n.code?.languages||[]).forEach(l=>{ totals[l.language]=(totals[l.language]||0)+1; }));
+  const sum=el('div','chips'); Object.entries(totals).sort((a,b)=>b[1]-a[1]).forEach(([k,c])=>{ const ch=el('button','codechip',`${k} · ${c}`); ch.style.borderLeft='3px solid '+(LANG_COLOR[k]||css('--muted')); ch.style.border='0'; ch.style.borderLeft='3px solid '+(LANG_COLOR[k]||css('--muted')); ch.style.cursor='pointer'; ch.onclick=()=>{ q.value=k; runSearch(); }; sum.appendChild(ch); });
+  side.append(el('div','label','Used by how many repos (click to find them)'), sum);
+  const ul=el('ul','conns');
+  DATA.nodes.filter(n=>n.code).sort((a,b)=>a.name.localeCompare(b.name)).forEach(n=>{ const li=el('li'); const b=el('button','link',n.name); b.onclick=()=>selectNode(n);
+    const chips=el('div','chips'); (n.code.languages.length?n.code.languages:[{language:'no code yet',percent:''}]).forEach(l=>{ const c=el('span','codechip',l.percent!==''?`${l.language} ${Math.round(l.percent)}%`:l.language); c.style.borderLeft='3px solid '+(LANG_COLOR[l.language]||css('--muted')); chips.appendChild(c); });
+    li.append(b, chips); ul.appendChild(li); });
+  side.appendChild(ul); side.hidden=false;
+}
+document.getElementById('vCode').onclick=showCodeList;
 function selectPair(pair){
   selectedPair=pair; selected=null; apply();
   const [a,b]=pair.split('|').map(i=>nodeById[i]);
@@ -345,7 +381,7 @@ const q=document.getElementById('q'), res=document.getElementById('res'); let re
 function runSearch(){
   const s=q.value.trim().toLowerCase();
   if(!s){ matches=null; res.hidden=true; apply(); return; }
-  const found=DATA.nodes.filter(n=>[n.name,n.job,n.id,DATA.types[n.type]].join(' ').toLowerCase().includes(s))
+  const found=DATA.nodes.filter(n=>[n.name,n.job,n.id,DATA.types[n.type],langOf(n)].join(' ').toLowerCase().includes(s))
     .sort((x,y)=>(y.name.toLowerCase().startsWith(s))-(x.name.toLowerCase().startsWith(s)));
   matches=new Set(found.map(n=>n.id)); resItems=found.slice(0,12); resOn=0; res.replaceChildren();
   if(!found.length){ res.appendChild(el('div','why','  Nothing matches.')); }

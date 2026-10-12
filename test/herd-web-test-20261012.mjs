@@ -48,3 +48,12 @@ test('every node sits on one of the six architecture layers, and every link has 
   assert.equal(data.links.find((l) => l.from === 'claude-bot' && l.to === 'claude').layer, 5, 'a pet calling a model is the harness layer');
   assert.ok(!data.links.some((l) => l.carries === 'builds' && data.nodes.find((n) => n.id === l.from).type === 'model'), 'models do not build pets; assistants do');
 });
+
+test('every pet with a repo has a measured code list with a reason for each language', () => {
+  const data = herdWebData(registry, extra);
+  for (const n of data.nodes.filter((x) => ['host', 'pet', 'pipeline'].includes(x.type))) {
+    assert.ok(n.code, `${n.name} has no code list`);
+    for (const l of n.code.languages) assert.ok(l.why && l.why.length > 20, `${n.name}: no reason for ${l.language}`);
+  }
+});
+
