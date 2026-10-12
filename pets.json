@@ -1055,6 +1055,59 @@
       }
     }
   ],
+  "seeds": {
+    "about": "Approved by Astra on 2026-10-11 as future pets. A seed has a name and nothing built; it is not counted as a pet app. When a seed gets a repo it moves to the pipeline. Jobs marked undecided are Astra's to decide.",
+    "pets": [
+      {
+        "pet": "Pole Puff",
+        "repo": null,
+        "job": "undecided",
+        "for": "astras-infinite-pole",
+        "note": "Probably the pet for Astra's Infinite Pole (a candidate below); confirm with Astra."
+      },
+      {
+        "pet": "Procreate Panda",
+        "repo": null,
+        "job": "undecided",
+        "note": "Named after Procreate. Takes the panda, so Passport Panda needs a new name."
+      },
+      {
+        "pet": "Skill Scout",
+        "repo": null,
+        "job": "undecided"
+      },
+      {
+        "pet": "PSC Sealion",
+        "repo": null,
+        "job": "undecided",
+        "note": "What PSC stands for is not recorded yet."
+      },
+      {
+        "pet": "Platform Platypus",
+        "repo": "platform-platypus",
+        "job": "Shows a page on iPhone, Android, iPad and desktop at once, checks it is presentable and the same on each, and compares screenshots from two platforms.",
+        "note": "Local draft app with pet.json on Astra's PC (Documents/Projects/platform-platypus, Claude Opus 5.5, 2026-10-11). Not on GitHub yet."
+      },
+      {
+        "pet": "Piranesi Nessi",
+        "repo": null,
+        "job": "undecided",
+        "for": "piranesi-house",
+        "note": "Probably the pet for Piranesi House (a candidate below); confirm with Astra."
+      }
+    ],
+    "already_in_pipeline": [
+      "claude-bot (Claude Bot)",
+      "spoonfed (Spoonfed Sugarcube; its pipeline entry says Sugarcube)"
+    ],
+    "renames": [
+      {
+        "from": "Passport Panda",
+        "to": null,
+        "why": "Procreate Panda takes the panda. Passport Panda's job (v5.2) is unchanged; Astra picks the new name."
+      }
+    ]
+  },
   "candidates": [
     {
       "name": "Astra's Infinite Pole",
