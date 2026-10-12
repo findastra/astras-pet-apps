@@ -72,6 +72,7 @@ flowchart LR
   astra(["Astra"])
   profile["Profile README"]
   data_dealer["Chip"]
+  mail_snail["Mail Snail *"]
   pets ==>|registry| astras_pet_apps
   astras_pet_apps ==>|status| pets
   astras_pet_apps ==>|status| astra
@@ -98,6 +99,7 @@ flowchart LR
   rift_rabbit -.->|findings| unity_unicorn
   astras_gif_maker -.->|art| meme_fiend
   file_master -.->|findings| backup_beaver
+  mail_snail -->|findings| finance_finch
 ```
 
 ### What travels
@@ -144,6 +146,7 @@ flowchart LR
 | Rift Rabbit * | Unity Unicorn | `findings` | idea | VR performance notes feed world build tasks. |
 | Gif Giraffe * | Meme Fiend * | `art` | idea | GIFs Gif Giraffe makes go to the meme collection. |
 | File Master | Backup Beaver * | `findings` | idea | What File Master finds unprotected is what Backup Beaver should copy. |
+| Mail Snail * | Finance Finch | `findings` | planned | Bills Astra has not paid yet, found in her mail, go to Finance Finch. Astra, 2026-10-12. Finance data stays on her PC. |
 
 ### Private pets
 
@@ -151,4 +154,4 @@ Health Hummy, Finance Finch, Meme Fiend *. These pets' data never leaves the PC.
 
 ### On their own so far
 
-Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Sugarcube *, Mine Mole *, Mail Snail *, Patch Cat *, Fuzzboi Friend *, Wifi Butterfly *, Mesh Moth *, Raspberry Pi *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
+Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Sugarcube *, Mine Mole *, Patch Cat *, Fuzzboi Friend *, Wifi Butterfly *, Mesh Moth *, Raspberry Pi *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
