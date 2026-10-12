@@ -2,6 +2,23 @@
 
 Spoonfed Sugarcube hatching metadata and its single-pet recipe prepared with OpenAI Codex (GPT-6), 2026-10-11. Paid artwork remains pending approval.
 
+## Before any work: read every rule and skill file, in full (Astra, 2026-10-11)
+Every assistant (Claude, Codex, ChatGPT, any other) reads these **completely** before
+answering, planning, building or editing anything. No skimming, no `head`, no first-N-lines,
+no "I'll read it if I need it". This applies to small tasks too.
+1. In this repo: `AGENTS.md`, `CLAUDE.md`, **every** `SKILL.md` (`skills/`, `.claude/skills/`,
+   `.agents/skills/`), `handoffs/README.md` and every open card for you or `any`,
+   [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md),
+   [docs/migration/PLAN.md](docs/migration/PLAN.md), [PET-FILES.md](PET-FILES.md) and
+   [PET-WORDS.md](PET-WORDS.md).
+2. In the pet's own repo: its `AGENTS.md`, `CLAUDE.md`, every `SKILL.md`, `handoffs/` and
+   `pet.json`.
+3. Check every branch (`git ls-remote --heads origin`) for skills or work that is not on
+   `main` yet, and read those too.
+4. In your first reply, say which of these files you read. If you could not read one, say so
+   before doing anything else.
+Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
+
 ## Read first: ASTRA_PET_OS (2026-10-11)
 Astra approved **ASTRA_PET_OS** as the direction for this project. The one canonical
 architecture document is [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md)
