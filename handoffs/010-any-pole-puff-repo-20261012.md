@@ -1,4 +1,4 @@
-status: open (waiting on Astra: OK to create the pole-puff repo)
+status: open (Astra said yes to all three on 2026-10-12: create the repo, generate the art, keep the look)
 for: any
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-12
 needs: AGENTS.md "Before any work" list, docs/architecture/ASTRA_PET_OS.md, docs/migration/PLAN.md (Seeded pets), PET-FILES.md, pets.json `seeds`, drafts/pole-puff/
@@ -40,7 +40,7 @@ Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11 to 2026-10-12:
   (2026-10-11, already fired; nothing to recreate). No artifacts and no connectors. GitHub access went
   through the session's own GitHub link.
 
-## Open decisions for Astra
+## Decisions (Astra answered "YES YES YES" on 2026-10-12, 16:47 MT, to all three below)
 1. OK to create `findastra/pole-puff` (public, topic `pet-app`)?
 2. OK to generate Pole Puff's art (one image, billed to her OpenAI account)?
 3. Is the stand-in look right (periwinkle puff, striped pole tuft, lime knob)?
@@ -64,3 +64,8 @@ Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11 to 2026-10-12:
 
 ## Return
 Work on a branch, open a PR, set this card to `status: done`, and update `## What I did`.
+
+## Update, 2026-10-12 (Claude Opus 5.5)
+Astra approved all three. This Claude session could not create the repo (GitHub sessions here are
+limited to existing repos) and cannot generate art (the image bridge runs on Astra's PC with her
+OpenAI key). The next assistant: start at Task step 1, no need to ask again.
