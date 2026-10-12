@@ -73,6 +73,10 @@ flowchart LR
   profile["Profile README"]
   data_dealer["Chip"]
   mail_snail["Mail Snail *"]
+  mine_mole["Mine Mole *"]
+  mesh_moth["Mesh Moth *"]
+  raspberry_berry["Raspberry Pi *"]
+  wifi_butterfly["Wifi Butterfly *"]
   pets ==>|registry| astras_pet_apps
   astras_pet_apps ==>|status| pets
   astras_pet_apps ==>|status| astra
@@ -100,6 +104,11 @@ flowchart LR
   astras_gif_maker -.->|art| meme_fiend
   file_master -.->|findings| backup_beaver
   mail_snail -->|findings| finance_finch
+  mommys -->|cue| findastra_discord_presence
+  github_goldfish -.->|shipped| portfolio_puffer
+  mine_mole -.->|findings| finance_finch
+  mesh_moth -.->|status| raspberry_berry
+  wifi_butterfly -.->|status| raspberry_berry
 ```
 
 ### What travels
@@ -147,6 +156,11 @@ flowchart LR
 | Gif Giraffe * | Meme Fiend * | `art` | idea | GIFs Gif Giraffe makes go to the meme collection. |
 | File Master | Backup Beaver * | `findings` | idea | What File Master finds unprotected is what Backup Beaver should copy. |
 | Mail Snail * | Finance Finch | `findings` | planned | Bills Astra has not paid yet, found in her mail, go to Finance Finch. Astra, 2026-10-12. Finance data stays on her PC. |
+| Mommy's Mommies | Discord Damsel | `cue` | planned | Mommy's Mommies lists a Discord connection as planned; Discord Damsel manages Astra's Discord apps. |
+| GitHub Goldfish | Portfolio Puffer | `shipped` | idea | Portfolio Puffer plans a GitHub connection; the Goldfish already reads the whole account. |
+| Mine Mole * | Finance Finch | `findings` | idea | Whether mining is worth the power is a money question for Finance Finch. Finance data stays on the PC. |
+| Mesh Moth * | Raspberry Pi * | `status` | idea | The cyberdeck plan puts a LoRa HAT on the Pi: the Meshtastic node runs on the Raspberry Pi. |
+| Wifi Butterfly * | Raspberry Pi * | `status` | idea | The cyberdeck plan puts a Wi-Fi HAT on the Pi. |
 
 ### Private pets
 
@@ -154,4 +168,4 @@ Health Hummy, Finance Finch, Meme Fiend *. These pets' data never leaves the PC.
 
 ### On their own so far
 
-Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Sugarcube *, Mine Mole *, Patch Cat *, Fuzzboi Friend *, Wifi Butterfly *, Mesh Moth *, Raspberry Pi *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
+Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Sugarcube *, Patch Cat *, Fuzzboi Friend *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
