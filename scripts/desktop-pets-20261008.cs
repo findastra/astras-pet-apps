@@ -46,12 +46,12 @@ namespace AstraDesktopPets {
   }
 
   internal sealed class PetSprite : IDisposable {
-    internal string Id,Name,Role,Interface;
+    internal string Id,Name,Role,Interface,Kind;
     internal Bitmap Idle,Blink;
     internal Rectangle Crop;
     internal RectangleF Hit;
     internal static PetSprite Load(Dictionary<string,object> entry,Dictionary<string,object> framesIndex) {
-      var pet=new PetSprite { Id=PetFiles.Text(entry,"art"),Name=PetFiles.Text(entry,"pet"),Role=PetFiles.Text(entry,"role"),Interface=PetFiles.Text(entry,"interface_url") };
+      var pet=new PetSprite { Id=PetFiles.Text(entry,"art"),Name=PetFiles.Text(entry,"pet"),Role=PetFiles.Text(entry,"role"),Interface=PetFiles.Text(entry,"interface_url"),Kind=PetFiles.Text(entry,"kind") };
       object raw;if(!framesIndex.TryGetValue(pet.Id,out raw))throw new InvalidDataException("No frames for "+pet.Name);
       var paths=(Dictionary<string,object>)((Dictionary<string,object>)raw)["frames"];
       pet.Idle=Detached(PetFiles.SafePath(PetFiles.Text(paths,"idle")));
@@ -107,19 +107,198 @@ namespace AstraDesktopPets {
     readonly Random random;
     int dx,dy,heading,rest;
     internal Roamer(Random source) { random=source; }
-    internal Point Next(Point at,Size size,Rectangle area,int step) {
-      if(rest>0){rest--;return PetsWindow.Clamp(at,size,area);}
+    // This step's wander direction (at most two across and one up or down), or none while resting.
+    internal Point Heading() {
+      if(rest>0){rest--;return Point.Empty;}
       if(heading<=0) {
         heading=random.Next(15,41);
         if(random.Next(6)==0)rest=random.Next(5,16);
         do{dx=random.Next(-2,3);dy=random.Next(-1,2);}while(dx==0&&dy==0);
       }
       heading--;
+      return new Point(dx,dy);
+    }
+    // Turn away from a side (-1 left or top, 1 right or bottom) if still heading into it.
+    internal void TurnFromX(int side) { if(side*dx>0)dx=-dx; }
+    internal void TurnFromY(int side) { if(side*dy>0)dy=-dy; }
+    internal Point Next(Point at,Size size,Rectangle area,int step) {
+      if(Heading().IsEmpty)return PetsWindow.Clamp(at,size,area);
       var next=new Point(at.X+dx*step,at.Y+dy*step);
       if(next.X<area.Left||next.X+size.Width>area.Right){dx=-dx;next.X=at.X+dx*step;}
       if(next.Y<area.Top||next.Y+size.Height>area.Bottom){dy=-dy;next.Y=at.Y+dy*step;}
       return PetsWindow.Clamp(next,size,area);
     }
+  }
+
+  // One roaming pet as the movement rules see it: where its window is, and what it is doing.
+  internal sealed class Mover {
+    internal string Id,Kind;
+    internal int Order;
+    internal float X,Y,Vx,Vy,FaceX=1,WallTop;
+    internal Size Size;
+    internal Roamer Wander;
+    internal int Wall,WallUntil,HopAt=-100,NextHop=-1,Lift;
+    internal bool Climbing,Airborne,Fleeing;
+    internal float CentreX { get { return X+Size.Width/2f; } }
+    internal float CentreY { get { return Y+Size.Height/2f; } }
+  }
+
+  // How each kind of pet moves, read from pets.json "pet_life": the same rules pets.html uses.
+  // Sky pets keep to the top of the screen, the fish swims mid-height and everyone else walks
+  // along the bottom of the working area, just above the taskbar. Humans hop, the cat climbs a
+  // screen edge and leaps off, birds fly in a loose V, friends hang out, two pets play tag, and
+  // hunters chase their prey, who run away. At the desktop's calm 200 ms pace a wandering pet
+  // moves at most two pixels across and one up or down per step; hurrying (chasing, fleeing,
+  // catching up) at most three across and two up or down. Only a leap or a fall is faster.
+  // Play never changes a pet's mood.
+  internal sealed class PetLife {
+    internal const int Sky=0,Swim=1,Ground=2;
+    static readonly int[] HopLift={3,6,3};
+    readonly Dictionary<string,Dictionary<string,object>> kinds=new Dictionary<string,Dictionary<string,object>>();
+    readonly List<string[]> friends=new List<string[]>(),tag=new List<string[]>(),chases=new List<string[]>();
+    readonly Dictionary<int,TagGame> games=new Dictionary<int,TagGame>();
+    internal sealed class TagGame { internal string It; internal int GraceUntil; }
+    internal static PetLife From(Dictionary<string,object> registry) {
+      var life=new PetLife();object raw;
+      if(!registry.TryGetValue("pet_life",out raw)||!(raw is Dictionary<string,object>))return life;
+      var rules=(Dictionary<string,object>)raw;
+      if(rules.TryGetValue("kinds",out raw)&&raw is Dictionary<string,object>)
+        foreach(var pair in (Dictionary<string,object>)raw)if(pair.Value is Dictionary<string,object>)life.kinds[pair.Key]=(Dictionary<string,object>)pair.Value;
+      Groups(rules,"friends",life.friends);Groups(rules,"tag",life.tag);Groups(rules,"chases",life.chases);
+      return life;
+    }
+    static void Groups(Dictionary<string,object> rules,string key,List<string[]> into) {
+      object raw;if(!rules.TryGetValue(key,out raw)||!(raw is ArrayList))return;
+      foreach(var group in (ArrayList)raw)if(group is ArrayList){var names=new List<string>();foreach(var name in (ArrayList)group)names.Add(Convert.ToString(name,CultureInfo.InvariantCulture));into.Add(names.ToArray());}
+    }
+    internal bool Knows(string kind) { return !String.IsNullOrEmpty(kind)&&kinds.ContainsKey(kind); }
+    internal IEnumerable<string> Names() { foreach(var g in friends)foreach(var n in g)yield return n;foreach(var g in tag)foreach(var n in g)yield return n;foreach(var g in chases)foreach(var n in g)yield return n; }
+    internal TagGame Game(int i) { TagGame game;if(!games.TryGetValue(i,out game))games[i]=game=new TagGame { It=tag[i][0] };return game; }
+    internal int TagGames { get { return tag.Count; } }
+    Dictionary<string,object> Rule(Mover m) { Dictionary<string,object> rule;return m.Kind!=null&&kinds.TryGetValue(m.Kind,out rule)?rule:null; }
+    internal int Zone(Mover m) { var rule=Rule(m);object zone;if(rule!=null&&rule.TryGetValue("zone",out zone)){string z=Convert.ToString(zone,CultureInfo.InvariantCulture);if(z=="sky")return Sky;if(z=="swim")return Swim;}return Ground; }
+    internal bool Flag(Mover m,string key) { var rule=Rule(m);object value;return rule!=null&&rule.TryGetValue(key,out value)&&value is bool&&(bool)value; }
+    static bool Named(Mover m,string name) { return m.Id==name||(!String.IsNullOrEmpty(m.Kind)&&m.Kind==name); }
+    internal int TagPair(Mover a,Mover b) { for(int i=0;i<tag.Count;i++){var pair=tag[i];if(pair.Length<2)continue;if((Named(a,pair[0])&&Named(b,pair[1]))||(Named(a,pair[1])&&Named(b,pair[0])))return i;}return -1; }
+    // Does a hunt b right now? Tag partners take turns being "it".
+    internal bool Hunts(Mover a,Mover b,int tick) {
+      int i=TagPair(a,b);
+      if(i>=0){var game=Game(i);return Named(a,game.It)&&!Named(b,game.It)&&tick>=game.GraceUntil;}
+      foreach(var c in chases)if(c.Length>=2&&Named(a,c[0])&&Named(b,c[1]))return true;
+      return false;
+    }
+    internal string[] FriendsOf(Mover m) { foreach(var group in friends)foreach(var name in group)if(Named(m,name))return group;return null; }
+    static int IndexIn(string[] group,Mover m) { for(int i=0;i<group.Length;i++)if(Named(m,group[i]))return i;return group.Length; }
+    // The top-of-window band each zone keeps to; the floor puts a pet's feet on the bottom edge.
+    internal static void Band(int zone,float top,float floor,out float low,out float high) {
+      float span=floor-top;
+      if(zone==Sky){low=top;high=top+span*.35f;}else if(zone==Swim){low=top+span*.4f;high=top+span*.75f;}else{low=high=floor;}
+    }
+    static float Limit(float value,float limit) { return Math.Max(-limit,Math.Min(limit,value)); }
+    static Mover Nearest(Mover p,List<Mover> list,out float distance) {
+      Mover best=null;distance=float.MaxValue;
+      foreach(var o in list){float d=(float)Math.Sqrt((o.CentreX-p.CentreX)*(o.CentreX-p.CentreX)+(o.CentreY-p.CentreY)*(o.CentreY-p.CentreY));if(d<distance){best=o;distance=d;}}
+      return best;
+    }
+    // Where a pet appears when the star brings everyone out: inside its own zone's band.
+    internal static int ZoneOf(PetLife life,string id,string kind) { return life.Zone(new Mover { Id=id,Kind=kind }); }
+
+    // One step for one pet. Mirrors live() in pets.html.
+    internal void Step(Mover p,IList<Mover> all,Rectangle area,int step,int tick,Random random) {
+      int zone=Zone(p);bool flying=zone!=Ground;
+      float left=area.Left,right=Math.Max(area.Left,area.Right-p.Size.Width),top=area.Top,floor=Math.Max(area.Top,area.Bottom-p.Size.Height);
+      var others=new List<Mover>();foreach(var o in all)if(o!=p)others.Add(o);
+      p.Lift=0;
+
+      // The cat on a screen edge: climb, hang, then leap back off.
+      if(p.Wall!=0) {
+        p.X=p.Wall<0?left:right;
+        if(p.Climbing){p.Y-=2*step;if(p.Y<=p.WallTop){p.Y=p.WallTop;p.Climbing=false;p.WallUntil=tick+random.Next(5,13);}}
+        else if(tick>=p.WallUntil){p.Vx=-p.Wall*3*step;p.Vy=-2*step;p.Wall=0;p.Airborne=true;}
+        Keep(p,left,right,top,floor);return;
+      }
+      // A leap off an edge, or a walker that was carried up and let go, comes down with gravity.
+      if(!flying&&!p.Airborne&&p.Y<floor-.5f){p.Airborne=true;p.Vx=0;p.Vy=0;}
+      if(p.Airborne) {
+        p.Vy+=.6f*step;p.X+=p.Vx;p.Y+=p.Vy;
+        if(p.X<left||p.X>right)p.Vx=-p.Vx;
+        if(p.Y>=floor||flying){p.Airborne=false;p.Vx=p.Vy=0;if(!flying)p.Y=floor;}
+        Keep(p,left,right,top,floor);return;
+      }
+
+      // Who matters: anything hunting me nearby, else anything I hunt.
+      float fear=140*step,sight=320*step,distance;
+      Mover goal=null;bool away=false;float speed=0;
+      Mover threat=Nearest(p,others.FindAll(o=>Hunts(o,p,tick)),out distance);
+      if(threat!=null&&distance<fear){goal=threat;away=true;speed=3*step;}
+      else {
+        var tagging=others.FindAll(o=>Hunts(p,o,tick)&&TagPair(p,o)>=0);
+        Mover prey=tagging.Count>0?Nearest(p,tagging,out distance):Nearest(p,others.FindAll(o=>Hunts(p,o,tick)),out distance);
+        if(prey!=null&&(tagging.Count>0||distance<sight)) {
+          goal=prey;speed=2*step;
+          if(tagging.Count>0&&distance<20*step) {
+            // Caught: the other one is it now, after a moment to get away.
+            int i=TagPair(p,prey);var game=Game(i);var pair=tag[i];
+            game.It=Named(p,pair[0])?pair[1]:pair[0];game.GraceUntil=tick+8;
+          }
+        }
+      }
+      p.Fleeing=away;
+
+      Point wander=p.Wander.Heading();
+      float mx=wander.X*step,my=flying?wander.Y*step:0;bool inBand=true;
+      if(goal!=null) {
+        float dx=goal.CentreX-p.CentreX,dy=goal.CentreY-p.CentreY,d=Math.Max(1,(float)Math.Sqrt(dx*dx+dy*dy)),s=away?-1:1;
+        mx=Limit(s*dx/d*speed,3*step);my=flying?Limit(s*dy/d*speed,2*step):0;inBand=false;
+      } else if(Flag(p,"flock")) {
+        // The first bird in the roster leads; the rest fly a loose V behind it.
+        Mover leader=p;int rank=0;
+        foreach(var o in others)if(o.Kind==p.Kind){if(o.Order<leader.Order)leader=o;if(o.Order<p.Order)rank++;}
+        if(leader!=p) {
+          int side=rank%2==1?1:-1,back=(rank+1)/2;float facing=leader.FaceX<0?-1:1;
+          float gx=leader.X-facing*back*44*step+side*6*step,gy=leader.Y+side*back*18*step;
+          mx=Limit(gx-p.X,3*step);my=Limit(gy-p.Y,2*step);inBand=false;
+        }
+      } else {
+        var group=FriendsOf(p);
+        if(group!=null) {
+          var crew=new List<Mover>{p};foreach(var o in others)if(FriendsOf(o)==group)crew.Add(o);
+          if(crew.Count>1) {
+            // Hang out: walk to a spot beside the others, then stay there.
+            crew.Sort((a,b)=>IndexIn(group,a).CompareTo(IndexIn(group,b)));
+            float centre=0;foreach(var c in crew)centre+=c.X;centre/=crew.Count;
+            float spot=centre+(crew.IndexOf(p)-(crew.Count-1)/2f)*60*step;
+            mx=Math.Abs(spot-p.X)>3*step?Limit(spot-p.X,2*step):0;
+          }
+        }
+      }
+
+      if(flying&&inBand) {
+        // Drift back to its own height: up for the sky, back to mid-water for the fish.
+        float low,high;Band(zone,top,floor,out low,out high);
+        if(p.Y+my<low)my=Math.Min(step,low-p.Y);else if(p.Y+my>high)my=Math.Max(-step,high-p.Y);
+        if(p.Y<=low)p.Wander.TurnFromY(-1);else if(p.Y>=high)p.Wander.TurnFromY(1);
+      }
+      p.X+=mx;if(Math.Abs(mx)>.01f)p.FaceX=mx;
+      if(flying)p.Y+=my;else p.Y=floor;
+
+      // Reaching a side: turn round, or, for a climber, run up the edge (always when chased).
+      if(p.X<=left||p.X>=right) {
+        int side=p.X<=left?-1:1;
+        if(Flag(p,"climbs")&&!flying&&(away||random.NextDouble()<.35)){p.Wall=side;p.Climbing=true;p.WallTop=Math.Max(top,floor-random.Next(80,241)*step);}
+        else p.Wander.TurnFromX(side);
+      }
+      if(flying&&(p.Y<=top||p.Y>=floor))p.Wander.TurnFromY(p.Y<=top?-1:1);
+
+      // Humans bounce along as they walk.
+      if(Flag(p,"hops")&&!flying) {
+        if(p.NextHop<0)p.NextHop=tick+random.Next(0,15);
+        if(tick>=p.NextHop){p.HopAt=tick;p.NextHop=tick+random.Next(8,21);}
+        int age=tick-p.HopAt;if(age>=0&&age<HopLift.Length)p.Lift=HopLift[age]*step;
+      }
+      Keep(p,left,right,top,floor);
+    }
+    static void Keep(Mover p,float left,float right,float top,float floor) { p.X=Math.Max(left,Math.Min(right,p.X));p.Y=Math.Max(top,Math.Min(floor,p.Y)); }
   }
 
   // One small input surface per pet. Transparent pixels pass through; there is never a

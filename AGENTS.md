@@ -6,6 +6,7 @@ Built with Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-07. Record your mode
 Ghost Protocol and dated asset support added with OpenAI Codex (GPT-6), 2026-10-08.
 Voicemeeter Bug's local desktop integration and browser companion added with OpenAI Codex (GPT-6), 2026-10-08.
 Pets set free to roam the page and the whole desktop, with the star showing or hiding everyone at once, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
+Movement by kind (zones, flocks, friends, tag and chases from `pet_life` in pets.json), on the page and the desktop, added with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 
 ## What this is
 The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who looks after the pets roaming free. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `pets-data.js`, the art) is generated from it.
