@@ -1063,7 +1063,14 @@
         "repo": null,
         "job": "Manages Astra's Infinite Pole.",
         "for": "astras-infinite-pole",
-        "note": "Confirmed by Astra on 2026-10-12: Pole Puff manages Astra's Infinite Pole, her VRChat world (repo findastra/astras-infinite-pole)."
+        "note": "Confirmed by Astra on 2026-10-12: Pole Puff manages Astra's Infinite Pole, her VRChat world (repo findastra/astras-infinite-pole).",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "Astra's Infinite Pole is a Unity world: what Pole Puff finds the world needs becomes Unity Unicorn build work, and Unity Unicorn's world tools ship the changes. Astra, 2026-10-12.",
+            "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
+          }
+        ]
       },
       {
         "pet": "Procreate Panda",
@@ -1093,7 +1100,14 @@
         "repo": null,
         "job": "Manages Piranesi House.",
         "for": "piranesi-house",
-        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house)."
+        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house).",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "Piranesi House is a Unity world built with Unity Unicorn's world tools (marble-carver, vine-bloomer): Nessi's world needs become Unity Unicorn build work, and the tools ship the changes. Astra, 2026-10-12.",
+            "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
+          }
+        ]
       }
     ],
     "already_in_pipeline": [

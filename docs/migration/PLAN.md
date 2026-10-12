@@ -110,12 +110,12 @@ and is not counted. It moves to the pipeline when it gets a repo, then to the Fa
 
 | Seed | What is known | Next step |
 |---|---|---|
-| Pole Puff | Manages Astra's Infinite Pole (`astras-infinite-pole`); confirmed by Astra 2026-10-12 | Repo plan with Astra's OK |
+| Pole Puff | Manages Astra's Infinite Pole (`astras-infinite-pole`); confirmed by Astra 2026-10-12. Works with Unity Unicorn on the world's Unity builds | Repo plan with Astra's OK |
 | Procreate Panda | Named after Procreate | Job |
 | Skill Scout | Name only | Job |
 | PSC Sealion | Name only | What PSC means; job |
 | Platform Platypus | Local draft app on Astra's PC with `pet.json`: checks a page on iPhone, Android, iPad and desktop | Repo with Astra's OK |
-| Piranesi Nessi | Manages Piranesi House (`piranesi-house`); confirmed by Astra 2026-10-12 | Repo plan with Astra's OK |
+| Piranesi Nessi | Manages Piranesi House (`piranesi-house`); confirmed by Astra 2026-10-12. Works with Unity Unicorn on the world's Unity builds | Repo plan with Astra's OK |
 | Claude Bot | Already in the pipeline (`claude-bot`, cards 001–003) | Cards 001–003 |
 | Spoonfed Sugarcube | Already in the pipeline (`spoonfed`, card 009) | Card 009 |
 
