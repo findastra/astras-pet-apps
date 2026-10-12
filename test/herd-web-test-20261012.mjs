@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { herdWebData, buildHerdWeb, HERD_WEB } from '../scripts/herd-web-20261012.mjs';
+import { herdWebData, buildHerdWeb, petIcons, HERD_WEB } from '../scripts/herd-web-20261012.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (f) => readFileSync(root + f, 'utf8');
@@ -34,5 +34,15 @@ test('private pets send nothing but their own registry entry to the Farmer', () 
 });
 
 test('herd-web-20261012.html is up to date (run npm run build)', () => {
-  assert.equal(read(HERD_WEB.output), buildHerdWeb(registry, extra, read(HERD_WEB.template)));
+  process.chdir(root);
+  assert.equal(read(HERD_WEB.output), buildHerdWeb(registry, extra, read(HERD_WEB.template), petIcons(JSON.parse(read('art/frames/index.json')))));
+});
+
+test('every node sits on one of the six architecture layers, and every link has a layer', () => {
+  const data = herdWebData(registry, extra);
+  for (const n of data.nodes) assert.ok(data.layers[n.layer], `${n.id} has no layer`);
+  for (const l of data.links) assert.ok([1, 2, 3, 4, 5, 6].includes(l.layer));
+  const pet = data.links.find((l) => l.from === 'mail-snail' && l.to === 'finance-finch');
+  assert.equal(pet.layer, 4, 'pet to pet is layer 4');
+  assert.equal(data.links.find((l) => l.from === 'openai' && l.carries === 'art').layer, 5, 'AI model work is layer 5');
 });
