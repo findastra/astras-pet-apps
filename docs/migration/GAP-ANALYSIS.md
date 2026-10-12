@@ -25,7 +25,7 @@ canonical architecture, [docs/architecture/ASTRA_PET_OS.md](../architecture/ASTR
 | Hiding visuals never stops work | No workers exist yet | Becomes real once runtimes exist | Launcher/herd separation already done |
 | No browser Cage, no browser roaming | `cage.html` with door and `cage_life` movement | Retire; keep reusable parts | See "Retiring the Cage" in the plan |
 | Security: secrets store, least privilege, approvals in code, audit | Rules in AGENTS.md; no secrets in repo; approvals are human | Enforcement in code once anything acts | Current rules carry over unchanged |
-| 30 approved new pets (12 core + 18 v5.2), plus 6 seeds (Pole Puff, Procreate Panda, Skill Scout, PSC Sealion, Platform Platypus, Piranesi Nessi) | None exist except as names; Platform Platypus has a local draft. Passport Panda needs a new name | Phased; none to be claimed as built | Art pipeline, handoff cards |
+| 30 approved new pets (12 core + 18 v5.2), plus 6 seeds (Pole Puff, Procreate Panda, Skill Scout, PSC Sealion, Platform Platypus, Piranesi Nessi) | None exist except as names; Platform Platypus has a local draft. Passport Panda is renamed Passport Pelican | Phased; none to be claimed as built | Art pipeline, handoff cards |
 | Stock Fox | No repo or entry | Add to pipeline when Astra wants it | Pipeline format |
 | Marketing website (pages listed in v5.2) | None | Information architecture and homepage mockup first | Pet words, art |
 | Acceptance demos A–R | None demonstrable | Test matrix in the plan | 64 existing tests stay as regression |

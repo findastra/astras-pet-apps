@@ -1,5 +1,9 @@
 # ASTRA_PET_OS — FINAL MASTER HANDOFF v5.2
 
+> **Amendments by Astra since v5.2** (these override the text below):
+> - 2026-10-11: **Passport Panda is renamed Passport Pelican** (Procreate Panda takes the panda). Same job and privacy rules.
+> - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, PSC Sealion, Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
+
 **Product name (approved):** ASTRA_PET_OS — *Grow your own AI ecosystem.*  
 **Official first-party ecosystem and user's herd:** `astras-farm`  
 **Community discovery, adoption and submissions:** `astras-kennel`  
@@ -89,16 +93,16 @@ New approved additions and roles:
 | Roaming Raven | Digital nomad | Travel connectivity, VPN/tailnet status and remote-access diagnostics |
 | Cache Coyote | Digital nomad | Offline-first documents, local caches, queued actions and reconnect recovery |
 | Sync Mink | Digital nomad | Cross-device sync, conflict resolution and replication integrity |
-| Passport Panda | Global mobility | Secure passport/ID metadata, visa/residency research, applications and deadlines |
+| Passport Pelican | Global mobility | Secure passport/ID metadata, visa/residency research, applications and deadlines |
 | Journal Jay | Digital nomad | Private travel diary, itineraries, memories and optional summaries |
 
 **Key boundaries and overlap resolution:** Linux Penguin is explicitly wanted, but the repo may already contain a penguin/Linux concept; audit and reconcile rather than spawn a duplicate. Cache Coyote **replaces Offline Otter**, and Sync Mink **replaces Sync Swallow** in all future planning. Packet Piranha remains the network diagnostics pet (do not create Packet Penguin). File Master continues file/memory organization. Existing Raspberry Pie, Mesh Moth, WiFi Butterfly, Server Salamander, Docker Dragon, Backup Beaver, Gatekeeper Goddess, Queue Quokka, Log Lynx, Token Toucan, Test Tortoise, Browser Bat and Data Dragonfly retain their distinct responsibilities. Data Dragonfly may support CHIP and Data Dealer with project-scoped permissions.
 
 **Cyberdeck target hardware:** Rugged Pelican-case build with Raspberry Pi, Flipper Zero, LoRa HAT, Wi-Fi HAT, physical hardware security key, and expansion for other modules. Preserve offline utility and independent operation when the network, cloud or home PC is unavailable. Security key is for hardware-backed authentication, not a substitute for encrypted storage, backups, and recovery options. Wireless/security tools are for owned or explicitly authorized systems only.
 
-**Global mobility security:** Passport Panda must encrypt sensitive document data, minimize exposure to agents, require human approval for submissions or account actions, and distinguish verified official immigration requirements from tentative AI research. Avoid storing passport scans in broad shared agent memory. Journal Jay remains separately permissioned and does not automatically share the full diary with Passport Panda.
+**Global mobility security:** Passport Pelican must encrypt sensitive document data, minimize exposure to agents, require human approval for submissions or account actions, and distinguish verified official immigration requirements from tentative AI research. Avoid storing passport scans in broad shared agent memory. Journal Jay remains separately permissioned and does not automatically share the full diary with Passport Pelican.
 
-**Suggested phased build, not all-at-once:** Linux Penguin + Shell Squid -> Server Salamander/Docker Dragon + Proxy Axolotl -> authorized security lab -> Llama Librarian/Inference Iguana/Agent Ant -> distributed execution -> Cache Coyote/Sync Mink/Roaming Raven -> Passport Panda/Journal Jay. Add remaining specialist pets as workflows justify them. User choice and modular installation remain mandatory.
+**Suggested phased build, not all-at-once:** Linux Penguin + Shell Squid -> Server Salamander/Docker Dragon + Proxy Axolotl -> authorized security lab -> Llama Librarian/Inference Iguana/Agent Ant -> distributed execution -> Cache Coyote/Sync Mink/Roaming Raven -> Passport Pelican/Journal Jay. Add remaining specialist pets as workflows justify them. User choice and modular installation remain mandatory.
 
 **Additional acceptance demonstrations M–R:**
 
@@ -107,7 +111,7 @@ New approved additions and roles:
 - **O. Security lab:** White Hat Weasel and Port Spider refuse out-of-scope targets and produce useful authorized findings with evidence and remediation.
 - **P. Local inference:** Llama Librarian + Inference Iguana report true model/VRAM/latency metrics and Agent Ant runs repeatable tool-use evaluations.
 - **Q. Cyberdeck offline recovery:** Cache Coyote queues work offline on the Pi, and Sync Mink reconciles it safely after reconnection, with documented conflict behavior.
-- **R. Mobility privacy:** Passport Panda alerts on synthetic visa/passport deadlines without leaking sensitive records; Journal Jay diary remains private; no immigration application is sent without approval.
+- **R. Mobility privacy:** Passport Pelican alerts on synthetic visa/passport deadlines without leaking sensitive records; Journal Jay diary remains private; no immigration application is sent without approval.
 
 ### Official vs community repositories and versioning
 

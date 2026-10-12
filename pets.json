@@ -1069,7 +1069,7 @@
         "pet": "Procreate Panda",
         "repo": null,
         "job": "undecided",
-        "note": "Named after Procreate. Takes the panda, so Passport Panda needs a new name."
+        "note": "Named after Procreate. Takes the panda, so the v5.2 passport pet is now Passport Pelican."
       },
       {
         "pet": "Skill Scout",
@@ -1103,8 +1103,9 @@
     "renames": [
       {
         "from": "Passport Panda",
-        "to": null,
-        "why": "Procreate Panda takes the panda. Passport Panda's job (v5.2) is unchanged; Astra picks the new name."
+        "to": "Passport Pelican",
+        "decided": "2026-10-11",
+        "why": "Procreate Panda takes the panda. Astra chose Passport Pelican: a pelican keeps papers safe in its pouch. The job from v5.2 is unchanged."
       }
     ]
   },
