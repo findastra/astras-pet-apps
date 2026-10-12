@@ -377,6 +377,41 @@
         "carries": "findings",
         "state": "planned",
         "why": "Bills Astra has not paid yet, found in her mail, go to Finance Finch. Astra, 2026-10-12. Finance data stays on her PC."
+      },
+      {
+        "from": "mommys",
+        "to": "findastra-discord-presence",
+        "carries": "cue",
+        "state": "planned",
+        "why": "Mommy's Mommies lists a Discord connection as planned; Discord Damsel manages Astra's Discord apps."
+      },
+      {
+        "from": "github-goldfish",
+        "to": "portfolio-puffer",
+        "carries": "shipped",
+        "state": "idea",
+        "why": "Portfolio Puffer plans a GitHub connection; the Goldfish already reads the whole account."
+      },
+      {
+        "from": "mine-mole",
+        "to": "finance-finch",
+        "carries": "findings",
+        "state": "idea",
+        "why": "Whether mining is worth the power is a money question for Finance Finch. Finance data stays on the PC."
+      },
+      {
+        "from": "mesh-moth",
+        "to": "raspberry-berry",
+        "carries": "status",
+        "state": "idea",
+        "why": "The cyberdeck plan puts a LoRa HAT on the Pi: the Meshtastic node runs on the Raspberry Pi."
+      },
+      {
+        "from": "wifi-butterfly",
+        "to": "raspberry-berry",
+        "carries": "status",
+        "state": "idea",
+        "why": "The cyberdeck plan puts a Wi-Fi HAT on the Pi."
       }
     ],
     "private": [
