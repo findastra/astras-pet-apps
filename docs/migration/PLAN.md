@@ -31,8 +31,9 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
    server / Raspberry Pi you already have?
 7. **The unmerged 2026-10-09 branch** (`pets-roam-life-20261009`, never pushed): drop it, or
    keep only its request-log idea as input to the Farm inbox (recommended)?
-8. **Seeded pets:** jobs for Pole Puff, Procreate Panda, Skill Scout and PSC Sealion (and what PSC
-   stands for), and whether Pole Puff and Piranesi Nessi are the pets for your two VRChat worlds.
+8. **Seeded pets:** jobs for Procreate Panda, Skill Scout and PSC Sealion (and what PSC
+   stands for). Decided 2026-10-12: Pole Puff manages Astra's Infinite Pole and Piranesi Nessi
+   manages Piranesi House.
    (Passport Panda's new name is decided: **Passport Pelican**.)
 
 ## Repositories: actual and proposed
@@ -109,12 +110,12 @@ and is not counted. It moves to the pipeline when it gets a repo, then to the Fa
 
 | Seed | What is known | Next step |
 |---|---|---|
-| Pole Puff | Probably the pet for Astra's Infinite Pole (candidate repo `astras-infinite-pole`) | Astra confirms; job |
+| Pole Puff | Manages Astra's Infinite Pole (`astras-infinite-pole`); confirmed by Astra 2026-10-12 | Repo plan with Astra's OK |
 | Procreate Panda | Named after Procreate | Job |
 | Skill Scout | Name only | Job |
 | PSC Sealion | Name only | What PSC means; job |
 | Platform Platypus | Local draft app on Astra's PC with `pet.json`: checks a page on iPhone, Android, iPad and desktop | Repo with Astra's OK |
-| Piranesi Nessi | Probably the pet for Piranesi House (candidate repo `piranesi-house`) | Astra confirms; job |
+| Piranesi Nessi | Manages Piranesi House (`piranesi-house`); confirmed by Astra 2026-10-12 | Repo plan with Astra's OK |
 | Claude Bot | Already in the pipeline (`claude-bot`, cards 001–003) | Cards 001–003 |
 | Spoonfed Sugarcube | Already in the pipeline (`spoonfed`, card 009) | Card 009 |
 
