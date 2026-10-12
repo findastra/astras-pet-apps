@@ -60,7 +60,7 @@ const names = Object.fromEntries([
 writeFileSync('ROSTER.md', buildRoster(registry, MOODS, names, data.frames));
 writeFileSync('RELATIONS.md', buildRelations(registry));
 writeFileSync('MOOD-KEY.md', buildMoodKey(registry));
-{ const { extra, template } = readHerdWebSources(); writeFileSync(HERD_WEB.output, buildHerdWeb(registry, extra, template)); }
+{ const { extra, template, icons } = readHerdWebSources(); writeFileSync(HERD_WEB.output, buildHerdWeb(registry, extra, template, icons)); }
 
 const readme = readFileSync('README.md', 'utf8');
 const nextReadme = applyTable(readme, registry);
