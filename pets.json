@@ -1112,7 +1112,10 @@
             "why": "Astra's Infinite Pole is a Unity world: what Pole Puff finds the world needs becomes Unity Unicorn build work, and Unity Unicorn's world tools ship the changes. Astra, 2026-10-12.",
             "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
           }
-        ]
+        ],
+        "draft": "drafts/pole-puff/ (Claude Opus 5.5, 2026-10-11/12): pet.json, README, AGENTS, CLAUDE, LICENSE, page and hand-drawn stand-in art, ready to become findastra/pole-puff once Astra OKs the repo. Card 010.",
+        "kind": "sprite",
+        "kind_note": "Astra, 2026-10-11: a puffball sprite that floats (sky zone)."
       },
       {
         "pet": "Procreate Panda",

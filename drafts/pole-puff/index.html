@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pole Puff</title>
+  <style>
+    :root { --bg: #f4f5ff; --ink: #1b1d3a; --muted: #5b5f86; --card: #ffffff; --line: #d9dcff; --accent: #7a8cff; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #12132a; --ink: #eef0ff; --muted: #a3a8d6; --card: #1c1e3d; --line: #2e3163; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; text-align: center; }
+    h1 { margin: 0 0 4px; font-size: 2rem; }
+    .credit { margin: 0; color: var(--muted); font-style: italic; }
+    .well { position: relative; margin: 28px auto 12px; width: 192px; height: 192px; }
+    .well img { width: 192px; height: 192px; image-rendering: pixelated; animation: float 3.2s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @media (prefers-reduced-motion: reduce) { .well img { animation: none; } }
+    .bubble { display: inline-block; min-height: 2.5em; padding: 8px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    .moods { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 20px 0; }
+    .moods button { font: inherit; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); cursor: pointer; }
+    .moods button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+    .note { color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pole Puff</h1>
+    <p class="credit">A pet app by Astra.</p>
+    <div class="well"><img id="pet" src="art/frames/neutral-20261011.png" alt="Pole Puff, a periwinkle puffball with a striped pole tuft"></div>
+    <p class="bubble" id="bubble"></p>
+    <div class="moods" id="moods" role="group" aria-label="Moods"></div>
+    <p class="note">Draft. Pole Puff manages Astra's Infinite Pole; nothing is built yet, and the art is a hand-drawn stand-in.
+      One of the pets of Astra's PetOS.</p>
+  </main>
+  <script>
+    const LINES = {
+      neutral: 'puff.',
+      blink: '...puff?',
+      happy: 'Floating nicely around the pole!',
+      curious: 'What does the Infinite Pole need today?',
+      worried: 'Something on the pole looks off.',
+      sad: 'The world build failed...',
+      unwell: 'I need my repo: your OK to create pole-puff.',
+      shocked: 'The pole goes up forever?!',
+      sleeping: 'zzz... drifting...',
+    };
+    const pet = document.getElementById('pet');
+    const bubble = document.getElementById('bubble');
+    const row = document.getElementById('moods');
+    function show(mood) {
+      pet.src = `art/frames/${mood}-20261011.png`;
+      bubble.textContent = LINES[mood];
+      for (const b of row.children) b.setAttribute('aria-pressed', String(b.dataset.mood === mood));
+    }
+    for (const mood of Object.keys(LINES)) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.mood = mood;
+      b.textContent = mood;
+      b.addEventListener('click', () => show(mood));
+      row.appendChild(b);
+    }
+    show('neutral');
+  </script>
+</body>
+</html>

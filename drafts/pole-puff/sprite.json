@@ -1,0 +1,17 @@
+{
+  "size": 256,
+  "moods": ["neutral", "blink", "happy", "curious", "worried", "sad", "unwell", "shocked", "sleeping"],
+  "frames": {
+    "neutral": "art/frames/neutral-20261011.png",
+    "blink": "art/frames/blink-20261011.png",
+    "happy": "art/frames/happy-20261011.png",
+    "curious": "art/frames/curious-20261011.png",
+    "worried": "art/frames/worried-20261011.png",
+    "sad": "art/frames/sad-20261011.png",
+    "unwell": "art/frames/unwell-20261011.png",
+    "shocked": "art/frames/shocked-20261011.png",
+    "sleeping": "art/frames/sleeping-20261011.png"
+  },
+  "sheet": "art/sheets/pole-puff-20261011.png",
+  "note": "Hand-drawn stand-in (scripts/draw-pole-puff-20261011.mjs). Replace with generated art from the shared pipeline once Astra OKs it."
+}
