@@ -37,8 +37,9 @@ export function syncProfile(readme, registry, repos) {
     else if ((m = BULLET.exec(ln))) blurbs.set(m[1] || m[2], m[3]);
   });
   sections.forEach((s, k) => { s.end = k + 1 < sections.length ? sections[k + 1].start : lines.length; });
-  const petSection = sections.find((s) => /pet apps/i.test(s.title));
-  if (!petSection) throw new Error('No "pet apps" section in the profile README.');
+  // Astra renamed the section "Astra's PetOS - Personal AI Agent Platform" on 2026-10-11; accept either name.
+  const petSection = sections.find((s) => /pet apps|petos|pet_os/i.test(s.title));
+  if (!petSection) throw new Error('No "pet apps" or "PetOS" section in the profile README.');
   const mentioned = new Set(blurbs.keys());
 
   // The pet apps list.
