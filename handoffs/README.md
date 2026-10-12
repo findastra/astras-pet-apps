@@ -17,3 +17,4 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-apps.
 | [006: Register Fuzzboi Friend in the Cage](006-farmer-register-fuzzboi-friend.md) | Farmer | open, ready: apply the patch in fuzzboi-friend/cage/ |
 | [007: Register Mail Snail in the Cage](007-farmer-register-mail-snail.md) | Farmer | open, waits on Astra's OK for the art |
 | [008: Voicemeeter Bug to GitHub, then scrambled-audio detection](008-any-voicemeeter-bug-github-and-detection.md) | any | open: repo done; detection waits on the next failure |
+| [010: Pole Puff repo from the draft](010-any-pole-puff-repo-20261012.md) | any | open, Astra OKed repo, art and look (2026-10-12) |
