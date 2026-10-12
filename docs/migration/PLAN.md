@@ -31,9 +31,9 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
    server / Raspberry Pi you already have?
 7. **The unmerged 2026-10-09 branch** (`pets-roam-life-20261009`, never pushed): drop it, or
    keep only its request-log idea as input to the Farm inbox (recommended)?
-8. **Seeded pets:** jobs for Procreate Panda, Skill Scout and PSC Sealion (and what PSC
-   stands for). Decided 2026-10-12: Pole Puff manages Astra's Infinite Pole and Piranesi Nessi
-   manages Piranesi House.
+8. **Seeded pets:** jobs for Procreate Panda and Skill Scout. Decided 2026-10-12: Pole Puff
+   manages Astra's Infinite Pole, Piranesi Nessi manages Piranesi House, and PSC Sealion is
+   OSC Sealion, which manages OSCGoesBrrr and VRCFT face tracking.
    (Passport Panda's new name is decided: **Passport Pelican**.)
 
 ## Repositories: actual and proposed
@@ -113,7 +113,7 @@ and is not counted. It moves to the pipeline when it gets a repo, then to the Fa
 | Pole Puff | Manages Astra's Infinite Pole (`astras-infinite-pole`); confirmed by Astra 2026-10-12. Works with Unity Unicorn on the world's Unity builds | Repo plan with Astra's OK |
 | Procreate Panda | Named after Procreate | Job |
 | Skill Scout | Name only | Job |
-| PSC Sealion | Name only | What PSC means; job |
+| OSC Sealion | Manages OSCGoesBrrr and VRCFT face tracking; first recorded as PSC Sealion; confirmed by Astra 2026-10-12. Works with Unity Unicorn on face-tracking rigs | Repo plan with Astra's OK |
 | Platform Platypus | Local draft app on Astra's PC with `pet.json`: checks a page on iPhone, Android, iPad and desktop | Repo with Astra's OK |
 | Piranesi Nessi | Manages Piranesi House (`piranesi-house`); confirmed by Astra 2026-10-12. Works with Unity Unicorn on the world's Unity builds | Repo plan with Astra's OK |
 | Claude Bot | Already in the pipeline (`claude-bot`, cards 001–003) | Cards 001–003 |

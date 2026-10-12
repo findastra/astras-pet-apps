@@ -3,7 +3,7 @@
 > **Amendments by Astra since v5.2** (these override the text below):
 > - 2026-10-12: **The project's title is "Astra's PetOS".** In files, folders, code and identifiers it is written **`ASTRA_PET_OS`**, with the underscore between PET and OS, never `ASTRA_PETOS` or `PetOS` on its own. Where the text below says to display `ASTRA_PET_OS` as the product name, show "Astra's PetOS" to people instead.
 > - 2026-10-11: **Passport Panda is renamed Passport Pelican** (Procreate Panda takes the panda). Same job and privacy rules.
-> - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, PSC Sealion, Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
+> - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, OSC Sealion (first recorded as PSC Sealion), Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
 
 **Product name (approved):** ASTRA_PET_OS — *Grow your own AI ecosystem.*  
 **Official first-party ecosystem and user's herd:** `astras-farm`  

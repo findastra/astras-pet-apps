@@ -1084,10 +1084,17 @@
         "job": "undecided"
       },
       {
-        "pet": "PSC Sealion",
+        "pet": "OSC Sealion",
         "repo": null,
-        "job": "undecided",
-        "note": "What PSC stands for is not recorded yet."
+        "job": "Manages Astra's OSC and face-tracking software: OSCGoesBrrr and VRCFT (VRCFaceTracking).",
+        "note": "Astra, 2026-10-12: the seed recorded as PSC Sealion is OSC Sealion.",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "Unity Unicorn manages an app that transfers faces and face-tracking data and will personalize a face-tracking rig on an avatar in conjunction with VRCFT, which OSC Sealion manages. Astra, 2026-10-12.",
+            "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
+          }
+        ]
       },
       {
         "pet": "Platform Platypus",
@@ -1120,6 +1127,12 @@
         "to": "Passport Pelican",
         "decided": "2026-10-11",
         "why": "Procreate Panda takes the panda. Astra chose Passport Pelican: a pelican keeps papers safe in its pouch. The job from v5.2 is unchanged."
+      },
+      {
+        "from": "PSC Sealion",
+        "to": "OSC Sealion",
+        "decided": "2026-10-12",
+        "why": "OSC as in Open Sound Control: the pet manages OSCGoesBrrr and VRCFT face tracking."
       }
     ]
   },
