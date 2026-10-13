@@ -42,6 +42,16 @@ export const SOURCES = {
   'video-vulture': 'art/seeds/video-vulture-sheet-20261012.png',
 };
 
+SOURCES['closet-cat'] = 'art/seeds/closet-cat-sheet-20261012.png';
+// Registered pets: their newest look. That is the October 11 desktop art where it exists (what the
+// desktop actually shows, Astra 2026-10-12: "the icons are outdated"), otherwise their mood frames.
+const registry = JSON.parse(readFileSync('pets.json', 'utf8'));
+const frames = JSON.parse(readFileSync('art/frames/index.json', 'utf8'));
+for (const p of registry.pets) {
+  const desk = `desktop-art/${p.art}/idle-20261011.png`;
+  SOURCES[p.repo] = existsSync(desk) ? desk : frames.pets[p.art]?.frames.idle;
+}
+
 function crop(img, x0, y0, w, h) {
   const out = new Uint8Array(w * h * 4);
   for (let y = 0; y < h; y++) out.set(img.rgba.subarray(((y0 + y) * img.width + x0) * 4, ((y0 + y) * img.width + x0 + w) * 4), y * w * 4);

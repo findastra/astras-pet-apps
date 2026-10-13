@@ -81,7 +81,8 @@ export function petIcons(index) {
 
 export function buildSystemMap(registry, extra, template, icons = {}) {
   const data = systemMapData(registry, extra);
-  for (const n of data.nodes) { n.icon = (n.art && icons[n.art]) || icons['node:' + n.id] || null; delete n.art; }
+  // A pet's own icon in art/icons/ (its newest look) wins over its older mood frame.
+  for (const n of data.nodes) { n.icon = icons['node:' + n.id] || (n.art && icons[n.art]) || null; delete n.art; }
   return template.replace('__DATA__', () => JSON.stringify(data).replaceAll('<', '\\u003c'));
 }
 

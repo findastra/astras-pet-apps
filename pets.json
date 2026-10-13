@@ -1194,6 +1194,12 @@
             "becomes": "relations links once this seed has a repo"
           }
         ]
+      },
+      {
+        "pet": "Closet Cat",
+        "repo": null,
+        "job": "Organizes your closet (what you own and what goes together) and keeps your favourite places to shop.",
+        "note": "Named by Astra on 2026-10-12."
       }
     ],
     "already_in_pipeline": [

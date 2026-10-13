@@ -12,6 +12,7 @@ When a seed gets its own repo, its art moves there.
 | Skill Scout | [skill-scout-sheet-20261012.png](skill-scout-sheet-20261012.png) | 2026-10-12, with the Mommies sheet as the style reference |
 | Photo Dodo | [photo-dodo-sheet-20261012.png](photo-dodo-sheet-20261012.png) | 2026-10-12 |
 | Video Vulture | [video-vulture-sheet-20261012.png](video-vulture-sheet-20261012.png) | 2026-10-12 |
+| Closet Cat | [closet-cat-sheet-20261012.png](closet-cat-sheet-20261012.png) | 2026-10-12 |
 
 **Provenance:** generated on Astra's OpenAI account (gpt-image-2, high quality, 1024×1024, one image each) through the
 image bridge, with the shared pet STYLE from [scripts/generate-pets.mjs](../../scripts/generate-pets.mjs). The exact
