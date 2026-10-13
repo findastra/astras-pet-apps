@@ -1,5 +1,5 @@
 {
-  "about": "The non-pet parts of the System Map (system-map-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets reach every app and drawn behind their own toggle. Built by scripts/system-map-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (0 development, 1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/system-map-20261012.mjs.",
+  "about": "The non-pet parts of the System Map (system-map-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets reach every pet and drawn behind their own toggle. Built by scripts/system-map-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (0 development, 1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/system-map-20261012.mjs.",
   "states": {
     "now": "Works today",
     "planned": "Planned (decided, or in a pet's own job)",
@@ -8,7 +8,7 @@
     "suggested": "Missing: needs planning"
   },
   "types": {
-    "host": "Friendly Farmer: Intelligent App (Pet) that coordinates the Intelligent Apps",
+    "host": "Friendly Farmer: organizes the pets (intelligent apps)",
     "you": "You",
     "pet": "Registered Intelligent App (Pet)",
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
@@ -34,18 +34,18 @@
   "nodes": [
     {
       "id": "farm",
-      "name": "The Farm (website)",
+      "name": "The Farm (native OS)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "The Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
+      "job": "The native OS of Astra's PetOS: the first-party home where your pets live and run, organized by the Farmer. Its face is the Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
       "layer": 1
     },
     {
       "id": "kennel",
-      "name": "The Kennel",
+      "name": "The Kennel (community lab)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "astras-kennel: the community pet catalog. Developers submit a link to their own repo; review, security checks and adoption happen here. Does not exist yet (ASTRAS_PET_OS, Kennel).",
+      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel).",
       "layer": 2
     },
     {
@@ -61,7 +61,7 @@
       "name": "AI harness",
       "type": "harness",
       "state": "planned",
-      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the Intelligent Apps. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
+      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the pets. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
       "layer": 5
     },
     {
@@ -1449,7 +1449,7 @@
     },
     "3": {
       "name": "Friendly Farmer",
-      "detail": "The independent pet agent that watches the Intelligent Apps, runs the Farm website and coordinates."
+      "detail": "The independent pet that organizes the pets (intelligent apps) and runs the Farm."
     },
     "4": {
       "name": "Individual pet agents",

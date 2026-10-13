@@ -98,7 +98,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="row" role="group" aria-label="View">
     <button class="btn" id="vNow" aria-pressed="false">Works today</button>
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
-    <button class="btn" id="vHub" aria-pressed="false">Links to every app</button>
+    <button class="btn" id="vHub" aria-pressed="false">Links to every pet</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
     <button class="btn" id="vCode">Code list</button>
     <button class="btn" id="vReset">Show everything</button>
@@ -112,8 +112,8 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="shapes" id="shapeKey"></div>
   <div class="label types-h">Colour key (nodes, click to hide)</div>
   <div class="legend" id="nodeLegend"></div>
-  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or every Intelligent App). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
-  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every app (pets that reach every other Intelligent App) stay hidden until you switch them on or click one of those pets.</p></details>
+  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or every pet). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
+  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every pet (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
 </section>
 
 <aside class="side" id="side" hidden aria-live="polite"></aside>
@@ -171,7 +171,7 @@ const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scen
 const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
 
 // ---------- layout: force-directed. Links pull, nodes push, the Farmer is pinned at the centre.
-// Links to every app are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
+// Links to every pet are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
 const pos = {};
 (function settle(){
   // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.

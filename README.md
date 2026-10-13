@@ -36,7 +36,7 @@ The pets move around inside the Cage. Open the door and they can use the browser
 
 The generated count and running list, with every mood of every character, are in [ROSTER.md](ROSTER.md). Ghost Protocol's [personal cybersecurity checklist](https://findastra.github.io/ghost-protocol/) is already live; Astra approved its ghost artwork on 2026-10-08.
 
-## How the Intelligent Apps connect
+## How the pets connect
 
 ![Astra's PetOS System Map (3D PFD)](docs/system-map/system-map-20261012.png)
 
