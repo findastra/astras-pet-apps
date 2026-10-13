@@ -77,11 +77,13 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 .chips{display:flex;flex-wrap:wrap;gap:4px}
 .codechip{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:5px;background:var(--raise);color:var(--fg)}
 .close{justify-self:end}
+.navpad{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;backdrop-filter:blur(6px)}
+.navpad .btn{min-width:44px;min-height:36px;justify-content:center}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
 @media (max-width:700px){
   .hud{width:auto;right:12px;max-height:46%}
   .hud .legend,.hud .shapes,.hud details,.hud .types-h,.hud .sub{display:none}
-  .side{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:52%;width:auto;left:12px}
+  .side{top:auto;bottom:calc(68px + env(safe-area-inset-bottom,0px));max-height:46%;width:auto;left:12px}
 }
 </style></head><body>
 <div id="stage" aria-label="3D map of Astra's PetOS"></div>
@@ -119,6 +121,12 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 </section>
 
 <aside class="side" id="side" hidden aria-live="polite"></aside>
+<nav class="navpad" aria-label="Move around the map">
+  <button class="btn" id="nZoomIn" title="Zoom in" aria-label="Zoom in">＋</button>
+  <button class="btn" id="nZoomOut" title="Zoom out" aria-label="Zoom out">－</button>
+  <button class="btn" id="nReset" title="Back to the whole map">Reset view</button>
+  <button class="btn" id="nSpin" aria-pressed="true" title="Slowly turn the map">Spin</button>
+</nav>
 <div class="tip" id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -159,12 +167,12 @@ const stage = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css('--bg'));
 stage.appendChild(renderer.domElement);
-const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .003);
+const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .0012);
 const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(...HOME_CAM);
 // Trackball, not orbit: it turns freely in every direction, over the top and under the bottom, with no stops.
 const controls = new THREE.TrackballControls(camera, renderer.domElement);
 let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-controls.rotateSpeed = 2.6; controls.zoomSpeed = 1.1; controls.panSpeed = .6; controls.dynamicDampingFactor = .15;
+controls.rotateSpeed = 1.2; controls.zoomSpeed = 1.4; controls.panSpeed = .6; controls.dynamicDampingFactor = .2;
 controls.minDistance = 2; controls.maxDistance = 320;
 // The switch maps mouse BUTTONS to actions: left (0) rotates, middle (1) pans, right (2) is left free for fly-look.
 controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:1};
@@ -477,6 +485,14 @@ function move(dt){ if(!keys.size) return;
   if(!v.lengthSq()) return; v.normalize().multiplyScalar((keys.has('shift')?40:14)*dt);
   camera.position.add(v); if(!looking) controls.target.add(v); }
 
+// ---------- on-screen navigation: zoom, reset, spin (Astra, 2026-10-12) ----------
+function zoomBy(k){ fly=null; const off=camera.position.clone().sub(controls.target); const len=Math.min(Math.max(off.length()*k,controls.minDistance),controls.maxDistance); fly={t0:performance.now(),fromT:controls.target.clone(),toT:controls.target.clone(),fromC:camera.position.clone(),toC:controls.target.clone().add(off.setLength(len))}; }
+document.getElementById('nZoomIn').onclick=()=>zoomBy(.7);
+document.getElementById('nZoomOut').onclick=()=>zoomBy(1.4);
+document.getElementById('nReset').onclick=()=>{ close(); fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(...HOME_CAM)}; camera.up.set(0,1,0); };
+const spinBtn=document.getElementById('nSpin'); spinBtn.setAttribute('aria-pressed',autoSpin);
+spinBtn.onclick=()=>{ autoSpin=!autoSpin; spinBtn.setAttribute('aria-pressed',autoSpin); };
+setInterval(()=>spinBtn.setAttribute('aria-pressed',autoSpin),500); // other controls stop the spin
 // ---------- loop ----------
 function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); controls.handleResize(); }
 addEventListener('resize',resize); resize();
@@ -493,7 +509,7 @@ function frame(now){
   const W=innerWidth,H=innerHeight;
   DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
     if(v.z>1||lab.dataset.off){lab.style.opacity=0;return;}
-    const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.12,Math.min(1,1.8-d/115))*(lab.dataset.dim?.15:1);
+    const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.6,Math.min(1,1.6-d/220))*(lab.dataset.dim?.25:1);
     lab.style.opacity=op; lab.style.transform=`translate(${(v.x*.5+.5)*W}px,${(-v.y*.5+.5)*H}px) translate(-50%,-100%)`; });
   requestAnimationFrame(frame);
 }
