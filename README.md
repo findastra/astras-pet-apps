@@ -1,5 +1,9 @@
 # Astra's PetOS
 
+[![Astra's PetOS System Map (3D PFD)](docs/system-map/system-map-20261013.png)](https://findastra.github.io/astras-pet-os/system-map-20261012.html)
+
+**[Open the System Map (3D PFD)](https://findastra.github.io/astras-pet-os/system-map-20261012.html)**: opens in any browser, including iPad and iPhone.
+
 *A pet app by Astra.*
 
 This is the development home of **Astra's PetOS** (`ASTRAS_PET_OS`). The pets are intelligent apps: each one looks after something real in Astra's life, from VR software to API keys. The **Friendly Farmer** organizes the pets. **The Farm** is the native OS where they will live and run, and **the Kennel** is the community lab where other people's pets are built and adopted (both planned).
@@ -42,9 +46,7 @@ The generated count and running list, with every mood of every character, are in
 
 ## How the pets connect
 
-![Astra's PetOS System Map (3D PFD)](docs/system-map/system-map-20261012.png)
-
-**[Astra's PetOS System Map](system-map-20261012.html)** is a 3D map of Astra's PetOS: every pet, seed and roadmap pet, the AI models, the infrastructure, the real programs they manage, and what flows between them. Open it in a browser (it loads three.js from a CDN, so it needs the internet). Search for any node; click a sphere for its job and connections, or click a line for everything that flows both ways between its two ends. Pet-to-pet links come from `relations` in [pets.json](pets.json); everything else comes from [system-map.json](system-map.json). `npm run build` rebuilds the page. The same links as a flat chart are in [RELATIONS.md](RELATIONS.md).
+**[Astra's PetOS System Map](https://findastra.github.io/astras-pet-os/system-map-20261012.html)** is a 3D map of Astra's PetOS: every pet, seed and roadmap pet, the AI models, the infrastructure, the real programs they manage, and what flows between them. Open it in a browser (it loads three.js from a CDN, so it needs the internet). Search for any node; click a sphere for its job and connections, or click a line for everything that flows both ways between its two ends. Pet-to-pet links come from `relations` in [pets.json](pets.json); everything else comes from [system-map.json](system-map.json). `npm run build` rebuilds the page. The same links as a flat chart are in [RELATIONS.md](RELATIONS.md).
 
 ## Run it
 
