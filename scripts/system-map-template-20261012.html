@@ -528,7 +528,13 @@ const spinBtn=document.getElementById('nSpin'); spinBtn.setAttribute('aria-press
 spinBtn.onclick=()=>{ autoSpin=!autoSpin; spinBtn.setAttribute('aria-pressed',autoSpin); };
 setInterval(()=>spinBtn.setAttribute('aria-pressed',autoSpin),500); // other controls stop the spin
 // ---------- loop ----------
-function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); controls.handleResize(); }
+// The sphere sits in the open space to the right of the key panel, not behind it (Astra, 2026-10-13).
+// On narrow screens the panel is on top, so there is no shift.
+function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight;
+  const hud=document.querySelector('.hud'), wide=innerWidth>700, shift=wide&&hud?Math.round((hud.getBoundingClientRect().right+12)/2):0;
+  if(shift) camera.setViewOffset(innerWidth,innerHeight,-shift,0,innerWidth,innerHeight); else camera.clearViewOffset();
+  const pad=document.querySelector('.navpad'); if(pad) pad.style.left=(innerWidth/2+shift)+'px';
+  camera.updateProjectionMatrix(); controls.handleResize(); }
 addEventListener('resize',resize); resize();
 const v=new THREE.Vector3(); let last=performance.now();
 function frame(now){
