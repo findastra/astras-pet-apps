@@ -8,7 +8,7 @@
     "suggested": "Missing: needs planning"
   },
   "types": {
-    "host": "Host Intelligent App (Pet): Friendly Farmer",
+    "host": "Friendly Farmer: Intelligent App (Pet) that coordinates the herd",
     "you": "You",
     "pet": "Registered Intelligent App (Pet)",
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",

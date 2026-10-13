@@ -21,6 +21,22 @@ no "I'll read it if I need it". This applies to small tasks too.
    before doing anything else.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
+## One copy of each repo, always on GitHub (Astra, 2026-10-12)
+Work was being lost between assistants because every chat kept its own copy of the repos
+(`Documents\ChatGPT\...`, `Documents\Codex\<date>\...`) and some never pushed. From now on:
+1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Projects\<repo>`, named
+   exactly like the GitHub repo. Do not clone a second copy into a chat or dated folder. If your
+   tool insists on its own workspace, push from it before you finish and say where it is.
+2. **Pull before you start** (`git fetch`, then fast-forward), and read the newest handoff.
+3. **Push before you stop**, every session: commit to a branch named for your assistant and the
+   date (for example `codex/<topic>-YYYYMMDD`) and push it, even if unfinished. Work that is
+   only on the PC counts as lost.
+4. **Never leave a program only on the PC.** If a pet's app, tool or art exists locally and not on
+   GitHub, push it first; that is a 💻 error in [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md).
+5. **The head chat** (Claude, started 2026-10-12) keeps these in line: it checks for unpushed
+   copies, rescues them to branches, and updates INTELLIGENCE-LEVELS.md. Each intelligent app has
+   its own chat, which keeps that app's row true.
+
 ## Read first: Astra's PetOS (`ASTRAS_PET_OS`) (2026-10-11)
 Astra approved **Astra's PetOS** as the direction for this project. The one canonical
 architecture document is [ASTRAS_PET_OS.md](ASTRAS_PET_OS.md)
