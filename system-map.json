@@ -30,7 +30,8 @@
     "runs-on": "where a program runs, is published or is installed",
     "directs": "your requests, decisions and approvals to an AI assistant, in conversation",
     "reports": "an AI assistant answering you: results with evidence, questions only you can decide, links to what changed",
-    "card": "a handoff card or brief left for another assistant to pick up"
+    "card": "a handoff card or brief left for another assistant to pick up",
+    "audio": "sound travelling: microphones in, speakers and headphones out, and the virtual cables in between (drawn as a wave)"
   },
   "nodes": [
     {
@@ -1054,21 +1055,12 @@
     },
     {
       "id": "microphone",
-      "name": "Microphone",
+      "name": "Desk microphone (in its box)",
       "type": "host-machine",
-      "state": "now",
+      "state": "planned",
       "layer": 6,
       "category": "Audio",
-      "job": "Astra’s microphone, routed through Voicemeeter (model to confirm)."
-    },
-    {
-      "id": "headphones",
-      "name": "Headphones (being fixed)",
-      "type": "host-machine",
-      "state": "now",
-      "layer": 6,
-      "category": "Audio",
-      "job": "Headphones that are not working right now and are being fixed with Voicemeeter and Voicemeeter Bug (model to confirm)."
+      "job": "Astra’s desk microphone, still in its box: not set up yet (model to confirm). It will go into Voicemeeter."
     },
     {
       "id": "macbook-pro",
@@ -1086,7 +1078,7 @@
       "state": "planned",
       "layer": 1,
       "category": "Device",
-      "job": "A small Wi-Fi pin with a screen, to wear and show the pets’ pictures. Astra plans to get one (2026-10-12)."
+      "job": "A small Wi-Fi pin with a screen, to wear and show the pets’ pictures. Astra plans to get one (2026-10-12). Options: docs/smart-pin-ideas-20261012.md."
     },
     {
       "id": "logitech-brio",
@@ -1104,7 +1096,7 @@
       "state": "now",
       "layer": 6,
       "category": "Audio",
-      "job": "USB headset with THX Spatial Audio, connected to the Desktop PC."
+      "job": "USB headset with THX Spatial Audio: Voicemeeter output A3. These are the headphones being fixed with Voicemeeter; Voicemeeter Bug restarts the audio engine when they reconnect."
     },
     {
       "id": "razer-viper",
@@ -1132,6 +1124,69 @@
       "layer": 6,
       "category": "Audio",
       "job": "Speaker bar with a microphone, connected to the Desktop PC."
+    },
+    {
+      "id": "steam-streaming-audio",
+      "name": "Steam Streaming audio",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Virtual audio",
+      "job": "Steam Remote Play’s virtual sound card (Steam Streaming Speakers and Microphone): Voicemeeter output A2 and input 3."
+    },
+    {
+      "id": "virtual-desktop-audio",
+      "name": "Virtual Desktop Audio",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Virtual audio",
+      "job": "Virtual Desktop’s sound card: the Quest’s microphone comes into Voicemeeter on input 2, and PC sound can play in the headset."
+    },
+    {
+      "id": "meta-link-audio",
+      "name": "Oculus Virtual Audio",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Virtual audio",
+      "job": "Meta Horizon Link’s sound card: the Quest’s headphones and microphone while on Link."
+    },
+    {
+      "id": "voicemeeter-cables",
+      "name": "Voicemeeter virtual cables",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Virtual audio",
+      "job": "Voicemeeter Potato’s own virtual inputs (Voicemeeter Input, AUX, VAIO3) and outputs (B1 to B3) that apps can send to and record from."
+    },
+    {
+      "id": "fuzzbois-site",
+      "name": "Fuzzbois",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "The website that generates the Fuzzboi art: a six-digit hex code picks the look (findastra.github.io/fuzzbois). Fuzzboi Friend watches over it."
+    },
+    {
+      "id": "fuzz-factory",
+      "name": "Fuzz Factory",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Fuzzboi Friend’s own page (findastra.github.io/fuzzboi-friend): make your own Fuzzboi. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "dubstep-gunsmith",
+      "name": "Dubstep Gunsmith",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Astra’s catalog site for avatar gun effects and loadouts, made with Codex on 2026-10-12. Its source is only in Codex’s workspace on the PC, not on GitHub yet."
     }
   ],
   "links": [
@@ -2774,48 +2829,6 @@
       "why": "Rift Rabbit could check the VR hardware before each session: batteries, tracking, firmware."
     },
     {
-      "from": "voicemeeter",
-      "to": "woojer-vest",
-      "carries": "opens",
-      "state": "idea",
-      "why": "The vest feels sound: game audio could be routed to it through Voicemeeter."
-    },
-    {
-      "from": "voicemeeter",
-      "to": "microphone",
-      "carries": "opens",
-      "state": "now",
-      "why": "The microphone goes into Voicemeeter."
-    },
-    {
-      "from": "voicemeeter",
-      "to": "headphones",
-      "carries": "opens",
-      "state": "now",
-      "why": "The headphones are being fixed through Voicemeeter."
-    },
-    {
-      "from": "voicemeeter-bug",
-      "to": "headphones",
-      "carries": "manages",
-      "state": "now",
-      "why": "Voicemeeter Bug restarts Voicemeeter’s audio engine when the headphones reconnect."
-    },
-    {
-      "from": "voicemeeter",
-      "to": "speaker-bar",
-      "carries": "opens",
-      "state": "now",
-      "why": "The speaker bar is a Voicemeeter output."
-    },
-    {
-      "from": "voicemeeter",
-      "to": "razer-kraken",
-      "carries": "opens",
-      "state": "now",
-      "why": "The headset is a Voicemeeter output and input."
-    },
-    {
       "from": "obs-studio",
       "to": "logitech-brio",
       "carries": "opens",
@@ -2856,6 +2869,174 @@
       "carries": "manages",
       "state": "idea",
       "why": "An old MacBook can get a second life as a small Linux machine."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "speaker-bar",
+      "carries": "audio",
+      "state": "now",
+      "why": "Output A1: the speaker bar plays Voicemeeter’s main mix."
+    },
+    {
+      "from": "speaker-bar",
+      "to": "voicemeeter",
+      "carries": "audio",
+      "state": "now",
+      "why": "Input 1: the speaker bar’s microphone."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "razer-kraken",
+      "carries": "audio",
+      "state": "now",
+      "why": "Output A3: the Razer Kraken Ultimate headset (the headphones being fixed)."
+    },
+    {
+      "from": "microphone",
+      "to": "voicemeeter",
+      "carries": "audio",
+      "state": "planned",
+      "why": "The desk microphone will go into Voicemeeter once it is out of the box."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "woojer-vest",
+      "carries": "audio",
+      "state": "idea",
+      "why": "The vest feels sound: game audio could be routed to it through Voicemeeter."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "steam-streaming-audio",
+      "carries": "audio",
+      "state": "now",
+      "why": "Output A2: Steam Streaming Speakers."
+    },
+    {
+      "from": "steam-streaming-audio",
+      "to": "voicemeeter",
+      "carries": "audio",
+      "state": "now",
+      "why": "Input 3: Steam Streaming Microphone."
+    },
+    {
+      "from": "virtual-desktop-audio",
+      "to": "voicemeeter",
+      "carries": "audio",
+      "state": "now",
+      "why": "Input 2: the Quest’s microphone through Virtual Desktop."
+    },
+    {
+      "from": "virtual-desktop",
+      "to": "virtual-desktop-audio",
+      "carries": "opens",
+      "state": "now",
+      "why": "Virtual Desktop installs this sound card."
+    },
+    {
+      "from": "meta-horizon-link",
+      "to": "meta-link-audio",
+      "carries": "opens",
+      "state": "now",
+      "why": "Meta Horizon Link installs this sound card."
+    },
+    {
+      "from": "quest-pro",
+      "to": "virtual-desktop-audio",
+      "carries": "audio",
+      "state": "now",
+      "why": "The headset’s microphone and sound travel through Virtual Desktop."
+    },
+    {
+      "from": "quest-pro",
+      "to": "meta-link-audio",
+      "carries": "audio",
+      "state": "now",
+      "why": "The headset’s microphone and sound travel through Meta Horizon Link."
+    },
+    {
+      "from": "quest-3",
+      "to": "virtual-desktop-audio",
+      "carries": "audio",
+      "state": "now",
+      "why": "The headset’s microphone and sound travel through Virtual Desktop."
+    },
+    {
+      "from": "quest-3",
+      "to": "meta-link-audio",
+      "carries": "audio",
+      "state": "now",
+      "why": "The headset’s microphone and sound travel through Meta Horizon Link."
+    },
+    {
+      "from": "voicemeeter-cables",
+      "to": "voicemeeter",
+      "carries": "audio",
+      "state": "now",
+      "why": "Apps send sound into Voicemeeter through its virtual inputs."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "voicemeeter-cables",
+      "carries": "audio",
+      "state": "now",
+      "why": "B1 to B3 send mixes back out to apps, for example a stream, a call or a recording."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "razer-kraken",
+      "carries": "manages",
+      "state": "now",
+      "why": "Voicemeeter Bug watches output A3 and restarts the audio engine when the headset reconnects."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "speaker-bar",
+      "carries": "manages",
+      "state": "now",
+      "why": "Voicemeeter Bug watches output A1."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "steam-streaming-audio",
+      "carries": "manages",
+      "state": "now",
+      "why": "Voicemeeter Bug watches output A2."
+    },
+    {
+      "from": "fuzzboi-friend",
+      "to": "fuzzbois-site",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Fuzzboi Friend watches over the Fuzzbois website and shows its health with his mood (Astra, 2026-10-12)."
+    },
+    {
+      "from": "fuzzboi-friend",
+      "to": "fuzz-factory",
+      "carries": "opens",
+      "state": "now",
+      "why": "Fuzz Factory is this pet’s own program."
+    },
+    {
+      "from": "fuzzbois-site",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Published on GitHub Pages."
+    },
+    {
+      "from": "fuzz-factory",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Published on GitHub Pages."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "dubstep-gunsmith",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Unity Unicorn’s gunsmith-loadout tool reads the Gunsmith’s loadouts (in draft PR #1)."
     }
   ],
   "layers": {

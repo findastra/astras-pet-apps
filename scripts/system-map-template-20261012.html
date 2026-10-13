@@ -146,8 +146,8 @@ const TYPE = {
 // they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
 // Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
 // The glass sphere around the pets is twice the first diameter (Astra, 2026-10-12): pets spread out inside it.
-const LAYER_R = {2:10, 3:20, 4:34, 5:54, 6:66, 0:72, 1:78};
-const OWN_R = 60; // programs made by Astra: their own shell, inside programs made by others (Astra, 2026-10-12)
+const LAYER_R = {2:10, 3:20, 4:34, 5:58, 6:66, 0:72, 1:78};
+const OWN_R = 51; // programs and websites Astra made: their own shell just outside the glass harness, looked after by the pets inside it (Astra, 2026-10-12)
 const HARNESS_R = 46;
 const HOME_CAM = [0,48,185];
 const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
@@ -158,6 +158,7 @@ const LANG_COLOR = {'HTML':'#e34c26','JavaScript':'#f1e05a','TypeScript':'#3178c
 const langOf = n => (n.code?.languages||[]).map(l=>l.language).join(' ');
 const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
 let showHub = false;
+let audioOn = true; // the wavy audio lines, switched in the line-style key
 // Key switches: hidden node types, hidden line layers, and the faint layer shells.
 const hiddenTypes = new Set(), hiddenLayers = new Set(); let shellsOn = true;
 const nodeOn = n => !hiddenTypes.has(n.type);
@@ -248,13 +249,19 @@ const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
   const mid=a.clone().add(b).multiplyScalar(.5); const out=mid.length()<.5?new THREE.Vector3(0,1,0):mid.clone().normalize();
   mid.addScaledVector(out, a.distanceTo(b)*.12 + (i%3)*.12);
   const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
+  // Audio is drawn as a sound wave (Astra, 2026-10-12): sound travelling between microphones, Voicemeeter, virtual cables, speakers and headphones.
+  let path=curve;
+  if(l.carries==='audio'){ const len=a.distanceTo(b), n=Math.max(60,Math.round(len*4)), waves=Math.max(4,Math.round(len/3)), pts=[];
+    for(let k=0;k<=n;k++){ const t=k/n, p=curve.getPoint(t), tan=curve.getTangent(t), side=new THREE.Vector3().crossVectors(tan,p.lengthSq()>1e-6?p.clone().normalize():new THREE.Vector3(0,1,0)).normalize();
+      if(side.lengthSq()<1e-6) side.set(0,1,0); pts.push(p.addScaledVector(side,Math.sin(t*waves*Math.PI*2)*.5*Math.sin(t*Math.PI))); }
+    path=new THREE.CatmullRomCurve3(pts); }
   const mat = st.dash ? new THREE.LineDashedMaterial({color:col,dashSize:st.dash[0],gapSize:st.dash[1],transparent:true,opacity:st.op})
                      : new THREE.LineBasicMaterial({color:col,transparent:true,opacity:st.op});
-  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(40)),mat); if(st.dash) line.computeLineDistances(); scene.add(line);
-  const hit=new THREE.Mesh(new THREE.TubeGeometry(curve,20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(l.carries==='audio'?240:40)),mat); if(st.dash) line.computeLineDistances(); scene.add(line);
+  const hit=new THREE.Mesh(new THREE.TubeGeometry(path,l.carries==='audio'?90:20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
   let dot=null;
   if(l.state==='now'||l.state==='planned'){ dot=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),new THREE.MeshBasicMaterial({color:col,transparent:true})); scene.add(dot); }
-  const rec={...l,curve,line,hit,dot,t:Math.random(),base:mat.opacity,pair:pairKey(l.from,l.to)}; hit.userData.link=rec; return rec;
+  const rec={...l,curve:path,line,hit,dot,t:Math.random(),base:mat.opacity,pair:pairKey(l.from,l.to)}; hit.userData.link=rec; return rec;
 });
 const hits = links.map(l=>l.hit);
 
@@ -269,6 +276,10 @@ Object.keys(STATE).forEach(k=>{
   b.onclick=()=>{shown[k]=!shown[k]; b.setAttribute('aria-pressed',shown[k]); syncView(); apply();};
   tg.appendChild(b);
 });
+{ const n=DATA.links.filter(e=>e.carries==='audio').length; if(n){ const b=document.createElement('button'); b.className='btn'; b.id='audioKey'; b.setAttribute('aria-pressed','true');
+  b.title='Sound travelling between microphones, Voicemeeter, virtual cables, speakers and headphones (drawn as a wave)';
+  const sw=document.createElement('span'); sw.textContent='\u3030'; sw.setAttribute('aria-hidden','true'); b.append(sw, document.createTextNode(` Audio: sound travelling (${n})`));
+  b.onclick=()=>{ audioOn=!audioOn; b.setAttribute('aria-pressed',audioOn); apply(); }; tg.appendChild(b); } }
 const ll=document.getElementById('layerLegend');
 // A key switch: a button that shows its on/off state and calls toggle() when clicked.
 function keyButton(parent, title, build, toggle){ const b=document.createElement('button'); b.className='key'; b.type='button'; b.title=title; b.setAttribute('aria-pressed','true');
@@ -287,7 +298,7 @@ const SHAPES=[
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
-  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes are made by Astra (their own shell), peach cubes are made by others (the shell just outside)','layer 6'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes sit just outside the glass, programs and websites Astra made that her pets look after; peach cubes further out are programs made by others','layer 6'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
 ];
@@ -307,7 +318,7 @@ Object.entries(DATA.types).forEach(([k,label])=>{ const n=DATA.nodes.filter(x=>x
     ()=>{ hiddenTypes.has(k) ? hiddenTypes.delete(k) : hiddenTypes.add(k); });
   keyButtons.push([b,()=>!hiddenTypes.has(k)]); });
 function syncKeys(){ keyButtons.forEach(([b,on])=>b.setAttribute('aria-pressed',on())); }
-document.getElementById('vReset').onclick=()=>{ hiddenTypes.clear(); hiddenLayers.clear(); shellsOn=true; setView(false); syncKeys(); };
+document.getElementById('vReset').onclick=()=>{ hiddenTypes.clear(); hiddenLayers.clear(); shellsOn=true; audioOn=true; const ak=document.getElementById('audioKey'); if(ak) ak.setAttribute('aria-pressed','true'); setView(false); syncKeys(); };
 function setView(onlyNow){ Object.keys(shown).forEach(k=>shown[k]=onlyNow?k==='now':true);
   document.querySelectorAll('#edgeToggles .btn').forEach(b=>b.setAttribute('aria-pressed',shown[b.dataset.state])); syncView(); apply(); }
 function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed',Object.entries(shown).every(([k,v])=>v===(k==='now')));
@@ -324,6 +335,7 @@ let hovered=null, selected=null, selectedPair=null, matches=null;
 const isHubNode = id => links.some(l=>l.everyApp&&l.from===id);
 function linkVisible(l, focusId){
   if(!shown[l.state]) return false;
+  if(l.carries==='audio' && !audioOn) return false;
   if(hiddenLayers.has(l.layer) || !nodeOn(nodeById[l.from]) || !nodeOn(nodeById[l.to])) return false;
   if(!l.everyApp) return true;
   return showHub || (focusId && (l.from===focusId || (selected && isHubNode(selected.id) && l.from===selected.id)));

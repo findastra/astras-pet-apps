@@ -1035,7 +1035,7 @@
       "pet": "Fuzzboi Friend",
       "visibility": "public",
       "status": "hatching",
-      "job": "Makes your own Fuzzboi from a six-digit hex code, and shows the health of your website with his mood. Mostly for fun: swap his look any time.",
+      "job": "Watches over the Fuzzbois website, which generates the Fuzzboi art, and shows its health with his mood. Mostly for fun: swap his look any time.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
