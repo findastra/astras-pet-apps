@@ -532,13 +532,13 @@ function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=inner
 addEventListener('resize',resize); resize();
 const v=new THREE.Vector3(); let last=performance.now();
 function frame(now){
-  const dt=Math.min((now-last)/1000,.05); last=now;
+  const dt=Math.min(Math.max((now-last)/1000,0),.05); last=now; // never backwards: the wavy audio curves cannot take a negative point
   if(fly){ const k=Math.min(1,(now-fly.t0)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
     controls.target.lerpVectors(fly.fromT,fly.toT,e); camera.position.lerpVectors(fly.fromC,fly.toC,e); if(k>=1) fly=null; }
   move(dt);
   if(autoSpin && !looking && !fly){ const off=camera.position.clone().sub(controls.target); off.applyAxisAngle(camera.up, dt*.12); camera.position.copy(controls.target).add(off); camera.lookAt(controls.target); }
   if(!looking) controls.update();
-  links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=(l.t+dt*.25)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
+  links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=((l.t+dt*.25)%1+1)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
   renderer.render(scene,camera);
   const W=innerWidth,H=innerHeight;
   DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
