@@ -9,75 +9,66 @@ ASTRAS_PET_OS ([ASTRAS_PET_OS.md](ASTRAS_PET_OS.md), section 2) and drawn in the
 | 2 | **Runtime** | Runs on its own, without you opening it: scheduler, inbox, saved state, health. Keeps working when the Farm, the Farmer or the desktop star is closed. | 4 Pet agents |
 | 3 | **Agentic harness** | The AI layer: model adapter (Claude, GPT or local), skills, tools, memory, permissions, task executor. Decides what to do next. | 5 AI harness (per pet) |
 
-**Key:** ✅ built and verified · 🟡 partly there (see note) · — not built.
+**Key:** ✅ built and verified · 🟡 partly there (see note) · — not built · $\color{red}{\textsf{red}}$ an obvious error to fix.
 A level counts as built only with evidence (code on GitHub, a scheduled task or service on Astra's PC, a test).
-A plan, an idea or a page that only describes the pet is not a level.
+Not built yet is not an error; an error is something broken, missing from GitHub, or out of step.
+
+**Kind:** registered (in the registry with art) · pipeline (on GitHub, no registered art) · seed (approved name, no repo) · unregistered.
 
 Checked 2026-10-12 by Claude Opus 5.5 (head chat), from GitHub (`main` of every repo), the 3D map data,
-and Astra's PC (scheduled tasks, startup folder, running processes). Update a row when you change a level,
-with the date and your evidence. Each intelligent app has its own chat; that chat keeps its row true.
+and Astra's PC (scheduled tasks, startup folder, running processes, project folders). Update a row when you
+change a level, with the date and your evidence. Each intelligent app has its own chat; that chat keeps its row true.
 
-## Registered pets (19)
+| Intelligent app | Kind | Repo | 1 Program | 2 Runtime | 3 Agentic harness | Errors | Chat |
+|---|---|---|---|---|---|---|---|
+| Friendly Farmer | registered | `astras-pet-apps` | ✅ The Cage page, the Farmer's desk, the desktop pets and tray star, the 3D map | 🟡 **Farmer's daily rounds**: GitHub Actions job, every day 06:17 Denver. Scheduled only: no inbox | — Dev skills only (`skills/handoff`), not a runtime harness | $\color{red}{\textsf{Repo still named astras-pet-apps; PC folder is astras-pet-os}}$ | this head chat |
+| API Fairy | registered | `api-fairy` | ✅ **API Fairy** Windows app (C#: key scanner, dashboard) | 🟡 Watches for new keys while open. Not running now; no startup entry | — | | |
+| Astra Wisp | registered | `vrchat-ai-astra` | ✅ **AI Astra** desktop app (Python) and the VRChat chatbox bridge | 🟡 Background learning workers while the app is open | 🟡 **Her own AI**: a statistical model with living memory, not an LLM harness | $\color{red}{\textsf{PC folder is not connected to its GitHub repo}}$ | |
+| Backup Beaver | pipeline | `backup-beaver` | 🟡 Web app only | — | — | | |
+| Chat Rat | unregistered | `chat-rat` (private) | — No program in the repo yet (art only) | — | — | $\color{red}{\textsf{On the desktop but missing from the registry}}$ | |
+| Chip | registered | `data-dealer` | ✅ Data Dealer dashboard builder (`dashboard/build.py`) and site | — | 🟡 **Claude Code role agents**: ceo, cfo, counsel, data-steward, engineer, eval-judge, growth, sourcing-agent, plus 3 skills. They run inside Claude Code, not their own harness | $\color{red}{\textsf{Public on GitHub but meant to be private; PC folder not connected}}$ | Data Dealer chats (4) |
+| Claude Bot | pipeline | `claude-bot` | — No program in the repo yet | — | — One dev skill (`skills/handoff`) | $\color{red}{\textsf{PC folder is not connected to its GitHub repo}}$ | Claude Bot |
+| Deck Duck | pipeline | `deck-duck` | 🟡 Web app only | — | — | | Deck Duck |
+| Discord Damsel | registered | `findastra-discord-presence` | ✅ **OpenAI Discord Presence** and **Anthropic Discord Presence** tray apps | ✅ Both start at sign-in and run in the tray. No inbox | — | $\color{red}{\textsf{DM cleanup skill only on a side branch, not on main}}$ | |
+| Drum Dog | registered | `drum-dog` | 🟡 Web app only | — | — | | |
+| File Master | registered | `file-master` | ✅ **File Master** scanner, plan and undo tools (PowerShell) | 🟡 **FileMaster Weekly Scan** (Sundays 7 pm) | 🟡 **Claude Code agent** `file-master` (`agent/file-master.md`) | $\color{red}{\textsf{Weekly scan is written but not installed on the PC}}$ | |
+| Finance Finch | registered | `finance-finch` | 🟡 Web app only | — | — | | |
+| Fuzzboi Friend | pipeline | `fuzzboi-friend` | 🟡 Web app only | — | — | | Fuzzbois |
+| Ghost Protocol | registered | `ghost-protocol` | ✅ Website `findastra.github.io/ghost-protocol` | — | — | | Ghost Protocol - Website Audit & Updates |
+| Gif Giraffe | pipeline | `astras-gif-maker` | ✅ **Astra's GIF Maker** web app | — | — | $\color{red}{\textsf{PC folder is not connected to its GitHub repo}}$ | |
+| GitHub Goldfish | registered | `github-goldfish` | 🟡 Web pages only (account audit page) | — Its audits run inside the Farmer's rounds | — | $\color{red}{\textsf{Its audit code lives in the hub, not in its own repo}}$ | |
+| Health Hummy | registered | `health-hummy` | 🟡 Web app only | — | — | | Health Hummy - UTI, UC · Health Hummy - Breaking Habits |
+| Mail Snail | pipeline | `mail-snail` | 🟡 Web app only | — | — | | |
+| Meme Fiend | pipeline | `meme-fiend` (private) | 🟡 Web app only | — | — | | |
+| Mesh Moth | pipeline | `mesh-moth` | 🟡 Web app only | — | — | | |
+| Mine Mole | pipeline | `mine-mole` | 🟡 Web app only | — | — | $\color{red}{\textsf{No desktop art on GitHub, only draft art}}$ | |
+| Mommy's Mommies | registered | `mommys` | 🟡 Web app only (site in `mommys-website`) | — | — | $\color{red}{\textsf{PC folder is not connected to its GitHub repo}}$ | Mommy's - Image Resize & Small PFP |
+| OSC Sealion | seed | none | — Will manage OSCGoesBrrr and VRCFT face tracking | — | — | | OSC Sealion |
+| Paper Girl | registered | `paper-girl` | ✅ Website `findastra.github.io/paper-girl` | — The GitHub workflow only publishes the site | — | | |
+| Patch Cat | pipeline | `patch-cat` (private) | 🟡 Web app only | — | — | | |
+| Piranesi Nessi | seed | none | — Will manage Piranesi House (VRChat world) | — | — | | |
+| Platform Platypus | seed | none | 🟡 Local draft app: checks a page on iPhone, Android, iPad and desktop | — | — | $\color{red}{\textsf{Only on the PC, not on GitHub (card 010)}}$ | |
+| Pole Puff | seed | none | — Will manage Astra's Infinite Pole (VRChat world) | — | — | | Astra's Infinite Pole - Video Player Screen Issues |
+| Portfolio Puffer | registered | `portfolio-puffer` | 🟡 Web app only | — | — | | |
+| Procreate Panda | seed | none | — Will manage Procreate | — | — | | |
+| Project Parrot | registered | `project-parrot` | 🟡 Web app only | — | — | | |
+| Python Panther | registered | `learn-python` | 🟡 Web app only | — | — | | |
+| Raspberry Pi | pipeline | `raspberry-berry` | 🟡 Web app only | — | — | $\color{red}{\textsf{Three spellings: Raspberry Pi, Raspberry Pie, raspberry-berry}}$ | |
+| RGBee | pipeline | `rgbee` | 🟡 Web app only | — | — | $\color{red}{\textsf{PC folder is not connected to its GitHub repo}}$ | |
+| Rift Rabbit | pipeline | `rift-rabbit` | 🟡 Web app only | — | — | $\color{red}{\textsf{Public on GitHub but meant to be private}}$ | |
+| Skill Scout | seed | none | — Job not decided | — | — | | Skill Scout |
+| Spoonfed Sugarcube | pipeline | `spoonfed` | — No program in the repo yet | — | — | $\color{red}{\textsf{Repo named spoonfed, folder spoonfed-sugarcube; PC draft art differs from GitHub}}$ | |
+| Startup Star | unregistered | none yet | 🟡 Shortcut and launcher for the desktop pets; the desktop host moves here later | — | — | $\color{red}{\textsf{Only on the PC, not on GitHub}}$ | this head chat |
+| Unity Unicorn | registered | `unity-unicorn` | ✅ **Unity Unicorn** tool library app, plus on `main`: neck-blender, marble-carver, masonry-structural-audit, no-windows-audit, run-unity-tool. 🟡 In draft PR #1: sparkle-strapper, fan-fitter, rgb-painter, bending-adder, star-effects-diagnostic, golden-painter, chain-dangle-weights, gunsmith-loadout | — | 🟡 Claude skills on the PC (`face-transfer`, `vrchat-unity-world`) run through Claude Code | $\color{red}{\textsf{8 tools stuck in an unmerged PR; face-transfer only on the PC}}$ | Unity Unicorn - Multiple Tools, Neck Blend |
+| Voicemeeter Bug | registered | `voicemeeter-bug` | ✅ **Voicemeeter Bug** Windows app (asks Voicemeeter to restart its audio engine) | ✅ Watches for audio devices reconnecting and restarts on its own; running on the PC now | — | $\color{red}{\textsf{Public on GitHub but meant to be private}}$ | Voicemeeter Bug |
+| VSCode Angel | registered | `vscode-angel` | 🟡 Web app only | — | — | | |
+| Wifi Butterfly | pipeline | `wifi-butterfly` | 🟡 Web app only | — | — | | |
 
-| Intelligent app | Repo | 1 Program | 2 Runtime | 3 Agentic harness | Chat |
-|---|---|---|---|---|---|
-| Friendly Farmer | `astras-pet-apps` (folder `astras-pet-os`) | ✅ The Cage page, the Farmer's desk, the desktop pets and tray star (Startup Star), the 3D map | 🟡 **Farmer's daily rounds**: GitHub Actions job, every day 06:17 Denver. Scheduled only: no inbox | — Dev skills only (`skills/handoff`), which are not a runtime harness | this head chat |
-| GitHub Goldfish | `github-goldfish` | 🟡 Web pages only (account audit page); no audit code in its repo | — Its audits run inside the Farmer's rounds, not on their own | — | |
-| Chip | `data-dealer` | ✅ Data Dealer dashboard builder (`dashboard/build.py`) and site | — | 🟡 **Claude Code role agents**: ceo, cfo, counsel, data-steward, engineer, eval-judge, growth, sourcing-agent, plus 3 skills. They run inside Claude Code, not their own harness | Data Dealer chats (4) |
-| API Fairy | `api-fairy` | ✅ **API Fairy** Windows app (C#: key scanner, dashboard) | 🟡 Desktop app that watches for new keys while open. Not running now; no startup entry | — | |
-| Unity Unicorn | `unity-unicorn` | ✅ **Unity Unicorn** tool library app plus editor tools on `main`: neck-blender, marble-carver, masonry-structural-audit, no-windows-audit, run-unity-tool. 🟡 In draft PR #1, not merged: sparkle-strapper, fan-fitter, rgb-painter, bending-adder, star-effects-diagnostic, golden-painter, chain-dangle-weights, gunsmith-loadout. 🟡 Only on Astra's PC: face-transfer, Poppy's installed copies | — | 🟡 Claude skills on Astra's PC (`face-transfer`, `vrchat-unity-world`) run through Claude Code | Unity Unicorn - Multiple Tools, Neck Blend |
-| Python Panther | `learn-python` | 🟡 Web app only | — | — | |
-| Astra Wisp | `vrchat-ai-astra` | ✅ **AI Astra** desktop app (Python) and the VRChat chatbox bridge | 🟡 Background learning workers while the app is open | 🟡 **Her own AI**: a statistical model with living memory, not an LLM harness | |
-| Health Hummy | `health-hummy` | 🟡 Web app only | — | — | Health Hummy - UTI, UC · Health Hummy - Breaking Habits |
-| Finance Finch | `finance-finch` | 🟡 Web app only | — | — | |
-| Mommy's Mommies | `mommys` | 🟡 Web app only (site in `mommys-website`) | — | — | Mommy's - Image Resize & Small PFP |
-| Paper Girl | `paper-girl` | ✅ Website `findastra.github.io/paper-girl` | — The GitHub workflow only publishes the site | — | |
-| File Master | `file-master` | ✅ **File Master** scanner, plan and undo tools (PowerShell) | 🟡 **FileMaster Weekly Scan** (Sundays 7 pm) is written but **not installed** on Astra's PC | 🟡 **Claude Code agent** `file-master` (`agent/file-master.md`) | |
-| Discord Damsel | `findastra-discord-presence` | ✅ **OpenAI Discord Presence** and **Anthropic Discord Presence** tray apps | ✅ Both start at sign-in (Startup folder) and run in the tray. No inbox | — DM cleanup skill is only on branch `claude/dm-cleanup-skill-20261010` | |
-| Portfolio Puffer | `portfolio-puffer` | 🟡 Web app only | — | — | |
-| Drum Dog | `drum-dog` | 🟡 Web app only | — | — | |
-| VSCode Angel | `vscode-angel` | 🟡 Web app only | — | — | |
-| Ghost Protocol | `ghost-protocol` | ✅ Website `findastra.github.io/ghost-protocol` | — | — | Ghost Protocol - Website Audit & Updates |
-| Project Parrot | `project-parrot` | 🟡 Web app only | — | — | |
-| Voicemeeter Bug | `voicemeeter-bug` | ✅ **Voicemeeter Bug** Windows app (asks Voicemeeter to restart its audio engine) | ✅ Watches for audio devices reconnecting and restarts on its own; running on Astra's PC now | — | Voicemeeter Bug |
+## Errors that affect every app
 
-## Pipeline pets (on GitHub, no registered art yet) (15)
-
-| Intelligent app | Repo | 1 Program | 2 Runtime | 3 Agentic harness | Chat |
-|---|---|---|---|---|---|
-| Spoonfed Sugarcube | `spoonfed` (folder `spoonfed-sugarcube`) | — No program in the repo yet | — | — | |
-| Claude Bot | `claude-bot` | — No program in the repo yet | — | — One dev skill (`skills/handoff`) | Claude Bot |
-| RGBee | `rgbee` | 🟡 Web app only | — | — | |
-| Mine Mole | `mine-mole` | 🟡 Web app only | — | — | |
-| Mail Snail | `mail-snail` | 🟡 Web app only | — | — | |
-| Patch Cat | `patch-cat` | 🟡 Web app only | — | — | |
-| Meme Fiend | `meme-fiend` | 🟡 Web app only | — | — | |
-| Gif Giraffe | `astras-gif-maker` | ✅ **Astra's GIF Maker** web app | — | — | |
-| Backup Beaver | `backup-beaver` | 🟡 Web app only | — | — | |
-| Rift Rabbit | `rift-rabbit` | 🟡 Web app only | — | — | |
-| Fuzzboi Friend | `fuzzboi-friend` | 🟡 Web app only | — | — | Fuzzbois |
-| Wifi Butterfly | `wifi-butterfly` | 🟡 Web app only | — | — | |
-| Deck Duck | `deck-duck` | 🟡 Web app only | — | — | Deck Duck |
-| Mesh Moth | `mesh-moth` | 🟡 Web app only | — | — | |
-| Raspberry Pi | `raspberry-berry` | 🟡 Web app only | — | — | |
-
-## Not yet in the registry
-
-| Intelligent app | Repo | 1 Program | 2 Runtime | 3 Agentic harness | Chat |
-|---|---|---|---|---|---|
-| Chat Rat | `chat-rat` (private) | — No program in the repo yet (art only) | — | — | |
-| Startup Star | none yet (folder `startup-star`) | 🟡 Shortcut and launcher for the desktop pets; the desktop host moves here later | — | — | this head chat |
-
-## Seeds (approved names, no repo) (6)
-
-| Intelligent app | Will manage (its programs) | 1 Program | 2 Runtime | 3 Agentic harness | Chat |
-|---|---|---|---|---|---|
-| Pole Puff | Astra's Infinite Pole (VRChat world) | — The world exists, the pet does not | — | — | Astra's Infinite Pole - Video Player Screen Issues |
-| Piranesi Nessi | Piranesi House (VRChat world) | — | — | — | |
-| OSC Sealion | OSCGoesBrrr, VRCFT face tracking | — | — | — | OSC Sealion |
-| Platform Platypus | Checks pages on iPhone, Android, iPad and desktop | 🟡 Local draft app on Astra's PC, not on GitHub (card 010) | — | — | |
-| Procreate Panda | Procreate | — | — | — | |
-| Skill Scout | (job not decided) | — | — | — | Skill Scout |
+- $\color{red}{\textsf{Double-clicking a registered desktop pet opens a copy of its app kept in the hub, not the program in its own repo.}}$
+  Two copies of each app can drift apart.
+- $\color{red}{\textsf{Double-clicking a pipeline desktop pet only opens its GitHub page; no app is wired up.}}$
 
 ## What this shows
 
