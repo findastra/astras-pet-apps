@@ -8,9 +8,11 @@
    Layout: full-bleed 3D night field; controls float top-left, details dock right (bottom sheet on phones). Deliberately dark-only. */
 :root{
   color-scheme:dark;
-  --bg:#0b0a12; --panel:rgba(22,19,34,.9); --line:#2e2840; --fg:#ece8f6; --muted:#9b93b1;
-  --host:#ffcc4d; --you:#ff8fd0; --pet:#9b7bff; --pipe:#3fd3e0; --seed:#b6f25a; --road:#7d86a3; --model:#ff9f43; --infra:#5ef0b0; --program:#d7d2e6; --machine:#8fb4ff;
-  --l0:#8d8a99; --l1:#ff8fd0; --l2:#5ad1ff; --l3:#ffcc4d; --l4:#b39dff; --l5:#ff9f43; --l6:#7ee0a1;
+  /* Warm on navy (Astra, 2026-10-12): reds, oranges, yellows and pinks on a navy night sky. */
+  --bg:#0a1430; --panel:rgba(14,26,62,.92); --line:#2b3d75; --fg:#fff4ec; --muted:#b7bfdc;
+  --raise:#1c2c63; --raise-edge:#4a5fa8; --well:#0d1a40; --shell:#4a5fa8;
+  --host:#ffd23f; --you:#ff4fa3; --pet:#ff4d5e; --pipe:#ff8c3a; --seed:#fff07a; --road:#d99aaa; --model:#ff6f3c; --infra:#ffb3cf; --program:#ffd6a5; --machine:#f7a072;
+  --l0:#9c93b5; --l1:#ff4fa3; --l2:#ffb3cf; --l3:#ffd23f; --l4:#ff4d5e; --l5:#ff8c3a; --l6:#ffd6a5;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -25,11 +27,11 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .lbl.big{font-size:13px;font-weight:500}
 .hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(370px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
 h1{font-family:var(--display);font-size:1.5rem;margin:0;line-height:1;letter-spacing:-.01em}
-h1 span{color:var(--host)}
+h1 span{color:var(--you)}
 .sub{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
 .row{display:flex;flex-wrap:wrap;gap:6px}
 .btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:transparent;color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.btn[aria-pressed="true"]{background:#2a2340;border-color:#5b4d85}
+.btn[aria-pressed="true"]{background:var(--raise);border-color:var(--raise-edge)}
 .btn:focus-visible,input:focus-visible,.res button:focus-visible{outline:2px solid var(--host);outline-offset:2px}
 .sw{width:14px;height:3px;border-radius:2px;display:inline-block}
 .sw.d{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important}
@@ -41,7 +43,7 @@ h1 span{color:var(--host)}
 /* Every key item is a switch: click to hide or show that kind of thing on the map. */
 button.key{font:inherit;color:inherit;background:none;border:0;padding:2px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
 .shapes button.key{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center;margin:0 -4px}
-button.key:hover{background:#2a2340}
+button.key:hover{background:var(--raise)}
 button.key[aria-pressed="false"]{opacity:.35}
 button.key[aria-pressed="mixed"]{opacity:.65}
 button.key[aria-pressed="false"] span,button.key[aria-pressed="false"]>.t{text-decoration:line-through}
@@ -50,10 +52,10 @@ button.key:focus-visible{outline:2px solid var(--host);outline-offset:1px}
 .shapes svg{width:18px;height:18px}
 .label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
 .search{position:relative}
-.search input{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#120f1c;color:var(--fg)}
-.res{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#171324;border:1px solid var(--line);border-radius:8px;padding:4px;display:grid;z-index:2;max-height:260px;overflow-y:auto}
+.search input{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--well);color:var(--fg)}
+.res{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--well);border:1px solid var(--line);border-radius:8px;padding:4px;display:grid;z-index:2;max-height:260px;overflow-y:auto}
 .res button{font:inherit;text-align:left;background:none;border:0;color:var(--fg);padding:6px 8px;border-radius:6px;cursor:pointer;display:flex;gap:8px;align-items:center}
-.res button:hover,.res button.on{background:#2a2340}
+.res button:hover,.res button.on{background:var(--raise)}
 .res small{color:var(--muted);margin-left:auto}
 details summary{cursor:pointer;font-size:12px;color:var(--muted)}
 .side{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;width:min(360px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;backdrop-filter:blur(6px)}
@@ -73,7 +75,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 .lang .bar i{display:block;height:100%}
 .lang b{font-weight:500}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
-.codechip{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:5px;background:#231d33;color:var(--fg)}
+.codechip{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:5px;background:var(--raise);color:var(--fg)}
 .close{justify-self:end}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
 @media (max-width:700px){
@@ -87,8 +89,8 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 
 <section class="hud">
   <div>
-    <h1>System <span>Map</span></h1>
-    <p class="sub">Astra's PetOS as a 3D map: every pet, model, program and piece of infrastructure, and what flows between them. Built from <b>pets.json</b> and <b>system-map.json</b>. Shells follow the architecture layers: the neutral registry at the core, the Farmer, every pet agent, the glass AI harness around them, models and programs, and you and your devices outside. Click a node or a line for details.</p>
+    <h1>Astra's PetOS <span>System Map</span></h1>
+    <p class="sub">Every pet, and what each one talks to. The Farmer sits at the centre and organizes the pets around him. Each pet lives inside its own glass AI harness. Further out are the AI models and the real programs the pets look after, and on the outside are you, your devices and the AI assistants that build everything. Lines show what flows between them. Click anything for details.</p>
   </div>
   <div class="search">
     <label class="label" for="q">Search</label>
@@ -168,7 +170,7 @@ controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:1};
 controls.keys = ['NoKeyA','NoKeyS','NoKeyD']; // keep A, S and D for flying, not the trackball's key modes
 scene.add(new THREE.AmbientLight(0xffffff,.55));
 const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
-const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
+const rim = new THREE.PointLight(0xff4fa3,.8); rim.position.set(-15,-8,-10); scene.add(rim);
 
 // ---------- layout: force-directed. Links pull, nodes push, the Farmer is pinned at the centre.
 // Links to every pet are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
@@ -197,7 +199,7 @@ const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), n
 scene.add(harnessGlass);
 const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
 scene.add(harnessWire);
-const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
+const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:css('--shell'),wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
@@ -216,7 +218,7 @@ function makeIcon(n){
   const sz=Math.max(TYPE[n.type].r*3.2,1.4); sp.scale.set(sz,sz,1);
   if(n.icon){ const img=new Image(); img.onload=()=>{ g.drawImage(img,0,0,128,128); tex.needsUpdate=true; }; img.src=n.icon; }
   else { g.fillStyle=TYPE[n.type].color; g.globalAlpha=.9; g.beginPath(); g.arc(64,64,56,0,Math.PI*2); g.fill(); g.globalAlpha=1;
-    g.fillStyle='#0b0a12'; g.font='bold 44px system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
+    g.fillStyle=css('--bg'); g.font='bold 44px system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
     g.fillText(n.name.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(),64,68); tex.needsUpdate=true; }
   sp.visible=false; sp.userData.node=n; return sp;
 }
@@ -267,7 +269,7 @@ Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.la
     const s=document.createElement('span'); s.textContent=`${k} ${L.name} · ${n}`; b.append(d,s); },
     ()=>{ hiddenLayers.has(+k) ? hiddenLayers.delete(+k) : hiddenLayers.add(+k); });
   keyButtons.push([b,()=>!hiddenLayers.has(+k)]); });
-{ const b=keyButton(ll, 'The faint wire spheres that mark each layer', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color='#8a7fb3';
+{ const b=keyButton(ll, 'The faint wire spheres that mark each layer', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color=css('--shell');
     const s=document.createElement('span'); s.textContent='Layer shell outlines'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
   keyButtons.push([b,()=>shellsOn]); }
 const SHAPES=[
