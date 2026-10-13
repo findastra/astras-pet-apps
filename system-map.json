@@ -555,6 +555,348 @@
       "state": "now",
       "layer": 0,
       "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex."
+    },
+    {
+      "id": "msi-center",
+      "name": "MSI Center",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "MSI’s control app: PC lighting (Mystic Light) and system settings. Installed (Store app)."
+    },
+    {
+      "id": "corsair-icue",
+      "name": "Corsair iCUE",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Corsair lighting and device control. Installed."
+    },
+    {
+      "id": "razer-synapse",
+      "name": "Razer Synapse",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Razer lighting and device control. Installed."
+    },
+    {
+      "id": "logitech-g-hub",
+      "name": "Logitech G HUB",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Logitech lighting and device control. Installed."
+    },
+    {
+      "id": "everything-search",
+      "name": "Everything",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Instant file-name search for the whole PC. Installed."
+    },
+    {
+      "id": "spacesniffer",
+      "name": "SpaceSniffer",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Shows what is filling the disks, as a map of boxes. Installed."
+    },
+    {
+      "id": "steamvr",
+      "name": "SteamVR",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Valve’s VR runtime. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "meta-horizon-link",
+      "name": "Meta Horizon Link",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Meta’s PC link for Quest headsets. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "virtual-desktop",
+      "name": "Virtual Desktop",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Streams the PC to the headset wirelessly. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "ovr-advanced-settings",
+      "name": "OVR Advanced Settings",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "SteamVR overlay for play space, audio and performance settings. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "ovr-toolkit",
+      "name": "OVR Toolkit",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Desktop and window overlays inside VR. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "ovr-dynamic-resolution",
+      "name": "OVR Dynamic Resolution",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Adjusts VR render resolution to keep frame rate. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "ovr-smooth-tracking",
+      "name": "OVR Smooth Tracking",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Smooths tracker and controller movement. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "ovr-pager",
+      "name": "OVR Pager",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Shows phone and desktop notifications in VR. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "space-calibrator",
+      "name": "Space Calibrator",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Lines up trackers from different tracking systems. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "base-station-fov",
+      "name": "Base Station FOV Viewer",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Shows base station coverage for tracking setup. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "double-hip-tracker",
+      "name": "Double Hip Tracker",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Hip tracking helper. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "bs-manager",
+      "name": "BS Manager",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Beat Saber version and mod manager. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "magic-chatbox",
+      "name": "Magic Chatbox",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Writes status text into the VRChat chatbox. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "vr-pole-overlay",
+      "name": "VR Pole Overlay",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Shows a real pole’s position in VR. On the desktop (vr-gaming)."
+    },
+    {
+      "id": "unity-editor",
+      "name": "Unity 2022.3.22f1 and Unity Hub",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "The Unity editor used for VRChat avatars and worlds. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "vrchat-creator-companion",
+      "name": "VRChat Creator Companion",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Sets up VRChat SDK projects and packages. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "blender",
+      "name": "Blender",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "3D modelling (Store app). Installed."
+    },
+    {
+      "id": "ableton-live",
+      "name": "Ableton Live",
+      "type": "program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Music production. Drum Dog plans an Ableton Live connection. Not found on the Desktop PC in the 2026-10-12 scan (no install, no Ableton folders); may be on another computer."
+    },
+    {
+      "id": "spotify",
+      "name": "Spotify",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Music streaming (Store app). Installed."
+    },
+    {
+      "id": "stream-deck",
+      "name": "Elgato Stream Deck",
+      "type": "program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Elgato’s Stream Deck software. Deck Duck is named for it. Not installed on the Desktop PC in the 2026-10-12 scan."
+    },
+    {
+      "id": "obs-studio",
+      "name": "OBS Studio",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Streaming and recording. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "tiktok-live-studio",
+      "name": "TikTok LIVE Studio",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "TikTok’s streaming app. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "tikfinity",
+      "name": "TikFinity",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "TikTok LIVE interactions and alerts. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "capcut",
+      "name": "CapCut",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Video editing. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "canva",
+      "name": "Canva",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Graphic design. On the desktop (editing-streaming)."
+    },
+    {
+      "id": "sharex",
+      "name": "ShareX",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Screenshots, screen recordings and GIFs. On the desktop (editing-streaming) and starts at sign-in."
+    },
+    {
+      "id": "steam",
+      "name": "Steam",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Game library and store; also runs SteamVR. On the desktop (pc-gaming and vr-gaming)."
+    },
+    {
+      "id": "epic-games",
+      "name": "Epic Games Launcher",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Game library and store. On the desktop (pc-gaming)."
+    },
+    {
+      "id": "overwolf",
+      "name": "Overwolf",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "In-game overlays and apps. On the desktop (pc-gaming)."
+    },
+    {
+      "id": "wallpaper-engine",
+      "name": "Wallpaper Engine",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Animated desktop wallpapers. On the desktop (pc-gaming)."
+    },
+    {
+      "id": "visual-studio",
+      "name": "Visual Studio Community 2022",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Microsoft’s IDE. Installed."
+    },
+    {
+      "id": "malwarebytes",
+      "name": "Malwarebytes",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Desktop app",
+      "job": "Malware scanning. Installed."
     }
   ],
   "links": [
@@ -1432,6 +1774,524 @@
       "to": "claude-code",
       "carries": "card",
       "why": "Codex leaves handoff cards and notes for the Claude chats when it stops."
+    },
+    {
+      "from": "rgbee",
+      "to": "msi-center",
+      "carries": "manages",
+      "state": "planned",
+      "why": "RGBee plans lighting scenes for every RGB light in the room; these are the apps that control those lights."
+    },
+    {
+      "from": "rgbee",
+      "to": "corsair-icue",
+      "carries": "manages",
+      "state": "planned",
+      "why": "RGBee plans lighting scenes for every RGB light in the room; these are the apps that control those lights."
+    },
+    {
+      "from": "rgbee",
+      "to": "razer-synapse",
+      "carries": "manages",
+      "state": "planned",
+      "why": "RGBee plans lighting scenes for every RGB light in the room; these are the apps that control those lights."
+    },
+    {
+      "from": "rgbee",
+      "to": "logitech-g-hub",
+      "carries": "manages",
+      "state": "planned",
+      "why": "RGBee plans lighting scenes for every RGB light in the room; these are the apps that control those lights."
+    },
+    {
+      "from": "file-master",
+      "to": "everything-search",
+      "carries": "manages",
+      "state": "planned",
+      "why": "File Master owns file organization and indexing (ASTRAS_PET_OS); Everything finds files and SpaceSniffer shows what fills the disks."
+    },
+    {
+      "from": "file-master",
+      "to": "spacesniffer",
+      "carries": "manages",
+      "state": "planned",
+      "why": "File Master owns file organization and indexing (ASTRAS_PET_OS); Everything finds files and SpaceSniffer shows what fills the disks."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "steamvr",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "meta-horizon-link",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "virtual-desktop",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "ovr-advanced-settings",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "ovr-toolkit",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "ovr-dynamic-resolution",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "ovr-smooth-tracking",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "ovr-pager",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "space-calibrator",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "base-station-fov",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "double-hip-tracker",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "bs-manager",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Rift Rabbit preps and tracks VR software and performance; this is the VR software in the vr-gaming desktop folder."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "unity-editor",
+      "carries": "manages",
+      "state": "now",
+      "why": "Unity Unicorn’s tools run inside this Unity editor, and its tool library covers VRChat Creator Companion packages."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "vrchat-creator-companion",
+      "carries": "manages",
+      "state": "now",
+      "why": "Unity Unicorn’s tools run inside this Unity editor, and its tool library covers VRChat Creator Companion packages."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "blender",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Avatar meshes are often edited in Blender before Unity."
+    },
+    {
+      "from": "drum-dog",
+      "to": "ableton-live",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Drum Dog’s job: Ableton Live connections are planned."
+    },
+    {
+      "from": "drum-dog",
+      "to": "spotify",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Track ideas and references often start in Spotify."
+    },
+    {
+      "from": "deck-duck",
+      "to": "stream-deck",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Deck Duck is the Elgato Stream Deck pet."
+    },
+    {
+      "from": "vrchat-ai-astra",
+      "to": "magic-chatbox",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Both write to the VRChat chatbox; Astra Wisp’s bridge and Magic Chatbox should not talk over each other."
+    },
+    {
+      "from": "pole-puff",
+      "to": "vr-pole-overlay",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Pole Puff looks after the pole world; VR Pole Overlay shows the real pole in VR."
+    },
+    {
+      "from": "astras-gif-maker",
+      "to": "sharex",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Gif Giraffe makes GIFs; ShareX records clips and CapCut edits them."
+    },
+    {
+      "from": "astras-gif-maker",
+      "to": "capcut",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Gif Giraffe makes GIFs; ShareX records clips and CapCut edits them."
+    },
+    {
+      "from": "ghost-protocol",
+      "to": "malwarebytes",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Ghost Protocol’s security checklist can include Malwarebytes scans."
+    },
+    {
+      "from": "vscode-angel",
+      "to": "visual-studio",
+      "carries": "manages",
+      "state": "idea",
+      "why": "VSCode Angel’s editor connections could include Visual Studio."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "obs-studio",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "tiktok-live-studio",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "tikfinity",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "steam",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "epic-games",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "overwolf",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "wallpaper-engine",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
+    },
+    {
+      "from": "msi-center",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "corsair-icue",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "razer-synapse",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "logitech-g-hub",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "everything-search",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "spacesniffer",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "steamvr",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "meta-horizon-link",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "virtual-desktop",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "ovr-advanced-settings",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "ovr-toolkit",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "ovr-dynamic-resolution",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "ovr-smooth-tracking",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "ovr-pager",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "space-calibrator",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "base-station-fov",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "double-hip-tracker",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "bs-manager",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "magic-chatbox",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "vr-pole-overlay",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "unity-editor",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "vrchat-creator-companion",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "blender",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "spotify",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "obs-studio",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "tiktok-live-studio",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "tikfinity",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "capcut",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "canva",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "sharex",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "steam",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "epic-games",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "overwolf",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "wallpaper-engine",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "visual-studio",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "malwarebytes",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC (scan of 2026-10-12)."
+    },
+    {
+      "from": "astras-pet-apps",
+      "to": "canva",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "No pet looks after design and streaming tools yet. The Farmer incubates new pets; a streaming pet would own these. (Meme Fiend is private, so it does not connect out.)"
     }
   ],
   "layers": {
