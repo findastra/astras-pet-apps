@@ -38,6 +38,14 @@ h1 span{color:var(--host)}
 .legend span{display:flex;align-items:center;gap:6px}
 .shapes{display:grid;gap:5px;font-size:12px;color:var(--muted)}
 .shapes div{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center}
+/* Every key item is a switch: click to hide or show that kind of thing on the map. */
+button.key{font:inherit;color:inherit;background:none;border:0;padding:2px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
+.shapes button.key{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center;margin:0 -4px}
+button.key:hover{background:#2a2340}
+button.key[aria-pressed="false"]{opacity:.35}
+button.key[aria-pressed="mixed"]{opacity:.65}
+button.key[aria-pressed="false"] span,button.key[aria-pressed="false"]>.t{text-decoration:line-through}
+button.key:focus-visible{outline:2px solid var(--host);outline-offset:1px}
 .shapes b{color:var(--fg);font-weight:500}
 .shapes svg{width:18px;height:18px}
 .label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
@@ -93,14 +101,16 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vHub" aria-pressed="false">Herd-wide links</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
     <button class="btn" id="vCode">Code list</button>
+    <button class="btn" id="vReset">Show everything</button>
   </div>
-  <div class="label">Line colour = architecture layer</div>
+  <p class="sub">Every item in the keys below is a switch: click it to hide or show that kind of thing.</p>
+  <div class="label">Line colour = architecture layer (click to hide)</div>
   <div class="legend" id="layerLegend"></div>
   <div class="label">Line style = how real it is (click to hide)</div>
   <div class="row" id="edgeToggles"></div>
-  <div class="label types-h">Shape key</div>
+  <div class="label types-h">Shape key (click to hide)</div>
   <div class="shapes" id="shapeKey"></div>
-  <div class="label types-h">Colour key (nodes)</div>
+  <div class="label types-h">Colour key (nodes, click to hide)</div>
   <div class="legend" id="nodeLegend"></div>
   <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or the whole herd). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
   <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Herd-wide links (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
@@ -124,8 +134,10 @@ const TYPE = {
 // Shells follow the architecture layers. Neutral registry at the core (Program Manager is not the Farmer's),
 // the Farmer around it, every pet agent, the glass AI harness around all of them, the models and real programs
 // they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
-const LAYER_R = {2:2.8, 3:6.5, 4:13, 5:21, 6:28, 0:32, 1:36};
-const HARNESS_R = 17;
+// Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
+const LAYER_R = {2:5, 3:10, 4:17, 5:29, 6:36, 0:41, 1:46};
+const HARNESS_R = 23;
+const HOME_CAM = [0,26,104];
 const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
 const STATE = {
   now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
@@ -134,6 +146,9 @@ const LANG_COLOR = {'HTML':'#e34c26','JavaScript':'#f1e05a','TypeScript':'#3178c
 const langOf = n => (n.code?.languages||[]).map(l=>l.language).join(' ');
 const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
 let showHub = false;
+// Key switches: hidden node types, hidden line layers, and the faint layer shells.
+const hiddenTypes = new Set(), hiddenLayers = new Set(); let shellsOn = true;
+const nodeOn = n => !hiddenTypes.has(n.type);
 const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
 
 // ---------- scene ----------
@@ -141,8 +156,8 @@ const stage = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css('--bg'));
 stage.appendChild(renderer.domElement);
-const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .0065);
-const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(0,20,82);
+const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .005);
+const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(...HOME_CAM);
 // Trackball, not orbit: it turns freely in every direction, over the top and under the bottom, with no stops.
 const controls = new THREE.TrackballControls(camera, renderer.domElement);
 let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -182,7 +197,7 @@ const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), n
 scene.add(harnessGlass);
 const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
 scene.add(harnessWire);
-[6.5,13,21,28,36].forEach(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); });
+const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
@@ -243,26 +258,44 @@ Object.keys(STATE).forEach(k=>{
   tg.appendChild(b);
 });
 const ll=document.getElementById('layerLegend');
+// A key switch: a button that shows its on/off state and calls toggle() when clicked.
+function keyButton(parent, title, build, toggle){ const b=document.createElement('button'); b.className='key'; b.type='button'; b.title=title; b.setAttribute('aria-pressed','true');
+  build(b); b.onclick=()=>{ toggle(); syncKeys(); apply(); }; parent.appendChild(b); return b; }
+const keyButtons = []; // [button, isOn()]
 Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.layer===+k&&!l.herdWide).length;
-  const s=document.createElement('span'); s.title=L.detail; const d=document.createElement('i'); d.className='sw'; d.style.background=LAYER_COLOR[k]; d.style.height='4px';
-  s.append(d,document.createTextNode(`${k} ${L.name} · ${n}`)); ll.appendChild(s); });
+  const b=keyButton(ll, L.detail, b=>{ const d=document.createElement('i'); d.className='sw'; d.style.background=LAYER_COLOR[k]; d.style.height='4px';
+    const s=document.createElement('span'); s.textContent=`${k} ${L.name} · ${n}`; b.append(d,s); },
+    ()=>{ hiddenLayers.has(+k) ? hiddenLayers.delete(+k) : hiddenLayers.add(+k); });
+  keyButtons.push([b,()=>!hiddenLayers.has(+k)]); });
+{ const b=keyButton(ll, 'The faint wire spheres that mark each layer', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color='#8a7fb3';
+    const s=document.createElement('span'); s.textContent='Layer shell outlines'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
+  keyButtons.push([b,()=>shellsOn]); }
 const SHAPES=[
   ['<circle cx="9" cy="9" r="7"/>','Sphere','a pet agent (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
-  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the orange dot on top','layer 5'],
+  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
   ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service','layer 6'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
 ];
+// Which node types each shape stands for; hiding a shape hides all of them.
+const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Glass shell':['harness'], Diamond:['model'], Gem:['infrastructure'], Cube:['program'], Cylinder:['host-machine'], Pyramid:['assistant']};
 const sk=document.getElementById('shapeKey');
-SHAPES.forEach(([svg,name,what])=>{ const d=document.createElement('div');
-  d.innerHTML=`<svg viewBox="0 0 18 18" aria-hidden="true" fill="${css('--fg')}" stroke="${css('--fg')}">${svg}</svg>`;
-  const s=document.createElement('span'); const b=document.createElement('b'); b.textContent=name; s.append(b, document.createTextNode(': '+what)); d.appendChild(s); sk.appendChild(d); });
+SHAPES.forEach(([svg,name,what])=>{ const types=SHAPE_TYPES[name]||[];
+  const b=keyButton(sk, `Hide or show every ${name.toLowerCase()}`, b=>{
+    b.innerHTML=`<svg viewBox="0 0 18 18" aria-hidden="true" fill="${css('--fg')}" stroke="${css('--fg')}">${svg}</svg>`;
+    const s=document.createElement('span'); const t=document.createElement('b'); t.textContent=name; s.append(t, document.createTextNode(': '+what)); b.appendChild(s); },
+    ()=>{ const allOn=types.every(t=>!hiddenTypes.has(t)); types.forEach(t=>allOn?hiddenTypes.add(t):hiddenTypes.delete(t)); });
+  keyButtons.push([b,()=>{ const on=types.filter(t=>!hiddenTypes.has(t)).length; return on===types.length ? true : on ? 'mixed' : false; }]); });
 const lg=document.getElementById('nodeLegend');
 Object.entries(DATA.types).forEach(([k,label])=>{ const n=DATA.nodes.filter(x=>x.type===k).length; if(!n) return;
-  const s=document.createElement('span'); const d=document.createElement('i'); d.className='dot'; d.style.background=TYPE[k].color;
-  s.append(d,document.createTextNode(`${label} · ${n}`)); lg.appendChild(s); });
+  const b=keyButton(lg, `Hide or show: ${label}`, b=>{ const d=document.createElement('i'); d.className='dot'; d.style.background=TYPE[k].color;
+    const s=document.createElement('span'); s.textContent=`${label} · ${n}`; b.append(d,s); },
+    ()=>{ hiddenTypes.has(k) ? hiddenTypes.delete(k) : hiddenTypes.add(k); });
+  keyButtons.push([b,()=>!hiddenTypes.has(k)]); });
+function syncKeys(){ keyButtons.forEach(([b,on])=>b.setAttribute('aria-pressed',on())); }
+document.getElementById('vReset').onclick=()=>{ hiddenTypes.clear(); hiddenLayers.clear(); shellsOn=true; setView(false); syncKeys(); };
 function setView(onlyNow){ Object.keys(shown).forEach(k=>shown[k]=onlyNow?k==='now':true);
   document.querySelectorAll('#edgeToggles .btn').forEach(b=>b.setAttribute('aria-pressed',shown[b.dataset.state])); syncView(); apply(); }
 function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed',Object.entries(shown).every(([k,v])=>v===(k==='now')));
@@ -272,13 +305,14 @@ document.getElementById('vAll').onclick=()=>setView(false);
 document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
 let iconMode=false;
 document.getElementById('vIcon').onclick=()=>{ iconMode=!iconMode; document.getElementById('vIcon').setAttribute('aria-pressed',iconMode);
-  meshes.forEach(m=>m.visible=!iconMode); icons.forEach(s=>s.visible=iconMode); };
+  apply(); };
 
 // ---------- focus: hover, selected node, selected link, search ----------
 let hovered=null, selected=null, selectedPair=null, matches=null;
 const isHubNode = id => links.some(l=>l.herdWide&&l.from===id);
 function linkVisible(l, focusId){
   if(!shown[l.state]) return false;
+  if(hiddenLayers.has(l.layer) || !nodeOn(nodeById[l.from]) || !nodeOn(nodeById[l.to])) return false;
   if(!l.herdWide) return true;
   return showHub || (focusId && (l.from===focusId || (selected && isHubNode(selected.id) && l.from===selected.id)));
 }
@@ -294,12 +328,22 @@ function apply(){
     const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
     m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
     m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
-    n.iconSprite.material.opacity = on ? 1 : .12; });
+    n.iconSprite.material.opacity = on ? 1 : .12;
+    // The harness has no dot of its own: the glass shell is the harness.
+    const keep=nodeOn(n), solid=n.type!=='harness'; m.visible=keep&&solid&&!iconMode; n.iconSprite.visible=keep&&solid&&iconMode; labelEls[n.id].dataset.off = keep?'':'1'; });
+  const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass;
+  const glassHot = fid && nodeById[fid] && nodeById[fid].type==='harness';
+  harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055;
+  shells.forEach(s=>s.visible=shellsOn);
 }
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
 function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
-  const hn=ray.intersectObjects(iconMode?icons:meshes)[0]; if(hn) return {node:hn.object.userData.node};
-  const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link}; return null; }
+  const hn=ray.intersectObjects((iconMode?icons:meshes).filter(o=>o.visible))[0]; if(hn) return {node:hn.object.userData.node};
+  const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link};
+  // The glass harness is picked only near its visible rim, so clicks through the middle still reach what is inside.
+  if(harnessGlass.visible && harnessNode){ const miss=ray.ray.distanceToPoint(new THREE.Vector3()); if(miss>HARNESS_R*.88 && miss<HARNESS_R*1.03) return {node:harnessNode}; }
+  return null; }
+const harnessNode = DATA.nodes.find(n=>n.type==='harness');
 renderer.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); const n=p&&p.node||null;
   if(n!==hovered){hovered=n; if(!selected&&!selectedPair) apply();}
   renderer.domElement.style.cursor=p?'pointer':'grab';
@@ -419,7 +463,7 @@ addEventListener('pointermove',e=>{ if(!looking) return; euler.y-=e.movementX*.0
 const typing = () => ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName);
 addEventListener('keydown',e=>{ if(typing()) return; const k=e.key.toLowerCase();
   if('wasdqe'.includes(k)&&k.length===1||e.key.startsWith('Arrow')||k==='shift'){ keys.add(k); autoSpin=false; }
-  if(k==='f'){ const id=(selected&&selected.id)||(selectedPair&&selectedPair.split('|')[0]); if(id) flyTo(id); else { fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(0,20,82)}; } } });
+  if(k==='f'){ const id=(selected&&selected.id)||(selectedPair&&selectedPair.split('|')[0]); if(id) flyTo(id); else { fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(...HOME_CAM)}; } } });
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 addEventListener('blur',()=>keys.clear());
 function move(dt){ if(!keys.size) return;
@@ -445,7 +489,7 @@ function frame(now){
   renderer.render(scene,camera);
   const W=innerWidth,H=innerHeight;
   DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
-    if(v.z>1){lab.style.opacity=0;return;}
+    if(v.z>1||lab.dataset.off){lab.style.opacity=0;return;}
     const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.12,Math.min(1,1.8-d/70))*(lab.dataset.dim?.15:1);
     lab.style.opacity=op; lab.style.transform=`translate(${(v.x*.5+.5)*W}px,${(-v.y*.5+.5)*H}px) translate(-50%,-100%)`; });
   requestAnimationFrame(frame);
