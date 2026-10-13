@@ -1,8 +1,10 @@
 # ASTRAS_PET_OS — FINAL MASTER HANDOFF v5.2
 
 > **Amendments by Astra since v5.2** (these override the text below):
+> - 2026-10-12: **Astra renamed the development repo to `astras-pet-os`** (it was `astras-pet-apps`; old links redirect). The Cage is retired: it is no longer the Farmer's job.
 > - 2026-10-12: **The pets are intelligent apps.** When talking about all of them together, just say **the pets** (never "the herd"). **The Friendly Farmer organizes the pets.** **The Farm is the native OS** of Astra's PetOS, the first-party home where the pets live and run; the Farm website is its face. **The Kennel is the community lab**, where other people's pets are built, tried, reviewed and adopted. Each pet grows through three levels of intelligence: program, runtime, agentic harness ([INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md)). The 3D diagram is **Astra's PetOS System Map**, also called the 3D PFD.
 > - 2026-10-12: **The project's title is "Astra's PetOS".** In files, folders, code and identifiers it is written **`ASTRAS_PET_OS`** (ASTRAS with the S, an underscore before PET and before OS), never `ASTRA_PET_OS`, `ASTRA_PETOS` or `PetOS` on its own. This document lives at the top of the repo as `ASTRAS_PET_OS.md` (moved from `docs/architecture/` on 2026-10-12). Where the text below says to display `ASTRAS_PET_OS` as the product name, show "Astra's PetOS" to people instead.
+> - 2026-10-12: **Journal Jay is renamed Journal Jellyfish.** Same job and privacy rules. New seeds: **Photo Dodo** (all saved pictures) and **Video Vulture** (all saved videos). Skill Scout watches the agent and skill files and tracks what changed, who changed it and why.
 > - 2026-10-11: **Passport Panda is renamed Passport Pelican** (Procreate Panda takes the panda). Same job and privacy rules.
 > - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, OSC Sealion (first recorded as PSC Sealion), Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
 
@@ -10,7 +12,7 @@
 **Official first-party ecosystem and user's installed pets:** `astras-farm`  
 **Community discovery, adoption and submissions:** `astras-kennel`  
 **Framework:** Astra Pet SDK / reusable independent pet agent harness  
-**Existing development repository:** https://github.com/findastra/astras-pet-apps  
+**Existing development repository:** https://github.com/findastra/astras-pet-os  
 **Status:** Product architecture including the approved future learning/nomad pet expansion; do not claim components are implemented until repository audit and tests confirm them.
 
 ## Instructions to Desktop Claude — read first
@@ -96,15 +98,15 @@ New approved additions and roles:
 | Cache Coyote | Digital nomad | Offline-first documents, local caches, queued actions and reconnect recovery |
 | Sync Mink | Digital nomad | Cross-device sync, conflict resolution and replication integrity |
 | Passport Pelican | Global mobility | Secure passport/ID metadata, visa/residency research, applications and deadlines |
-| Journal Jay | Digital nomad | Private travel diary, itineraries, memories and optional summaries |
+| Journal Jellyfish | Digital nomad | Private travel diary, itineraries, memories and optional summaries |
 
 **Key boundaries and overlap resolution:** Linux Penguin is explicitly wanted, but the repo may already contain a penguin/Linux concept; audit and reconcile rather than spawn a duplicate. Cache Coyote **replaces Offline Otter**, and Sync Mink **replaces Sync Swallow** in all future planning. Packet Piranha remains the network diagnostics pet (do not create Packet Penguin). File Master continues file/memory organization. Existing Raspberry Pie, Mesh Moth, WiFi Butterfly, Server Salamander, Docker Dragon, Backup Beaver, Gatekeeper Goddess, Queue Quokka, Log Lynx, Token Toucan, Test Tortoise, Browser Bat and Data Dragonfly retain their distinct responsibilities. Data Dragonfly may support CHIP and Data Dealer with project-scoped permissions.
 
 **Cyberdeck target hardware:** Rugged Pelican-case build with Raspberry Pi, Flipper Zero, LoRa HAT, Wi-Fi HAT, physical hardware security key, and expansion for other modules. Preserve offline utility and independent operation when the network, cloud or home PC is unavailable. Security key is for hardware-backed authentication, not a substitute for encrypted storage, backups, and recovery options. Wireless/security tools are for owned or explicitly authorized systems only.
 
-**Global mobility security:** Passport Pelican must encrypt sensitive document data, minimize exposure to agents, require human approval for submissions or account actions, and distinguish verified official immigration requirements from tentative AI research. Avoid storing passport scans in broad shared agent memory. Journal Jay remains separately permissioned and does not automatically share the full diary with Passport Pelican.
+**Global mobility security:** Passport Pelican must encrypt sensitive document data, minimize exposure to agents, require human approval for submissions or account actions, and distinguish verified official immigration requirements from tentative AI research. Avoid storing passport scans in broad shared agent memory. Journal Jellyfish remains separately permissioned and does not automatically share the full diary with Passport Pelican.
 
-**Suggested phased build, not all-at-once:** Linux Penguin + Shell Squid -> Server Salamander/Docker Dragon + Proxy Axolotl -> authorized security lab -> Llama Librarian/Inference Iguana/Agent Ant -> distributed execution -> Cache Coyote/Sync Mink/Roaming Raven -> Passport Pelican/Journal Jay. Add remaining specialist pets as workflows justify them. User choice and modular installation remain mandatory.
+**Suggested phased build, not all-at-once:** Linux Penguin + Shell Squid -> Server Salamander/Docker Dragon + Proxy Axolotl -> authorized security lab -> Llama Librarian/Inference Iguana/Agent Ant -> distributed execution -> Cache Coyote/Sync Mink/Roaming Raven -> Passport Pelican/Journal Jellyfish. Add remaining specialist pets as workflows justify them. User choice and modular installation remain mandatory.
 
 **Additional acceptance demonstrations M–R:**
 
@@ -113,7 +115,7 @@ New approved additions and roles:
 - **O. Security lab:** White Hat Weasel and Port Spider refuse out-of-scope targets and produce useful authorized findings with evidence and remediation.
 - **P. Local inference:** Llama Librarian + Inference Iguana report true model/VRAM/latency metrics and Agent Ant runs repeatable tool-use evaluations.
 - **Q. Cyberdeck offline recovery:** Cache Coyote queues work offline on the Pi, and Sync Mink reconciles it safely after reconnection, with documented conflict behavior.
-- **R. Mobility privacy:** Passport Pelican alerts on synthetic visa/passport deadlines without leaking sensitive records; Journal Jay diary remains private; no immigration application is sent without approval.
+- **R. Mobility privacy:** Passport Pelican alerts on synthetic visa/passport deadlines without leaking sensitive records; Journal Jellyfish diary remains private; no immigration application is sent without approval.
 
 ### Official vs community repositories and versioning
 
@@ -121,7 +123,7 @@ Recommended GitHub organization layout (names proposed; check availability and e
 
 - `findastra/astras-farm` — first-party Farm app/site, official catalog, official pet distribution references.
 - `findastra/astras-kennel` — community catalog, submission workflow, review automation and registry records.
-- Existing `findastra/astras-pet-apps` — preserve as current development repo until audit decides if/how to split; **do not silently rename or replace**.
+- Existing `findastra/astras-pet-os` — preserve as current development repo until audit decides if/how to split; **do not silently rename or replace**.
 - `findastra/astra-pet-sdk` — optional separate SDK repository once shared contracts stabilize.
 - **One independently versioned repository per independently released pet**, when practical; avoid mass repo creation before audit.
 
@@ -163,7 +165,7 @@ Validation milestones: real end-to-end demo; 10–20 external users who install 
 
 ### Immediate repository work requests
 
-- Inspect current `astras-pet-apps` repo and the bundled registry starter.
+- Inspect current `astras-pet-os` repo and the bundled registry starter.
 - Produce a mapping of **actual** vs **proposed** repositories and web pages.
 - Draft initial `astras-farm` and `astras-kennel` repository creation plans, ownership and workflows; do not publish until user approves.
 - Build an initial marketing website information architecture, plus responsive homepage mockup, with Farmer coordinating Browser Bat.
@@ -178,7 +180,7 @@ Validation milestones: real end-to-end demo; 10–20 external users who install 
 # ASTRA'S PET APPS — FINAL CLAUDE HANDOFF
 ## Friendly Farmer, The Farm, Program Manager, and Distributed Pet Agents
 **Version:** 5.0 FINAL | **Date:** October 11, 2026
-**Repository:** https://github.com/findastra/astras-pet-apps
+**Repository:** https://github.com/findastra/astras-pet-os
 **Audience:** Desktop Claude Code, OpenAI Codex, Project Parrot, and authorized contributors
 **Status:** Target architecture; audit actual repository before modifying it.
 
@@ -502,7 +504,7 @@ Mock screens alone do not satisfy acceptance. Provide reproducible test evidence
 
 ## 16. Immediate instruction to Desktop Claude
 
-1. Read this entire document and inspect the real `findastra/astras-pet-apps` checkout.
+1. Read this entire document and inspect the real `findastra/astras-pet-os` checkout.
 2. Read `CLAUDE.md`, `AGENTS.md`, all existing skills and architecture docs.
 3. Audit Cage, Farmer, Project Parrot, desktop Star, Farm UI, pet runtimes, program links and agents. Do not assume prior claims reflect the code.
 4. Produce `AUDIT.md`, `GAP-ANALYSIS.md`, and `PLAN.md` (use repository-consistent paths).

@@ -2,7 +2,7 @@
 // infrastructure in Astra's PetOS, and everything that flows between them.
 // Sources: pets.json (pets, pipeline, seeds, relations) and system-map.json (everything that is not a
 // pet with a repo). Run by npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12.
-import { readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { allPets } from './farmer-rounds-20261009.mjs';
 
 const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -67,14 +67,21 @@ export function systemMapData(registry, extra) {
   return { nodes: [...nodes.values()], links, carries, states, types: extra.types, layers: extra.layers, codeChecked: extra.code?.checked || null };
 }
 
-/** Each pet's idle mood frame, embedded so icons also work when the page is opened by double-click. */
+/** Each pet's idle mood frame, embedded so icons also work when the page is opened by double-click.
+    Pets without registered frames (pipeline pets, seeds) use their small icon in art/icons/,
+    keyed "node:<id>" (make-icons-20261012.mjs). */
 export function petIcons(index) {
-  return Object.fromEntries(Object.entries(index.pets).map(([art, p]) => [art, 'data:image/png;base64,' + readFileSync(p.frames.idle).toString('base64')]));
+  const icons = Object.fromEntries(Object.entries(index.pets).map(([art, p]) => [art, 'data:image/png;base64,' + readFileSync(p.frames.idle).toString('base64')]));
+  if (existsSync('art/icons')) for (const f of readdirSync('art/icons').sort()) {
+    const m = /^(.+)-\d{8}\.png$/.exec(f);
+    if (m) icons['node:' + m[1]] = 'data:image/png;base64,' + readFileSync('art/icons/' + f).toString('base64');
+  }
+  return icons;
 }
 
 export function buildSystemMap(registry, extra, template, icons = {}) {
   const data = systemMapData(registry, extra);
-  for (const n of data.nodes) { n.icon = (n.art && icons[n.art]) || null; delete n.art; }
+  for (const n of data.nodes) { n.icon = (n.art && icons[n.art]) || icons['node:' + n.id] || null; delete n.art; }
   return template.replace('__DATA__', () => JSON.stringify(data).replaceAll('<', '\\u003c'));
 }
 

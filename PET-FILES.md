@@ -149,7 +149,7 @@ Play never changes a pet's mood: moods report the app's state (below), not the g
 
 Saving goes upward: the pet's repo first, then the Farmer, then everything generated ([RELATIONS.md](RELATIONS.md) has the picture).
 
-1. **In the new pet's repo:** `pet.json` (with an `audit` block, below), the `pet-app` topic, README, AGENTS.md and CLAUDE.md. AGENTS.md links this repo (`findastra/astras-pet-apps`) and says changes are submitted to the Farmer.
+1. **In the new pet's repo:** `pet.json` (with an `audit` block, below), the `pet-app` topic, README, AGENTS.md and CLAUDE.md. AGENTS.md links this repo (`findastra/astras-pet-os`) and says changes are submitted to the Farmer.
 2. **The Farmer's daily round finds it** and adds it to `pipeline` in pets.json, so the Cage, the Farmer's desk and Astra's profile know about it the next morning. To do it straight away, add the `pipeline` entry yourself and leave a card `NNN-farmer-register-<repo>.md`.
 3. **Registering it** (moving it from `pipeline` to `pets`) needs its art. Add its prompt to `PETS` in `scripts/generate-pets.mjs`, then ask Astra first: generating costs money. With `asset_date: "20261009"`, its sheet is `art/sheets/<art>-20261009.png` and its frames are `art/frames/<art>/idle-20261009.png`, etc. The entry needs `repo`, `pet`, `role: "pet"`, `kind` (how it moves), `status`, `job`, `art`, `published`, `added` and `audit`.
 4. `npm run build`, `npm run check`, `npm test`.

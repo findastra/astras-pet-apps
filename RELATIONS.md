@@ -38,13 +38,13 @@ Thick arrows work today. Plain arrows are planned (in a plan or a card). Dotted 
 ```mermaid
 flowchart LR
   subgraph Keepers["Keepers"]
-    astras_pet_apps["Friendly Farmer"]
+    astras_pet_os["Friendly Farmer"]
     github_goldfish["GitHub Goldfish"]
     file_master["File Master"]
   end
   subgraph Safety["Safety"]
     api_fairy["API Fairy"]
-    ghost_protocol["Ghost Protocol"]
+    ghost_protocol["Gone Ghost"]
     backup_beaver["Backup Beaver *"]
   end
   subgraph Making["Making"]
@@ -77,15 +77,15 @@ flowchart LR
   mesh_moth["Mesh Moth *"]
   raspberry_berry["Raspberry Pi *"]
   wifi_butterfly["Wifi Butterfly *"]
-  pets ==>|registry| astras_pet_apps
-  astras_pet_apps ==>|status| pets
-  astras_pet_apps ==>|status| astra
-  astras_pet_apps ==>|shipped| profile
-  astras_pet_apps ==>|registry| github_goldfish
-  github_goldfish ==>|findings| astras_pet_apps
-  astras_pet_apps ==>|registry| file_master
-  file_master -->|idea| astras_pet_apps
-  project_parrot -->|idea| astras_pet_apps
+  pets ==>|registry| astras_pet_os
+  astras_pet_os ==>|status| pets
+  astras_pet_os ==>|status| astra
+  astras_pet_os ==>|shipped| profile
+  astras_pet_os ==>|registry| github_goldfish
+  github_goldfish ==>|findings| astras_pet_os
+  astras_pet_os ==>|registry| file_master
+  file_master -->|idea| astras_pet_os
+  project_parrot -->|idea| astras_pet_os
   github_goldfish -.->|findings| vscode_angel
   github_goldfish -.->|findings| ghost_protocol
   api_fairy -.->|keys| ghost_protocol
@@ -93,7 +93,7 @@ flowchart LR
   claude_bot -.->|keys| api_fairy
   data_dealer -.->|keys| api_fairy
   github_goldfish -.->|keys| api_fairy
-  astras_pet_apps -.->|shipped| portfolio_puffer
+  astras_pet_os -.->|shipped| portfolio_puffer
   claude_bot -.->|status| findastra_discord_presence
   mommys -.->|cue| rgbee
   mommys -.->|cue| drum_dog
@@ -139,8 +139,8 @@ flowchart LR
 | File Master | Friendly Farmer | `idea` | planned | New project folders on the PC become candidates. |
 | Project Parrot | Friendly Farmer | `idea` | planned | An idea Astra says yes to becomes a new pet repo. |
 | GitHub Goldfish | VSCode Angel | `findings` | idea | Code findings become worklist items. |
-| GitHub Goldfish | Ghost Protocol | `findings` | idea | A secret found in a repo becomes a checklist step. |
-| API Fairy | Ghost Protocol | `keys` | idea | An old or exposed key becomes a checklist step. |
+| GitHub Goldfish | Gone Ghost | `findings` | idea | A secret found in a repo becomes a checklist step. |
+| API Fairy | Gone Ghost | `keys` | idea | An old or exposed key becomes a checklist step. |
 | RGBee * | API Fairy | `keys` | planned | Cloud light APIs (Govee and others) need keys; API Fairy keeps the notes. |
 | Claude Bot * | API Fairy | `keys` | idea | Quick chat uses an Anthropic key. |
 | Chip | API Fairy | `keys` | idea | Data Dealer uses several service keys. |
@@ -168,4 +168,4 @@ Health Hummy, Finance Finch, Meme Fiend *. These pets' data never leaves the PC.
 
 ### On their own so far
 
-Python Panther, Astra Wisp, Paper Girl, Voicemeeter Bug, Sugarcube *, Patch Cat *, Fuzzboi Friend *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
+Python Panther, Astra Wisp, Patty, Voicemeeter Bug, Sugarcube *, Patch Cat *, Fuzzboi Friend *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.

@@ -447,7 +447,7 @@
       "findings": [],
       "checked": "2026-10-10T05:48:42.552Z"
     },
-    "astras-pet-apps": {
+    "astras-pet-os": {
       "pet": "Friendly Farmer",
       "mood": "sick",
       "says": "Need: a FARMER_TOKEN secret so I can see the private pet repos (10 private: data-dealer, voicemeeter-bug, patch-cat, meme-fiend, astras-gif…",
@@ -474,7 +474,7 @@
   "updated": "2026-10-11T17:41:27.268Z",
   "needs_astra": [
     {
-      "repo": "astras-pet-apps",
+      "repo": "astras-pet-os",
       "pet": "Friendly Farmer",
       "need": "a FARMER_TOKEN secret so I can see the private pet repos (10 private: data-dealer, voicemeeter-bug, patch-cat, meme-fiend, astras-gif-maker, backup-beaver, rift-rabbit, wifi-butterfly, mesh-moth, raspberry-berry)"
     },

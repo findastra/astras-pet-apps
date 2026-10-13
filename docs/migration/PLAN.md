@@ -11,7 +11,7 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 - Ask Astra first for: new GitHub repos, publishing anything, accounts or paid services
   (including a private-network service such as Tailscale), installing software, transferring
   repos, deleting or force-pushing, and paid art generation.
-- `astras-pet-apps` stays the development repo. It is not renamed or replaced until Astra
+- `astras-pet-os` (renamed from `astras-pet-apps` by Astra on 2026-10-12) stays the development repo. It is not renamed or replaced until Astra
   decides how to split it.
 - Existing pet code, names and art are kept. Nothing is deleted because a list was incomplete.
 - Status shown anywhere must be true: unknown and stale are shown as unknown and stale.
@@ -40,7 +40,7 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 
 | Repo | Today | Proposed |
 |---|---|---|
-| `findastra/astras-pet-apps` | Development hub, public | Stays the development repo during migration |
+| `findastra/astras-pet-os` | Development hub, public | Stays the development repo during migration |
 | `findastra/astras-farm` | Does not exist | First-party Farm app/site and official catalog. Create after the first slice works, with Astra's OK |
 | `findastra/astras-kennel` | Does not exist | Community catalog from the registry starter (renamed from `astra-pet-registry`). Create when there is a submission flow to test |
 | `findastra/astra-pet-sdk` | Does not exist | Split out once contracts stop changing; until then `contracts/` and `sdk/` live in the hub |
@@ -145,6 +145,6 @@ Status today: **not started** for every row.
 | O | White Hat Weasel and Port Spider refuse out-of-scope targets; useful findings in scope | Scope tests on owned lab hosts only | 8 |
 | P | Llama Librarian and Inference Iguana report real model, VRAM and latency; Agent Ant repeatable evals | Benchmarks on Astra's GPU | 8 |
 | Q | Cache Coyote queues work offline on the Pi; Sync Mink reconciles after reconnect | Offline/online test with conflicts | 8 |
-| R | Passport Pelican alerts on synthetic deadlines without leaking; Journal Jay stays private; nothing submitted without approval | Synthetic data only | 8 |
+| R | Passport Pelican alerts on synthetic deadlines without leaking; Journal Jellyfish stays private; nothing submitted without approval | Synthetic data only | 8 |
 
 The 64 existing tests keep running as regression throughout.

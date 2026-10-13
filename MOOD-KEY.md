@@ -22,7 +22,7 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 
 | Pet | Checks | How often | When it is sick it needs |
 |---|---|---|---|
-| **Friendly Farmer** | the Cage and the pet registry | daily | a FARMER_TOKEN secret so I can see the private pet repos |
+| **Friendly Farmer** | the pet registry and the System Map | daily | a FARMER_TOKEN secret so I can see the private pet repos |
 | **GitHub Goldfish** | the findastra GitHub account | weekly, Monday | a GitHub token that can read the private repos |
 | **Chip** | Data Dealer's repo | weekly, Tuesday | your answer to a decision on the ops dashboard |
 | **API Fairy** | the notes about your API keys | weekly, Wednesday | a key renewed or a note confirmed |
@@ -32,13 +32,13 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 | **Health Hummy** | my own files (never your check-ins) | weekly, Sunday | a check-in only you can make |
 | **Finance Finch** | my own files (never your entries) | weekly, Monday | an entry only you can add |
 | **Mommy's Mommies** | Mommy's classes and events | weekly, Tuesday | a date or teacher confirmed for a session |
-| **Paper Girl** | the science desk and its live site | weekly, Wednesday | a look at the live site |
+| **Patty** | the science desk and its live site | weekly, Wednesday | a look at the live site |
 | **File Master** | your PC's folders and projects | weekly, Thursday | the scanner run on your PC |
 | **Discord Damsel** | the OpenAI and Anthropic presence apps | weekly, Friday | Discord open with activity sharing on |
 | **Portfolio Puffer** | your updates worth sharing | weekly, Saturday | a drafted update approved or posted |
 | **Drum Dog** | your track ideas and samples | weekly, Sunday | a sample permission confirmed |
 | **VSCode Angel** | your code cleanup worklist | weekly, Monday | a finding reviewed |
-| **Ghost Protocol** | your security checklist | weekly, Tuesday | a security step only you can do |
+| **Gone Ghost** | your security checklist | weekly, Tuesday | a security step only you can do |
 | **Project Parrot** | your project ideas | weekly, Wednesday | a yes or no on an idea that is due |
 | **Voicemeeter Bug** | your Voicemeeter audio | weekly, Thursday | the Bug running on your PC |
 | **Sugarcube** * | Spoonfed’s restaurant discovery, saved spots, and sample-data labels | weekly, Friday | review of Sugarcube draft artwork and a live restaurant provider before real recommendations |

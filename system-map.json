@@ -16,7 +16,8 @@
     "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
     "model": "AI model",
     "infrastructure": "Infrastructure",
-    "program": "Program, site or world",
+    "own-program": "Program made by Astra",
+    "program": "Program made by others",
     "host-machine": "Device",
     "harness": "AI harness",
     "assistant": "AI assistant (builds the pets)"
@@ -66,7 +67,7 @@
     },
     {
       "id": "desktop-host",
-      "name": "Desktop host and tray Star",
+      "name": "Startup Star (desktop host)",
       "type": "infrastructure",
       "state": "now",
       "job": "The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
@@ -99,7 +100,7 @@
     {
       "id": "profile",
       "name": "GitHub profile",
-      "type": "program",
+      "type": "own-program",
       "state": "now",
       "job": "findastra/findastra: the profile README the Farmer's profile round keeps matched to the repos.",
       "layer": 6,
@@ -108,7 +109,7 @@
     {
       "id": "openai-discord-presence",
       "name": "OpenAI Discord Presence",
-      "type": "program",
+      "type": "own-program",
       "state": "now",
       "job": "Windows app that shows Codex activity on Astra's Discord profile. One of Discord Damsel's programs.",
       "layer": 6,
@@ -117,7 +118,7 @@
     {
       "id": "anthropic-discord-presence",
       "name": "Anthropic Discord Presence",
-      "type": "program",
+      "type": "own-program",
       "state": "now",
       "job": "Windows app that shows Claude activity on Astra's Discord profile. One of Discord Damsel's programs.",
       "layer": 6,
@@ -153,7 +154,7 @@
     {
       "id": "infinite-pole-world",
       "name": "Astra's Infinite Pole (world)",
-      "type": "program",
+      "type": "own-program",
       "state": "now",
       "job": "Astra's VRChat world (findastra/astras-infinite-pole). Pole Puff manages it.",
       "layer": 6,
@@ -162,7 +163,7 @@
     {
       "id": "piranesi-house-world",
       "name": "Piranesi House (world)",
-      "type": "program",
+      "type": "own-program",
       "state": "now",
       "job": "Astra's Piranesi-inspired VRChat world (findastra/piranesi-house). Piranesi Nessi manages it.",
       "layer": 6,
@@ -410,8 +411,8 @@
       "layer": 4
     },
     {
-      "id": "journal-jay",
-      "name": "Journal Jay",
+      "id": "journal-jellyfish",
+      "name": "Journal Jellyfish",
       "type": "roadmap",
       "state": "planned",
       "job": "Private travel diary and itineraries.",
@@ -431,7 +432,7 @@
       "type": "infrastructure",
       "state": "now",
       "layer": 2,
-      "job": "The authoritative list of every pet, its jobs, status and links. Today this is pets.json in astras-pet-apps, kept by the Farmer's daily round."
+      "job": "The authoritative list of every pet, its jobs, status and links. Today this is pets.json in astras-pet-os, kept by the Farmer's daily round."
     },
     {
       "id": "discord",
@@ -897,32 +898,131 @@
       "layer": 6,
       "category": "Desktop app",
       "job": "Malware scanning. Installed."
+    },
+    {
+      "id": "the-barn",
+      "name": "The Barn",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "The Friendly Farmer’s desk inside the Farm: every pet’s status, follow-ups and what needs Astra, with his daily rounds and this System Map. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "key-ring",
+      "name": "Key Ring",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "API Fairy’s Windows app: the key scanner and dashboard. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "ai-astra",
+      "name": "AI Astra",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "VRChat AI Astra: her desktop app and the bridge into the VRChat chatbox. Astra Wisp watches her health."
+    },
+    {
+      "id": "data-dealer-project",
+      "name": "Data Dealer",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Astra’s large data project: its dashboard and site. Chip reports its health."
+    },
+    {
+      "id": "file-kingdom",
+      "name": "File Kingdom",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "File Master’s scanner, plan and undo tools. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "unity-stable",
+      "name": "Unity Stable",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Unity Unicorn’s tool library and editor tools for avatars and worlds. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "audio-rescue",
+      "name": "Audio Rescue",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Voicemeeter Bug’s Windows app: asks Voicemeeter to restart its audio engine when a device reconnects. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+    },
+    {
+      "id": "paper-girl-site",
+      "name": "Paper Girl",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "The free science discovery website (findastra.github.io/paper-girl), run by Patty."
+    },
+    {
+      "id": "ghost-protocol-site",
+      "name": "Ghost Protocol",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "The public cybersecurity website (findastra.github.io/ghost-protocol), watched by Gone Ghost."
+    },
+    {
+      "id": "gif-maker",
+      "name": "Astra’s GIF Maker",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Makes GIFs in the browser. Gif Giraffe’s program."
+    },
+    {
+      "id": "spoonfed-app",
+      "name": "Spoonfed",
+      "type": "own-program",
+      "state": "now",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Restaurant-discovery app for iOS, Android and web (on a rescue branch until merged). Sugarcube’s program."
     }
   ],
   "links": [
     {
       "from": "openai",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "art",
       "state": "now",
       "why": "Every pet's mood sheet is generated with OpenAI image generation through the image bridge, billed to Astra's OpenAI account (scripts/generate-pets.mjs)."
     },
     {
       "from": "codex",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "builds",
       "state": "now",
       "why": "Codex picks up handoff cards and builds or changes pets on branches; its work is recorded in AGENTS.md."
     },
     {
       "from": "claude-code",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "builds",
       "state": "now",
       "why": "Claude accounts pick up handoff cards and build or change pets on branches; their work is recorded in AGENTS.md."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "desktop-host",
       "carries": "registry",
       "state": "now",
@@ -1034,7 +1134,7 @@
       "why": "Mommy's Mommies lists a calendar connection as planned; Calendar Crow is the calendar pet in the roadmap."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "farm",
       "carries": "status",
       "state": "architecture",
@@ -1077,13 +1177,13 @@
     },
     {
       "from": "kennel",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "registry",
       "state": "architecture",
       "why": "A Kennel pet moves to the official Farm only with consent, provenance and security checks."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "program-manager",
       "carries": "registry",
       "state": "architecture",
@@ -1118,7 +1218,7 @@
       "why": "Pet agents call local models through the harness."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "agent-harness",
       "carries": "model",
       "state": "architecture",
@@ -1182,14 +1282,14 @@
     },
     {
       "from": "test-tortoise",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "findings",
       "state": "architecture",
       "why": "Tests every new pet before it is registered."
     },
     {
       "from": "gatekeeper-goddess",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "findings",
       "state": "architecture",
       "why": "Permission review before a new pet is registered."
@@ -1203,7 +1303,7 @@
     },
     {
       "from": "browser-bat",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "findings",
       "state": "architecture",
       "why": "Website QA and publishing for the Farmer."
@@ -1245,7 +1345,7 @@
     },
     {
       "from": "queue-quokka",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "findings",
       "state": "architecture",
       "why": "Stalled jobs and handoffs."
@@ -1336,20 +1436,20 @@
     },
     {
       "from": "project-parrot",
-      "to": "astras-pet-apps",
+      "to": "astras-pet-os",
       "carries": "idea",
       "state": "architecture",
       "why": "The Farmer coordinates pet incubation with Project Parrot."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "@seeds",
       "carries": "registry",
       "state": "architecture",
       "why": "The Farmer incubates every seed: requirements, scaffold, tests, approval, registration (ASTRAS_PET_OS, Farmer grows new pets)."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "@roadmap",
       "carries": "registry",
       "state": "architecture",
@@ -1468,7 +1568,7 @@
       "why": "Every pet agent runs on the shared harness: models, tools, skills, memory and permission checks."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "pet-directory",
       "carries": "registry",
       "state": "now",
@@ -1510,7 +1610,7 @@
       "why": "Discord Damsel's server and DM cleanup and future Discord tools (Astra, 2026-10-11)."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "github",
       "carries": "runs-on",
       "state": "now",
@@ -1986,49 +2086,49 @@
       "why": "VSCode Angel’s editor connections could include Visual Studio."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "obs-studio",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "tiktok-live-studio",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "tikfinity",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after streaming yet. The Farmer incubates new pets; a streaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "steam",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "epic-games",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "overwolf",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after PC games yet. The Farmer incubates new pets; a gaming pet would own these."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "wallpaper-engine",
       "carries": "manages",
       "state": "suggested",
@@ -2287,11 +2387,144 @@
       "why": "Installed on the Desktop PC (scan of 2026-10-12)."
     },
     {
-      "from": "astras-pet-apps",
+      "from": "astras-pet-os",
       "to": "canva",
       "carries": "manages",
       "state": "suggested",
       "why": "No pet looks after design and streaming tools yet. The Farmer incubates new pets; a streaming pet would own these. (Meme Fiend is private, so it does not connect out.)"
+    },
+    {
+      "from": "astras-pet-os",
+      "to": "the-barn",
+      "carries": "opens",
+      "state": "now",
+      "why": "The Barn is this pet’s own program."
+    },
+    {
+      "from": "api-fairy",
+      "to": "key-ring",
+      "carries": "opens",
+      "state": "now",
+      "why": "Key Ring is this pet’s own program."
+    },
+    {
+      "from": "key-ring",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC."
+    },
+    {
+      "from": "vrchat-ai-astra",
+      "to": "ai-astra",
+      "carries": "opens",
+      "state": "now",
+      "why": "AI Astra is this pet’s own program."
+    },
+    {
+      "from": "ai-astra",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC."
+    },
+    {
+      "from": "data-dealer",
+      "to": "data-dealer-project",
+      "carries": "opens",
+      "state": "now",
+      "why": "Data Dealer is this pet’s own program."
+    },
+    {
+      "from": "file-master",
+      "to": "file-kingdom",
+      "carries": "opens",
+      "state": "now",
+      "why": "File Kingdom is this pet’s own program."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC."
+    },
+    {
+      "from": "unity-unicorn",
+      "to": "unity-stable",
+      "carries": "opens",
+      "state": "now",
+      "why": "Unity Stable is this pet’s own program."
+    },
+    {
+      "from": "unity-stable",
+      "to": "unity-editor",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "The tools run inside the Unity editor."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "audio-rescue",
+      "carries": "opens",
+      "state": "now",
+      "why": "Audio Rescue is this pet’s own program."
+    },
+    {
+      "from": "audio-rescue",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Installed on the Desktop PC."
+    },
+    {
+      "from": "paper-girl",
+      "to": "paper-girl-site",
+      "carries": "opens",
+      "state": "now",
+      "why": "Paper Girl is this pet’s own program."
+    },
+    {
+      "from": "paper-girl-site",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Published on GitHub Pages."
+    },
+    {
+      "from": "ghost-protocol",
+      "to": "ghost-protocol-site",
+      "carries": "opens",
+      "state": "now",
+      "why": "Ghost Protocol is this pet’s own program."
+    },
+    {
+      "from": "ghost-protocol-site",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Published on GitHub Pages."
+    },
+    {
+      "from": "astras-gif-maker",
+      "to": "gif-maker",
+      "carries": "opens",
+      "state": "now",
+      "why": "Astra’s GIF Maker is this pet’s own program."
+    },
+    {
+      "from": "spoonfed",
+      "to": "spoonfed-app",
+      "carries": "opens",
+      "state": "now",
+      "why": "Spoonfed is this pet’s own program."
+    },
+    {
+      "from": "audio-rescue",
+      "to": "voicemeeter",
+      "carries": "opens",
+      "state": "now",
+      "why": "Asks Voicemeeter to restart its audio engine."
     }
   ],
   "layers": {
@@ -2321,7 +2554,7 @@
     },
     "6": {
       "name": "Real programs and integrations",
-      "detail": "Desktop apps, websites, local files, data sources, cloud services, hardware and devices, and APIs."
+      "detail": "Real programs: the ones Astra made sit on their own inner shell (pink cubes), the ones made by others on the shell just outside (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
     }
   },
   "type_layers": {
@@ -2333,7 +2566,8 @@
     "roadmap": 4,
     "model": 5,
     "harness": 5,
-    "assistant": 0
+    "assistant": 0,
+    "own-program": 6
   },
   "code": {
     "about": "Languages in each pet's repo, measured by file size like GitHub's language bar, on 2026-10-12 from the main branch, with why each pet uses each one. Re-measure when a repo changes.",
@@ -2396,7 +2630,7 @@
           }
         ]
       },
-      "astras-pet-apps": {
+      "astras-pet-os": {
         "languages": [
           {
             "language": "HTML",

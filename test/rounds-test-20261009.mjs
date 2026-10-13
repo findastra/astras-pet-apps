@@ -65,9 +65,9 @@ test('a card waiting on Astra makes a pet sick and says what it needs', () => {
   assert.equal(r.says, 'Need: the brand and model of each light');
 });
 
-test('a pet that does not point at the Cage is told to, and a job drift without a submission is flagged', () => {
+test('a pet that does not point at the hub is told to, and a job drift without a submission is flagged', () => {
   const r = auditPet(registry, pet(), goodSnap({ agents: 'Rules only.' }));
-  assert.ok(r.findings.some((f) => /does not point at the Cage/.test(f.msg)));
+  assert.ok(r.findings.some((f) => /does not point at the hub/.test(f.msg)));
   const d = auditPet(registry, pet({ job: 'Old job.' }), goodSnap());
   assert.ok(d.findings.some((f) => /describes my job differently/.test(f.msg) && f.sev === 'note'));
 });
@@ -138,9 +138,9 @@ test('a whole round, against a pretend GitHub', async () => {
   const report = await runRound({ registry: r, status, github, token: null, ownerToken: null, now: new Date('2026-10-10T13:00:00Z'), log: () => {}, all: true });
   assert.deepEqual(report.discovered, ['new-newt']);
   assert.ok(report.unreadable.includes('data-dealer'), 'private pets are unreadable without FARMER_TOKEN');
-  assert.equal(status.pets['astras-pet-apps'].mood, 'sick');
+  assert.equal(status.pets['astras-pet-os'].mood, 'sick');
   assert.equal(status.pets['data-dealer'].mood, 'sleep');
-  assert.ok(status.needs_astra.some((n) => n.repo === 'astras-pet-apps'));
+  assert.ok(status.needs_astra.some((n) => n.repo === 'astras-pet-os'));
   assert.ok(['happy', 'sick', 'worried'].includes(status.pets['github-goldfish'].mood));
 });
 
@@ -170,7 +170,7 @@ const profile = `<h2 align="center">Hi</h2>
 
 ### Astra's Pet Apps
 
-1. [\`astras-pet-apps\`](https://github.com/findastra/astras-pet-apps) -- **Friendly Farmer** · her blurb
+1. [\`astras-pet-os\`](https://github.com/findastra/astras-pet-os) -- **Friendly Farmer** · her blurb
 
 ### Web & More
 
@@ -178,11 +178,11 @@ const profile = `<h2 align="center">Hi</h2>
 - \`secret\` *(private)* -- private thing
 - [\`rgbee\`](https://github.com/findastra/rgbee) -- in the wrong place
 `;
-const online = (extra = []) => [...['astras-infinite-pole', 'astras-pet-apps', 'rgbee', 'claude-bot', 'findastra'].map((name) => ({ name, private: false, description: '' })), ...extra];
+const online = (extra = []) => [...['astras-infinite-pole', 'astras-pet-os', 'rgbee', 'claude-bot', 'findastra'].map((name) => ({ name, private: false, description: '' })), ...extra];
 
 test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dropped, new repos sorted', () => {
   const { text, changes } = syncProfile(profile, registry, online([{ name: 'detour-into-vr', private: false, description: 'Takes detours into VR.' }, { name: 'tool-x', private: false, description: 'A small tool.' }]));
-  assert.match(text, /^1\. \[`astras-pet-apps`\].* -- \*\*Friendly Farmer\*\* · her blurb$/m, 'her blurb is kept');
+  assert.match(text, /^1\. \[`astras-pet-os`\].* -- \*\*Friendly Farmer\*\* · her blurb$/m, 'her blurb is kept');
   assert.match(text, /- \[`astras-infinite-pole`\].* -- Astra's own words/);
   assert.ok(!/gone-repo/.test(text), 'a deleted repo is dropped');
   assert.match(text, /`secret` \*\(private\)\*/, 'a private line is kept');

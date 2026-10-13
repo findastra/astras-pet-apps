@@ -12,12 +12,12 @@ Same card format as `findastra/data-dealer` (`skills/handoff/SKILL.md` there).
 ## When Astra's request is unclear or sounds like an assignment
 Check GitHub **before** asking her:
 1. List `findastra` repos. Look for the name, pet or person she used (pet names are in
-   `findastra/astras-pet-apps/pets.json`; the **Friendly Farmer** is the Cage's host, so
-   "tell the farmer" means a card in `astras-pet-apps/handoffs/`).
+   `findastra/astras-pet-os/pets.json`; the **Friendly Farmer** is the Cage's host, so
+   "tell the farmer" means a card in `astras-pet-os/handoffs/`).
 2. Read `handoffs/README.md` in the likely repos and any card that is `open` and `for:` you
    or `any`.
 3. Read, in full, that repo's `AGENTS.md`, `CLAUDE.md` and every `SKILL.md` (on every branch),
-   plus everything in the "Before any work" list in `astras-pet-apps/AGENTS.md`. Never skim.
+   plus everything in the "Before any work" list in `astras-pet-os/AGENTS.md`. Never skim.
 Ask Astra only what the repos do not answer, and say what you already found.
 
 ## Card format: `handoffs/NNN-short-name.md`
@@ -47,8 +47,8 @@ Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 
 ## Hatching or changing a pet
 - A new pet repo needs `pet.json` with an `audit` block, the `pet-app` topic, and an AGENTS.md that links
-  `findastra/astras-pet-apps` and its PET-FILES.md. The Farmer's daily round finds it and adds it to the
-  pipeline; leave a `farmer-register-<repo>` card in `astras-pet-apps/handoffs/` too.
+  `findastra/astras-pet-os` and its PET-FILES.md. The Farmer's daily round finds it and adds it to the
+  pipeline; leave a `farmer-register-<repo>` card in `astras-pet-os/handoffs/` too.
 - Changing a pet's name, job, status, bubble lines (`says`), mood lines (`moods`) or audit: also put the change in
   `cage.submit` in its pet.json with today's date, so the Farmer picks it up. See PET-FILES.md, "Submitting a
   change to the Farmer".

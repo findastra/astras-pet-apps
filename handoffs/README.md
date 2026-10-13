@@ -4,7 +4,7 @@ Task cards for whichever assistant picks them up. Format and rules:
 [skills/handoff/SKILL.md](../skills/handoff/SKILL.md). Every card has a `## What I did` section
 that lists explicitly what was changed, where, and what is not done.
 
-To start: "Take the next open card for <you | any> in findastra/astras-pet-apps."
+To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |

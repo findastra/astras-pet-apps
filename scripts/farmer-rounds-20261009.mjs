@@ -11,7 +11,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 
 export const OWNER = 'findastra';
-export const CAGE = 'astras-pet-apps';
+export const CAGE = 'astras-pet-os'; // renamed from astras-pet-apps by Astra, 2026-10-12
 export const ORDER = ['sleep', 'idle', 'blink', 'curious', 'happy', 'worried', 'alarmed', 'sick', 'sad'];
 export const MOODS = ['idle', 'blink', 'happy', 'curious', 'worried', 'sad', 'sick', 'alarmed', 'sleep'];
 export const STATUSES = ['hatching', 'growing', 'grown'];
@@ -115,7 +115,7 @@ export function auditPet(registry, pet, snap) {
     if (!/^#+ .*(limit|not done)/im.test(readme)) f('warn', 'README has no "Limits" section.', 'my README needs "Limits"');
   }
   if (!has('AGENTS.md')) f('warn', 'No AGENTS.md, so assistants have no rules for me.', 'add AGENTS.md');
-  else if (snap.agents != null && !/astras-pet-apps/.test(snap.agents)) f('warn', 'AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.', 'my AGENTS.md should point at the Cage');
+  else if (snap.agents != null && !/astras-pet-(apps|os)/.test(snap.agents)) f('warn', 'AGENTS.md does not point at the hub (astras-pet-os), so I do not know how to submit changes to the Farmer.', 'my AGENTS.md should point at the Cage');
   if (!has('CLAUDE.md')) f('note', 'No CLAUDE.md.', 'add CLAUDE.md');
   if (!snap.private && !has('LICENSE')) f('warn', 'No LICENSE.', 'add a LICENSE');
   if (!snap.private && Array.isArray(snap.topics) && !snap.topics.includes('pet-app')) f('warn', 'Missing the pet-app topic, so the Cage and the Goldfish cannot find me by topic.', 'add the pet-app topic');

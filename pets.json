@@ -1,5 +1,5 @@
 {
-  "cage": "astras-pet-apps",
+  "cage": "astras-pet-os",
   "owner": "Astra",
   "topic": "pet-app",
   "updated": "2026-10-11",
@@ -191,34 +191,34 @@
     "links": [
       {
         "from": "pets",
-        "to": "astras-pet-apps",
+        "to": "astras-pet-os",
         "carries": "registry",
         "state": "now",
         "why": "Every pet submits changes to its name, job, status, moods and lines through its own pet.json; the Farmer's daily round takes them."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "pets",
         "carries": "status",
         "state": "now",
         "why": "The daily round runs each pet's self-audit on its day and writes its mood and bubble."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "astra",
         "carries": "status",
         "state": "now",
         "why": "Every sick pet's need is listed on the Farmer's desk under Needs you."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "profile",
         "carries": "shipped",
         "state": "now",
         "why": "The profile round keeps findastra/findastra matched to the repos on GitHub."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "github-goldfish",
         "carries": "registry",
         "state": "now",
@@ -226,13 +226,13 @@
       },
       {
         "from": "github-goldfish",
-        "to": "astras-pet-apps",
+        "to": "astras-pet-os",
         "carries": "findings",
         "state": "now",
         "why": "Account-wide problems go to the Farmer as cards."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "file-master",
         "carries": "registry",
         "state": "now",
@@ -240,14 +240,14 @@
       },
       {
         "from": "file-master",
-        "to": "astras-pet-apps",
+        "to": "astras-pet-os",
         "carries": "idea",
         "state": "planned",
         "why": "New project folders on the PC become candidates."
       },
       {
         "from": "project-parrot",
-        "to": "astras-pet-apps",
+        "to": "astras-pet-os",
         "carries": "idea",
         "state": "planned",
         "why": "An idea Astra says yes to becomes a new pet repo."
@@ -302,7 +302,7 @@
         "why": "The Goldfish uses a GitHub token."
       },
       {
-        "from": "astras-pet-apps",
+        "from": "astras-pet-os",
         "to": "portfolio-puffer",
         "carries": "shipped",
         "state": "idea",
@@ -422,7 +422,7 @@
     "private_rule": "These pets' data never leaves the PC. Other pets do not read from them, and the self-audit checks only their repo files.",
     "groups": {
       "Keepers": [
-        "astras-pet-apps",
+        "astras-pet-os",
         "github-goldfish",
         "file-master"
       ],
@@ -456,7 +456,7 @@
   },
   "pets": [
     {
-      "repo": "astras-pet-apps",
+      "repo": "astras-pet-os",
       "pet": "Friendly Farmer",
       "role": "host",
       "art": "farmer",
@@ -465,14 +465,14 @@
       "status": "growing",
       "published": true,
       "visibility": "public",
-      "job": "Hosts the Cage and opens or closes its door. The Farmer’s desk opens all apps and keeps a personal follow-up list.",
+      "job": "Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra. The Farmer’s desk opens every app. He will run the Farm, the native OS of Astra’s PetOS.",
       "added": "2026-10-07",
       "note": "DRAFT. Repaired faces, visible blond hair and a different fruit or vegetable in each mood, requested by Astra on 2026-10-08. Original lime overalls, coral shirt and straw hat retained.",
       "interface_local_url": "apps/astras-pet-apps-20261008.html",
       "interface_url": "apps/astras-pet-apps-20261008.html",
       "audit": {
         "cadence": "daily",
-        "subject": "the Cage and the pet registry",
+        "subject": "the pet registry and the System Map",
         "needs": "a FARMER_TOKEN secret so I can see the private pet repos"
       }
     },
@@ -508,7 +508,7 @@
       "status": "hatching",
       "published": true,
       "visibility": "private",
-      "job": "Data Dealer's pet.",
+      "job": "Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her.",
       "added": "2026-10-07",
       "note": "Original Data Dealer drawing code, preserved at integer scale inside its yellow pocket launcher. Uses the exact original LCD palette and pixel geometry. The original app repository is private.",
       "interface_local_url": "apps/data-dealer-20261008.html",
@@ -530,7 +530,7 @@
       "kind": "fairy",
       "status": "growing",
       "published": true,
-      "job": "Lives in the corner of the Windows desktop and keeps notes about your API keys, never the keys themselves.",
+      "job": "Keeps notes about your API keys, never the keys themselves: where each lives and what uses it, which keys have gone stale, and which new keys to get. Lives in the corner of the Windows desktop.",
       "added": "2026-10-07",
       "note": "Redrawn in the Cage style from her 32x24 LCD original (pink hair, mint wings).",
       "interface_local_url": "apps/api-fairy-20261008.html",
@@ -595,7 +595,7 @@
       "kind": "sprite",
       "status": "hatching",
       "published": true,
-      "job": "Represents VRChat AI Astra, the planned bridge that brings Astra into VRChat. Its pet-app integration remains unfinished.",
+      "job": "Watches the health of VRChat AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session.",
       "added": "2026-10-07",
       "note": "DRAFT. The name Wisp is a placeholder.",
       "interface_local_url": "apps/vrchat-ai-astra-20261008.html",
@@ -617,7 +617,7 @@
       "kind": "bird",
       "status": "hatching",
       "published": true,
-      "job": "Personal health tracker. Your data stays on your PC and is never committed.",
+      "job": "Personal health tracker: weight lifting by body group and sets, cardio, and pole plans. Your data stays on your PC and is never committed.",
       "added": "2026-10-07",
       "note": "DRAFT as a hummingbird (a guess from the name).",
       "interface_local_url": "apps/health-hummy-20261008.html",
@@ -639,7 +639,7 @@
       "kind": "bird",
       "status": "hatching",
       "published": true,
-      "job": "Personal finance tracker. A yellow canary. Your data stays on your PC and is never committed.",
+      "job": "Personal finance tracker across your bank, savings and investment accounts. It reads balances and never moves money. A yellow canary. Your data stays on your PC and is never committed.",
       "added": "2026-10-07",
       "interface_local_url": "apps/finance-finch-20261008.html",
       "interface_url": "apps/finance-finch-20261008.html",
@@ -692,13 +692,13 @@
     },
     {
       "repo": "paper-girl",
-      "pet": "Paper Girl",
+      "pet": "Patty",
       "role": "pet",
       "art": "paper-girl",
       "kind": "human",
       "status": "growing",
       "published": true,
-      "job": "A free science discovery desk: real research, publisher explanations and fresh articles.",
+      "job": "Runs Paper Girl, a free science discovery desk: real research, publisher explanations and fresh articles.",
       "added": "2026-10-07",
       "note": "DRAFT. Dark mauve and pink from the site, a folded paper hat, a rolled paper.",
       "interface_local_url": "apps/paper-girl-20261008.html",
@@ -721,7 +721,7 @@
       "kind": "tech",
       "status": "growing",
       "published": true,
-      "job": "Reviews a Windows PC and prepares cleanup plans with undo. Its web app imports a plan for review; original scripts run changes separately.",
+      "job": "Organizes your files and finds systemic errors. Shows every mass change before making it, with undo. Opens or edits programs only after Test Tortoise tests the change and Gatekeeper Goddess and Astra approve it (planned).",
       "added": "2026-10-07",
       "note": "DRAFT as a manila folder.",
       "interface_local_url": "apps/file-master-20261008.html",
@@ -787,7 +787,7 @@
       "kind": "dog",
       "status": "hatching",
       "published": true,
-      "job": "Keeps track ideas, sample references, permissions and session notes locally. Ableton Live connections are planned.",
+      "job": "Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted. Ableton Live connections are planned.",
       "added": "2026-10-08",
       "note": "DRAFT. A local music-project notebook is available. It does not connect to Ableton Live or acquire samples.",
       "interface_local_url": "apps/drum-dog-20261008.html",
@@ -825,14 +825,14 @@
     },
     {
       "repo": "ghost-protocol",
-      "pet": "Ghost Protocol",
+      "pet": "Gone Ghost",
       "role": "pet",
       "art": "ghost-protocol",
       "kind": "ghost",
       "asset_date": "20261008",
       "status": "hatching",
       "published": true,
-      "job": "A personal cybersecurity checklist for reviewing your own security habits and tracking the steps you complete.",
+      "job": "Watches the public Ghost Protocol website and checks Astra’s own security against its research: a personal cybersecurity checklist and the steps she has completed.",
       "added": "2026-10-08",
       "note": "Art approved by Astra on 2026-10-08. A pale mint ghost with bright teal inner folds. Its checklist is live; the Cage character is not connected to checklist progress or security monitoring.",
       "interface_local_url": "apps/ghost-protocol-20261008.html",
@@ -914,7 +914,7 @@
       "pet": "Claude Bot",
       "visibility": "public",
       "status": "hatching",
-      "job": "A small floating Claude control on the Windows desktop: an orange face, a status bubble and a quick-chat box.",
+      "job": "Claude’s twin of ChatGPT’s BSOD desktop pet, in looks and in function: an orange face on the Windows desktop that shows Claude’s live status in a bubble and opens quick chat.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -942,7 +942,7 @@
       "pet": "Mine Mole",
       "visibility": "public",
       "status": "hatching",
-      "job": "Researching whether mining crypto on Astra's own PC is worth the power.",
+      "job": "Manages the cryptocurrency mining program on Astra’s PC and checks whether mining is worth the power.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -955,7 +955,7 @@
       "pet": "Mail Snail",
       "visibility": "public",
       "status": "hatching",
-      "job": "Placeholder: a mail pet. The job is not decided yet, and it connects to no mail account.",
+      "job": "Organizes your mail: sorts it, cleans it up and deletes what you no longer need, always with your OK first. Connects to no mail account yet.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -982,7 +982,7 @@
       "pet": "Meme Fiend",
       "visibility": "private",
       "status": "hatching",
-      "job": "Meme saver and maker. Your memes stay on your PC.",
+      "job": "Archives your favourite memes, especially from Discord, and will run a tool for making your own (not built yet). Your memes stay on your PC.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1009,7 +1009,7 @@
       "pet": "Backup Beaver",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder: a backup pet. The job is not decided yet.",
+      "job": "Like API Fairy for backups: keeps track of when the last backup ran, where it is, and how to get to it.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1035,7 +1035,7 @@
       "pet": "Fuzzboi Friend",
       "visibility": "public",
       "status": "hatching",
-      "job": "Makes your own Fuzzboi: type a six-digit hex code and get that exact Fuzzboi as a PNG.",
+      "job": "Makes your own Fuzzboi from a six-digit hex code, and shows the health of your website with his mood. Mostly for fun: swap his look any time.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1062,7 +1062,7 @@
       "pet": "Deck Duck",
       "visibility": "public",
       "status": "hatching",
-      "job": "Placeholder: an Elgato Stream Deck inspired pet. The job is not decided yet.",
+      "job": "Helps you manage your Elgato Stream Deck: what every button does, on every profile.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1075,7 +1075,7 @@
       "pet": "Mesh Moth",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder for a pet that stands for a Meshtastic node: it will show the node's place in a radio mesh.",
+      "job": "Manages Astra’s Meshtastic node: its place in the radio mesh, its health and its messages.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1123,12 +1123,13 @@
       {
         "pet": "Skill Scout",
         "repo": null,
-        "job": "undecided"
+        "job": "Watches the agent and skill files (AGENTS.md, CLAUDE.md, SKILL.md) for every AI assistant and model, and tracks what changed, who changed it and why.",
+        "note": "Job and look decided by Astra on 2026-10-12: an original sailor-style girl in the Mommies' design with very long braids (not a copy of any existing character)."
       },
       {
         "pet": "OSC Sealion",
         "repo": null,
-        "job": "Manages Astra's OSC and face-tracking software: OSCGoesBrrr and VRCFT (VRCFaceTracking).",
+        "job": "Monitors OSC packets and finds problems when several apps share channels to VRChat, OSCGoesBrrr and VRCFaceTracking.",
         "note": "Astra, 2026-10-12: the seed recorded as PSC Sealion is OSC Sealion.",
         "works_with": [
           {
@@ -1155,6 +1156,42 @@
             "pet": "unity-unicorn",
             "why": "Piranesi House is a Unity world built with Unity Unicorn's world tools (marble-carver, vine-bloomer): Nessi's world needs become Unity Unicorn build work, and the tools ship the changes. Astra, 2026-10-12.",
             "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
+          }
+        ]
+      },
+      {
+        "pet": "Photo Dodo",
+        "repo": null,
+        "job": "Keeps track of all your saved pictures: where each one is, what it shows, and whether it is backed up.",
+        "note": "Named by Astra on 2026-10-12.",
+        "works_with": [
+          {
+            "pet": "file-master",
+            "why": "File Master organizes all files; Photo Dodo knows the pictures in detail.",
+            "becomes": "relations links once this seed has a repo"
+          },
+          {
+            "pet": "backup-beaver",
+            "why": "Backup Beaver knows where the last backup is, so Photo Dodo can say which pictures are safe.",
+            "becomes": "relations links once this seed has a repo"
+          }
+        ]
+      },
+      {
+        "pet": "Video Vulture",
+        "repo": null,
+        "job": "Keeps track of all your saved videos, the same way Photo Dodo does for pictures: where each one is, what it shows, and whether it is backed up.",
+        "note": "Named by Astra on 2026-10-12.",
+        "works_with": [
+          {
+            "pet": "file-master",
+            "why": "File Master organizes all files; Video Vulture knows the videos in detail.",
+            "becomes": "relations links once this seed has a repo"
+          },
+          {
+            "pet": "backup-beaver",
+            "why": "Backup Beaver knows where the last backup is, so Video Vulture can say which videos are safe.",
+            "becomes": "relations links once this seed has a repo"
           }
         ]
       }

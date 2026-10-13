@@ -234,7 +234,7 @@ test('the table only links pets that are on GitHub', () => {
   Object.assign(sample.pets.find((p) => p.repo === 'github-goldfish'), { published: false });
   const table = buildTable(sample);
   assert.ok(!/\[GitHub Goldfish\]\(/.test(table), 'unpublished pets have no link');
-  assert.match(table, /\[Paper Girl\]\(https:\/\/github\.com\/findastra\/paper-girl\)/);
+  assert.match(table, /\[Patty\]\(https:\/\/github\.com\/findastra\/paper-girl\)/);
   assert.match(table, /not on GitHub yet/);
   assert.match(table, /\*\*Chip\*\*.*private repo/);
   assert.ok(!table.includes('github.com/findastra/data-dealer'), 'private repositories have no public download link');

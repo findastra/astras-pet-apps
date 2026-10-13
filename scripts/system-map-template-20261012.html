@@ -11,7 +11,7 @@
   /* Warm on navy (Astra, 2026-10-12): reds, oranges, yellows and pinks on a navy night sky. */
   --bg:#0a1430; --panel:rgba(14,26,62,.92); --line:#2b3d75; --fg:#fff4ec; --muted:#b7bfdc;
   --raise:#1c2c63; --raise-edge:#4a5fa8; --well:#0d1a40; --shell:#4a5fa8;
-  --host:#ffd23f; --you:#ff4fa3; --pet:#ff4d5e; --pipe:#ff8c3a; --seed:#fff07a; --road:#d99aaa; --model:#ff6f3c; --infra:#ffb3cf; --program:#ffd6a5; --machine:#f7a072;
+  --host:#ffd23f; --you:#ff4fa3; --pet:#ff4d5e; --pipe:#ff8c3a; --seed:#fff07a; --road:#d99aaa; --model:#ff6f3c; --infra:#ffb3cf; --program:#ffd6a5; --own:#ff9ecb; --machine:#f7a072;
   --l0:#9c93b5; --l1:#ff4fa3; --l2:#ffb3cf; --l3:#ffd23f; --l4:#ff4d5e; --l5:#ff8c3a; --l6:#ffd6a5;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -116,7 +116,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="shapes" id="shapeKey"></div>
   <div class="label types-h">Colour key (nodes, click to hide)</div>
   <div class="legend" id="nodeLegend"></div>
-  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or every pet). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
+  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Scroll</b> zooms toward the centre, or toward what you selected. <b>Scroll-click drag</b> (hold the wheel down) or <b>left-drag</b> spins the sphere freely in any direction, with no stops; <b>Shift + scroll-click drag</b> pans. <b>F</b> frames what you selected (or every pet). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
   <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every pet (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
 </section>
 
@@ -138,7 +138,7 @@ const TYPE = {
   host:{color:css('--host'),r:.95,shape:'sphere'}, pet:{color:css('--pet'),r:.55,shape:'sphere'},
   pipeline:{color:css('--pipe'),r:.44,shape:'sphere'}, seed:{color:css('--seed'),r:.38,shape:'sphere'},
   roadmap:{color:css('--road'),r:.34,shape:'sphere'}, infrastructure:{color:css('--infra'),r:.6,shape:'gem'},
-  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.36,shape:'box'},
+  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.36,shape:'box'}, 'own-program':{color:css('--own'),r:.42,shape:'box'},
   'host-machine':{color:css('--machine'),r:.55,shape:'cyl'}, you:{color:css('--you'),r:.8,shape:'sphere'}, assistant:{color:css('--l0'),r:.6,shape:'tetra'},
 };
 // Shells follow the architecture layers. Neutral registry at the core (Program Manager is not the Farmer's),
@@ -146,9 +146,10 @@ const TYPE = {
 // they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
 // Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
 // The glass sphere around the pets is twice the first diameter (Astra, 2026-10-12): pets spread out inside it.
-const LAYER_R = {2:10, 3:20, 4:34, 5:54, 6:62, 0:68, 1:74};
+const LAYER_R = {2:10, 3:20, 4:34, 5:54, 6:66, 0:72, 1:78};
+const OWN_R = 60; // programs made by Astra: their own shell, inside programs made by others (Astra, 2026-10-12)
 const HARNESS_R = 46;
-const HOME_CAM = [0,44,170];
+const HOME_CAM = [0,48,185];
 const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
 const STATE = {
   now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
@@ -175,7 +176,7 @@ let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 controls.rotateSpeed = 1.2; controls.zoomSpeed = 1.4; controls.panSpeed = .6; controls.dynamicDampingFactor = .2;
 controls.minDistance = 2; controls.maxDistance = 320;
 // The switch maps mouse BUTTONS to actions: left (0) rotates, middle (1) pans, right (2) is left free for fly-look.
-controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:1};
+controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:-8}; controls.noZoom = true; // scroll and scroll-click drag are handled below
 controls.keys = ['NoKeyA','NoKeyS','NoKeyD']; // keep A, S and D for flying, not the trackball's key modes
 scene.add(new THREE.AmbientLight(0xffffff,.55));
 const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
@@ -188,7 +189,7 @@ const pos = {};
   // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
   let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
   const ids=DATA.nodes.map(n=>n.id), P={}, R={};
-  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
     P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
   const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3();
   for(let step=0;step<500;step++){
@@ -208,7 +209,7 @@ const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), n
 scene.add(harnessGlass);
 const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
 scene.add(harnessWire);
-const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:css('--shell'),wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
+const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],OWN_R,LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:css('--shell'),wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
@@ -286,12 +287,12 @@ const SHAPES=[
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
-  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service','layer 6'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes are made by Astra (their own shell), peach cubes are made by others (the shell just outside)','layer 6'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
 ];
 // Which node types each shape stands for; hiding a shape hides all of them.
-const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Glass shell':['harness'], Diamond:['model'], Gem:['infrastructure'], Cube:['program'], Cylinder:['host-machine'], Pyramid:['assistant']};
+const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Glass shell':['harness'], Diamond:['model'], Gem:['infrastructure'], Cube:['own-program','program'], Cylinder:['host-machine'], Pyramid:['assistant']};
 const sk=document.getElementById('shapeKey');
 SHAPES.forEach(([svg,name,what])=>{ const types=SHAPE_TYPES[name]||[];
   const b=keyButton(sk, `Hide or show every ${name.toLowerCase()}`, b=>{
@@ -485,8 +486,29 @@ function move(dt){ if(!keys.size) return;
   if(!v.lengthSq()) return; v.normalize().multiplyScalar((keys.has('shift')?40:14)*dt);
   camera.position.add(v); if(!looking) controls.target.add(v); }
 
+// ---------- scroll and scroll-click (Astra, 2026-10-12) ----------
+// Scroll zooms toward the centre, or toward what is selected. Scroll-click drag (middle button)
+// turns the sphere freely in any direction, over the top and under the bottom; with Shift it pans.
+function focusPoint(){ if(selected&&pos[selected.id]) return pos[selected.id].clone();
+  if(selectedPair){ const [a,b]=selectedPair.split('|'); return pos[a].clone().add(pos[b]).multiplyScalar(.5); }
+  return new THREE.Vector3(); }
+renderer.domElement.addEventListener('wheel',e=>{ e.preventDefault(); autoSpin=false; fly=null;
+  const off=camera.position.clone().sub(controls.target);
+  const len=Math.min(Math.max(off.length()*Math.pow(1.0015,e.deltaY),controls.minDistance),controls.maxDistance);
+  controls.target.lerp(focusPoint(),.35); camera.position.copy(controls.target).add(off.setLength(len)); },{passive:false});
+let midDrag=null;
+renderer.domElement.addEventListener('mousedown',e=>{ if(e.button===1) e.preventDefault(); }); // no browser auto-scroll
+renderer.domElement.addEventListener('pointerdown',e=>{ if(e.button!==1) return; e.preventDefault(); midDrag={x:e.clientX,y:e.clientY,pan:e.shiftKey}; autoSpin=false; fly=null; try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{} });
+addEventListener('pointermove',e=>{ if(!midDrag) return; const dx=e.clientX-midDrag.x, dy=e.clientY-midDrag.y; midDrag.x=e.clientX; midDrag.y=e.clientY;
+  const off=camera.position.clone().sub(controls.target);
+  if(midDrag.pan||e.shiftKey){ const k=off.length()*.0016, right=new THREE.Vector3().setFromMatrixColumn(camera.matrix,0), up=new THREE.Vector3().setFromMatrixColumn(camera.matrix,1);
+    const move=right.multiplyScalar(-dx*k).add(up.multiplyScalar(dy*k)); camera.position.add(move); controls.target.add(move); return; }
+  const up=camera.up.clone().normalize(), right=new THREE.Vector3().crossVectors(up,off).normalize();
+  const q=new THREE.Quaternion().setFromAxisAngle(up,-dx*.006).multiply(new THREE.Quaternion().setFromAxisAngle(right,-dy*.006));
+  off.applyQuaternion(q); camera.up.applyQuaternion(q).normalize(); camera.position.copy(controls.target).add(off); camera.lookAt(controls.target); });
+addEventListener('pointerup',e=>{ if(e.button===1) midDrag=null; });
 // ---------- on-screen navigation: zoom, reset, spin (Astra, 2026-10-12) ----------
-function zoomBy(k){ fly=null; const off=camera.position.clone().sub(controls.target); const len=Math.min(Math.max(off.length()*k,controls.minDistance),controls.maxDistance); fly={t0:performance.now(),fromT:controls.target.clone(),toT:controls.target.clone(),fromC:camera.position.clone(),toC:controls.target.clone().add(off.setLength(len))}; }
+function zoomBy(k){ fly=null; const f=focusPoint(), off=camera.position.clone().sub(controls.target); const len=Math.min(Math.max(off.length()*k,controls.minDistance),controls.maxDistance); fly={t0:performance.now(),fromT:controls.target.clone(),toT:f,fromC:camera.position.clone(),toC:f.clone().add(off.setLength(len))}; }
 document.getElementById('nZoomIn').onclick=()=>zoomBy(.7);
 document.getElementById('nZoomOut').onclick=()=>zoomBy(1.4);
 document.getElementById('nReset').onclick=()=>{ close(); fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(...HOME_CAM)}; camera.up.set(0,1,0); };
