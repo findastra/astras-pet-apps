@@ -6,6 +6,7 @@ const projects=join(process.env.USERPROFILE,'Documents','Projects');
 const local=join(process.env.LOCALAPPDATA,'astras-pet-apps');
 const cache=join(local,'drafts-20261011');
 const pets=[];
+const firstDir=(...dirs)=>dirs.find(d=>existsSync(d))||dirs[0];
 // Sugarcube finished after the initial draft inventory.
 function add(id,name,dir,idle,blink,repo=id){
   // A pet's own repo may contain a newer desktop-only draft; keep private art there.
@@ -21,8 +22,9 @@ function add(id,name,dir,idle,blink,repo=id){
   pets.push(entry);
 }
 for(const id of ['claude-bot','rgbee','mine-mole','mail-snail','patch-cat','backup-beaver','rift-rabbit']){
-  const repo=['claude-bot','rgbee'].includes(id)?`${id}-draft-art-20261011`:id;
-  add(id,id.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' '),join(projects,repo,'draft-art',id),'idle-20261011.png','blink-20261011.png');
+  // Astra moved the separate draft-art folders inside each pet's folder on 2026-10-12; the old layout still works.
+  const repo=['claude-bot','rgbee'].includes(id)?firstDir(join(projects,id,`${id}-draft-art-20261011`),join(projects,`${id}-draft-art-20261011`)):join(projects,id);
+  add(id,id.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' '),join(repo,'draft-art',id),'idle-20261011.png','blink-20261011.png');
 }
 for(const id of ['wifi-butterfly','chat-rat'])add(id,id==='chat-rat'?'Chat Rat':'Wifi Butterfly',join(projects,id,'art'),'idle-20261009.png','blink-20261009.png');
 add('deck-duck','Deck Duck',join(projects,'deck-duck','art','frames'),'neutral.png','blink.png');
@@ -39,7 +41,7 @@ for(const mood of ['idle','blink']){
 }
 const meshRevised=join(projects,'mesh-moth','desktop-art','mesh-moth');
 add('mesh-moth','Mesh Moth',existsSync(join(meshRevised,'idle-20261011.png'))?meshRevised:dir,'idle-20261011.png','blink-20261011.png');
-add('spoonfed-sugarcube','Sugarcube',join(projects,'spoonfed-art-20261011','draft-art','spoonfed-sugarcube'),'idle-20261011.png','blink-20261011.png','spoonfed');
+add('spoonfed-sugarcube','Sugarcube',join(firstDir(join(projects,'spoonfed-sugarcube','spoonfed-art-20261011'),join(projects,'spoonfed-art-20261011')),'draft-art','spoonfed-sugarcube'),'idle-20261011.png','blink-20261011.png','spoonfed');
 const fuzzRoot=join(cache,'fuzzbois'),fuzzRecipes=join(fuzzRoot,'desktop-recipes-20261011.json');
 if(existsSync(fuzzRecipes)){
   const fuzz=pets.find(p=>p.id==='fuzzboi-friend');
