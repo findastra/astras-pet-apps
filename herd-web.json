@@ -8,12 +8,12 @@
     "suggested": "Missing: needs planning"
   },
   "types": {
-    "host": "Host pet (Friendly Farmer)",
+    "host": "Host Intelligent App (Pet): Friendly Farmer",
     "you": "You",
-    "pet": "Registered pet",
-    "pipeline": "Pipeline pet (repo, no art yet)",
-    "seed": "Seed (approved name)",
-    "roadmap": "Roadmap pet (ASTRAS_PET_OS v5.2)",
+    "pet": "Registered Intelligent App (Pet)",
+    "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
+    "seed": "Seed Intelligent App (Pet): approved name",
+    "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
     "model": "AI model",
     "infrastructure": "Infrastructure",
     "program": "Program, site or world",

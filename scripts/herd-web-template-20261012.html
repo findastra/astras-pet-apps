@@ -271,7 +271,7 @@ Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.la
     const s=document.createElement('span'); s.textContent='Layer shell outlines'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
   keyButtons.push([b,()=>shellsOn]); }
 const SHAPES=[
-  ['<circle cx="9" cy="9" r="7"/>','Sphere','a pet agent (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
+  ['<circle cx="9" cy="9" r="7"/>','Sphere','an Intelligent App (Pet): each pet is one intelligent app (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
