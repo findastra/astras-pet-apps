@@ -8,7 +8,7 @@ answering, planning, building or editing anything. No skimming, no `head`, no fi
 no "I'll read it if I need it". This applies to small tasks too.
 1. In this repo: `AGENTS.md`, `CLAUDE.md`, **every** `SKILL.md` (`skills/`, `.claude/skills/`,
    `.agents/skills/`), `handoffs/README.md` and every open card for you or `any`,
-   [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md),
+   [ASTRAS_PET_OS.md](ASTRAS_PET_OS.md),
    [docs/migration/PLAN.md](docs/migration/PLAN.md), [PET-FILES.md](PET-FILES.md) and
    [PET-WORDS.md](PET-WORDS.md).
 2. In the pet's own repo: its `AGENTS.md`, `CLAUDE.md`, every `SKILL.md`, `handoffs/` and
@@ -19,12 +19,12 @@ no "I'll read it if I need it". This applies to small tasks too.
    before doing anything else.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
-## Read first: Astra's PetOS (`ASTRA_PET_OS`) (2026-10-11)
+## Read first: Astra's PetOS (`ASTRAS_PET_OS`) (2026-10-11)
 Astra approved **Astra's PetOS** as the direction for this project. The one canonical
-architecture document is [docs/architecture/ASTRA_PET_OS.md](docs/architecture/ASTRA_PET_OS.md)
+architecture document is [ASTRAS_PET_OS.md](ASTRAS_PET_OS.md)
 (master handoff v5.2); where it disagrees with anything below, it wins. **Name:** the title people
-see is **Astra's PetOS**; in files, folders, code and identifiers write **`ASTRA_PET_OS`**
-(underscore between PET and OS), never `ASTRA_PETOS` or `PetOS` on its own. Astra's amendments are listed at the top of that document (for example,
+see is **Astra's PetOS**; in files, folders, code and identifiers write **`ASTRAS_PET_OS`**
+(ASTRAS with the S; Astra, 2026-10-12), never `ASTRA_PET_OS`, `ASTRA_PETOS` or `PetOS` on its own. Astra's amendments are listed at the top of that document (for example,
 Passport Panda is now **Passport Pelican**).
 - Migration is planned in [docs/migration/PLAN.md](docs/migration/PLAN.md), with the
   [audit](docs/migration/AUDIT.md) and [gap analysis](docs/migration/GAP-ANALYSIS.md). The plan
@@ -46,11 +46,11 @@ Cage movement by kind (zones, flocks, friends, tag and chases from `cage_life` i
 Square pet well for the eight rail-style apps (`scripts/square-pet-well-20261009.mjs`, guarded by `test/pet-frame-test-20261009.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 Pet words (`PET-WORDS.md`, `words` in pets.json, `test/pet-words-test-20261009.mjs`) and public-repo labels with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
 The Farmer's rounds (self-audits, mood key, submissions, pipeline, relations, profile round; `scripts/farmer-rounds-20261009.mjs`, `scripts/farmer-profile-20261009.mjs`, `scripts/relations-20261009.mjs`, `.github/workflows/farmer-daily-rounds.yml`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-09.
-ASTRA_PET_OS v5.2 filed as the canonical architecture, with the Phase 0 audit, gap analysis and migration plan, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11.
+ASTRAS_PET_OS v5.2 filed as the canonical architecture, with the Phase 0 audit, gap analysis and migration plan, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11.
 Voicemeeter Bug (made with OpenAI Codex (GPT-6) on 2026-10-08) registered on main from the unmerged roam-free branch, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. His Windows app and source are still only on Astra's PC.
 
 ## What this is
-The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage today and will run the Farm under ASTRA_PET_OS. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
+The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage today and will run the Farm under ASTRAS_PET_OS. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
 
 ## Rules
 - **`pets.json` is the source of truth.** Never hand-edit the README table between the `pets:start` / `pets:end` markers, `ROSTER.md`, `cage-data.js` or `art/`. Run `npm run build`.
@@ -102,3 +102,4 @@ Latest owner follow-up, OpenAI Codex (GPT-6), 2026-10-11: use docs/pet-revisions
 Paired desktop revision by OpenAI Codex (GPT-6), 2026-10-11: Paper Girl has no NEWS lettering and matches File Master's small rectangular eyes. File Master wears a crown and stern expression. They stay together during roaming; dragging either makes it lead. See docs/pet-partners-20261011.md. Preserve their equal heights and the existing no-sparkle rule.
 
 Herd Web (`herd-web-20261012.html`, `herd-web.json`, `scripts/herd-web-20261012.mjs`, template `scripts/herd-web-template-20261012.html`, guarded by `test/herd-web-test-20261012.mjs`): the 3D map of every pet, model, program and piece of infrastructure and the links between them, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12. Pet-to-pet links belong in `relations` in pets.json; links with a non-pet end belong in herd-web.json.
+ASTRAS_PET_OS name and top-level architecture file (`ASTRAS_PET_OS.md`) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12.

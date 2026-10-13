@@ -1,7 +1,7 @@
-# ASTRA_PET_OS migration: gap analysis
+# ASTRAS_PET_OS migration: gap analysis
 
 Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. Compares the [audit](AUDIT.md) with the
-canonical architecture, [docs/architecture/ASTRA_PET_OS.md](../architecture/ASTRA_PET_OS.md).
+canonical architecture, [ASTRAS_PET_OS.md](../../ASTRAS_PET_OS.md).
 "Reuse" names what to keep rather than rewrite.
 
 | v5.2 requirement | Today | Gap | Reuse |

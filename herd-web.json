@@ -4,7 +4,7 @@
     "now": "Works today",
     "planned": "Planned (decided, or in a pet's own job)",
     "idea": "Idea (suggested, not agreed)",
-    "architecture": "In the ASTRA_PET_OS architecture",
+    "architecture": "In the ASTRAS_PET_OS architecture",
     "suggested": "Missing: needs planning"
   },
   "types": {
@@ -13,7 +13,7 @@
     "pet": "Registered pet",
     "pipeline": "Pipeline pet (repo, no art yet)",
     "seed": "Seed (approved name)",
-    "roadmap": "Roadmap pet (ASTRA_PET_OS v5.2)",
+    "roadmap": "Roadmap pet (ASTRAS_PET_OS v5.2)",
     "model": "AI model",
     "infrastructure": "Infrastructure",
     "program": "Program, site or world",
@@ -34,7 +34,7 @@
       "name": "The Farm (website)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "The Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRA_PET_OS section 4).",
+      "job": "The Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
       "layer": 1
     },
     {
@@ -42,7 +42,7 @@
       "name": "The Kennel",
       "type": "infrastructure",
       "state": "planned",
-      "job": "astras-kennel: the community pet catalog. Developers submit a link to their own repo; review, security checks and adoption happen here. Does not exist yet (ASTRA_PET_OS, Kennel).",
+      "job": "astras-kennel: the community pet catalog. Developers submit a link to their own repo; review, security checks and adoption happen here. Does not exist yet (ASTRAS_PET_OS, Kennel).",
       "layer": 2
     },
     {
@@ -50,7 +50,7 @@
       "name": "Program Manager",
       "type": "infrastructure",
       "state": "planned",
-      "job": "Neutral registry of every real program: links, launchers, status and capabilities, for every pet including the Farmer (ASTRA_PET_OS section 6).",
+      "job": "Neutral registry of every real program: links, launchers, status and capabilities, for every pet including the Farmer (ASTRAS_PET_OS section 6).",
       "layer": 2
     },
     {
@@ -58,7 +58,7 @@
       "name": "AI harness",
       "type": "harness",
       "state": "planned",
-      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the herd. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRA_PET_OS sections 7 and 8).",
+      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the herd. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
       "layer": 5
     },
     {
@@ -90,7 +90,7 @@
       "name": "Local models",
       "type": "model",
       "state": "planned",
-      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRA_PET_OS v5.2).",
+      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2).",
       "layer": 5
     },
     {
@@ -419,7 +419,7 @@
       "name": "Stock Fox",
       "type": "roadmap",
       "state": "planned",
-      "job": "Named as an established pet in ASTRA_PET_OS v5.2; no repo in the registry.",
+      "job": "Named as an established pet in ASTRAS_PET_OS v5.2; no repo in the registry.",
       "layer": 4
     },
     {
@@ -543,7 +543,7 @@
       "state": "now",
       "layer": 1,
       "category": "Device",
-      "job": "The physical key on your keychain that you tap or plug in to sign in (a FIDO2 or passkey authenticator). It proves it is really you: to your accounts, and later to the Farm and to approvals. ASTRA_PET_OS lists one in the cyberdeck for hardware-backed sign-in, not as a replacement for encrypted storage, backups or recovery codes."
+      "job": "The physical key on your keychain that you tap or plug in to sign in (a FIDO2 or passkey authenticator). It proves it is really you: to your accounts, and later to the Farm and to approvals. ASTRAS_PET_OS lists one in the cyberdeck for hardware-backed sign-in, not as a replacement for encrypted storage, backups or recovery codes."
     }
   ],
   "links": [
@@ -993,14 +993,14 @@
       "to": "@seeds",
       "carries": "registry",
       "state": "architecture",
-      "why": "The Farmer incubates every seed: requirements, scaffold, tests, approval, registration (ASTRA_PET_OS, Farmer grows new pets)."
+      "why": "The Farmer incubates every seed: requirements, scaffold, tests, approval, registration (ASTRAS_PET_OS, Farmer grows new pets)."
     },
     {
       "from": "astras-pet-apps",
       "to": "@roadmap",
       "carries": "registry",
       "state": "architecture",
-      "why": "The Farmer incubates every roadmap pet when its turn comes (ASTRA_PET_OS, Farmer grows new pets)."
+      "why": "The Farmer incubates every roadmap pet when its turn comes (ASTRAS_PET_OS, Farmer grows new pets)."
     },
     {
       "from": "platform-platypus",

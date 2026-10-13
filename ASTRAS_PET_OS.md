@@ -1,11 +1,11 @@
-# ASTRA_PET_OS — FINAL MASTER HANDOFF v5.2
+# ASTRAS_PET_OS — FINAL MASTER HANDOFF v5.2
 
 > **Amendments by Astra since v5.2** (these override the text below):
-> - 2026-10-12: **The project's title is "Astra's PetOS".** In files, folders, code and identifiers it is written **`ASTRA_PET_OS`**, with the underscore between PET and OS, never `ASTRA_PETOS` or `PetOS` on its own. Where the text below says to display `ASTRA_PET_OS` as the product name, show "Astra's PetOS" to people instead.
+> - 2026-10-12: **The project's title is "Astra's PetOS".** In files, folders, code and identifiers it is written **`ASTRAS_PET_OS`** (ASTRAS with the S, an underscore before PET and before OS), never `ASTRA_PET_OS`, `ASTRA_PETOS` or `PetOS` on its own. This document lives at the top of the repo as `ASTRAS_PET_OS.md` (moved from `docs/architecture/` on 2026-10-12). Where the text below says to display `ASTRAS_PET_OS` as the product name, show "Astra's PetOS" to people instead.
 > - 2026-10-11: **Passport Panda is renamed Passport Pelican** (Procreate Panda takes the panda). Same job and privacy rules.
 > - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, OSC Sealion (first recorded as PSC Sealion), Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
 
-**Product name (approved):** ASTRA_PET_OS — *Grow your own AI ecosystem.*  
+**Product name (approved):** ASTRAS_PET_OS — *Grow your own AI ecosystem.*  
 **Official first-party ecosystem and user's herd:** `astras-farm`  
 **Community discovery, adoption and submissions:** `astras-kennel`  
 **Framework:** Astra Pet SDK / reusable independent pet agent harness  
@@ -24,7 +24,7 @@
 
 ### Brand and distribution
 
-- **ASTRA_PET_OS** is the umbrella consumer product and developer platform; technically it is a local-first, cross-device, distributed multi-agent operating *environment* running on top of Windows/Linux host OSes, not a replacement kernel.
+- **ASTRAS_PET_OS** is the umbrella consumer product and developer platform; technically it is a local-first, cross-device, distributed multi-agent operating *environment* running on top of Windows/Linux host OSes, not a replacement kernel.
 - **`astras-farm`** is the first-party home: official Astra-maintained pets, the user's installed herd, Farmer's management interface, and a simple responsive Farm website. Every pet card has an always-visible fast text box. No browser-based Cage, simulated habitat, or pet roaming in a browser.
 - **`astras-kennel`** is the community pet adoption catalog: community-submitted repositories, searchable metadata, adoption/install flow, compatibility and security status, and maintainer attribution. A Kennel pet may later be proposed for migration into the official Farm only through explicit consent, licensing/provenance review, security checks, and a deliberate maintenance transfer; never automatic.
 - **Astra Pet SDK** supplies common contracts, manifests, templates, runtime harness, task/inbox infrastructure, tool adapters, permissions, versioning, and testing scaffolds.
@@ -41,7 +41,7 @@ Creating new GitHub repos, installing software, publishing, or accepting risky p
 
 ### Marketing website ownership
 
-**Friendly Farmer = accountable product/website coordinator** for ASTRA_PET_OS marketing site: content roadmap, positioning, release launch coordination, first-party pet catalog accuracy, Kennel cross-linking, and assigning work.
+**Friendly Farmer = accountable product/website coordinator** for ASTRAS_PET_OS marketing site: content roadmap, positioning, release launch coordination, first-party pet catalog accuracy, Kennel cross-linking, and assigning work.
 
 **Browser Bat = website operations specialist**: browser-based QA, link checking, responsive and accessibility checks, analytics diagnostics, authorized publishing workflow, uptime and broken-page investigation. Browser Bat is not allowed to publish unapproved changes.
 
@@ -74,7 +74,7 @@ New approved additions and roles:
 
 ### Approved expansion — Linux, self-hosting, ethical security, local AI, and digital nomad pets (v5.2)
 
-**This section is now part of the authoritative ASTRA_PET_OS plan, not a separate brainstorming appendix.** The user explicitly approved all 18 candidates. They are **approved for the roadmap**, not represented as already implemented or as requirements to install the entire herd. Prioritize by dependencies and user value. Preserve existing ASTRA_PET_OS roles and all earlier decisions.
+**This section is now part of the authoritative ASTRAS_PET_OS plan, not a separate brainstorming appendix.** The user explicitly approved all 18 candidates. They are **approved for the roadmap**, not represented as already implemented or as requirements to install the entire herd. Prioritize by dependencies and user value. Preserve existing ASTRAS_PET_OS roles and all earlier decisions.
 
 | Pet | Area | Primary function |
 |---|---|---|
@@ -183,7 +183,7 @@ Validation milestones: real end-to-end demo; 10–20 external users who install 
 
 > Claude: Read this complete specification first. Audit the repository and existing instructions before editing. This describes the desired end state, NOT features verified as currently implemented.
 
-**Branding requirement:** Always display the umbrella product name exactly as `ASTRA_PET_OS` (including underscores). Do not abbreviate it as PetOS. Keep the distinct names `astras-farm` and `astras-kennel` for the official and community experiences.
+**Branding requirement:** Always display the umbrella product name exactly as `ASTRAS_PET_OS` (including underscores). Do not abbreviate it as PetOS. Keep the distinct names `astras-farm` and `astras-kennel` for the official and community experiences.
 
 ## 1. Non-negotiable vision
 

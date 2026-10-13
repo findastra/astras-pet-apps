@@ -1,7 +1,7 @@
 status: open
 for: any
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-12 (account closing; session https://claude.ai/code/session_012RaHVD6yUnzUbh36o6jk9S)
-needs: AGENTS.md, CLAUDE.md, skills/handoff/SKILL.md, docs/architecture/ASTRA_PET_OS.md, docs/migration/PLAN.md, PET-FILES.md, branch `claude/movement-by-kind-merge-wip-20261009`
+needs: AGENTS.md, CLAUDE.md, skills/handoff/SKILL.md, ASTRAS_PET_OS.md, docs/migration/PLAN.md, PET-FILES.md, branch `claude/movement-by-kind-merge-wip-20261009`
 ---
 ## What this chat was for
 Started 2026-10-09 on `findastra/astras-pet-apps`: (1) update the README summary after the
@@ -31,7 +31,7 @@ screenshots (her desktop full of pets, and the tray star) near the top of the RE
 
 ## Current state
 - `main` has since moved far on (desktop pets in `scripts/desktop-pets-20261011.cs` by Codex,
-  tray star, 30+ desktop pets, ASTRA_PET_OS plan, Herd Web). The 2026-10-09 PC snapshot and the
+  tray star, 30+ desktop pets, ASTRAS_PET_OS plan, Herd Web). The 2026-10-09 PC snapshot and the
   WIP branch predate all of that; use the WIP branch only as reference.
 - The live desktop pets (`desktop-pets-20261011.cs`) do **not** read `cage_life`/`pet_life`:
   pets do not move by kind on the desktop. PLAN.md already schedules this for Phase 7

@@ -4,7 +4,7 @@
 SKILL.md on every branch, and say in your first reply which ones you read. Never skim or skip them.**
 
 Read [AGENTS.md](AGENTS.md) first. It applies to every assistant. Its first section points to
-the canonical Astra's PetOS architecture (`ASTRA_PET_OS` in files) and the migration plan; read both before larger work.
+the canonical Astra's PetOS architecture (`ASTRAS_PET_OS` in files) and the migration plan; read both before larger work.
 
 For Claude:
 

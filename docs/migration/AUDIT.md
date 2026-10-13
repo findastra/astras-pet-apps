@@ -1,7 +1,7 @@
-# ASTRA_PET_OS migration: Phase 0 audit
+# ASTRAS_PET_OS migration: Phase 0 audit
 
 Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11, America/Denver. Read with the canonical
-architecture, [docs/architecture/ASTRA_PET_OS.md](../architecture/ASTRA_PET_OS.md) (master
+architecture, [ASTRAS_PET_OS.md](../../ASTRAS_PET_OS.md) (master
 handoff v5.2), the [gap analysis](GAP-ANALYSIS.md) and the [plan](PLAN.md).
 
 This audit records what the code does today. Nothing was changed to produce it.

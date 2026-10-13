@@ -1,8 +1,8 @@
-# ASTRA_PET_OS migration plan
+# ASTRAS_PET_OS migration plan
 
 Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. Astra asked for it to be pushed on 2026-10-11; the **open
 decisions below still need her answers** before any step that depends on them. Nothing below
-is built yet. Architecture: [docs/architecture/ASTRA_PET_OS.md](../architecture/ASTRA_PET_OS.md).
+is built yet. Architecture: [ASTRAS_PET_OS.md](../../ASTRAS_PET_OS.md).
 Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 
 ## Ground rules for every step
