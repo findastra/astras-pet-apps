@@ -997,6 +997,141 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Restaurant-discovery app for iOS, Android and web (on a rescue branch until merged). Sugarcube’s program."
+    },
+    {
+      "id": "quest-pro",
+      "name": "Meta Quest Pro",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 1,
+      "category": "VR headset",
+      "job": "VR headset with face and eye tracking, which VRCFaceTracking reads for VRChat."
+    },
+    {
+      "id": "quest-3",
+      "name": "Meta Quest 3",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 1,
+      "category": "VR headset",
+      "job": "VR headset, streamed from the PC with Meta Horizon Link or Virtual Desktop."
+    },
+    {
+      "id": "index-controllers",
+      "name": "Valve Index controllers",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "job": "Finger-tracking VR controllers, tracked by the base stations through SteamVR."
+    },
+    {
+      "id": "vr-trackers",
+      "name": "13 trackers",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "job": "Thirteen SteamVR body trackers (brand to confirm), tracked by the base stations. Space Calibrator lines them up with the Quest."
+    },
+    {
+      "id": "base-stations",
+      "name": "4 base stations",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "job": "Four SteamVR base stations that track the controllers and trackers."
+    },
+    {
+      "id": "woojer-vest",
+      "name": "Woojer Vest 3",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Haptics",
+      "job": "Haptic vest that turns sound into feel."
+    },
+    {
+      "id": "microphone",
+      "name": "Microphone",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Audio",
+      "job": "Astra’s microphone, routed through Voicemeeter (model to confirm)."
+    },
+    {
+      "id": "headphones",
+      "name": "Headphones (being fixed)",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Audio",
+      "job": "Headphones that are not working right now and are being fixed with Voicemeeter and Voicemeeter Bug (model to confirm)."
+    },
+    {
+      "id": "macbook-pro",
+      "name": "Old MacBook Pro",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 1,
+      "category": "Device",
+      "job": "An old MacBook Pro that is barely usable today."
+    },
+    {
+      "id": "smart-pin",
+      "name": "Smart pin (planned)",
+      "type": "host-machine",
+      "state": "planned",
+      "layer": 1,
+      "category": "Device",
+      "job": "A small Wi-Fi pin with a screen, to wear and show the pets’ pictures. Astra plans to get one (2026-10-12)."
+    },
+    {
+      "id": "logitech-brio",
+      "name": "Logitech BRIO",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Camera",
+      "job": "Webcam with a microphone (seen by Windows on the Desktop PC; not plugged in during the scan)."
+    },
+    {
+      "id": "razer-kraken",
+      "name": "Razer Kraken Ultimate",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Audio",
+      "job": "USB headset with THX Spatial Audio, connected to the Desktop PC."
+    },
+    {
+      "id": "razer-viper",
+      "name": "Razer Viper V3 Pro",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Mouse",
+      "job": "Mouse, connected to the Desktop PC."
+    },
+    {
+      "id": "dell-monitor",
+      "name": "Dell U3225QE",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Monitor",
+      "job": "The Desktop PC’s monitor."
+    },
+    {
+      "id": "speaker-bar",
+      "name": "CA-2890PRO speaker bar",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Audio",
+      "job": "Speaker bar with a microphone, connected to the Desktop PC."
     }
   ],
   "links": [
@@ -2525,6 +2660,202 @@
       "carries": "opens",
       "state": "now",
       "why": "Asks Voicemeeter to restart its audio engine."
+    },
+    {
+      "from": "steamvr",
+      "to": "index-controllers",
+      "carries": "opens",
+      "state": "now",
+      "why": "SteamVR tracks the Index controllers."
+    },
+    {
+      "from": "steamvr",
+      "to": "vr-trackers",
+      "carries": "opens",
+      "state": "now",
+      "why": "SteamVR tracks the trackers."
+    },
+    {
+      "from": "steamvr",
+      "to": "base-stations",
+      "carries": "opens",
+      "state": "now",
+      "why": "SteamVR runs the base stations that do the tracking."
+    },
+    {
+      "from": "space-calibrator",
+      "to": "vr-trackers",
+      "carries": "opens",
+      "state": "now",
+      "why": "Lines the trackers up with the Quest’s own tracking."
+    },
+    {
+      "from": "double-hip-tracker",
+      "to": "vr-trackers",
+      "carries": "opens",
+      "state": "now",
+      "why": "Hip tracking from the trackers."
+    },
+    {
+      "from": "base-station-fov",
+      "to": "base-stations",
+      "carries": "opens",
+      "state": "now",
+      "why": "Shows where the base stations can see."
+    },
+    {
+      "from": "vrcft",
+      "to": "quest-pro",
+      "carries": "opens",
+      "state": "now",
+      "why": "Reads the Quest Pro’s face and eye tracking for VRChat."
+    },
+    {
+      "from": "meta-horizon-link",
+      "to": "quest-pro",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Meta Horizon Link streams the PC to the headset."
+    },
+    {
+      "from": "virtual-desktop",
+      "to": "quest-pro",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Virtual Desktop streams the PC to the headset wirelessly."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "quest-pro",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Rift Rabbit could check the headset before each VR session: battery, firmware, link."
+    },
+    {
+      "from": "meta-horizon-link",
+      "to": "quest-3",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Meta Horizon Link streams the PC to the headset."
+    },
+    {
+      "from": "virtual-desktop",
+      "to": "quest-3",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Virtual Desktop streams the PC to the headset wirelessly."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "quest-3",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Rift Rabbit could check the headset before each VR session: battery, firmware, link."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "index-controllers",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Rift Rabbit could check the VR hardware before each session: batteries, tracking, firmware."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "vr-trackers",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Rift Rabbit could check the VR hardware before each session: batteries, tracking, firmware."
+    },
+    {
+      "from": "rift-rabbit",
+      "to": "base-stations",
+      "carries": "manages",
+      "state": "idea",
+      "why": "Rift Rabbit could check the VR hardware before each session: batteries, tracking, firmware."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "woojer-vest",
+      "carries": "opens",
+      "state": "idea",
+      "why": "The vest feels sound: game audio could be routed to it through Voicemeeter."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "microphone",
+      "carries": "opens",
+      "state": "now",
+      "why": "The microphone goes into Voicemeeter."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "headphones",
+      "carries": "opens",
+      "state": "now",
+      "why": "The headphones are being fixed through Voicemeeter."
+    },
+    {
+      "from": "voicemeeter-bug",
+      "to": "headphones",
+      "carries": "manages",
+      "state": "now",
+      "why": "Voicemeeter Bug restarts Voicemeeter’s audio engine when the headphones reconnect."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "speaker-bar",
+      "carries": "opens",
+      "state": "now",
+      "why": "The speaker bar is a Voicemeeter output."
+    },
+    {
+      "from": "voicemeeter",
+      "to": "razer-kraken",
+      "carries": "opens",
+      "state": "now",
+      "why": "The headset is a Voicemeeter output and input."
+    },
+    {
+      "from": "obs-studio",
+      "to": "logitech-brio",
+      "carries": "opens",
+      "state": "now",
+      "why": "The webcam for streaming and recording."
+    },
+    {
+      "from": "razer-synapse",
+      "to": "razer-viper",
+      "carries": "opens",
+      "state": "now",
+      "why": "Razer Synapse sets the mouse’s lighting and buttons."
+    },
+    {
+      "from": "rgbee",
+      "to": "razer-viper",
+      "carries": "manages",
+      "state": "planned",
+      "why": "RGBee’s job includes the mouse’s lights."
+    },
+    {
+      "from": "desktop-host",
+      "to": "dell-monitor",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "The desktop pets and tray Star show on this monitor."
+    },
+    {
+      "from": "astras-pet-os",
+      "to": "smart-pin",
+      "carries": "manages",
+      "state": "planned",
+      "why": "The Farmer will send each pet’s picture and mood to the pin."
+    },
+    {
+      "from": "linux-penguin",
+      "to": "macbook-pro",
+      "carries": "manages",
+      "state": "idea",
+      "why": "An old MacBook can get a second life as a small Linux machine."
     }
   ],
   "layers": {
