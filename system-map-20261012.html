@@ -186,21 +186,31 @@ const rim = new THREE.PointLight(0xff4fa3,.8); rim.position.set(-15,-8,-10); sce
 // Links to every pet are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
 const pos = {};
 (function settle(){
-  // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
-  let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+  // Each node lives on its shell (radius) and moves around it: links pull, nodes push.
+  // Balanced, not lopsided (Astra, 2026-10-12): every shell starts evenly spread on a golden spiral, a busy
+  // node (like the Desktop PC, which dozens of programs run on) pulls each partner only gently, and each
+  // shell is kept centred around the middle so it never piles up on one side. Same shape on every load.
   const ids=DATA.nodes.map(n=>n.id), P={}, R={};
-  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
-    P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
-  const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3();
+  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); });
+  const groups={}; ids.forEach(i=>{ (groups[R[i].toFixed(1)]||=[]).push(i); });
+  const GA=Math.PI*(3-Math.sqrt(5));
+  Object.values(groups).forEach(g=>{ g.sort(); g.forEach((id,k)=>{ const y=g.length===1?0:1-2*(k+.5)/g.length, s=Math.sqrt(1-y*y), a=k*GA;
+    P[id]=new THREE.Vector3(s*Math.cos(a), y, s*Math.sin(a)).multiplyScalar(Math.max(R[id],.001)); }); });
+  const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3(), deg={};
+  springs.forEach(e=>{ deg[e.from]=(deg[e.from]||0)+1; deg[e.to]=(deg[e.to]||0)+1; });
   for(let step=0;step<500;step++){
     const F={}; ids.forEach(i=>F[i]=new THREE.Vector3());
     for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){
       if(Math.abs(R[ids[a]]-R[ids[b]])>1.5) continue;
       d.subVectors(P[ids[a]],P[ids[b]]); const dist=Math.max(d.length(),.3), f=60/(dist*dist);
       d.multiplyScalar(f/dist); F[ids[a]].add(d); F[ids[b]].sub(d); }
-    springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const f=.04; F[e.from].addScaledVector(d,f); F[e.to].addScaledVector(d,-f); });
+    springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const f=.04/Math.sqrt(Math.max(1,Math.max(deg[e.from],deg[e.to])/4));
+      F[e.from].addScaledVector(d,f); F[e.to].addScaledVector(d,-f); });
     const cool=1-step/560;
     ids.forEach(i=>{ if(nodeById[i].type==='harness') { P[i].set(0,HARNESS_R,0); return; } if(F[i].length()>3) F[i].setLength(3); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
+    // keep each shell centred, so no shell drifts to one side
+    Object.values(groups).forEach(g=>{ if(g.length<3) return; const c=new THREE.Vector3(); g.forEach(i=>c.add(P[i])); c.divideScalar(g.length);
+      g.forEach(i=>{ if(nodeById[i].type!=='harness') { P[i].sub(c); P[i].setLength(R[i]); } }); });
   }
   ids.forEach(i=>pos[i]=P[i]);
 })();
