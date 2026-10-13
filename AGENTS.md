@@ -9,8 +9,10 @@ no "I'll read it if I need it". This applies to small tasks too.
 1. In this repo: `AGENTS.md`, `CLAUDE.md`, **every** `SKILL.md` (`skills/`, `.claude/skills/`,
    `.agents/skills/`), `handoffs/README.md` and every open card for you or `any`,
    [ASTRAS_PET_OS.md](ASTRAS_PET_OS.md),
-   [docs/migration/PLAN.md](docs/migration/PLAN.md), [PET-FILES.md](PET-FILES.md) and
-   [PET-WORDS.md](PET-WORDS.md).
+   [docs/migration/PLAN.md](docs/migration/PLAN.md), [PET-FILES.md](PET-FILES.md),
+   [PET-WORDS.md](PET-WORDS.md) and [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md): which of the three
+   levels (program, runtime, agentic harness) each intelligent app has built. Each intelligent app has its
+   own chat; when you change a level, update that app's row with the date and your evidence.
 2. In the pet's own repo: its `AGENTS.md`, `CLAUDE.md`, every `SKILL.md`, `handoffs/` and
    `pet.json`.
 3. Check every branch (`git ls-remote --heads origin`) for skills or work that is not on
