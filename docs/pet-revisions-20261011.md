@@ -4,7 +4,7 @@ Prepared by OpenAI Codex (GPT-6) for Astra. This is the current desktop handoff;
 
 ## Current controls and rendering
 
-- Double-click the desktop star to toggle floor lineup / roaming. Single click shows/hides the herd.
+- Double-click the desktop star to toggle floor lineup / roaming. Single click shows/hides the desktop pets.
 - Click the system-tray star to show/hide the desktop star. Tray and desktop use the identical 24-physical-pixel raster at the owner's current 150% display scale, with a crisp black outline and no sparkles. Windows controls notification-area placement.
 - Claude Bot is an orange-screen BSOD twin at a fixed 88.125 logical-pixel height, enlarged to match the small BSOD shown in the owner's reference. Pets do not grow/shrink while roaming.
 - Triple-click Fuzzboi to cycle original body styles B → C → A, choosing a fresh valid combination. Double-click still opens the app, after the triple-click window expires. The original Forge decoder exports 858 valid recipes spanning every style and color. Compose original layers at 256px for responsive switching; no generated replacement body.

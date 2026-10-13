@@ -221,4 +221,4 @@ A pet that changes its job in pet.json **without** submitting gets a note in its
 
 ### Who tells whom
 
-`relations` in pets.json lists which pet passes what to which: registry, status, findings, cards, key notes, ideas, what shipped, live cues, art. [RELATIONS.md](RELATIONS.md) draws it. Links whose other end is not a pet with a repo (AI models, the Farm, the Kennel, programs, seeds, roadmap pets) go in [herd-web.json](herd-web.json); the [Herd Web](herd-web-20261012.html) draws both in 3D. Health Hummy, Finance Finch and Meme Fiend are private: their data never leaves the PC and no other pet reads from them.
+`relations` in pets.json lists which pet passes what to which: registry, status, findings, cards, key notes, ideas, what shipped, live cues, art. [RELATIONS.md](RELATIONS.md) draws it. Links whose other end is not a pet with a repo (AI models, the Farm, the Kennel, programs, seeds, roadmap pets) go in [system-map.json](system-map.json); the [System Map](system-map-20261012.html) draws both in 3D. Health Hummy, Finance Finch and Meme Fiend are private: their data never leaves the PC and no other pet reads from them.

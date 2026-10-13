@@ -1,5 +1,5 @@
 {
-  "about": "The non-pet parts of the Herd Web (herd-web-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets are herd-wide and drawn behind their own toggle. Built by scripts/herd-web-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (0 development, 1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/herd-web-20261012.mjs.",
+  "about": "The non-pet parts of the System Map (system-map-20261012.html): AI models, infrastructure, programs, computers and roadmap pets, plus links that cannot live in pets.json relations because one end is not a pet with a repo. Pet-to-pet links stay in pets.json relations. @pets means every registered and pipeline pet; @seeds and @roadmap mean every seed and every roadmap pet. Links to @pets reach every app and drawn behind their own toggle. Built by scripts/system-map-20261012.mjs during npm run build. Claude Opus 5.5 (claude-opus-5-5), 2026-10-12. Each node has a layer from Astra's architecture chart (0 development, 1 You, 2 Program Manager and Pet Directory, 3 Friendly Farmer, 4 pet agents, 5 AI harness, 6 real programs); each link's colour is the layer it belongs to, worked out in scripts/system-map-20261012.mjs.",
   "states": {
     "now": "Works today",
     "planned": "Planned (decided, or in a pet's own job)",
@@ -8,7 +8,7 @@
     "suggested": "Missing: needs planning"
   },
   "types": {
-    "host": "Friendly Farmer: Intelligent App (Pet) that coordinates the herd",
+    "host": "Friendly Farmer: Intelligent App (Pet) that coordinates the Intelligent Apps",
     "you": "You",
     "pet": "Registered Intelligent App (Pet)",
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
@@ -26,7 +26,10 @@
     "opens": "opens or controls a real program",
     "model": "requests to an AI model and its replies",
     "manages": "looks after a real program or world: health, updates, planned work",
-    "runs-on": "where a program runs, is published or is installed"
+    "runs-on": "where a program runs, is published or is installed",
+    "directs": "your requests, decisions and approvals to an AI assistant, in conversation",
+    "reports": "an AI assistant answering you: results with evidence, questions only you can decide, links to what changed",
+    "card": "a handoff card or brief left for another assistant to pick up"
   },
   "nodes": [
     {
@@ -58,7 +61,7 @@
       "name": "AI harness",
       "type": "harness",
       "state": "planned",
-      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the herd. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
+      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the Intelligent Apps. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
       "layer": 5
     },
     {
@@ -544,6 +547,14 @@
       "layer": 1,
       "category": "Device",
       "job": "The physical key on your keychain that you tap or plug in to sign in (a FIDO2 or passkey authenticator). It proves it is really you: to your accounts, and later to the Farm and to approvals. ASTRAS_PET_OS lists one in the cyberdeck for hardware-backed sign-in, not as a replacement for encrypted storage, backups or recovery codes."
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "type": "assistant",
+      "state": "now",
+      "layer": 0,
+      "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex."
     }
   ],
   "links": [
@@ -1358,6 +1369,69 @@
       "carries": "cue",
       "state": "suggested",
       "why": "The laptop does streaming and recording (Astra, 2026-10-12). Mommy's classes and events may be streamed or recorded."
+    },
+    {
+      "state": "now",
+      "from": "astra",
+      "to": "claude-code",
+      "carries": "directs",
+      "why": "You ask Claude Code for work in chats, make the decisions, and approve anything that matters: new repos, publishing, paid art, deleting."
+    },
+    {
+      "state": "now",
+      "from": "claude-code",
+      "to": "astra",
+      "carries": "reports",
+      "why": "Claude Code answers you in the chat: what it did with evidence, what is not done, and the questions only you can decide."
+    },
+    {
+      "state": "now",
+      "from": "astra",
+      "to": "codex",
+      "carries": "directs",
+      "why": "You ask Codex for work in chats, make the decisions, and approve anything that matters: new repos, publishing, paid art, deleting."
+    },
+    {
+      "state": "now",
+      "from": "codex",
+      "to": "astra",
+      "carries": "reports",
+      "why": "Codex answers you in the chat: what it did with evidence, what is not done, and the questions only you can decide."
+    },
+    {
+      "state": "now",
+      "from": "astra",
+      "to": "chatgpt",
+      "carries": "directs",
+      "why": "You ask ChatGPT for work in chats, make the decisions, and approve anything that matters: new repos, publishing, paid art, deleting."
+    },
+    {
+      "state": "now",
+      "from": "chatgpt",
+      "to": "astra",
+      "carries": "reports",
+      "why": "ChatGPT answers you in the chat: what it did with evidence, what is not done, and the questions only you can decide."
+    },
+    {
+      "state": "now",
+      "from": "chatgpt",
+      "to": "openai",
+      "carries": "model",
+      "why": "ChatGPT runs on OpenAI’s models."
+    },
+    {
+      "state": "now",
+      "from": "claude-code",
+      "to": "codex",
+      "carries": "card",
+      "why": "The head chat (Claude Code) keeps the other chats in line: briefs, handoff cards and the sync rules in AGENTS.md. Each intelligent app has its own chat."
+    },
+    {
+      "state": "now",
+      "from": "codex",
+      "to": "claude-code",
+      "carries": "card",
+      "why": "Codex leaves handoff cards and notes for the Claude chats when it stops."
     }
   ],
   "layers": {
@@ -1375,7 +1449,7 @@
     },
     "3": {
       "name": "Friendly Farmer",
-      "detail": "The independent pet agent that watches the herd, runs the Farm website and coordinates."
+      "detail": "The independent pet agent that watches the Intelligent Apps, runs the Farm website and coordinates."
     },
     "4": {
       "name": "Individual pet agents",
@@ -1467,7 +1541,7 @@
           {
             "language": "HTML",
             "percent": 81.9,
-            "why": "The Cage, every pet's app page in apps/, and the Herd Web: pages that open by double-click."
+            "why": "The Cage, every pet's app page in apps/, and the System Map: pages that open by double-click."
           },
           {
             "language": "JavaScript",
@@ -1857,12 +1931,12 @@
           },
           {
             "language": "HTML",
-            "percent": 3.0,
+            "percent": 3,
             "why": "The renderer's screens and the pet app page."
           },
           {
             "language": "CSS",
-            "percent": 1.0,
+            "percent": 1,
             "why": "Styling for the desktop front end."
           },
           {

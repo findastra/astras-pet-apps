@@ -69,7 +69,7 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 | 4 Workers | A worker for Deck Duck and one for the Farmer, each with its own inbox, schedule and health; keep running while the Farm and Farmer are closed | B (part), C |
 | 5 Harness | One agent framework chosen after a short comparison against Node and C#; observe → verify loop for Deck Duck | B, F |
 | 6 Pet-to-pet | Deck Duck asks Patch Cat for diagnostics with the typed envelope | B |
-| 7 Desktop | Tray double-click = herd, triple-click = lineup; cross-monitor roaming; desktop moods from real status | E |
+| 7 Desktop | Tray double-click = all desktop pets, triple-click = lineup; cross-monitor roaming; desktop moods from real status | E |
 | 8 More hosts and pets | Home server or Pi host; the v5.2 pets in the order v5.2 gives | M–R |
 
 Kennel, marketing site and Farmer's pet incubation (G, H, J, L) start after Phase 3 proves the

@@ -44,7 +44,7 @@ package dependency.
 | Pets roam the real Windows desktop | Yes, one window per pet |
 | Across monitors | Partly: each pet roams the work area of the screen it is on; it does not cross to another monitor by itself. Not verified on a multi-monitor PC |
 | Tray Star single-click toggles the desktop Star | Yes |
-| Double-click toggles all roaming pets | No. The *desktop* star (not the tray) toggles the herd on click |
+| Double-click toggles all roaming pets | No. The *desktop* star (not the tray) toggles the desktop pets on click |
 | Triple-click: formation vs free roam | No. The desktop star's double-click toggles a floor lineup |
 | Right-click: management menu | Yes |
 | Hiding visuals never stops work | Trivially true: no pet has a background worker yet |

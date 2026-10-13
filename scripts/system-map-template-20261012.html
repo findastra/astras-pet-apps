@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astra's PetOS System Map</title>
+<meta name="description" content="3D map of Astra's PetOS: every pet, model, program and piece of infrastructure, and what flows between them.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Generated page: edit scripts/system-map-template-20261012.html, then npm run build.
+   Layout: full-bleed 3D night field; controls float top-left, details dock right (bottom sheet on phones). Deliberately dark-only. */
+:root{
+  color-scheme:dark;
+  --bg:#0b0a12; --panel:rgba(22,19,34,.9); --line:#2e2840; --fg:#ece8f6; --muted:#9b93b1;
+  --host:#ffcc4d; --you:#ff8fd0; --pet:#9b7bff; --pipe:#3fd3e0; --seed:#b6f25a; --road:#7d86a3; --model:#ff9f43; --infra:#5ef0b0; --program:#d7d2e6; --machine:#8fb4ff;
+  --l0:#8d8a99; --l1:#ff8fd0; --l2:#5ad1ff; --l3:#ffcc4d; --l4:#b39dff; --l5:#ff9f43; --l6:#7ee0a1;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;overflow:hidden}
+#stage{position:fixed;inset:0}
+#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;font-size:11px;white-space:nowrap;color:var(--fg);text-shadow:0 0 4px #000,0 0 2px #000;will-change:transform,opacity}
+.lbl.big{font-size:13px;font-weight:500}
+.hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(370px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
+h1{font-family:var(--display);font-size:1.5rem;margin:0;line-height:1;letter-spacing:-.01em}
+h1 span{color:var(--host)}
+.sub{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:transparent;color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn[aria-pressed="true"]{background:#2a2340;border-color:#5b4d85}
+.btn:focus-visible,input:focus-visible,.res button:focus-visible{outline:2px solid var(--host);outline-offset:2px}
+.sw{width:14px;height:3px;border-radius:2px;display:inline-block}
+.sw.d{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.shapes{display:grid;gap:5px;font-size:12px;color:var(--muted)}
+.shapes div{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center}
+/* Every key item is a switch: click to hide or show that kind of thing on the map. */
+button.key{font:inherit;color:inherit;background:none;border:0;padding:2px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
+.shapes button.key{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center;margin:0 -4px}
+button.key:hover{background:#2a2340}
+button.key[aria-pressed="false"]{opacity:.35}
+button.key[aria-pressed="mixed"]{opacity:.65}
+button.key[aria-pressed="false"] span,button.key[aria-pressed="false"]>.t{text-decoration:line-through}
+button.key:focus-visible{outline:2px solid var(--host);outline-offset:1px}
+.shapes b{color:var(--fg);font-weight:500}
+.shapes svg{width:18px;height:18px}
+.label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.search{position:relative}
+.search input{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#120f1c;color:var(--fg)}
+.res{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#171324;border:1px solid var(--line);border-radius:8px;padding:4px;display:grid;z-index:2;max-height:260px;overflow-y:auto}
+.res button{font:inherit;text-align:left;background:none;border:0;color:var(--fg);padding:6px 8px;border-radius:6px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.res button:hover,.res button.on{background:#2a2340}
+.res small{color:var(--muted);margin-left:auto}
+details summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.side{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;width:min(360px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;backdrop-filter:blur(6px)}
+.side h2{font-family:var(--display);font-size:1.25rem;margin:0;overflow-wrap:anywhere}
+.chip{font-size:11px;border-radius:999px;padding:2px 8px;border:1px solid currentColor;display:inline-block;white-space:nowrap}
+.job{margin:0;line-height:1.5}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);overflow-wrap:anywhere;margin:0}
+.side a{color:var(--pipe)}
+ul.conns{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.conns li{border-top:1px solid var(--line);padding-top:8px;font-size:12.5px;line-height:1.45;display:grid;gap:3px}
+ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}
+.kind{font-family:var(--mono);font-size:11.5px}
+.why{color:var(--muted)}
+.langs{display:grid;gap:8px}
+.lang{display:grid;gap:3px;font-size:12.5px;line-height:1.45}
+.lang .bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.lang .bar i{display:block;height:100%}
+.lang b{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.codechip{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:5px;background:#231d33;color:var(--fg)}
+.close{justify-self:end}
+.tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
+@media (max-width:700px){
+  .hud{width:auto;right:12px;max-height:46%}
+  .hud .legend,.hud .shapes,.hud details,.hud .types-h,.hud .sub{display:none}
+  .side{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:52%;width:auto;left:12px}
+}
+</style></head><body>
+<div id="stage" aria-label="3D map of Astra's PetOS"></div>
+<div id="labels" aria-hidden="true"></div>
+
+<section class="hud">
+  <div>
+    <h1>System <span>Map</span></h1>
+    <p class="sub">Astra's PetOS as a 3D map: every pet, model, program and piece of infrastructure, and what flows between them. Built from <b>pets.json</b> and <b>system-map.json</b>. Shells follow the architecture layers: the neutral registry at the core, the Farmer, every pet agent, the glass AI harness around them, models and programs, and you and your devices outside. Click a node or a line for details.</p>
+  </div>
+  <div class="search">
+    <label class="label" for="q">Search</label>
+    <input id="q" type="search" placeholder="Pet, program, job…" autocomplete="off" aria-controls="res">
+    <div class="res" id="res" hidden role="listbox"></div>
+  </div>
+  <div class="row" role="group" aria-label="View">
+    <button class="btn" id="vNow" aria-pressed="false">Works today</button>
+    <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
+    <button class="btn" id="vHub" aria-pressed="false">Links to every app</button>
+    <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
+    <button class="btn" id="vCode">Code list</button>
+    <button class="btn" id="vReset">Show everything</button>
+  </div>
+  <p class="sub">Every item in the keys below is a switch: click it to hide or show that kind of thing.</p>
+  <div class="label">Line colour = architecture layer (click to hide)</div>
+  <div class="legend" id="layerLegend"></div>
+  <div class="label">Line style = how real it is (click to hide)</div>
+  <div class="row" id="edgeToggles"></div>
+  <div class="label types-h">Shape key (click to hide)</div>
+  <div class="shapes" id="shapeKey"></div>
+  <div class="label types-h">Colour key (nodes, click to hide)</div>
+  <div class="legend" id="nodeLegend"></div>
+  <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Left-drag</b> spins the sphere freely in any direction, with no stops, <b>middle-drag</b> pans, <b>scroll</b> zooms, <b>F</b> frames what you selected (or every Intelligent App). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
+  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every app (pets that reach every other Intelligent App) stay hidden until you switch them on or click one of those pets.</p></details>
+</section>
+
+<aside class="side" id="side" hidden aria-live="polite"></aside>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TrackballControls.js"></script>
+<script>
+const DATA = __DATA__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const TYPE = {
+  host:{color:css('--host'),r:.95,shape:'sphere'}, pet:{color:css('--pet'),r:.55,shape:'sphere'},
+  pipeline:{color:css('--pipe'),r:.44,shape:'sphere'}, seed:{color:css('--seed'),r:.38,shape:'sphere'},
+  roadmap:{color:css('--road'),r:.34,shape:'sphere'}, infrastructure:{color:css('--infra'),r:.6,shape:'gem'},
+  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.36,shape:'box'},
+  'host-machine':{color:css('--machine'),r:.55,shape:'cyl'}, you:{color:css('--you'),r:.8,shape:'sphere'}, assistant:{color:css('--l0'),r:.6,shape:'tetra'},
+};
+// Shells follow the architecture layers. Neutral registry at the core (Program Manager is not the Farmer's),
+// the Farmer around it, every pet agent, the glass AI harness around all of them, the models and real programs
+// they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
+// Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
+const LAYER_R = {2:5, 3:10, 4:17, 5:29, 6:36, 0:41, 1:46};
+const HARNESS_R = 23;
+const HOME_CAM = [0,26,104];
+const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
+const STATE = {
+  now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
+};
+const LANG_COLOR = {'HTML':'#e34c26','JavaScript':'#f1e05a','TypeScript':'#3178c6','C#':'#178600','Python':'#3572a5','PowerShell':'#5391fe','Batchfile':'#c1f12e','CSS':'#663399','Shell':'#89e051','SQL':'#e38c00'};
+const langOf = n => (n.code?.languages||[]).map(l=>l.language).join(' ');
+const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
+let showHub = false;
+// Key switches: hidden node types, hidden line layers, and the faint layer shells.
+const hiddenTypes = new Set(), hiddenLayers = new Set(); let shellsOn = true;
+const nodeOn = n => !hiddenTypes.has(n.type);
+const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
+
+// ---------- scene ----------
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setClearColor(css('--bg'));
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .005);
+const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(...HOME_CAM);
+// Trackball, not orbit: it turns freely in every direction, over the top and under the bottom, with no stops.
+const controls = new THREE.TrackballControls(camera, renderer.domElement);
+let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+controls.rotateSpeed = 2.6; controls.zoomSpeed = 1.1; controls.panSpeed = .6; controls.dynamicDampingFactor = .15;
+controls.minDistance = 2; controls.maxDistance = 200;
+// The switch maps mouse BUTTONS to actions: left (0) rotates, middle (1) pans, right (2) is left free for fly-look.
+controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:1};
+controls.keys = ['NoKeyA','NoKeyS','NoKeyD']; // keep A, S and D for flying, not the trackball's key modes
+scene.add(new THREE.AmbientLight(0xffffff,.55));
+const key = new THREE.PointLight(0xffffff,1.1); key.position.set(10,20,15); scene.add(key);
+const rim = new THREE.PointLight(0x9b7bff,.8); rim.position.set(-15,-8,-10); scene.add(rim);
+
+// ---------- layout: force-directed. Links pull, nodes push, the Farmer is pinned at the centre.
+// Links to every app are left out of the forces so the hubs do not swallow the map. Seeded: same shape every load.
+const pos = {};
+(function settle(){
+  // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
+  let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+  const ids=DATA.nodes.map(n=>n.id), P={}, R={};
+  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+    P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
+  const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3();
+  for(let step=0;step<500;step++){
+    const F={}; ids.forEach(i=>F[i]=new THREE.Vector3());
+    for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){
+      if(Math.abs(R[ids[a]]-R[ids[b]])>1.5) continue;
+      d.subVectors(P[ids[a]],P[ids[b]]); const dist=Math.max(d.length(),.3), f=14/(dist*dist);
+      d.multiplyScalar(f/dist); F[ids[a]].add(d); F[ids[b]].sub(d); }
+    springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const f=.04; F[e.from].addScaledVector(d,f); F[e.to].addScaledVector(d,-f); });
+    const cool=1-step/560;
+    ids.forEach(i=>{ if(nodeById[i].type==='harness') { P[i].set(0,HARNESS_R,0); return; } if(F[i].length()>1.5) F[i].setLength(1.5); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
+  }
+  ids.forEach(i=>pos[i]=P[i]);
+})();
+// faint shells so the layers read as layers, and the glass AI harness wrapped around every pet agent
+const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), new THREE.MeshBasicMaterial({color:css('--l5'),transparent:true,opacity:.055,side:THREE.DoubleSide,depthWrite:false}));
+scene.add(harnessGlass);
+const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
+scene.add(harnessWire);
+const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:0x8a7fb3,wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
+
+// ---------- nodes ----------
+// makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
+function makeAvatar(n){
+  const t = TYPE[n.type], planned = n.state==='planned' && n.type!=='seed';
+  const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='tetra' ? new THREE.TetrahedronGeometry(t.r*1.2) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
+    : t.shape==='box' ? new THREE.BoxGeometry(t.r*1.4,t.r*1.4,t.r*1.4) : t.shape==='cyl' ? new THREE.CylinderGeometry(t.r*.8,t.r*.8,t.r*1.2,24) : new THREE.SphereGeometry(t.r,32,20);
+  const mat = new THREE.MeshStandardMaterial({color:t.color, emissive:t.color, emissiveIntensity:.28, roughness:.45, metalness:.1,
+    transparent:true, opacity:planned?.55:1});
+  const m = new THREE.Mesh(geo, mat); m.userData.baseOpacity = planned?.55:1; return m;
+}
+// Icon mode: the pet's own idle mood frame, or a round badge with its initials for everything else.
+function makeIcon(n){
+  const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
+  const tex=new THREE.CanvasTexture(c), sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false}));
+  const sz=Math.max(TYPE[n.type].r*3.2,1.4); sp.scale.set(sz,sz,1);
+  if(n.icon){ const img=new Image(); img.onload=()=>{ g.drawImage(img,0,0,128,128); tex.needsUpdate=true; }; img.src=n.icon; }
+  else { g.fillStyle=TYPE[n.type].color; g.globalAlpha=.9; g.beginPath(); g.arc(64,64,56,0,Math.PI*2); g.fill(); g.globalAlpha=1;
+    g.fillStyle='#0b0a12'; g.font='bold 44px system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
+    g.fillText(n.name.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(),64,68); tex.needsUpdate=true; }
+  sp.visible=false; sp.userData.node=n; return sp;
+}
+const meshes = [], icons = [], labelEls = {};
+const labelsBox = document.getElementById('labels');
+DATA.nodes.forEach(n=>{
+  const m = makeAvatar(n); m.position.copy(pos[n.id]); m.userData.node = n; scene.add(m); meshes.push(m); n.mesh=m;
+  const ic = makeIcon(n); ic.position.copy(pos[n.id]); scene.add(ic); icons.push(ic); n.iconSprite=ic;
+  const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
+});
+
+// ---------- links: bowed curves, flow dots, and an invisible tube on each so it can be clicked ----------
+const pairKey = (a,b)=> a<b ? a+'|'+b : b+'|'+a;
+const viaGlass = l => nodeById[l.from].type==='harness' || nodeById[l.to].type==='harness';
+const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
+  const a=pos[l.from], b=pos[l.to], st=STATE[l.state], col=LAYER_COLOR[l.layer];
+  const mid=a.clone().add(b).multiplyScalar(.5); const out=mid.length()<.5?new THREE.Vector3(0,1,0):mid.clone().normalize();
+  mid.addScaledVector(out, a.distanceTo(b)*.12 + (i%3)*.12);
+  const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
+  const mat = st.dash ? new THREE.LineDashedMaterial({color:col,dashSize:st.dash[0],gapSize:st.dash[1],transparent:true,opacity:st.op})
+                     : new THREE.LineBasicMaterial({color:col,transparent:true,opacity:st.op});
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(40)),mat); if(st.dash) line.computeLineDistances(); scene.add(line);
+  const hit=new THREE.Mesh(new THREE.TubeGeometry(curve,20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
+  let dot=null;
+  if(l.state==='now'||l.state==='planned'){ dot=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),new THREE.MeshBasicMaterial({color:col,transparent:true})); scene.add(dot); }
+  const rec={...l,curve,line,hit,dot,t:Math.random(),base:mat.opacity,pair:pairKey(l.from,l.to)}; hit.userData.link=rec; return rec;
+});
+const hits = links.map(l=>l.hit);
+
+// ---------- controls: toggles, legend ----------
+const STATE_WORD = DATA.states;
+const tg=document.getElementById('edgeToggles');
+Object.keys(STATE).forEach(k=>{
+  const n=DATA.links.filter(e=>e.state===k&&!e.everyApp).length;
+  const b=document.createElement('button'); b.className='btn'; b.setAttribute('aria-pressed','true'); b.dataset.state=k;
+  const sw=document.createElement('i'); sw.className='sw'+(STATE[k].dash?' d':''); sw.style.background=css('--fg'); sw.style.color=css('--fg'); sw.style.opacity=STATE[k].op;
+  b.append(sw, document.createTextNode(`${STATE_WORD[k]} (${n})`));
+  b.onclick=()=>{shown[k]=!shown[k]; b.setAttribute('aria-pressed',shown[k]); syncView(); apply();};
+  tg.appendChild(b);
+});
+const ll=document.getElementById('layerLegend');
+// A key switch: a button that shows its on/off state and calls toggle() when clicked.
+function keyButton(parent, title, build, toggle){ const b=document.createElement('button'); b.className='key'; b.type='button'; b.title=title; b.setAttribute('aria-pressed','true');
+  build(b); b.onclick=()=>{ toggle(); syncKeys(); apply(); }; parent.appendChild(b); return b; }
+const keyButtons = []; // [button, isOn()]
+Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.layer===+k&&!l.everyApp).length;
+  const b=keyButton(ll, L.detail, b=>{ const d=document.createElement('i'); d.className='sw'; d.style.background=LAYER_COLOR[k]; d.style.height='4px';
+    const s=document.createElement('span'); s.textContent=`${k} ${L.name} · ${n}`; b.append(d,s); },
+    ()=>{ hiddenLayers.has(+k) ? hiddenLayers.delete(+k) : hiddenLayers.add(+k); });
+  keyButtons.push([b,()=>!hiddenLayers.has(+k)]); });
+{ const b=keyButton(ll, 'The faint wire spheres that mark each layer', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color='#8a7fb3';
+    const s=document.createElement('span'); s.textContent='Layer shell outlines'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
+  keyButtons.push([b,()=>shellsOn]); }
+const SHAPES=[
+  ['<circle cx="9" cy="9" r="7"/>','Sphere','an Intelligent App (Pet): each pet is one intelligent app (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
+  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
+  ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
+  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service','layer 6'],
+  ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
+  ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
+];
+// Which node types each shape stands for; hiding a shape hides all of them.
+const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Glass shell':['harness'], Diamond:['model'], Gem:['infrastructure'], Cube:['program'], Cylinder:['host-machine'], Pyramid:['assistant']};
+const sk=document.getElementById('shapeKey');
+SHAPES.forEach(([svg,name,what])=>{ const types=SHAPE_TYPES[name]||[];
+  const b=keyButton(sk, `Hide or show every ${name.toLowerCase()}`, b=>{
+    b.innerHTML=`<svg viewBox="0 0 18 18" aria-hidden="true" fill="${css('--fg')}" stroke="${css('--fg')}">${svg}</svg>`;
+    const s=document.createElement('span'); const t=document.createElement('b'); t.textContent=name; s.append(t, document.createTextNode(': '+what)); b.appendChild(s); },
+    ()=>{ const allOn=types.every(t=>!hiddenTypes.has(t)); types.forEach(t=>allOn?hiddenTypes.add(t):hiddenTypes.delete(t)); });
+  keyButtons.push([b,()=>{ const on=types.filter(t=>!hiddenTypes.has(t)).length; return on===types.length ? true : on ? 'mixed' : false; }]); });
+const lg=document.getElementById('nodeLegend');
+Object.entries(DATA.types).forEach(([k,label])=>{ const n=DATA.nodes.filter(x=>x.type===k).length; if(!n) return;
+  const b=keyButton(lg, `Hide or show: ${label}`, b=>{ const d=document.createElement('i'); d.className='dot'; d.style.background=TYPE[k].color;
+    const s=document.createElement('span'); s.textContent=`${label} · ${n}`; b.append(d,s); },
+    ()=>{ hiddenTypes.has(k) ? hiddenTypes.delete(k) : hiddenTypes.add(k); });
+  keyButtons.push([b,()=>!hiddenTypes.has(k)]); });
+function syncKeys(){ keyButtons.forEach(([b,on])=>b.setAttribute('aria-pressed',on())); }
+document.getElementById('vReset').onclick=()=>{ hiddenTypes.clear(); hiddenLayers.clear(); shellsOn=true; setView(false); syncKeys(); };
+function setView(onlyNow){ Object.keys(shown).forEach(k=>shown[k]=onlyNow?k==='now':true);
+  document.querySelectorAll('#edgeToggles .btn').forEach(b=>b.setAttribute('aria-pressed',shown[b.dataset.state])); syncView(); apply(); }
+function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed',Object.entries(shown).every(([k,v])=>v===(k==='now')));
+  document.getElementById('vAll').setAttribute('aria-pressed',Object.values(shown).every(Boolean)); document.getElementById('vHub').setAttribute('aria-pressed',showHub); }
+document.getElementById('vNow').onclick=()=>setView(true);
+document.getElementById('vAll').onclick=()=>setView(false);
+document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
+let iconMode=false;
+document.getElementById('vIcon').onclick=()=>{ iconMode=!iconMode; document.getElementById('vIcon').setAttribute('aria-pressed',iconMode);
+  apply(); };
+
+// ---------- focus: hover, selected node, selected link, search ----------
+let hovered=null, selected=null, selectedPair=null, matches=null;
+const isHubNode = id => links.some(l=>l.everyApp&&l.from===id);
+function linkVisible(l, focusId){
+  if(!shown[l.state]) return false;
+  if(hiddenLayers.has(l.layer) || !nodeOn(nodeById[l.from]) || !nodeOn(nodeById[l.to])) return false;
+  if(!l.everyApp) return true;
+  return showHub || (focusId && (l.from===focusId || (selected && isHubNode(selected.id) && l.from===selected.id)));
+}
+function apply(){
+  const focus = selected||hovered, fid = focus&&focus.id;
+  const near=new Set();
+  if(fid){ near.add(fid); links.forEach(l=>{ if(linkVisible(l,fid)&&(l.from===fid||l.to===fid)){near.add(l.from);near.add(l.to);} }); }
+  if(selectedPair){ selectedPair.split('|').forEach(i=>near.add(i)); }
+  const anyFocus = !!(fid||selectedPair||matches);
+  links.forEach(l=>{ const vis=linkVisible(l,fid); const on = selectedPair ? l.pair===selectedPair : fid ? (l.from===fid||l.to===fid) : matches ? (matches.has(l.from)&&matches.has(l.to)) : true;
+    l.line.visible=vis; l.hit.visible=vis; l.line.material.opacity = on ? (anyFocus?.95:l.base*(l.everyApp?.5:1)) : .05; if(l.dot) l.dot.visible=vis&&on; });
+  meshes.forEach(m=>{ const n=m.userData.node; const on = selectedPair||fid ? near.has(n.id) : matches ? matches.has(n.id) : true;
+    const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
+    m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
+    m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
+    n.iconSprite.material.opacity = on ? 1 : .12;
+    // The harness has no dot of its own: the glass shell is the harness.
+    const keep=nodeOn(n), solid=n.type!=='harness'; m.visible=keep&&solid&&!iconMode; n.iconSprite.visible=keep&&solid&&iconMode; labelEls[n.id].dataset.off = keep?'':'1'; });
+  const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass;
+  const glassHot = fid && nodeById[fid] && nodeById[fid].type==='harness';
+  harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055;
+  shells.forEach(s=>s.visible=shellsOn);
+}
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
+function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
+  const hn=ray.intersectObjects((iconMode?icons:meshes).filter(o=>o.visible))[0]; if(hn) return {node:hn.object.userData.node};
+  const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link};
+  // The glass harness is picked only near its visible rim, so clicks through the middle still reach what is inside.
+  if(harnessGlass.visible && harnessNode){ const miss=ray.ray.distanceToPoint(new THREE.Vector3()); if(miss>HARNESS_R*.88 && miss<HARNESS_R*1.03) return {node:harnessNode}; }
+  return null; }
+const harnessNode = DATA.nodes.find(n=>n.type==='harness');
+renderer.domElement.addEventListener('pointermove',ev=>{ const p=pick(ev); const n=p&&p.node||null;
+  if(n!==hovered){hovered=n; if(!selected&&!selectedPair) apply();}
+  renderer.domElement.style.cursor=p?'pointer':'grab';
+  if(p){ tip.hidden=false; tip.textContent = p.node ? `${p.node.name}: ${p.node.job||''}` : `${nodeById[p.link.from].name} → ${nodeById[p.link.to].name}: ${p.link.carries}. Click for everything on this line.`;
+    tip.style.left=Math.min(ev.clientX+14,innerWidth-290)+'px'; tip.style.top=(ev.clientY+14)+'px'; } else tip.hidden=true; });
+renderer.domElement.addEventListener('pointerleave',()=>{hovered=null;tip.hidden=true;apply();});
+let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; autoSpin=false;});
+renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0) { downAt=null; return; } const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
+  const p=pick(ev); if(!p) return close(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
+
+// ---------- detail panel ----------
+const side=document.getElementById('side');
+const el=(tag,cls,text)=>{const e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e;};
+function close(){ selected=null; selectedPair=null; side.hidden=true; apply(); }
+function head(title){ side.replaceChildren(); const c=el('button','btn close','Close'); c.onclick=close; side.append(c, el('h2','',title)); }
+function flowItem(l, perspective){
+  const li=el('li'); const st=el('span','chip',`Layer ${l.layer} · ${STATE_WORD[l.state]}`); st.style.color=LAYER_COLOR[l.layer];
+  const top=el('div'); const from=el('button','link',nodeById[l.from].name), to=el('button','link',nodeById[l.to].name);
+  from.onclick=()=>selectNode(nodeById[l.from]); to.onclick=()=>selectNode(nodeById[l.to]);
+  top.append(from, document.createTextNode(' → '), to, document.createTextNode(' '), st);
+  const kind=el('div','kind',`${l.carries}: ${DATA.carries[l.carries]||''}`);
+  li.append(top, kind, el('div','why',l.why)); return li;
+}
+function selectNode(n){
+  selected=n; selectedPair=null; apply(); flyTo(n.id);
+  head(n.name);
+  const c=el('span','chip',DATA.types[n.type]+(n.status?` · ${n.status}`:'')+(n.state==='planned'&&!['seed','roadmap'].includes(n.type)?' · planned':'')); c.style.color=TYPE[n.type].color; side.appendChild(c);
+  const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
+  side.appendChild(el('p','job',n.job||'No job recorded.'));
+  if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
+  side.appendChild(codeBlock(n));
+  const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)
+    : links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.everyApp||showHub||l.from===n.id));
+  if(n.type==='harness') side.appendChild(el('p','why','Its connections are the glass shell itself: every pet agent sits inside it, and models and programs are reached through it. "Every pet" rows stand for one link per pet.'));
+  const outN=list.filter(l=>l.from===n.id).length, inN=list.length-outN;
+  side.appendChild(el('div','label',`${outN} sent · ${inN} received`));
+  const ul=el('ul','conns'); list.forEach(l=>ul.appendChild(flowItem(l)));
+  if(!list.length) ul.appendChild(el('li','why','No connections in the views that are switched on.'));
+  side.appendChild(ul); side.hidden=false;
+}
+function codeBlock(n){
+  const box=el('div','langs');
+  const has = n.code && n.code.languages.length;
+  box.appendChild(el('div','label', has ? `Code · ${n.code.languages.length} language${n.code.languages.length===1?'':'s'}` : 'Code'));
+  if(!n.code){ box.appendChild(el('div','why', n.repo===null||!n.repo ? 'No repo yet, so no code.' : 'Not measured.')); return box; }
+  if(!has){ box.appendChild(el('div','why', n.code.note||'No code yet.')); return box; }
+  n.code.languages.forEach(l=>{ const row=el('div','lang'); const top=el('div'); const b=el('b','',l.language); top.append(b, document.createTextNode(` · ${l.percent}%`));
+    const bar=el('div','bar'); const i=el('i'); i.style.width=Math.max(l.percent,1.5)+'%'; i.style.background=LANG_COLOR[l.language]||css('--muted'); bar.appendChild(i);
+    row.append(top,bar,el('div','why',l.why)); box.appendChild(row); });
+  return box;
+}
+function showCodeList(){
+  selected=null; selectedPair=null; apply();
+  head('Code list');
+  side.appendChild(el('p','why',`What each pet is written in and why, measured from each repo's main branch${DATA.codeChecked?' on '+DATA.codeChecked:''}. Click a pet for the reasons.`));
+  const totals={}; DATA.nodes.forEach(n=>(n.code?.languages||[]).forEach(l=>{ totals[l.language]=(totals[l.language]||0)+1; }));
+  const sum=el('div','chips'); Object.entries(totals).sort((a,b)=>b[1]-a[1]).forEach(([k,c])=>{ const ch=el('button','codechip',`${k} · ${c}`); ch.style.borderLeft='3px solid '+(LANG_COLOR[k]||css('--muted')); ch.style.border='0'; ch.style.borderLeft='3px solid '+(LANG_COLOR[k]||css('--muted')); ch.style.cursor='pointer'; ch.onclick=()=>{ q.value=k; runSearch(); }; sum.appendChild(ch); });
+  side.append(el('div','label','Used by how many repos (click to find them)'), sum);
+  const ul=el('ul','conns');
+  DATA.nodes.filter(n=>n.code).sort((a,b)=>a.name.localeCompare(b.name)).forEach(n=>{ const li=el('li'); const b=el('button','link',n.name); b.onclick=()=>selectNode(n);
+    const chips=el('div','chips'); (n.code.languages.length?n.code.languages:[{language:'no code yet',percent:''}]).forEach(l=>{ const c=el('span','codechip',l.percent!==''?`${l.language} ${Math.round(l.percent)}%`:l.language); c.style.borderLeft='3px solid '+(LANG_COLOR[l.language]||css('--muted')); chips.appendChild(c); });
+    li.append(b, chips); ul.appendChild(li); });
+  side.appendChild(ul); side.hidden=false;
+}
+document.getElementById('vCode').onclick=showCodeList;
+function selectPair(pair){
+  selectedPair=pair; selected=null; apply();
+  const [a,b]=pair.split('|').map(i=>nodeById[i]);
+  head(`${a.name} ⇄ ${b.name}`);
+  const flows=links.filter(l=>l.pair===pair);
+  [[a,b],[b,a]].forEach(([x,y])=>{ const f=flows.filter(l=>l.from===x.id);
+    side.appendChild(el('div','label',`${x.name} → ${y.name} · ${f.length}`));
+    const ul=el('ul','conns'); f.forEach(l=>ul.appendChild(flowItem(l)));
+    if(!f.length) ul.appendChild(el('li','why','Nothing flows this way.'));
+    side.appendChild(ul); });
+  side.hidden=false;
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+
+// ---------- search ----------
+const q=document.getElementById('q'), res=document.getElementById('res'); let resItems=[], resOn=0;
+function runSearch(){
+  const s=q.value.trim().toLowerCase();
+  if(!s){ matches=null; res.hidden=true; apply(); return; }
+  const found=DATA.nodes.filter(n=>[n.name,n.job,n.id,DATA.types[n.type],langOf(n)].join(' ').toLowerCase().includes(s))
+    .sort((x,y)=>(y.name.toLowerCase().startsWith(s))-(x.name.toLowerCase().startsWith(s)));
+  matches=new Set(found.map(n=>n.id)); resItems=found.slice(0,12); resOn=0; res.replaceChildren();
+  if(!found.length){ res.appendChild(el('div','why','  Nothing matches.')); }
+  resItems.forEach((n,i)=>{ const b=el('button',i===0?'on':''); b.setAttribute('role','option');
+    const d=el('i','dot'); d.style.background=TYPE[n.type].color; b.append(d, document.createTextNode(n.name), el('small','',DATA.types[n.type].split(' (')[0]));
+    b.onclick=()=>{ res.hidden=true; selectNode(n); }; res.appendChild(b); });
+  res.hidden=false; apply();
+}
+q.addEventListener('input',runSearch);
+q.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&resItems[resOn]){ res.hidden=true; selectNode(resItems[resOn]); }
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); resOn=(resOn+(e.key==='ArrowDown'?1:-1)+resItems.length)%Math.max(resItems.length,1);
+    [...res.querySelectorAll('button')].forEach((b,i)=>b.classList.toggle('on',i===resOn)); }
+  if(e.key==='Escape'){ q.value=''; runSearch(); }
+});
+
+// ---------- camera fly ----------
+let fly=null;
+function flyTo(id){ const p=pos[id]; if(!p) return; autoSpin=false;
+  const dir=camera.position.clone().sub(controls.target).normalize();
+  fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(p.length()>1?p.clone().normalize().multiplyScalar(14):dir.multiplyScalar(14))}; }
+
+// ---------- Unity-style navigation: hold right mouse to look, WASD to fly, Q/E down/up, Shift faster, F to frame ----------
+const keys = new Set(); let looking=false; const euler=new THREE.Euler(0,0,0,'YXZ');
+renderer.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+renderer.domElement.addEventListener('pointerdown',e=>{ if(e.button!==2) return; looking=true; controls.enabled=false; autoSpin=false; fly=null;
+  euler.setFromQuaternion(camera.quaternion); renderer.domElement.setPointerCapture(e.pointerId); });
+addEventListener('pointerup',e=>{ if(e.button!==2||!looking) return; looking=false;
+  const dist=Math.min(Math.max(camera.position.distanceTo(controls.target),6),30);
+  controls.target.copy(camera.position).add(new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion).multiplyScalar(dist)); controls.enabled=true; });
+addEventListener('pointermove',e=>{ if(!looking) return; euler.y-=e.movementX*.0035; euler.x=Math.max(-1.5,Math.min(1.5,euler.x-e.movementY*.0035)); camera.quaternion.setFromEuler(euler); });
+const typing = () => ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName);
+addEventListener('keydown',e=>{ if(typing()) return; const k=e.key.toLowerCase();
+  if('wasdqe'.includes(k)&&k.length===1||e.key.startsWith('Arrow')||k==='shift'){ keys.add(k); autoSpin=false; }
+  if(k==='f'){ const id=(selected&&selected.id)||(selectedPair&&selectedPair.split('|')[0]); if(id) flyTo(id); else { fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(...HOME_CAM)}; } } });
+addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+addEventListener('blur',()=>keys.clear());
+function move(dt){ if(!keys.size) return;
+  const f=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion), r=new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion), u=new THREE.Vector3(0,1,0), v=new THREE.Vector3();
+  if(keys.has('w')||keys.has('arrowup')) v.add(f); if(keys.has('s')||keys.has('arrowdown')) v.sub(f);
+  if(keys.has('d')||keys.has('arrowright')) v.add(r); if(keys.has('a')||keys.has('arrowleft')) v.sub(r);
+  if(keys.has('e')) v.add(u); if(keys.has('q')) v.sub(u);
+  if(!v.lengthSq()) return; v.normalize().multiplyScalar((keys.has('shift')?40:14)*dt);
+  camera.position.add(v); if(!looking) controls.target.add(v); }
+
+// ---------- loop ----------
+function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); controls.handleResize(); }
+addEventListener('resize',resize); resize();
+const v=new THREE.Vector3(); let last=performance.now();
+function frame(now){
+  const dt=Math.min((now-last)/1000,.05); last=now;
+  if(fly){ const k=Math.min(1,(now-fly.t0)/700), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    controls.target.lerpVectors(fly.fromT,fly.toT,e); camera.position.lerpVectors(fly.fromC,fly.toC,e); if(k>=1) fly=null; }
+  move(dt);
+  if(autoSpin && !looking && !fly){ const off=camera.position.clone().sub(controls.target); off.applyAxisAngle(camera.up, dt*.12); camera.position.copy(controls.target).add(off); camera.lookAt(controls.target); }
+  if(!looking) controls.update();
+  links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=(l.t+dt*.25)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
+  renderer.render(scene,camera);
+  const W=innerWidth,H=innerHeight;
+  DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
+    if(v.z>1||lab.dataset.off){lab.style.opacity=0;return;}
+    const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.12,Math.min(1,1.8-d/70))*(lab.dataset.dim?.15:1);
+    lab.style.opacity=op; lab.style.transform=`translate(${(v.x*.5+.5)*W}px,${(-v.y*.5+.5)*H}px) translate(-50%,-100%)`; });
+  requestAnimationFrame(frame);
+}
+apply(); requestAnimationFrame(frame);
+</script>
+</body></html>

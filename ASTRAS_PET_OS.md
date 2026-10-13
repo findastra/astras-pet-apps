@@ -6,7 +6,7 @@
 > - 2026-10-11: Seeded pets Pole Puff, Procreate Panda, Skill Scout, OSC Sealion (first recorded as PSC Sealion), Platform Platypus and Piranesi Nessi; see `seeds` in `pets.json` and docs/migration/PLAN.md.
 
 **Product name (approved):** ASTRAS_PET_OS — *Grow your own AI ecosystem.*  
-**Official first-party ecosystem and user's herd:** `astras-farm`  
+**Official first-party ecosystem and user's installed Intelligent Apps:** `astras-farm`  
 **Community discovery, adoption and submissions:** `astras-kennel`  
 **Framework:** Astra Pet SDK / reusable independent pet agent harness  
 **Existing development repository:** https://github.com/findastra/astras-pet-apps  
@@ -25,7 +25,7 @@
 ### Brand and distribution
 
 - **ASTRAS_PET_OS** is the umbrella consumer product and developer platform; technically it is a local-first, cross-device, distributed multi-agent operating *environment* running on top of Windows/Linux host OSes, not a replacement kernel.
-- **`astras-farm`** is the first-party home: official Astra-maintained pets, the user's installed herd, Farmer's management interface, and a simple responsive Farm website. Every pet card has an always-visible fast text box. No browser-based Cage, simulated habitat, or pet roaming in a browser.
+- **`astras-farm`** is the first-party home: official Astra-maintained pets, the user's installed Intelligent Apps, Farmer's management interface, and a simple responsive Farm website. Every pet card has an always-visible fast text box. No browser-based Cage, simulated habitat, or pet roaming in a browser.
 - **`astras-kennel`** is the community pet adoption catalog: community-submitted repositories, searchable metadata, adoption/install flow, compatibility and security status, and maintainer attribution. A Kennel pet may later be proposed for migration into the official Farm only through explicit consent, licensing/provenance review, security checks, and a deliberate maintenance transfer; never automatic.
 - **Astra Pet SDK** supplies common contracts, manifests, templates, runtime harness, task/inbox infrastructure, tool adapters, permissions, versioning, and testing scaffolds.
 - Users pick **only the pets they want**. Shared core security/identity/messaging services remain framework responsibilities, not optional bypassable controls.
@@ -33,7 +33,7 @@
 
 ### Farmer grows new pets
 
-Friendly Farmer is an independent pet, registered and supervised through the same neutral Program Manager as every other pet. Farmer is **not** the harness or central execution bottleneck. Farmer is responsible for herd health, coordination, and **pet incubation**:
+Friendly Farmer is an independent pet, registered and supervised through the same neutral Program Manager as every other pet. Farmer is **not** the harness or central execution bottleneck. Farmer is responsible for Intelligent App health, coordination, and **pet incubation**:
 
 `user idea -> check existing pets/templates -> requirements and permissions -> scaffold from SDK -> assign version + repo plan -> implement integration -> Test Tortoise tests -> Gatekeeper Goddess permission review -> user approval -> register/install -> optional release/publish -> GitHub Goldfish tracks versions`
 
@@ -74,7 +74,7 @@ New approved additions and roles:
 
 ### Approved expansion — Linux, self-hosting, ethical security, local AI, and digital nomad pets (v5.2)
 
-**This section is now part of the authoritative ASTRAS_PET_OS plan, not a separate brainstorming appendix.** The user explicitly approved all 18 candidates. They are **approved for the roadmap**, not represented as already implemented or as requirements to install the entire herd. Prioritize by dependencies and user value. Preserve existing ASTRAS_PET_OS roles and all earlier decisions.
+**This section is now part of the authoritative ASTRAS_PET_OS plan, not a separate brainstorming appendix.** The user explicitly approved all 18 candidates. They are **approved for the roadmap**, not represented as already implemented or as requirements to install every Intelligent App. Prioritize by dependencies and user value. Preserve existing ASTRAS_PET_OS roles and all earlier decisions.
 
 | Pet | Area | Primary function |
 |---|---|---|
@@ -191,7 +191,7 @@ Astra's Pet Apps is a local-first, multi-device ecosystem of independent utility
 
 **The Farm is a lightweight, responsive website**, not a visual Cage, game, or simulated pet habitat. It displays all pets as cards. **Under every pet is an always-visible, fast text box** for the user to submit recommendations, questions, tasks, and standing-goal suggestions. The Farm must work from **Android, iPad, iPhone, Windows, and future authorized devices and servers**. Responsive browser access is mandatory; native mobile apps are optional later.
 
-**Friendly Farmer is a pet like every other pet.** He has his own application, runtime, harness, memory, schedules, standing goals, permissions, and Program Manager registration. His domain is coordinating, maintaining, and improving the herd. He operates the Farm website. He is not the entire framework, not the sole AI brain, and not required for other pets to execute their work.
+**Friendly Farmer is a pet like every other pet.** He has his own application, runtime, harness, memory, schedules, standing goals, permissions, and Program Manager registration. His domain is coordinating, maintaining, and improving the Intelligent Apps. He operates the Farm website. He is not the entire framework, not the sole AI brain, and not required for other pets to execute their work.
 
 **Program Manager is neutral shared infrastructure**, registering, connecting, and managing real programs/resources for every pet—including Farmer himself. It must not depend on Farmer's AI agent.
 
@@ -213,7 +213,7 @@ Astra's Pet Apps is a local-first, multi-device ecosystem of independent utility
 | Pet runtime | Independently executed worker, scheduler, inbox, state store, and task processor |
 | Pet agent | Goal-directed decision-maker that observes, discovers work, plans, uses tools, and delegates |
 | Agent harness | Reusable tools, model adapters, skill loader, memory, task execution, permission checks, and tracing |
-| Friendly Farmer | Specialized herd-coordination pet; managed through Program Manager like all other pets |
+| Friendly Farmer | Specialized Intelligent App coordination pet; managed through Program Manager like all other pets |
 | The Farm | Farmer's simple web directory and quick-input interface |
 | Desktop host + Star | Windows tray and roaming mascot visuals; never the pet execution engine |
 
@@ -256,14 +256,14 @@ This is a logical architecture, not a mandate for a single process or machine. D
 - Program Manager registers Farmer's app and the Farm website as normal resources.
 - Farmer can be started/restarted by an independent service supervisor.
 - Farmer's AI agent may be stopped without stopping Program Manager or the other pet runtimes.
-- Farmer can inspect authorized herd status and propose/delegate maintenance, but has no magical blanket admin rights.
+- Farmer can inspect authorized Intelligent App status and propose/delegate maintenance, but has no magical blanket admin rights.
 
 ## 4. The Farm: required product experience
 
 **No Cage, no browser roaming, no farm simulation.** Prioritize usability and speed.
 
 ### 4.1 Main screen
-- Header: The Farm, search/filter, herd health summary, access to Farmer.
+- Header: The Farm, search/filter, Intelligent App health summary, access to Farmer.
 - Responsive grid/list of every registered pet including Friendly Farmer.
 - Each pet card has:
   1. Mascot icon/image, name, concise purpose.
@@ -405,7 +405,7 @@ Farmer should proactively:
 - Track overdue tasks, undelivered suggestions and pending approvals.
 - Identify framework incompatibilities and redundant work.
 - Recommend maintenance, repairs, and new cross-pet collaboration.
-- Coordinate authorized diagnostics and concise herd-wide reporting.
+- Coordinate authorized diagnostics and concise reporting across all Intelligent Apps.
 - Maintain Farm website availability and report its health.
 
 Farmer must not silently gain administrator rights or become a central AI dependency. Program Manager and service supervisor must be able to manage Farmer's own app.
@@ -512,4 +512,4 @@ Mock screens alone do not satisfy acceptance. Provide reproducible test evidence
 9. Ask for review before destructive restructuring, forced pushes, or major foundational merges.
 10. Implement in small testable increments; demonstrate real behavior and truthful status.
 
-**NORTH STAR:** The Farm is a simple multi-device website. Friendly Farmer is an independently operating pet that coordinates the herd. The neutral Program Manager manages Farmer too. Every pet connects to real programs, can receive fast suggestions, and can proactively discover and delegate authorized work. The mascots roam on Windows, never inside a Cage.
+**NORTH STAR:** The Farm is a simple multi-device website. Friendly Farmer is an independently operating pet that coordinates the Intelligent Apps. The neutral Program Manager manages Farmer too. Every pet connects to real programs, can receive fast suggestions, and can proactively discover and delegate authorized work. The mascots roam on Windows, never inside a Cage.

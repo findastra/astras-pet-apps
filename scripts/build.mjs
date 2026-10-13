@@ -7,7 +7,7 @@
 //   README.md                    the pet table between the pets:start / pets:end markers
 //   art/roster.png               every pet in every mood on one labelled sheet
 //   RELATIONS.md, MOOD-KEY.md   how the pets relate, and what each mood means for each pet (relations-20261009.mjs)
-//   herd-web-20261012.html       the 3D map of Astra's PetOS, from pets.json and herd-web.json (herd-web-20261012.mjs)
+//   system-map-20261012.html       the 3D map of Astra's PetOS, from pets.json and system-map.json (system-map-20261012.mjs)
 //
 // This replaces build-art.mjs, which drew the original 32x32 pets by hand.
 // Generating new art is separate and costs money: see generate-pets.mjs.
@@ -19,7 +19,7 @@ import { buildRoster } from './roster.mjs';
 import { applyTable } from './lib.mjs';
 import { MOODS, decodePng } from './sheet-to-sprites.mjs';
 import { buildRelations, buildMoodKey } from './relations-20261009.mjs';
-import { buildHerdWeb, readHerdWebSources, HERD_WEB } from './herd-web-20261012.mjs';
+import { buildSystemMap, readSystemMapSources, SYSTEM_MAP } from './system-map-20261012.mjs';
 import { existsSync } from 'node:fs';
 
 process.chdir(fileURLToPath(new URL('..', import.meta.url)));
@@ -60,7 +60,7 @@ const names = Object.fromEntries([
 writeFileSync('ROSTER.md', buildRoster(registry, MOODS, names, data.frames));
 writeFileSync('RELATIONS.md', buildRelations(registry));
 writeFileSync('MOOD-KEY.md', buildMoodKey(registry));
-{ const { extra, template, icons } = readHerdWebSources(); writeFileSync(HERD_WEB.output, buildHerdWeb(registry, extra, template, icons)); }
+{ const { extra, template, icons } = readSystemMapSources(); writeFileSync(SYSTEM_MAP.output, buildSystemMap(registry, extra, template, icons)); }
 
 const readme = readFileSync('README.md', 'utf8');
 const nextReadme = applyTable(readme, registry);

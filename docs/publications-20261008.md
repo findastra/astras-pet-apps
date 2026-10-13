@@ -65,7 +65,7 @@ The local build converts these sheets into dated frame filenames, composes the s
 
 ## Functional limits
 
-- The Cage and its herd run in a browser. An optional Windows Farmer companion is included separately; see [its instructions](farmer-dock-20261008.md) for current behavior and verification.
+- The Cage and its pets run in a browser. An optional Windows Farmer companion is included separately; see [its instructions](farmer-dock-20261008.md) for current behavior and verification.
 - All 18 entries have an interface, but not every intended external integration is implemented. Status and repository visibility are recorded per pet. Source upload to the corresponding repositories is verified separately.
 - Project Parrot supports manually entered ideas, due dates and reminders while its page is open. OneNote access, scanning and background reminder automation are not connected or tested here. No scheduled automation was created as part of this release.
 - Ghost Protocol is a personal cybersecurity checklist. Its pet does not scan the PC, monitor threats, or receive checklist progress.

@@ -20,9 +20,9 @@ canonical architecture, [ASTRAS_PET_OS.md](../../ASTRAS_PET_OS.md).
 | **GitHub Goldfish** compares releases, both official and community | Compares registry text with repos | Release vs commit, installed vs latest, last-checked timestamps | Goldfish's existing account crawl |
 | **astras-farm**, **astras-kennel**, **astra-pet-sdk** repos | None exist | Plans first; creation needs Astra's OK | Kennel registry starter (rename from `astra-pet-registry`) |
 | Community submission flow and statuses | None | Issue form, review, catalog | Kennel starter issue form |
-| Desktop: tray single/double/triple/right click | Tray single and right click; desktop-star click toggles herd; desktop-star double-click lineup | Move herd toggle to tray double-click, lineup to triple-click | `PetClicks` gesture recogniser already handles timing |
+| Desktop: tray single/double/triple/right click | Tray single and right click; desktop-star click toggles the desktop pets; desktop-star double-click lineup | Move the desktop pets toggle to tray double-click, lineup to triple-click | `PetClicks` gesture recogniser already handles timing |
 | Desktop: roam across monitors | Per-monitor only | Cross-monitor roaming and a multi-monitor test | `Screen.AllScreens` scatter, DPI handling |
-| Hiding visuals never stops work | No workers exist yet | Becomes real once runtimes exist | Launcher/herd separation already done |
+| Hiding visuals never stops work | No workers exist yet | Becomes real once runtimes exist | Launcher/desktop pets separation already done |
 | No browser Cage, no browser roaming | `cage.html` with door and `cage_life` movement | Retire; keep reusable parts | See "Retiring the Cage" in the plan |
 | Security: secrets store, least privilege, approvals in code, audit | Rules in AGENTS.md; no secrets in repo; approvals are human | Enforcement in code once anything acts | Current rules carry over unchanged |
 | 30 approved new pets (12 core + 18 v5.2), plus 6 seeds (Pole Puff, Procreate Panda, Skill Scout, OSC Sealion, Platform Platypus, Piranesi Nessi) | None exist except as names; Platform Platypus has a local draft. Passport Panda is renamed Passport Pelican | Phased; none to be claimed as built | Art pipeline, handoff cards |

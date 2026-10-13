@@ -36,11 +36,11 @@ The pets move around inside the Cage. Open the door and they can use the browser
 
 The generated count and running list, with every mood of every character, are in [ROSTER.md](ROSTER.md). Ghost Protocol's [personal cybersecurity checklist](https://findastra.github.io/ghost-protocol/) is already live; Astra approved its ghost artwork on 2026-10-08.
 
-## How the herd connects
+## How the Intelligent Apps connect
 
-![Herd Web: Astra's PetOS as a 3D map](docs/herd-web/herd-web-20261012.png)
+![Astra's PetOS System Map (3D PFD)](docs/system-map/system-map-20261012.png)
 
-The **[Herd Web](herd-web-20261012.html)** is a 3D map of Astra's PetOS: every pet, seed and roadmap pet, the AI models, the infrastructure, the real programs they manage, and what flows between them. Open it in a browser (it loads three.js from a CDN, so it needs the internet). Search for any node; click a sphere for its job and connections, or click a line for everything that flows both ways between its two ends. Pet-to-pet links come from `relations` in [pets.json](pets.json); everything else comes from [herd-web.json](herd-web.json). `npm run build` rebuilds the page. The same links as a flat chart are in [RELATIONS.md](RELATIONS.md).
+**[Astra's PetOS System Map](system-map-20261012.html)** is a 3D map of Astra's PetOS: every pet, seed and roadmap pet, the AI models, the infrastructure, the real programs they manage, and what flows between them. Open it in a browser (it loads three.js from a CDN, so it needs the internet). Search for any node; click a sphere for its job and connections, or click a line for everything that flows both ways between its two ends. Pet-to-pet links come from `relations` in [pets.json](pets.json); everything else comes from [system-map.json](system-map.json). `npm run build` rebuilds the page. The same links as a flat chart are in [RELATIONS.md](RELATIONS.md).
 
 ## Run it
 
@@ -95,7 +95,7 @@ Read [PET-FILES.md](PET-FILES.md). Add an entry to `pets.json` and a prompt to `
 What is not done, plainly:
 
 - **Hosted deployment is pending.** The repository is public and the Cage works locally. Source upload and the release tag are tracked separately in the publication record. Some underlying apps already have public repositories; a repo does not mean its pet integration is complete.
-- **The Cage pets roam the browser window.** The optional Windows Farmer is a separate desktop pet; it does not put the whole herd over other programs.
+- **The Cage pets roam the browser window.** The optional Windows Farmer is a separate desktop pet; it does not put every desktop pet over other programs.
 - **Art approval is recorded per character in the roster.** Ghost Protocol is approved; other drawings remain drafts unless noted. The Farmer has visible blond hair and assorted fruit and vegetables across his moods, as requested. Chip uses the actual Data Dealer drawing code and original palette inside the original yellow pocket shell.
 - Unity Unicorn, Health Hummy, Finance Finch and the other new browser desks support local records and exports. They do not connect to Unity, health services, bank accounts or other external services.
 - Every pet opens an app, but Cage moods do not yet receive live status from the apps. The web stand-ins say which records are manual and which services are connected.
