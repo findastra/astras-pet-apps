@@ -80,18 +80,34 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 .navpad{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;backdrop-filter:blur(6px)}
 .navpad .btn{min-width:44px;min-height:36px;justify-content:center}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
+/* Minimize (Astra, 2026-10-13): both panels fold down to their title bar so the map is free. */
+.bar{display:flex;align-items:center;gap:8px}
+.bar h1,.bar h2{flex:1;min-width:0}
+.bar .btn{flex:none}
+.hud.min,.side.min{gap:0}
+.hud.min>:not(.bar),.side.min>:not(.bar){display:none!important}
+.hud.min{width:auto;max-width:calc(100vw - 24px)}
 @media (max-width:700px){
-  .hud{width:auto;right:12px;max-height:46%}
-  .hud .legend,.hud .shapes,.hud details,.hud .types-h,.hud .sub{display:none}
-  .side{top:auto;bottom:calc(68px + env(safe-area-inset-bottom,0px));max-height:46%;width:auto;left:12px}
+  body{font-size:15px}
+  .hud{width:auto;right:12px;max-height:60%;padding:12px}
+  .hud.min{right:auto}
+  h1{font-size:1.25rem}
+  .hud details{display:none}
+  .lbl{font-size:12.5px}
+  .lbl.big{font-size:14px}
+  .btn{padding:8px 12px;min-height:36px}
+  .side{top:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));max-height:52%;width:auto;left:12px;padding:12px}
 }
 </style></head><body>
 <div id="stage" aria-label="3D map of Astra's PetOS"></div>
 <div id="labels" aria-hidden="true"></div>
 
 <section class="hud">
-  <div>
+  <div class="bar">
     <h1>Astra's PetOS <span>System Map</span></h1>
+    <button class="btn" id="hudMin" aria-expanded="true" title="Fold the keys away to see the map">Minimize</button>
+  </div>
+  <div>
     <p class="sub">Every pet, and what each one talks to. The Farmer sits at the centre and organizes the pets around him. Each pet lives inside its own glass AI harness. Further out are the AI models and the real programs the pets look after, and on the outside are you, your devices and the AI assistants that build everything. Lines show what flows between them. Click anything for details.</p>
   </div>
   <div class="search">
@@ -326,9 +342,16 @@ function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed'
 document.getElementById('vNow').onclick=()=>setView(true);
 document.getElementById('vAll').onclick=()=>setView(false);
 document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
-let iconMode=false;
+// Phones (Astra, 2026-10-13): pet app icons instead of shapes, and the keys start minimized.
+// Icon mode swaps only things that have a pet app icon; programs, models and devices keep their shapes.
+const narrow = matchMedia('(max-width:700px)').matches;
+let iconMode=narrow;
+document.getElementById('vIcon').setAttribute('aria-pressed',iconMode);
 document.getElementById('vIcon').onclick=()=>{ iconMode=!iconMode; document.getElementById('vIcon').setAttribute('aria-pressed',iconMode);
   apply(); };
+const hud=document.querySelector('.hud'), hudMin=document.getElementById('hudMin');
+function setHudMin(on){ hud.classList.toggle('min',on); hudMin.textContent=on?'Show keys':'Minimize'; hudMin.setAttribute('aria-expanded',!on); resize(); }
+hudMin.onclick=()=>setHudMin(!hud.classList.contains('min'));
 
 // ---------- focus: hover, selected node, selected link, search ----------
 let hovered=null, selected=null, selectedPair=null, matches=null;
@@ -354,7 +377,7 @@ function apply(){
     m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
     n.iconSprite.material.opacity = on ? 1 : .12;
     // The harness has no dot of its own: the glass shell is the harness.
-    const keep=nodeOn(n), solid=n.type!=='harness'; m.visible=keep&&solid&&!iconMode; n.iconSprite.visible=keep&&solid&&iconMode; labelEls[n.id].dataset.off = keep?'':'1'; });
+    const keep=nodeOn(n), solid=n.type!=='harness', asIcon=iconMode&&!!n.icon; m.visible=keep&&solid&&!asIcon; n.iconSprite.visible=keep&&solid&&asIcon; labelEls[n.id].dataset.off = keep?'':'1'; });
   const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass;
   const glassHot = fid && nodeById[fid] && nodeById[fid].type==='harness';
   harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055;
@@ -362,7 +385,7 @@ function apply(){
 }
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
 function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
-  const hn=ray.intersectObjects((iconMode?icons:meshes).filter(o=>o.visible))[0]; if(hn) return {node:hn.object.userData.node};
+  const hn=ray.intersectObjects([...icons,...meshes].filter(o=>o.visible))[0]; if(hn) return {node:hn.object.userData.node};
   const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link};
   // The glass harness is picked only near its visible rim, so clicks through the middle still reach what is inside.
   if(harnessGlass.visible && harnessNode){ const miss=ray.ray.distanceToPoint(new THREE.Vector3()); if(miss>HARNESS_R*.88 && miss<HARNESS_R*1.03) return {node:harnessNode}; }
@@ -382,7 +405,12 @@ renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0
 const side=document.getElementById('side');
 const el=(tag,cls,text)=>{const e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e;};
 function close(){ selected=null; selectedPair=null; side.hidden=true; apply(); }
-function head(title){ side.replaceChildren(); const c=el('button','btn close','Close'); c.onclick=close; side.append(c, el('h2','',title)); }
+// The detail panel keeps its minimized state while you tap from pet to pet; its title bar always shows what is selected.
+let sideMin=false;
+function setSideMin(on){ sideMin=on; side.classList.toggle('min',on); const b=side.querySelector('#sideMin'); if(b){ b.textContent=on?'Expand':'Minimize'; b.setAttribute('aria-expanded',!on); } }
+function head(title){ side.replaceChildren(); const bar=el('div','bar'), m=el('button','btn','Minimize'), c=el('button','btn','Close');
+  m.id='sideMin'; m.title='Fold the details down to their title'; m.onclick=()=>setSideMin(!sideMin); c.onclick=close;
+  bar.append(el('h2','',title), m, c); side.append(bar); setSideMin(sideMin); }
 function flowItem(l, perspective){
   const li=el('li'); const st=el('span','chip',`Layer ${l.layer} · ${STATE_WORD[l.state]}`); st.style.color=LAYER_COLOR[l.layer];
   const top=el('div'); const from=el('button','link',nodeById[l.from].name), to=el('button','link',nodeById[l.to].name);
@@ -473,7 +501,8 @@ q.addEventListener('keydown',e=>{
 let fly=null;
 function flyTo(id){ const p=pos[id]; if(!p) return; autoSpin=false;
   const dir=camera.position.clone().sub(controls.target).normalize();
-  fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(p.length()>1?p.clone().normalize().multiplyScalar(14):dir.multiplyScalar(14))}; }
+  fly={t0:performance.now(), fromT:controls.target.clone(), toT:p.clone(), fromC:camera.position.clone(), toC:p.clone().add(p.length()>1?p.clone().normalize().multiplyScalar(FLY_D):dir.multiplyScalar(FLY_D))}; }
+const FLY_D = matchMedia('(max-width:700px)').matches ? 24 : 14; // phones stop further back so neighbours stay in view
 
 // ---------- Unity-style navigation: hold right mouse to look, WASD to fly, Q/E down/up, Shift faster, F to frame ----------
 const keys = new Set(); let looking=false; const euler=new THREE.Euler(0,0,0,'YXZ');
@@ -531,11 +560,14 @@ setInterval(()=>spinBtn.setAttribute('aria-pressed',autoSpin),500); // other con
 // The sphere sits in the open space to the right of the key panel, not behind it (Astra, 2026-10-13).
 // On narrow screens the panel is on top, so there is no shift.
 function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight;
-  const hud=document.querySelector('.hud'), wide=innerWidth>700, shift=wide&&hud?Math.round((hud.getBoundingClientRect().right+12)/2):0;
-  if(shift) camera.setViewOffset(innerWidth,innerHeight,-shift,0,innerWidth,innerHeight); else camera.clearViewOffset();
+  const wide=innerWidth>700, shift=wide&&!hud.classList.contains('min')?Math.round((hud.getBoundingClientRect().right+12)/2):0;
+  measureLabels();
+  // On a phone the open detail panel covers the bottom half, so the selection moves up into the free top half.
+  const lift=!wide&&!side.hidden&&!side.classList.contains('min')?Math.round(innerHeight*.2):0;
+  if(shift||lift) camera.setViewOffset(innerWidth,innerHeight,-shift,lift,innerWidth,innerHeight); else camera.clearViewOffset();
   const pad=document.querySelector('.navpad'); if(pad) pad.style.left=(innerWidth/2+shift)+'px';
   camera.updateProjectionMatrix(); controls.handleResize(); }
-addEventListener('resize',resize); resize();
+addEventListener('resize',resize); new MutationObserver(resize).observe(side,{attributes:true,attributeFilter:['hidden','class']}); resize(); if(narrow) setHudMin(true);
 const v=new THREE.Vector3(); let last=performance.now();
 function frame(now){
   const dt=Math.min(Math.max((now-last)/1000,0),.05); last=now; // never backwards: the wavy audio curves cannot take a negative point
@@ -546,12 +578,40 @@ function frame(now){
   if(!looking) controls.update();
   links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=((l.t+dt*.25)%1+1)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
   renderer.render(scene,camera);
-  const W=innerWidth,H=innerHeight;
-  DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);
-    if(v.z>1||lab.dataset.off){lab.style.opacity=0;return;}
-    const d=camera.position.distanceTo(n.mesh.position); const op=Math.max(.6,Math.min(1,1.6-d/220))*(lab.dataset.dim?.25:1);
-    lab.style.opacity=op; lab.style.transform=`translate(${(v.x*.5+.5)*W}px,${(-v.y*.5+.5)*H}px) translate(-50%,-100%)`; });
+  placeLabels();
   requestAnimationFrame(frame);
+}
+// ---------- legible labels (Astra, 2026-10-13) ----------
+// Pet icons never shrink below a finger-sized minimum on screen, and a label is only drawn where it does not
+// overlap one already placed: the selected thing first, then the big hubs, then whatever is nearest the camera.
+// Hidden labels come back as you zoom in or select something.
+const ICON_MIN_PX = narrow ? 30 : 22, LABEL_GAP = 3;
+function measureLabels(){ DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; lab.style.opacity=0; lab.style.transform='none'; const r=lab.getBoundingClientRect(); n.lw=r.width; n.lh=r.height; }); }
+if(document.fonts) document.fonts.ready.then(measureLabels);
+const BIG = new Set(['host','you','model','infrastructure']);
+function placeLabels(){
+  const W=innerWidth, H=innerHeight, tanHalf=Math.tan(camera.fov*Math.PI/360), fid=(selected||hovered)?.id;
+  const cand=[], icn=[]; // icon boxes: a label never covers another pet's icon
+  DATA.nodes.forEach(n=>{ const lab=labelEls[n.id], asIcon=iconMode&&!!n.icon, obj=asIcon?n.iconSprite:n.mesh;
+    const d=camera.position.distanceTo(n.mesh.position), wpp=2*d*tanHalf/H; // world units per screen pixel at that depth
+    if(asIcon){ const base=Math.max(TYPE[n.type].r*3.2,1.4)*(fid===n.id?1.35:1); const s=Math.max(base,ICON_MIN_PX*wpp); n.iconSprite.scale.set(s,s,1); }
+    if(lab.dataset.off||(!obj.visible&&n.type!=='harness')){ lab.style.opacity=0; return; } // the glass harness has no shape, only its label
+    v.copy(n.mesh.position).project(camera); if(v.z>1||v.x<-1.2||v.x>1.2||v.y<-1.2||v.y>1.2){ lab.style.opacity=0; return; }
+    const half=(asIcon?n.iconSprite.scale.y/2:TYPE[n.type].r*n.mesh.scale.x)/wpp;
+    const x=(v.x*.5+.5)*W, y=(-v.y*.5+.5)*H-half-2;
+    const dim=!!lab.dataset.dim, pri=(n.id===fid?0:BIG.has(n.type)&&!dim?1:dim?3:2)*1e4+d;
+    const cy=(-v.y*.5+.5)*H, cx=(v.x*.5+.5)*W;
+    if(asIcon&&!dim) icn.push([cx-half,cy-half,cx+half,cy+half,n.id]);
+    cand.push({n,lab,x,y,pri,dim,d}); });
+  cand.sort((a,b)=>a.pri-b.pri);
+  const placed=[];
+  for(const c of cand){ const w=(c.n.lw||60)+LABEL_GAP*2, h=(c.n.lh||14)+LABEL_GAP; c.x=Math.min(Math.max(c.x,w/2+4),W-w/2-4); // keep labels on screen
+    const box=[c.x-w/2,c.y-h,c.x+w/2,c.y], hit=p=>box[0]<p[2]&&box[2]>p[0]&&box[1]<p[3]&&box[3]>p[1];
+    const clash=c.y-h<0||placed.some(hit)||icn.some(p=>p[4]!==c.n.id&&hit(p));
+    if(clash&&c.n.id!==fid){ c.lab.style.opacity=0; continue; }
+    placed.push(box);
+    c.lab.style.opacity=Math.max(.7,Math.min(1,1.6-c.d/220))*(c.dim?.4:1);
+    c.lab.style.transform=`translate(${c.x}px,${c.y}px) translate(-50%,-100%)`; }
 }
 apply(); requestAnimationFrame(frame);
 </script>

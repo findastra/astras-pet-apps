@@ -57,3 +57,11 @@ test('every pet with a repo has a measured code list with a reason for each lang
   }
 });
 
+test('on phones the map starts with pet icons, and both panels can be minimized (Astra, 2026-10-13)', () => {
+  const t = read(SYSTEM_MAP.template);
+  assert.match(t, /id="hudMin"/, 'the key panel has a Minimize button');
+  assert.match(t, /sideMin/, 'the detail panel has a Minimize button');
+  assert.match(t, /let iconMode=narrow;/, 'phones start in pet icon mode');
+  assert.match(t, /if\(narrow\) setHudMin\(true\)/, 'phones start with the keys minimized');
+  assert.match(t, /function placeLabels/, 'labels are decluttered so they stay legible');
+});
