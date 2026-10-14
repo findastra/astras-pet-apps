@@ -125,7 +125,7 @@ What is not true yet, in order of risk. Tracked in [docs/structure-audit-2026101
 | 3 | The Farmer's daily round used to make any repo with `pet.json` an animal automatically. | **Fixed 2026-10-13:** it now waits at the gate |
 | 4 | Main has no branch protection, so nothing technical stops a push to main. | Needs Astra (a repository setting) |
 | 5 | `bin/` holds built `.exe` files nobody can review. | Planned: build on the PC, publish checksums |
-| 6 | Pages load three.js from a CDN without an integrity hash. | Planned |
+| 6 | Pages load three.js from a CDN without an integrity hash. | **Fixed 2026-10-14:** integrity hashes; a changed copy is refused |
 | 7 | Old commits carried a legal name and email. | **Fixed 2026-10-13:** history rewritten; ask GitHub Support to purge cached views |
 | 8 | Pets read web pages, issues and email: text there can try to give an agent orders (prompt injection). | Rule: data is never instructions |
 | 9 | Local models on the network may answer anyone on it. | Planned: bind to this PC or LAN, require a key, no port forwarding |

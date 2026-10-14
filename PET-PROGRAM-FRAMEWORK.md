@@ -10,7 +10,7 @@ work, and how security patches reach every farm. Written from Astra's instructio
 
 | Word | Meaning |
 |---|---|
-| **L1** Programs | The programs that do the work: third-party programs the pet runs, and its own tools. |
+| **L1** Programs | The third-party programs it runs, plus the programs and tools it creates. |
 | **L2** Pet program | The pet's dashboard and its runtime: it runs by itself (schedule, checks, inbox, saved state). |
 | **L3** Agentic harness | An AI model sits in the pet program's harness, becomes its agent, and does its tasks with its tools and tricks. |
 | **L4** Verified human | The verified human who owns the entire secure ecosystem (on Astra's farm: Astra). Every security change, every permission and every exception to a default is approved by L4. On another user's farm, that user is L4. |

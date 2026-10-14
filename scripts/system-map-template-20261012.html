@@ -28,6 +28,13 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 .hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(var(--hud-w,370px),calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
 h1{font-family:var(--display);font-size:1.5rem;margin:0;line-height:1;letter-spacing:-.01em}
 h1 span{color:var(--you)}
+/* Your system's name (Astra, 2026-10-14): double-click it to rename; asked on the first visit. */
+.sysname{font-weight:inherit;cursor:text;border-radius:6px;padding:0 2px;margin:0 -2px}
+.sysname:hover,.sysname:focus-visible{outline:1px dashed var(--muted);outline-offset:2px}
+.namebox{position:fixed;inset:0;display:grid;place-items:center;background:rgba(5,10,28,.6);z-index:10}
+.namebox>div{background:var(--panel);border:1px solid var(--raise-edge);border-radius:14px;padding:20px;width:min(380px,calc(100vw - 32px));display:grid;gap:10px}
+.namebox h2{font-family:var(--display);margin:0;font-size:1.2rem}
+.namebox input{font:inherit;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--well);color:var(--fg)}
 .sub{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
 .row{display:flex;flex-wrap:wrap;gap:6px}
 .btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:transparent;color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
@@ -110,7 +117,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 
 <section class="hud">
   <div>
-    <h1>Astra's PetOS <span>System Map</span></h1>
+    <h1><b id="sysName" class="sysname" tabindex="0" title="Double-click (or press Enter) to rename your system">Astra's PetOS</b> <span>System Map</span></h1>
     <p class="sub">Every pet, and what each one talks to, in protection rings. The core and the Farmer sit at the centre, then the pets, then the pet programs Astra made. The glass agent harness wraps all of them: <b class="animal">🐾 everything inside the harness is an animal</b>, and an agent in the seat can only control animals. Outside the glass are the AI models, third-party programs, your devices and you. Lines show what flows between them. Click anything for details.</p>
   </div>
   <div>
@@ -147,6 +154,12 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 </section>
 
 <button class="grip" id="grip" type="button" role="separator" aria-orientation="vertical" aria-valuemin="300" aria-label="Key panel width" title="Drag to widen or narrow the key panel. Arrow keys work too; double-click to reset."></button>
+<div class="namebox" id="nameBox" hidden><div role="dialog" aria-modal="true" aria-labelledby="nameBoxTitle">
+  <h2 id="nameBoxTitle">Name your system</h2>
+  <p class="sub">Make it yours, for example "Jordan's PetOS". Change it any time: double-click the name at the top. Saved in this browser only; it is never sent anywhere.</p>
+  <input id="nameInput" maxlength="40" autocomplete="off" aria-label="System name">
+  <div class="row"><button class="btn" id="nameSave" aria-pressed="true">Save</button><button class="btn" id="nameSkip">Keep "Astra's PetOS"</button></div>
+</div></div>
 <aside class="side" id="side" hidden aria-live="polite"></aside>
 <nav class="navpad" aria-label="Move around the map">
   <button class="btn" id="nZoomIn" title="Zoom in" aria-label="Zoom in">＋</button>
@@ -156,8 +169,8 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 </nav>
 <div class="tip" id="tip" hidden></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TrackballControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TrackballControls.js" integrity="sha384-hf3oVtegKGVgPlVvpd9Lg2YX9MGMmV/Dn9iSbKOeIAvzwL2L3WLK4RWf7QNkNrfJ" crossorigin="anonymous"></script>
 <script>
 const DATA = __DATA__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
@@ -708,5 +721,19 @@ apply(); requestAnimationFrame(frame);
 // Every pet program page links here as #node=<its node id>, so the map opens on it (PET-PROGRAM-FRAMEWORK.md, section 3).
 function openFromHash(){ const m=location.hash.match(/node=([^&]+)/); const id=m&&decodeURIComponent(m[1]); if(id&&nodeById[id]&&(!selected||selected.id!==id)) selectNode(nodeById[id]); }
 addEventListener('hashchange',openFromHash); openFromHash();
+// Your system's name (Astra, 2026-10-14): asked on the first visit; double-click the name at the top to change it.
+// Saved in this browser only (a per-viewer preference); nothing is sent anywhere.
+{ const KEY='petos-system-name', DEFAULT_NAME="Astra's PetOS";
+  const nameEl=document.getElementById('sysName'), box=document.getElementById('nameBox'), input=document.getElementById('nameInput');
+  const read=()=>{ try{ return localStorage.getItem(KEY); }catch(e){ return undefined; } };
+  const show=n=>{ const name=(n||'').replace(/\s+/g,' ').trim().slice(0,40)||DEFAULT_NAME; nameEl.textContent=name; document.title=name+' System Map'; return name; };
+  const save=n=>{ const name=show(n); try{ localStorage.setItem(KEY,name); }catch(e){} box.hidden=true; };
+  const ask=()=>{ input.value=nameEl.textContent; box.hidden=false; input.focus(); input.select(); };
+  document.getElementById('nameSave').onclick=()=>save(input.value);
+  document.getElementById('nameSkip').onclick=()=>save(DEFAULT_NAME);
+  input.addEventListener('keydown',e=>{ e.stopPropagation(); if(e.key==='Enter') save(input.value); if(e.key==='Escape') box.hidden=true; });
+  nameEl.addEventListener('dblclick',ask);
+  nameEl.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key==='F2'){ e.preventDefault(); ask(); } });
+  const stored=read(); show(stored); if(stored===null) ask(); }
 </script>
 </body></html>
