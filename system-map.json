@@ -1030,6 +1030,18 @@
       "job": "A shared tool of File Master’s pet program: its connector to Everything (third-party search). One copy; other pets get grants from Iron Gates. File Master: the whole PC, read only. Wifi Butterfly: its own folder only, read only, 50 results per search."
     },
     {
+      "id": "footprint-meter",
+      "name": "footprint-meter",
+      "type": "tool",
+      "of": "token-toucan",
+      "state": "planned",
+      "layer": 4,
+      "category": "Tool",
+      "version": "v1.0",
+      "label": "pet-program-52-v1.0-footprint-meter-v1.0",
+      "job": "A tool of Token Toucan (Astra, 2026-10-14): estimates the energy and carbon of the farm’s AI use from its tokens (shown as a range and clearly labelled an estimate, since providers do not publish exact figures), next to the clean-energy donations Astra records, including any from pets that earn money, and shows the balance with links to clean-energy initiatives. It never moves money."
+    },
+    {
       "id": "unity-stable",
       "name": "pet-program-5",
       "type": "own-program",
@@ -3680,6 +3692,13 @@
       "medium": "lora",
       "state": "suggested",
       "why": "The LoRa HAT joins the Meshtastic mesh."
+    },
+    {
+      "from": "token-toucan",
+      "to": "footprint-meter",
+      "carries": "opens",
+      "state": "planned",
+      "why": "footprint-meter is a tool of Token Toucan."
     }
   ],
   "layers": {
