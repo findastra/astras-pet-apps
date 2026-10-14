@@ -134,6 +134,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vNow" aria-pressed="false">Works today</button>
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
     <button class="btn" id="vHub" aria-pressed="false">Links to every pet</button>
+    <button class="btn" id="vExamples" aria-pressed="false" title="Hide Astra's example pets, worlds and programs">Hide examples</button>
     <button class="btn" id="vRemoved" hidden title="Put back everything you removed from your map">Show removed</button>
     <button class="btn" id="vHat" aria-pressed="false" title="Every pet wears its security hat: white trusted, blue defends, red red-team, purple checks, grey not verified, black intruder">Security hats</button>
     <button class="btn" id="vNet" aria-pressed="false" title="How the devices are physically connected: Wi-Fi, Ethernet, Bluetooth, USB and more">Network view</button>
@@ -252,7 +253,8 @@ const EXAMPLES = DATA.examples || {}; // node id -> the repo it comes from
 const REMOVED_KEY = 'petos-removed';
 const removed = new Set((()=>{ try{ return JSON.parse(localStorage.getItem(REMOVED_KEY)||'[]'); }catch(e){ return []; } })());
 const saveRemoved = ()=>{ try{ localStorage.setItem(REMOVED_KEY, JSON.stringify([...removed])); }catch(e){} };
-const nodeOn = n => !hiddenTypes.has(n.type) && !removed.has(n.id);
+let examplesHidden = false;
+const nodeOn = n => !hiddenTypes.has(n.type) && !removed.has(n.id) && !(examplesHidden && EXAMPLES[n.id]);
 const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
 
 // ---------- scene ----------
@@ -492,6 +494,7 @@ document.getElementById('vNow').onclick=()=>setView(true);
 document.getElementById('vAll').onclick=()=>setView(false);
 document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
 function syncRemoved(){ const b=document.getElementById('vRemoved'); b.hidden=!removed.size; b.textContent='Show removed ('+removed.size+')'; }
+document.getElementById('vExamples').onclick=()=>{ examplesHidden=!examplesHidden; document.getElementById('vExamples').setAttribute('aria-pressed',examplesHidden); apply(); };
 document.getElementById('vRemoved').onclick=()=>{ removed.clear(); saveRemoved(); syncRemoved(); apply(); };
 syncRemoved();
 { const hl=document.getElementById('hatLegend');
@@ -581,7 +584,7 @@ function selectNode(n){
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(PET_TYPES.includes(n.type)){ const h=HATS[hatOf(n)]; const hp=el('p','meta'); hp.innerHTML=`<span style="color:${h.color==='#141414'?'#ff4d5e':h.color}">\u{1F3A9}</span> <b>${h.name}</b>: ${h.what}`; side.appendChild(hp); }
-  if(EXAMPLES[n.id]){ const p=el('p','meta'); p.append(el('b','','\u{1F3F7}\u{FE0F} EXAMPLE'), document.createTextNode(': Astra\u2019s own, included to show how a farm works. Remove it whenever you like.')); side.appendChild(p); }
+  if(EXAMPLES[n.id]){ const p=el('p','meta'); p.append(el('b','','\u{1F3F7}\u{FE0F} EXAMPLE'), document.createTextNode(': Astra\u2019s own, included to show how a farm works. Remove it whenever you like. If the programs it looks after are not on your PC, it simply sleeps: no errors, and it sends nothing.')); side.appendChild(p); }
   if(n.type!=='host' && n.type!=='you' && (PET_TYPES.includes(n.type) || EXAMPLES[n.id])){
     const gone=removed.has(n.id), b=el('button','btn', gone?'Put it back on my map':'Remove from my map');
     b.onclick=()=>{ gone?removed.delete(n.id):removed.add(n.id); saveRemoved(); syncRemoved(); apply(); selectNode(n); };

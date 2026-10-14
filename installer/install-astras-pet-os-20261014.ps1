@@ -23,7 +23,7 @@ param(
     [switch]$NoLaunch
 )
 $ErrorActionPreference = 'Stop'
-$Version = 'v0.1.0-beta'
+$Version = 'v0.1.1-beta'
 $source = Split-Path -Parent $PSScriptRoot
 Write-Host "Astra's PetOS $Version installer"
 
