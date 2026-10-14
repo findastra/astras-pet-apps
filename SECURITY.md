@@ -6,8 +6,8 @@ Companion to [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md), [PROVENANCE.md](P
 
 ## Report a security problem
 
-**Never post a break-in, a leaked key or a way to bypass a check in a public issue.** A private reporting channel
-opens when the maintainer turns on GitHub private vulnerability reporting for this repo.
+**Never post a break-in, a leaked key or a way to bypass a check in a public issue.** Report it privately:
+[Report a vulnerability](https://github.com/findastra/astras-pet-os/security/advisories/new) (GitHub private vulnerability reporting).
 
 ## The honest answer: is this insecure?
 
@@ -30,7 +30,7 @@ The pets are the guards. These are the walls they guard. Each one is planned unl
 
 | Wall | What it stops | Status |
 |---|---|---|
-| Agents run as a separate, standard (non-admin) Windows account | A rogue agent changing system settings, other users' files, or the security pets | Planned |
+| Agents run as a separate, standard (non-admin) Windows account | A rogue agent changing system settings, other users' files, or the security pets | **First wall chosen.** Guide: [docs/agent-account-20261014.md](docs/agent-account-20261014.md) |
 | The Police Station, its logs and Iron Gates' key store run under an account agents cannot touch | A rogue agent silencing the police or forging approvals | Planned |
 | Sandbox (Windows Sandbox, a VM or containers) for anything untrusted | A stranger's pet, cure, tool or trick touching the real farm | Planned |
 | Network allowlist (firewall) for agent traffic | An agent sending data anywhere it likes | Planned |
@@ -45,7 +45,7 @@ The pets are the guards. These are the walls they guard. Each one is planned unl
 
 Grouped by the five standard jobs of a security program (the NIST Cybersecurity Framework), plus testing.
 Names follow [docs/naming-20261013.md](docs/naming-20261013.md); `pet-program-#` means the program has no name yet.
-**"Proposed"** roles are suggestions for Astra to confirm.
+Roles marked **confirmed** were confirmed by Astra on 2026-10-14. Turn on **Security hats** on the System Map to see every pet wearing its team colour: blue defends, red attacks your own farm in the sandbox, purple checks both, white is trusted, grey is not verified yet, black is an intruder.
 
 | Job | Pet program icon | Pet program | What it does for security | Status |
 |---|---|---|---|---|
@@ -56,23 +56,23 @@ Names follow [docs/naming-20261013.md](docs/naming-20261013.md); `pet-program-#`
 | Identify | API Fairy | API Fairy Ring | Every key: where it lives, what uses it, active and expired (never the secret) | Registered |
 | Identify | GitHub Goldfish | pet-program-2 | Everything public on GitHub: leaks, exposed files, document errors | Registered |
 | Identify | Port Spider | pet-program-68 | Open ports and exposed services | Roadmap |
-| Protect | Cipher Owl | pet-program-69 | Encryption, certificates and **signatures** (checks provenance; see PROVENANCE.md) | Roadmap, proposed role |
-| Protect | Proxy Axolotl | pet-program-64 | **Egress allowlist**: what may leave the PC, and safe remote access | Roadmap, proposed role |
-| Protect | Docker Dragon | pet-program-50 | **The sandbox:** runs anything untrusted in isolation first | Roadmap, proposed role |
+| Protect | Cipher Owl | pet-program-69 | Encryption, certificates and **signatures** (checks provenance; see PROVENANCE.md) | Roadmap, role confirmed |
+| Protect | Proxy Axolotl | pet-program-64 | **Egress allowlist**: what may leave the PC, and safe remote access | Roadmap, role confirmed |
+| Protect | Docker Dragon | pet-program-50 | **The sandbox:** runs anything untrusted in isolation first | Roadmap, role confirmed |
 | Protect | Update Urchin | pet-program-57 | Pinned versions, safe dependency updates, integrity hashes | Roadmap |
-| Protect | Patch Cat | pet-program-25 | Windows, driver and app security patches | Pipeline, proposed role |
+| Protect | Patch Cat | pet-program-25 | Windows, driver and app security patches | Pipeline, role confirmed |
 | Protect | Gone Ghost | Am I a Ghost? | Privacy: name-eraser, internet scrub, personal security checklist | Registered |
 | Detect | Pet Police Officer | The Police Station | Watches every write and key use live; switches OFF; raises the alarm | Seed |
-| Detect | Agent Ant | pet-program-73 | **Records each agent:** model, version, request patterns, so a stranger or a changed agent stands out | Roadmap, proposed role |
+| Detect | Agent Ant | pet-program-73 | **Records each agent:** model, version, request patterns, so a stranger or a changed agent stands out | Roadmap, role confirmed |
 | Detect | Log Lynx | pet-program-48 | Append-only records of everything; never creates approvals | Roadmap |
-| Detect | Token Toucan | pet-program-52 | Token and cost spikes: a runaway or hijacked agent burns tokens | Roadmap, proposed role |
+| Detect | Token Toucan | pet-program-52 | Token and cost spikes: a runaway or hijacked agent burns tokens | Roadmap, role confirmed |
 | Detect | Packet Piranha | pet-program-53 | Unusual network traffic | Roadmap |
-| Detect | Wifi Butterfly | pet-program-31 | Radios: unknown Wi-Fi networks and Bluetooth devices | Pipeline, proposed role |
+| Detect | Wifi Butterfly | pet-program-31 | Radios: unknown Wi-Fi networks and Bluetooth devices | Pipeline, role confirmed |
 | Respond | Forensic Ferret | pet-program-70 | Investigates breaches: timeline, which key, which agent | Roadmap |
 | Respond | (vet-clinic triage) | pet-program-77 | Community advisories when a problem affects other farms | Seed |
 | Recover | Backup Beaver | pet-program-28 | Versioned backups off the PC that agents cannot delete | Pipeline |
-| Test | White Hat Weasel | pet-program-67 | **Red team:** attacks your own farm, only inside the sandbox, with L4's OK, and reports what got through | Roadmap, proposed role |
-| Test | Test Tortoise | pet-program-51 | **The checker agent** for maker-checker, and a security test for every hole ever fixed | Roadmap, proposed role |
+| Test | White Hat Weasel | pet-program-67 | **Red team:** attacks your own farm, only inside the sandbox, with L4's OK, and reports what got through | Roadmap, role confirmed |
+| Test | Test Tortoise | pet-program-51 | **The checker agent** for maker-checker, and a security test for every hole ever fixed | Roadmap, role confirmed |
 
 **Do we have enough pets?** Yes: about twenty pets already cover every job above, so no new pets are needed. What is
 missing is the walls, not the guards.
@@ -104,7 +104,7 @@ Security is shown with evidence, not claimed. Each item is something anyone can 
 |---|---|
 | A written threat model: [PROTECTION-RINGS.md](PROTECTION-RINGS.md) and this page | **Done** |
 | Automated tests on every change (privacy, registry, the animal guard) | **Done (74 tests)** |
-| GitHub secret scanning and push protection, Dependabot alerts, CodeQL code scanning (free for public repos) | Needs Astra (repo settings) |
+| GitHub secret scanning and push protection, Dependabot alerts, CodeQL code scanning and private vulnerability reporting | **Done 2026-10-14** on all 50 public repos |
 | OpenSSF Scorecard: a public score of this repo's security practices | Planned |
 | Prompt-injection drills and red-team reports from White Hat Weasel, in the sandbox | Planned |
 | Outside review: the community (vet-clinic) now, a professional audit later | Open |

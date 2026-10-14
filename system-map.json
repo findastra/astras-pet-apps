@@ -261,7 +261,7 @@
       "name": "Docker Dragon",
       "type": "roadmap",
       "state": "planned",
-      "job": "Containers: Docker health and authorized management.",
+      "job": "Containers: Docker health and authorized management. Security role: keeps the sandbox, where anything untrusted runs first.",
       "layer": 4
     },
     {
@@ -269,7 +269,7 @@
       "name": "Test Tortoise",
       "type": "roadmap",
       "state": "planned",
-      "job": "Quality: tests and release verification.",
+      "job": "Quality: tests and release verification. Security role: the checker agent for maker-checker, and a security test for every hole ever fixed.",
       "layer": 4
     },
     {
@@ -277,7 +277,7 @@
       "name": "Token Toucan",
       "type": "roadmap",
       "state": "planned",
-      "job": "AI cost: model tokens, budgets and inference usage.",
+      "job": "AI cost: model tokens, budgets and inference usage. Security role: flags token and cost spikes; a runaway or hijacked agent burns tokens.",
       "layer": 4
     },
     {
@@ -349,7 +349,7 @@
       "name": "Proxy Axolotl",
       "type": "roadmap",
       "state": "planned",
-      "job": "Reverse proxies, TLS and secure private remote access.",
+      "job": "Reverse proxies, TLS and secure private remote access. Security role: the egress allowlist, what may leave the PC, and safe remote access.",
       "layer": 4
     },
     {
@@ -373,7 +373,7 @@
       "name": "White Hat Weasel",
       "type": "roadmap",
       "state": "planned",
-      "job": "Authorized security assessment and remediation.",
+      "job": "Authorized security assessment and remediation. Security role: the red team. Attacks your own farm, only inside the sandbox and with L4’s OK, and reports what got through.",
       "layer": 4
     },
     {
@@ -389,7 +389,7 @@
       "name": "Cipher Owl",
       "type": "roadmap",
       "state": "planned",
-      "job": "Encryption, keys, certificates and crypto education.",
+      "job": "Encryption, keys, certificates and crypto education. Security role: checks signatures and provenance (PROVENANCE.md).",
       "layer": 4
     },
     {
@@ -421,7 +421,7 @@
       "name": "Agent Ant",
       "type": "roadmap",
       "state": "planned",
-      "job": "Agent experiments and tool-use evaluation.",
+      "job": "Agent experiments and tool-use evaluation. Security role: records each AI that takes a seat (model, version, request patterns), so a stranger or a changed agent stands out.",
       "layer": 4
     },
     {
@@ -4232,5 +4232,31 @@
         ]
       }
     }
+  },
+  "hats": {
+    "_about": "Security hats (Astra, 2026-10-14): blue defends, red attacks your own farm in the sandbox, purple checks both; every other pet wears white, community pets at the gate grey, intruders black.",
+    "gatekeeper-goddess": "blue",
+    "skill-scout": "blue",
+    "file-master": "blue",
+    "api-fairy": "blue",
+    "github-goldfish": "blue",
+    "port-spider": "blue",
+    "cipher-owl": "blue",
+    "proxy-axolotl": "blue",
+    "docker-dragon": "blue",
+    "update-urchin": "blue",
+    "patch-cat": "blue",
+    "ghost-protocol": "blue",
+    "pet-police-officer": "blue",
+    "agent-ant": "blue",
+    "log-lynx": "blue",
+    "token-toucan": "blue",
+    "packet-piranha": "blue",
+    "wifi-butterfly": "blue",
+    "forensic-ferret": "blue",
+    "pet-program-77-icon-77": "blue",
+    "backup-beaver": "blue",
+    "white-hat-weasel": "red",
+    "test-tortoise": "purple"
   }
 }
