@@ -228,5 +228,13 @@ test('profile round finds the pet list under the Astra\'s PetOS heading too', ()
   const renamed = profile.replace(/^(#{2,4} ).*[Pp]et [Aa]pps.*$/m, "$1Astra's PetOS - Personal AI Agent Platform");
   assert.notEqual(renamed, profile, 'the fixture has a pet apps heading to rename');
   assert.doesNotThrow(() => syncProfile(renamed, registry, online([])));
+  // With every pet program: seeds and roadmap pets join the list (numbered by pet program), never "Web & More".
+  const programs = [{ number: 1, program: 'The Farm', assigned: true, icon: 'Friendly Farmer', repo: 'astras-pet-os', mini_descriptor: { text: 'Organizes the pets.' } },
+    { number: 47, program: 'pet-program-47', assigned: false, icon: 'Queue Quokka', repo: 'pet-program-47', mini_descriptor: { text: 'Tasks: watches retries.' } }];
+  const all = syncProfile(profile, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs);
+  assert.match(all.text, /^47\. \[`pet-program-47`\][^\n]*\*\*Queue Quokka\*\* · tasks: watches retries$/m);
+  const others = all.text.split("### Astra's Pet Apps")[0] + (all.text.split('### Web & More')[1] || '');
+  assert.doesNotMatch(others, /pet-program-47/, 'a pet program never lands in another section');
+  assert.deepEqual(syncProfile(all.text, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs).changes, [], 'a second run changes nothing');
 });
 
