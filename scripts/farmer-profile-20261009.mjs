@@ -7,7 +7,8 @@
 //   - rewrites the pet apps list as a numbered running list, in Cage order (registered pets, then the pipeline);
 //   - drops lines for repos that are gone, and moves pets out of the other sections;
 //   - adds new non-pet repos to a section (VR, Discord, else Web & More) with their GitHub description.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 const OWNER = 'findastra';
 const BULLET = /^- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/;
@@ -20,12 +21,14 @@ const lowerFirst = (s) => {
 };
 
 /** @returns {{ text: string, changes: string[] }} */
-export function syncProfile(readme, registry, repos) {
+export function syncProfile(readme, registry, repos, programs = null) {
   const lines = readme.split('\n');
   const changes = [];
   const online = new Map(repos.filter((r) => !r.fork && !r.archived && r.name !== OWNER).map((r) => [r.name, r]));
   const pets = [...(registry.pets || []), ...(registry.pipeline || [])];
-  const petRepos = new Set(pets.map((p) => p.repo));
+  // Every pet program (pet-programs.json, 2026-10-14): when given, the list shows all of them, seeds and roadmap pets
+  // too, each with its mini-descriptor, and their repos never land in the other sections.
+  const petRepos = new Set([...pets.map((p) => p.repo), ...(programs || []).map((p) => p.repo)]);
 
   // Section boundaries and the blurbs Astra already wrote.
   const sections = [];
@@ -44,7 +47,15 @@ export function syncProfile(readme, registry, repos) {
 
   // The pet apps list.
   const petLines = [];
-  for (const p of pets) {
+  if (programs) for (const p of programs) {
+    const r = online.get(p.repo); const reg = pets.find((x) => x.repo === p.repo);
+    const isPrivate = r ? r.private : reg?.visibility === 'private';
+    if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
+    const what = p.assigned ? `*${p.program}*: ` : '';
+    petLines.push(`${p.number}. ${link(p.repo, isPrivate)} -- **${p.icon}** · ${what}${lowerFirst(p.mini_descriptor.text)}`);
+    if (!mentioned.has(p.repo)) changes.push(`added pet ${p.icon} (${p.repo})`);
+  }
+  else for (const p of pets) {
     const r = online.get(p.repo);
     const isPrivate = r ? r.private : p.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
@@ -119,10 +130,13 @@ async function publicRepos(token) {
 if (process.argv[1] && import.meta.url === new URL('file://' + process.argv[1]).href) {
   const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
   const readmePath = arg('--readme') || 'README.md';
-  const registry = JSON.parse(readFileSync(arg('--registry') || 'pets.json', 'utf8'));
+  const registryPath = arg('--registry') || 'pets.json';
+  const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
+  const programsPath = arg('--programs') || join(dirname(registryPath), 'pet-programs.json');
+  const programs = existsSync(programsPath) ? JSON.parse(readFileSync(programsPath, 'utf8')).programs : null;
   const repos = arg('--repos') ? JSON.parse(readFileSync(arg('--repos'), 'utf8')) : await publicRepos(process.env.GITHUB_TOKEN);
   const before = readFileSync(readmePath, 'utf8');
-  const { text, changes } = syncProfile(before, registry, repos);
+  const { text, changes } = syncProfile(before, registry, repos, programs);
   if (!process.argv.includes('--dry-run') && changes.length) writeFileSync(readmePath, text);
   console.log(changes.length ? changes.map((c) => '- ' + c).join('\n') : 'Profile already matches GitHub.');
   if (process.env.GITHUB_OUTPUT) writeFileSync(process.env.GITHUB_OUTPUT, `changed=${changes.length ? 'yes' : 'no'}\nsummary=${changes.join('; ').replace(/[\r\n%]/g, ' ')}\n`, { flag: 'a' });
