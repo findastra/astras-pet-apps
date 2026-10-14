@@ -82,7 +82,10 @@ everything about that tool inside it.
 7. **Links tool box**, grouped by kind (section 5).
 8. **Backlog health tool box:** healthy / needs attention / unhealthy, with the L3 agent's diagnosis of what is
    unhealthy, the date of the next weekly run, and the schedule.
-9. **Footer:** the coding languages used, from the repo; credit "by Astra" and the license; signature status.
+9. **Pet Passport tool box** (`<pet-program>-v<version>-pet-passport-v<version>`): its microchip (signature), pedigree
+   (where it came from), passport stamps (installs and updates), vaccination card (security patches) and vet records
+   (vet-clinic tickets). See [PROVENANCE.md](PROVENANCE.md).
+10. **Footer:** the coding languages used, from the repo; credit "by Astra" and the license; signature status.
 
 ## 4. Tools: ON/OFF and sick, enforced, not just shown
 
