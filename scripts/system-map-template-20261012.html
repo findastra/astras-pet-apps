@@ -134,6 +134,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vNow" aria-pressed="false">Works today</button>
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
     <button class="btn" id="vHub" aria-pressed="false">Links to every pet</button>
+    <button class="btn" id="vRemoved" hidden title="Put back everything you removed from your map">Show removed</button>
     <button class="btn" id="vHat" aria-pressed="false" title="Every pet wears its security hat: white trusted, blue defends, red red-team, purple checks, grey not verified, black intruder">Security hats</button>
     <button class="btn" id="vNet" aria-pressed="false" title="How the devices are physically connected: Wi-Fi, Ethernet, Bluetooth, USB and more">Network view</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
@@ -245,7 +246,13 @@ let showHub = false;
 let audioOn = true; // the wavy audio lines, switched in the line-style key
 // Key switches: hidden node types, hidden line layers, and the faint layer shells.
 const hiddenTypes = new Set(), hiddenLayers = new Set(); let shellsOn = true;
-const nodeOn = n => !hiddenTypes.has(n.type);
+// EXAMPLE tags and "Remove from my map" (Astra, 2026-10-14). Removing only changes this map in this browser; the
+// original always stays in Astra's repo, and "Show removed" puts everything back.
+const EXAMPLES = DATA.examples || {}; // node id -> the repo it comes from
+const REMOVED_KEY = 'petos-removed';
+const removed = new Set((()=>{ try{ return JSON.parse(localStorage.getItem(REMOVED_KEY)||'[]'); }catch(e){ return []; } })());
+const saveRemoved = ()=>{ try{ localStorage.setItem(REMOVED_KEY, JSON.stringify([...removed])); }catch(e){} };
+const nodeOn = n => !hiddenTypes.has(n.type) && !removed.has(n.id);
 const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
 
 // ---------- scene ----------
@@ -384,6 +391,13 @@ const labelsBox = document.getElementById('labels');
 DATA.nodes.forEach(n=>{
   const m = makeAvatar(n); m.position.copy(pos[n.id]); m.userData.node = n; scene.add(m); meshes.push(m); n.mesh=m;
   const ic = makeIcon(n); ic.position.copy(pos[n.id]); scene.add(ic); icons.push(ic); n.iconSprite=ic;
+  if(EXAMPLES[n.id]){ const c=document.createElement('canvas'); c.width=300; c.height=110; const g=c.getContext('2d');
+    g.fillStyle='#fff4ec'; g.strokeStyle='#ff4d5e'; g.lineWidth=6; g.beginPath();
+    g.moveTo(40,8); g.lineTo(292,8); g.lineTo(292,102); g.lineTo(40,102); g.lineTo(8,55); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle='#0a1430'; g.beginPath(); g.arc(40,55,9,0,Math.PI*2); g.fill();
+    g.fillStyle='#e8384f'; g.font='800 40px "Bricolage Grotesque",system-ui,sans-serif'; g.textBaseline='middle'; g.fillText('EXAMPLE',72,57);
+    const tag=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));
+    const r=TYPE[n.type].r; tag.scale.set(2.4,.88,1); tag.position.copy(pos[n.id]).add(new THREE.Vector3(r*2.6,r*1.6,0)); scene.add(tag); n.exampleTag=tag; }
   const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
 });
 
@@ -477,6 +491,9 @@ function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed'
 document.getElementById('vNow').onclick=()=>setView(true);
 document.getElementById('vAll').onclick=()=>setView(false);
 document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
+function syncRemoved(){ const b=document.getElementById('vRemoved'); b.hidden=!removed.size; b.textContent='Show removed ('+removed.size+')'; }
+document.getElementById('vRemoved').onclick=()=>{ removed.clear(); saveRemoved(); syncRemoved(); apply(); };
+syncRemoved();
 { const hl=document.getElementById('hatLegend');
   hl.innerHTML = Object.values(HATS).map(h=>`<span><i class="dot" style="background:${h.color};box-shadow:0 0 0 1px ${h.glow||'#4a5fa8'}"></i>${h.name}: ${h.what}</span>`).join('');
   document.getElementById('vHat').onclick=()=>{ hatsOn=!hatsOn; document.getElementById('vHat').setAttribute('aria-pressed',hatsOn); hl.hidden=!hatsOn; apply(); }; }
@@ -501,6 +518,7 @@ function linkVisible(l, focusId){
 }
 function apply(){
   meshes.forEach(m=>{ if(m.userData.hat) m.userData.hat.visible=hatsOn; });
+  DATA.nodes.forEach(n=>{ if(n.exampleTag) n.exampleTag.visible=nodeOn(n); });
   const focus = selected||hovered, fid = focus&&focus.id;
   const near=new Set();
   if(fid){ near.add(fid); links.forEach(l=>{ if(linkVisible(l,fid)&&(l.from===fid||l.to===fid)){near.add(l.from);near.add(l.to);} }); }
@@ -563,6 +581,16 @@ function selectNode(n){
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(PET_TYPES.includes(n.type)){ const h=HATS[hatOf(n)]; const hp=el('p','meta'); hp.innerHTML=`<span style="color:${h.color==='#141414'?'#ff4d5e':h.color}">\u{1F3A9}</span> <b>${h.name}</b>: ${h.what}`; side.appendChild(hp); }
+  if(EXAMPLES[n.id]){ const p=el('p','meta'); p.append(el('b','','\u{1F3F7}\u{FE0F} EXAMPLE'), document.createTextNode(': Astra\u2019s own, included to show how a farm works. Remove it whenever you like.')); side.appendChild(p); }
+  if(n.type!=='host' && n.type!=='you' && (PET_TYPES.includes(n.type) || EXAMPLES[n.id])){
+    const gone=removed.has(n.id), b=el('button','btn', gone?'Put it back on my map':'Remove from my map');
+    b.onclick=()=>{ gone?removed.delete(n.id):removed.add(n.id); saveRemoved(); syncRemoved(); apply(); selectNode(n); };
+    const repo=EXAMPLES[n.id]||n.repo||'astras-pet-os', note=el('p','why');
+    note.append(document.createTextNode('This only changes this map, in this browser. The original is always online at '));
+    const a=el('a','','github.com/findastra/'+repo); a.href='https://github.com/findastra/'+repo; a.target='_blank'; a.rel='noopener'; note.appendChild(a);
+    note.append(document.createTextNode('. To remove it from your own farm, or get it back later, see '));
+    const g=el('a','','Make it yours'); g.href='https://github.com/findastra/astras-pet-os/blob/main/MAKE-IT-YOURS.md'; g.target='_blank'; g.rel='noopener'; note.append(g, document.createTextNode('.'));
+    side.append(b, note); }
   if(n.type==='tool'&&nodeById[n.of]){ const p=el('p','meta'); const b=el('button','link',nodeById[n.of].name); b.onclick=()=>selectNode(nodeById[n.of]);
     p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p);
     if(n.label){ const lb=el('p','meta'); lb.append(document.createTextNode('Tool box label: ')); lb.appendChild(el('code','',n.label)); side.appendChild(lb); } }

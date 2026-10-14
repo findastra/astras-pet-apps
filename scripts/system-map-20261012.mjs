@@ -64,7 +64,7 @@ export function systemMapData(registry, extra) {
     if (!carries[l.carries]) throw new Error(`unknown kind: ${l.carries}`);
     if (!states[l.state]) throw new Error(`unknown state: ${l.state}`);
   }
-  return { nodes: [...nodes.values()], links, carries, states, types: extra.types, layers: extra.layers, hats: extra.hats || {}, codeChecked: extra.code?.checked || null };
+  return { nodes: [...nodes.values()], links, carries, states, types: extra.types, layers: extra.layers, hats: extra.hats || {}, examples: extra.examples || {}, codeChecked: extra.code?.checked || null };
 }
 
 /** Each pet's idle mood frame, embedded so icons also work when the page is opened by double-click.
