@@ -89,8 +89,13 @@
 
   if (cfg.type === 'discord') {
     const box = card('Existing local controllers', 'Start each installed companion first, then open its controls.');
-    link(box, 'Open OpenAI controls', 'http://127.0.0.1:38761/', 'button'); link(box, 'Open Anthropic controls', 'http://127.0.0.1:38762/', 'button');
-    h('p', 'Connection status has not been checked. If a page does not open, run its existing Start … Discord Presence.cmd launcher.', 'muted', box);
+    // The control panel addresses stay on this PC, in apps/<repo>-local-services-20261014.js (never committed or
+    // published; docs/local-services-20261014.md). The public page only names the services.
+    const row = h('div', undefined, '', box), note = h('p', '', 'muted', box);
+    const show = () => { const known = window.LOCAL_SERVICES || {}; let shown = 0;
+      for (const [label, id] of [['Open OpenAI controls', 'openai-discord-presence'], ['Open Anthropic controls', 'anthropic-discord-presence']]) { const url = String(known[id] || ''); if (/^http:\/\/(127\.0\.0\.1|localhost):\d{2,5}\/$/.test(url)) { link(row, label, url, 'button'); shown++; } }
+      note.textContent = shown ? 'Connection status has not been checked. If a page does not open, run its existing Start … Discord Presence.cmd launcher.' : 'These controls run on your own PC. Open this page from your installed farm, with its local services file set up (docs/local-services-20261014.md).'; };
+    if (location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) { const s = document.createElement('script'); s.src = cfg.repo + '-local-services-20261014.js'; s.onload = s.onerror = show; document.head.append(s); } else show();
     checklist('Presence checklist', ['Discord desktop is running.', 'Activity sharing is enabled in Discord.', 'The intended companion is running.', 'The profile card was inspected in Discord.', 'If both apps are running, the visible result was checked rather than assumed.']); notesCard();
   }
 

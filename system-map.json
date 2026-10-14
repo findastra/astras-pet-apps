@@ -1469,14 +1469,14 @@
       "to": "openai-discord-presence",
       "carries": "opens",
       "state": "now",
-      "why": "Discord Damsel's app opens the OpenAI controls at 127.0.0.1:38761."
+      "why": "Discord Damsel's app opens the OpenAI controls: OpenAI Discord Presence's control panel, which only answers on this PC."
     },
     {
       "from": "findastra-discord-presence",
       "to": "anthropic-discord-presence",
       "carries": "opens",
       "state": "now",
-      "why": "Discord Damsel's app opens the Anthropic controls at 127.0.0.1:38762."
+      "why": "Discord Damsel's app opens the Anthropic controls: Anthropic Discord Presence's control panel, which only answers on this PC."
     },
     {
       "from": "codex",

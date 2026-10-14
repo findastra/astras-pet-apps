@@ -31,7 +31,7 @@ function boot({ reduced = true, storage = new Map() } = {}) {
   const body = new Element('body');
   const document = { body, getElementById: get, createElement: tag => new Element(tag), addEventListener(type, fn, capture = false) { if (!listeners.has(type)) listeners.set(type, []); listeners.get(type).push({ fn, capture }); } };
   const win = { devicePixelRatio: 1 };
-  const context = { window: win, document, Element, innerWidth: 1280, innerHeight: 800, location: new URL('http://127.0.0.1:8765/cage.html'), URL,
+  const context = { window: win, document, Element, innerWidth: 1280, innerHeight: 800, location: new URL('http://127.0.0.1/cage.html'), URL,
     localStorage: { getItem: k => storage.get(k) ?? null, setItem: (k, v) => storage.set(k, v) }, matchMedia: () => ({ matches: reduced }),
     Image: class { constructor() { this.complete = true; this.naturalWidth = this.naturalHeight = 256; } },
     performance: { now: () => milliseconds }, requestAnimationFrame: () => 1, cancelAnimationFrame() {}, addEventListener() {},

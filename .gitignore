@@ -17,3 +17,7 @@ bin/
 
 # Local Unity tool inventory, paths and execution reports never ship as source.
 apps/unity-unicorn-local-tools-*.js
+
+# Local service addresses (ports) for this PC only; public pages name the services, never the address.
+# See docs/local-services-20261014.md.
+apps/*-local-services-*.js
