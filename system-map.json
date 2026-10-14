@@ -60,6 +60,14 @@
       "job": "Is your pet sick? A public issue tracker on GitHub: a farmer opens a ticket (vet-clinic-ticket-NNNN) with the sick tool’s code and error, after name-eraser and the secret scan; other farmers diagnose it and may offer a cure (a code fix). One tier below Kennel-verified: every community answer carries a warning and never runs by itself; a cure goes through quarantine, a checker agent and the farm’s L4. Every ticket is logged, and cures that work for many farms become official patches (PET-PROGRAM-FRAMEWORK.md, section 10). Outside the harness, like the Kennel."
     },
     {
+      "id": "the-shed",
+      "name": "The Shed (community tools and tricks)",
+      "type": "infrastructure",
+      "state": "planned",
+      "layer": 6,
+      "job": "Public, like the Kennel but for tools and tricks made by other creators (findastra/the-shed). Everything there is untrusted until it is quarantined, checked and approved by a farm’s L4. Trust tiers: official, Shed-verified, community (with a warning). Outside the harness."
+    },
+    {
       "id": "program-manager",
       "name": "Program Manager",
       "type": "infrastructure",
@@ -220,7 +228,7 @@
       "name": "Gatekeeper Goddess",
       "type": "roadmap",
       "state": "planned",
-      "job": "Security and approvals: human-facing approvals and security monitoring.",
+      "job": "Security and approvals: human-facing approvals and security monitoring. Pet program: Iron Gates. Issues the grants and the short-lived agent keys; never approves her own.",
       "layer": 4
     },
     {
@@ -938,12 +946,24 @@
     },
     {
       "id": "key-ring",
-      "name": "pet-program-4",
+      "name": "API Fairy Ring",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "API Fairy’s Windows app: the key scanner and dashboard. Name not assigned yet (idea: Key Ring); see docs/naming-20261013.md."
+      "job": "API Fairy’s pet program (Astra, 2026-10-14): the key scanner and dashboard. Its api-fairy-mushroom-circle shows every agent key: active keys float in the circle, expired keys go into the chest."
+    },
+    {
+      "id": "api-fairy-mushroom-circle",
+      "name": "api-fairy-mushroom-circle",
+      "type": "tool",
+      "of": "key-ring",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "version": "v1.0",
+      "label": "api-fairy-ring-v1.0-api-fairy-mushroom-circle-v1.0",
+      "job": "A tool of API Fairy Ring: every agent session key Gatekeeper Goddess issues, ours or external. Active keys float inside the mushroom circle with a list (agent, model, person, device, place, pets, grants, expiry); expired keys leave the circle for the chest, with their own list. The secret part of a key is never shown."
     },
     {
       "id": "ai-astra",
@@ -997,6 +1017,18 @@
       "label": "pet-program-12-v1.0-repo-catcher-v1.0"
     },
     {
+      "id": "everything-search-tool",
+      "name": "everything-search",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool (shared)",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-everything-search-v1.0",
+      "job": "A shared tool of File Master’s pet program: its connector to Everything (third-party search). One copy; other pets get grants from Iron Gates. File Master: the whole PC, read only. Wifi Butterfly: its own folder only, read only, 50 results per search."
+    },
+    {
       "id": "unity-stable",
       "name": "pet-program-5",
       "type": "own-program",
@@ -1031,6 +1063,15 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Gone Ghost’s pet program (Astra, 2026-10-13): the private controls that change Ghost Protocol, and an exact local copy of the public site that runs only on the PC (a local environment; Ghost Protocol is production). His privacy tools live here too: the internet scrub and name-eraser, whose name lists never leave the PC."
+    },
+    {
+      "id": "the-police-station",
+      "name": "The Police Station",
+      "type": "own-program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Pet Police Officer’s pet program: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach (findastra/the-police-station)."
     },
     {
       "id": "name-eraser",
@@ -3276,6 +3317,76 @@
       "carries": "runs-on",
       "state": "planned",
       "why": "Tickets and cures live in a public GitHub repo, the only shared place."
+    },
+    {
+      "from": "key-ring",
+      "to": "api-fairy-mushroom-circle",
+      "carries": "opens",
+      "state": "planned",
+      "why": "api-fairy-mushroom-circle is a tool of API Fairy Ring."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "everything-search-tool",
+      "carries": "opens",
+      "state": "planned",
+      "why": "everything-search is a shared tool owned by File Master’s pet program."
+    },
+    {
+      "from": "everything-search-tool",
+      "to": "everything-search",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Asks Everything (voidtools) to search the PC."
+    },
+    {
+      "from": "wifi-butterfly",
+      "to": "everything-search-tool",
+      "carries": "opens",
+      "state": "planned",
+      "why": "Grant from Iron Gates: its own folder only, read only, 50 results per search."
+    },
+    {
+      "from": "pet-police-officer",
+      "to": "the-police-station",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The Police Station is this pet’s own program."
+    },
+    {
+      "from": "the-police-station",
+      "to": "gatekeeper-goddess",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Alerts her to unpermitted agent changes that could affect who she lets in."
+    },
+    {
+      "from": "the-police-station",
+      "to": "astra",
+      "carries": "reports",
+      "state": "planned",
+      "why": "The alarm: the Officer on the desktop, red banners on every pet page and the map, a phone alert."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "key-ring",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Every key and grant she issues shows on API Fairy Ring."
+    },
+    {
+      "from": "the-shed",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Submissions live in a public GitHub repo, the only shared place."
+    },
+    {
+      "from": "the-shed",
+      "to": "skill-scout",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Skill Scout tracks every trick a farm adopts from the Shed."
     }
   ],
   "layers": {

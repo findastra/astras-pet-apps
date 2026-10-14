@@ -189,7 +189,44 @@ the way Linux distributions take bug reports and fixes from their users. The **v
   is the moderator, with a triage pet that labels tickets, checks for leaked secrets, and runs offered cures in an
   isolated test (CI). The triage pet never merges anything.
 
-## 11. Checklist for a new or updated pet program
+## 11. Tools, tricks, shared tools and the Shed
+
+Full explanation with four real examples: [TOOLS-AND-TRICKS.md](TOOLS-AND-TRICKS.md).
+- A **tool** is code the pet program owns; a **trick** is a skill its L3 agent has learned, shown in a trick box
+  (`<pet-program>-v<version>-<trick>-trick-v<trick version>`) with its origin, the tools it uses and ON/OFF.
+  A trick never brings permissions of its own. **Skill Scout** keeps track of every trick.
+- **Shared tools:** one copy, owned by one pet program; other pets get a **grant** from Iron Gates (folders, R W X,
+  limits), approved by L4 and shown in both pets' connection boxes.
+- **Third-party tools and tricks** come through **the Shed** (like the Kennel, for tools): quarantine, checker agent,
+  L4. Trust tiers: official, Shed-verified, community (with a warning).
+
+## 12. Agent keys, the Police Station and the alarm
+
+Every agent, ours or **external**, needs a **key** to operate a pet. That is how a break-in is caught and traced.
+
+- **Short-lived key per session.** Gatekeeper Goddess (Iron Gates) issues one for each agent session. The key records
+  which agent and model, which person, which device and where, which pets and grants, and when it expires.
+  No key, no access. A stolen key stops working soon and points back to where it came from.
+- **API Fairy shows every key** on the API Fairy Ring, in the `api-fairy-ring-v1.0-api-fairy-mushroom-circle-v1.0`
+  tool box: active keys float inside the mushroom circle with a list beside them; expired keys leave the circle and
+  go into the chest (old keys), with their own list. Keys themselves are never shown, only who, what, where and when.
+- **Pet Police Officer (The Police Station) watches** every W (write) and every key use, live, and looks for
+  unpermitted agent changes. It may **switch a tool, connection or key OFF** at once (containment), never ON. It alerts
+  Gatekeeper Goddess, so her decisions are not made on tampered ground, and L4.
+- **The alarm** when a break is happening now, or a past breach is found: Pet Police Officer jumps onto the desktop
+  with a siren, every pet page and the System Map show a red banner, the affected nodes flash on the map, and L4 gets
+  a phone notification. A past breach is marked "found, not active".
+- **Security jobs, no overlap:** Gatekeeper Goddess decides who may do what and issues keys and grants. Pet Police
+  Officer watches, alarms and switches OFF. Log Lynx keeps the records. Forensic Ferret investigates past breaches.
+  API Fairy shows the keys. L4 approves.
+
+## 13. The first run: How to Take Care of Your Farm!
+
+When someone first installs Astra's PetOS, it opens straight to the **System Map**. The Friendly Farmer appears in a
+chat, the way he does at The Farm, and walks them through **How to Take Care of Your Farm!**, a tutorial (a trick of
+The Farm). Its steps are still to be written with Astra.
+
+## 14. Checklist for a new or updated pet program
 
 - [ ] Names and versions follow section 2 everywhere: repo, files, icons, tool box labels, backlog.
 - [ ] `pet.json` lists `framework`, every tool (name, version, intended use, public or private) and its links by kind.
@@ -198,5 +235,7 @@ the way Linux distributions take bug reports and fixes from their users. The **v
 - [ ] Data is outside the code, with a schema version, a migration, export and import (section 6).
 - [ ] Backlog and the weekly run work, and backlog health shows (section 7).
 - [ ] The map link focuses its own node. Languages show in the footer.
+- [ ] Its tricks are in trick boxes and known to Skill Scout; any shared tool it uses has a grant from Iron Gates.
+- [ ] Every agent that operates it uses a short-lived key from Iron Gates; it reports every W to the Police Station.
 - [ ] Plain developer language throughout; no marketing.
 - [ ] Follows [PROTECTION-RINGS.md](PROTECTION-RINGS.md): it is an animal only once L4 lets it in.

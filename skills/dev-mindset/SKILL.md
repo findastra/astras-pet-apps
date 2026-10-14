@@ -23,6 +23,12 @@ Astra wants other software developers to read her build without frustration. She
 | Versions with `v` | Version tags (`v1.0`) | `pet-program-3-v1.0-icon-2-v1.0`: a name keeps its number, a version never hides inside it. Decided 2026-10-13. |
 | Tool box | Card or panel with a title (HTML `fieldset` with a `legend`) | Border with the versioned label on top, everything about the tool inside. |
 | Connection box | Integration panel (what flows between two services) | Its own border colour; titled with the other pet's icon name. |
+| Trick | Skill (`SKILL.md`), prompt, workflow | What a pet's agent knows; uses only the tools the pet has. Kept by Skill Scout. See TOOLS-AND-TRICKS.md. Decided 2026-10-14. |
+| Grant | Scope / permission grant (least privilege, capability-based access) | Folders + R W X + limits for one pet on a shared tool. Not a copy of the tool. Decided 2026-10-14. |
+| The Shed | Plugin / extension registry | Third-party tools and tricks, like the Kennel for pets. |
+| Agent key | Short-lived session token with an audit trail | Issued per agent session by Iron Gates; records agent, model, person, device, place. |
+| The Police Station | Security monitoring (a SOC with intrusion detection) | Detects and contains (switches OFF); never authorizes. |
+| The alarm | Security incident alert | Everywhere at once; past breaches marked "found, not active". |
 | ON/OFF on a tool or connection | Kill switch / feature flag | Enforced by the core, not just shown on the page. |
 | Sick checkbox | User-reported defect | Feeds the Farmer's `broken-tools-on-the-farm`. |
 | Backlog (`<pet-program>-backlog`) | Backlog | Entries and weekly runs carry versions; the store itself never does, so it is never lost. |

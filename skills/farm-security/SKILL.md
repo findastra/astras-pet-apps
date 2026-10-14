@@ -73,5 +73,18 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 - Security patches reach other farms only as signed releases they pull and their own L4 approves. Nobody pushes into
   another person's farm. Details: [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md), sections 4, 8 and 9.
 
-## 8. When unsure
+## 8. Keys, grants, the Police Station and the alarm (Astra, 2026-10-14)
+- Every agent, ours or external, operates a pet only with a **short-lived session key** from Gatekeeper Goddess
+  (Iron Gates). The key records agent, model, person, device, place, pets, grants and expiry. API Fairy shows every key
+  (never the secret itself) in her `api-fairy-mushroom-circle`: active keys in the circle, expired keys in the chest.
+- Shared tools: one copy, one owner; other pets get a **grant** (folders, R W X, limits) from Iron Gates, approved by L4.
+- **Pet Police Officer (The Police Station)** watches every W and every key use, may switch a tool, connection or key
+  OFF (never ON), and alerts Gatekeeper Goddess and L4. A live break or a past breach raises **the alarm everywhere**:
+  the Officer on the desktop with a siren, red banners on every pet page and the map, flashing nodes, a phone alert.
+- Jobs: Gatekeeper Goddess authorizes, Pet Police Officer detects and contains, Log Lynx records, Forensic Ferret
+  investigates, API Fairy shows keys, L4 approves.
+- Third-party tools and tricks come through **the Shed**, quarantined and checked like any stranger's code.
+  Details: [TOOLS-AND-TRICKS.md](../../TOOLS-AND-TRICKS.md) and [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md), sections 11 and 12.
+
+## 9. When unsure
 Stop and ask Astra. Name the ring, the R W X involved and what crosses which boundary.

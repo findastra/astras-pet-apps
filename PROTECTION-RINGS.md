@@ -98,7 +98,8 @@ flowchart TB
   L5["5 Branch and pull request: work lands on a branch, never straight on main"] --> L6
   L6["6 Tests: npm test must pass (privacy, registry, map)"] --> L7
   L7["7 Astra's review: the core merges only with her approval"] --> L8
-  L8["8 Signatures (planned): the farm refuses pets whose signature does not check out"] --> L9
+  L8["8 Signatures (planned): the farm refuses pets whose signature does not check out"] --> L8b
+  L8b["8b The Police Station (planned): watches every write and key use, switches OFF, raises the alarm"] --> L9
   L9["9 Backups and undo: Backup Beaver and File Master's undo logs"] --> OK["The change is live"]
 ```
 
@@ -119,7 +120,7 @@ What is not true yet, in order of risk. Tracked in [docs/structure-audit-2026101
 
 | # | Gap | Status |
 |---|---|---|
-| 1 | Agents act on Astra's own GitHub account, so GitHub cannot tell her from an agent, and "core needs Astra" is a written rule, not an enforced one. | Astra deciding (agent identity) |
+| 1 | Agents act on Astra's own GitHub account, so GitHub cannot tell her from an agent, and "core needs Astra" is a written rule, not an enforced one. | First step chosen: Astra signs her own commits with her security key. Designed: a short-lived key per agent session from Iron Gates, watched by The Police Station (PET-PROGRAM-FRAMEWORK.md, section 12) |
 | 2 | Remote Control and Desktop Commander let a phone control this PC: a path into the native farm from outside. | Astra deciding (on only when she turns it on?) |
 | 3 | The Farmer's daily round used to make any repo with `pet.json` an animal automatically. | **Fixed 2026-10-13:** it now waits at the gate |
 | 4 | Main has no branch protection, so nothing technical stops a push to main. | Needs Astra (a repository setting) |
