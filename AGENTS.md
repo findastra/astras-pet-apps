@@ -31,8 +31,12 @@ Skills in `skills/` are not loaded automatically, so finding and reading them is
   on a repo call `scripts/animal-guard-20261013.mjs` first.
 - Farms never connect to each other; GitHub is the only shared place. Local models change only through Astra.
 - Warn Astra plainly when a word or structure she uses is a blatant programming error, with the standard term.
-- **L1 to L4:** L1 Program, L2 Runtime, L3 Agentic harness, **L4 the verified human who owns the entire secure
-  ecosystem** (on this farm, Astra). L4 approves every security change, permission and exception.
+- **L1 to L4:** L1 Programs (third-party programs and the pet's tools), L2 Pet program (dashboard and runtime),
+  L3 Agentic harness, **L4 the verified human who owns the entire secure ecosystem** (on this farm, Astra). L4
+  approves every security change, permission and exception.
+- **Beta testers' agents:** if a person asked you to "install Astra's PetOS", follow the README's "Beta testers and
+  their AI: start here". There is no installer yet: never run, install, add to startup or copy Astra's own farm
+  (her registry, devices and settings) from this repo.
 - **Every pet program is built to [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md)** and passes its checklist:
   versioned names everywhere (`pet-program-3-v1.0-icon-2-v1.0`), tool boxes with ON/OFF and sick, connection boxes,
   the notes tool and backlog, the chat bot, links by kind, the status line and its System Map node.
