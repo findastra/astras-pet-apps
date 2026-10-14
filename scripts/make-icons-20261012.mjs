@@ -9,6 +9,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { decodePng, keyBackground } from './sheet-to-sprites.mjs';
 import { png } from './art-kit.mjs';
+import { pathToFileURL } from 'node:url';
 
 const SIZE = 96;
 const RAW = (repo, path, branch = 'main') => `https://raw.githubusercontent.com/findastra/${repo}/${branch}/${path}`;
@@ -52,13 +53,13 @@ for (const p of registry.pets) {
   SOURCES[p.repo] = existsSync(desk) ? desk : frames.pets[p.art]?.frames.idle;
 }
 
-function crop(img, x0, y0, w, h) {
+export function crop(img, x0, y0, w, h) {
   const out = new Uint8Array(w * h * 4);
   for (let y = 0; y < h; y++) out.set(img.rgba.subarray(((y0 + y) * img.width + x0) * 4, ((y0 + y) * img.width + x0 + w) * 4), y * w * 4);
   return { width: w, height: h, rgba: out };
 }
 /** Make the background transparent unless the image already has transparency. */
-function clearBackground(img) {
+export function clearBackground(img) {
   let hasAlpha = false;
   for (let i = 3; i < img.rgba.length; i += 4) if (img.rgba[i] < 250) { hasAlpha = true; break; }
   if (hasAlpha) return img;
@@ -67,7 +68,7 @@ function clearBackground(img) {
   for (let i = 0; i < bg.length; i++) if (bg[i]) rgba[i * 4 + 3] = 0;
   return { ...img, rgba };
 }
-function trim(img) {
+export function trim(img) {
   let x0 = img.width, y0 = img.height, x1 = -1, y1 = -1;
   for (let y = 0; y < img.height; y++) for (let x = 0; x < img.width; x++) if (img.rgba[(y * img.width + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
   if (x1 < 0) throw new Error('empty image');
@@ -86,12 +87,14 @@ function fit(img) {
   return png(SIZE, SIZE, out);
 }
 
-async function load(src) {
+export async function load(src) {
   if (/^https?:/.test(src)) { const r = await fetch(src); if (!r.ok) throw new Error(`${r.status} ${src}`); return Buffer.from(await r.arrayBuffer()); }
   if (!existsSync(src)) throw new Error(`missing ${src}`);
   return readFileSync(src);
 }
 
+// Run only when called directly; make-tokens-20261014.mjs imports the helpers above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
 mkdirSync('art/icons', { recursive: true });
 let made = 0;
 for (const [id, src] of Object.entries(SOURCES)) {
@@ -103,3 +106,4 @@ for (const [id, src] of Object.entries(SOURCES)) {
   } catch (e) { console.log(`${id}: skipped (${e.message})`); }
 }
 console.log(`${made} icons in art/icons/`);
+}
