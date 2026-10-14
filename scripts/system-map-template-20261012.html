@@ -147,8 +147,8 @@ const TYPE = {
 // Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
 // The glass sphere around the pets is twice the first diameter (Astra, 2026-10-12): pets spread out inside it.
 const LAYER_R = {2:10, 3:20, 4:34, 5:58, 6:66, 0:72, 1:78};
-const OWN_R = 51; // programs and websites Astra made: their own shell just outside the glass harness, looked after by the pets inside it (Astra, 2026-10-12)
-const HARNESS_R = 46;
+const OWN_R = 44; // pet programs (programs and websites Astra made): their own shell just outside the pets, inside the glass harness (Astra, 2026-10-13)
+const HARNESS_R = 52; // the agentic harness wraps the pets and pet programs, below the root programs at LAYER_R[6] (Astra, 2026-10-13)
 const HOME_CAM = [0,48,185];
 const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
 const STATE = {
@@ -298,7 +298,7 @@ const SHAPES=[
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
-  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes sit just outside the glass, programs and websites Astra made that her pets look after; peach cubes further out are programs made by others','layer 6'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes are pet programs, the programs and websites Astra made, on their own shell inside the glass harness just outside the pets; peach cubes outside the glass are root programs made by others','layer 6'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
 ];

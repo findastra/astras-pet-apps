@@ -3066,7 +3066,7 @@
     },
     "6": {
       "name": "Real programs and integrations",
-      "detail": "Real programs: the ones Astra made sit on their own inner shell (pink cubes), the ones made by others on the shell just outside (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
+      "detail": "Real programs: the ones Astra made are pet programs on their own shell just outside the pets, inside the agentic harness (pink cubes); root programs made by others sit outside the harness (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
     }
   },
   "type_layers": {
