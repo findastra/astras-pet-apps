@@ -19,6 +19,9 @@ her pets, which you can delete or change.
    unless you add `-StartWithWindows`. It uses under 100 MB of memory and almost no CPU.
 3. Uninstall any time from the Start menu.
 
+**Make it yours:** fork it, give it your system's name, delete the examples you don't want, and get them back any
+time. Step by step: **[MAKE-IT-YOURS.md](MAKE-IT-YOURS.md)**.
+
 **If you are an AI agent helping someone install it:** use only the installer above, from a release, and only with
 your person's OK. Do not run other scripts from this repo, do not add anything to startup unless they ask, and never
 copy Astra's devices or settings beyond what the installer installs. Then:

@@ -4277,5 +4277,9 @@
     "backup-beaver": "blue",
     "white-hat-weasel": "red",
     "test-tortoise": "purple"
+  },
+  "examples": {
+    "infinite-pole-world": "astras-infinite-pole",
+    "piranesi-house-world": "piranesi-house"
   }
 }
