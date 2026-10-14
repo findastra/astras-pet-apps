@@ -1186,21 +1186,171 @@
     },
     {
       "id": "index-controllers",
-      "name": "Valve Index controllers",
+      "name": "Valve Index controllers (L and R)",
       "type": "host-machine",
       "state": "now",
       "layer": 6,
       "category": "VR hardware",
-      "job": "Finger-tracking VR controllers, tracked by the base stations through SteamVR."
+      "job": "The pair of finger-tracking controllers, tracked by the base stations through SteamVR. Each hand is its own node around this one."
+    },
+    {
+      "id": "index-controller-left",
+      "name": "Valve Index controller (left)",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "index-controllers",
+      "job": "The left-hand finger-tracking controller. Tracked by the base stations through SteamVR; talks to the PC over 2.4 GHz radio."
+    },
+    {
+      "id": "index-controller-right",
+      "name": "Valve Index controller (right)",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "index-controllers",
+      "job": "The right-hand finger-tracking controller. Tracked by the base stations through SteamVR; talks to the PC over 2.4 GHz radio."
     },
     {
       "id": "vr-trackers",
-      "name": "13 trackers",
+      "name": "13 HTC Vive Trackers 3.0",
       "type": "host-machine",
       "state": "now",
       "layer": 6,
       "category": "VR hardware",
-      "job": "Thirteen SteamVR body trackers (brand to confirm), tracked by the base stations. Space Calibrator lines them up with the Quest."
+      "job": "Thirteen HTC Vive Tracker 3.0 body trackers, tracked by the base stations. Each pairs with its own 2.4 GHz dongle on the PC; Space Calibrator lines them up with the Quest. Each tracker is its own node in this cluster. Which body spot each one is strapped to, and its label, come later (Astra has the labeling)."
+    },
+    {
+      "id": "vive-tracker-01",
+      "name": "Vive Tracker 3.0 #1",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-02",
+      "name": "Vive Tracker 3.0 #2",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-03",
+      "name": "Vive Tracker 3.0 #3",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-04",
+      "name": "Vive Tracker 3.0 #4",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-05",
+      "name": "Vive Tracker 3.0 #5",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-06",
+      "name": "Vive Tracker 3.0 #6",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-07",
+      "name": "Vive Tracker 3.0 #7",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-08",
+      "name": "Vive Tracker 3.0 #8",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-09",
+      "name": "Vive Tracker 3.0 #9",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-10",
+      "name": "Vive Tracker 3.0 #10",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-11",
+      "name": "Vive Tracker 3.0 #11",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-12",
+      "name": "Vive Tracker 3.0 #12",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
+    },
+    {
+      "id": "vive-tracker-13",
+      "name": "Vive Tracker 3.0 #13",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "vr-trackers",
+      "job": "One of Astra’s 13 HTC Vive Trackers 3.0, paired with its own 2.4 GHz dongle. Its body spot and label: to come."
     },
     {
       "id": "base-stations",
@@ -1209,7 +1359,47 @@
       "state": "now",
       "layer": 6,
       "category": "VR hardware",
-      "job": "Four SteamVR base stations that track the controllers and trackers."
+      "job": "Four SteamVR base stations that track the controllers and trackers. Each is its own node in this cluster; Astra chooses which ones are on for each session."
+    },
+    {
+      "id": "base-station-1",
+      "name": "Base station 1",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "base-stations",
+      "job": "A SteamVR base station. On or off is Astra’s choice each session. Two stations on the same channel interfere, so each needs its own channel."
+    },
+    {
+      "id": "base-station-2",
+      "name": "Base station 2",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "base-stations",
+      "job": "A SteamVR base station. On or off is Astra’s choice each session. Two stations on the same channel interfere, so each needs its own channel."
+    },
+    {
+      "id": "base-station-3",
+      "name": "Base station 3",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "base-stations",
+      "job": "A SteamVR base station. On or off is Astra’s choice each session. Two stations on the same channel interfere, so each needs its own channel."
+    },
+    {
+      "id": "base-station-4",
+      "name": "Base station 4",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "VR hardware",
+      "in": "base-stations",
+      "job": "A SteamVR base station. On or off is Astra’s choice each session. Two stations on the same channel interfere, so each needs its own channel."
     },
     {
       "id": "woojer-vest",

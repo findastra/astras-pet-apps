@@ -256,6 +256,10 @@ const saveRemoved = ()=>{ try{ localStorage.setItem(REMOVED_KEY, JSON.stringify(
 let examplesHidden = false;
 const nodeOn = n => !hiddenTypes.has(n.type) && !removed.has(n.id) && !(examplesHidden && EXAMPLES[n.id]);
 const nodeById = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
+// Clusters (Astra, 2026-10-14): a node with "in" is its own node, placed on a small ring around its hub node (each
+// tracker around "13 HTC Vive Trackers 3.0"), instead of taking its own spot on the shell.
+const inCluster = n => !!(n && n.in && nodeById[n.in]);
+const clusterOf = id => DATA.nodes.filter(m=>m.in===id);
 
 // ---------- scene ----------
 const stage = document.getElementById('stage');
@@ -282,10 +286,10 @@ const pos = {};
 (function settle(){
   // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
   let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
-  const ids=DATA.nodes.map(n=>n.id), P={}, R={};
-  DATA.nodes.forEach(n=>{ R[n.id]= radiusOf(n); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+  const ids=DATA.nodes.filter(n=>!inCluster(n)).map(n=>n.id), P={}, R={};
+  DATA.nodes.forEach(n=>{ if(inCluster(n)) return; R[n.id]= radiusOf(n); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
     P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
-  const springs = DATA.links.filter(l=>!l.everyApp&&l.carries!=='network'), d=new THREE.Vector3(); // network links do not move the layout
+  const springs = DATA.links.filter(l=>!l.everyApp&&l.carries!=='network'&&!inCluster(nodeById[l.from])&&!inCluster(nodeById[l.to])), d=new THREE.Vector3(); // network links do not move the layout
   for(let step=0;step<500;step++){
     const F={}; ids.forEach(i=>F[i]=new THREE.Vector3());
     for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){
@@ -314,6 +318,11 @@ const pos = {};
         d.subVectors(P[ids[a]],P[ids[b]]); const dist=Math.max(d.length(),.3); if(dist>9) continue; d.multiplyScalar(30/(dist*dist*dist)); F[ids[a]].add(d); F[ids[b]].sub(d); }
       ids.forEach(i=>{ if(PIN[i]) return; if(F[i].length()>1.5) F[i].setLength(1.5); P[i].addScaledVector(F[i],1-step/60).setLength(R[i]); }); }
   }
+  // Clusters: members on a small ring around their hub, on the hub's shell, so they read as one group.
+  DATA.nodes.filter(n=>!inCluster(n)).forEach(h=>{ const list=clusterOf(h.id); if(!list.length) return;
+    const c=P[h.id], up=c.clone().normalize(), e1=new THREE.Vector3().crossVectors(up,Math.abs(up.y)<.9?new THREE.Vector3(0,1,0):new THREE.Vector3(1,0,0)).normalize(), e2=new THREE.Vector3().crossVectors(up,e1);
+    const r=1.8+list.length*.3;
+    list.forEach((m,k)=>{ const a=k/list.length*Math.PI*2; P[m.id]=c.clone().addScaledVector(e1,r*Math.cos(a)).addScaledVector(e2,r*Math.sin(a)).setLength(c.length()); ids.push(m.id); }); });
   ids.forEach(i=>pos[i]=P[i]);
 })();
 // faint shells so the layers read as layers, and the glass AI harness wrapped around every pet agent
@@ -605,6 +614,9 @@ function selectNode(n){
   if(n.type==='tool'&&nodeById[n.of]){ const p=el('p','meta'); const b=el('button','link',nodeById[n.of].name); b.onclick=()=>selectNode(nodeById[n.of]);
     p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p);
     if(n.label){ const lb=el('p','meta'); lb.append(document.createTextNode('Tool box label: ')); lb.appendChild(el('code','',n.label)); side.appendChild(lb); } }
+  if(inCluster(n)){ const p=el('p','meta'), b=el('button','link',nodeById[n.in].name); b.onclick=()=>selectNode(nodeById[n.in]); p.append(document.createTextNode('Part of '), b); side.appendChild(p); }
+  const members=clusterOf(n.id); if(members.length){ const p=el('p','meta'); p.append(document.createTextNode(members.length+' in this cluster: '));
+    members.forEach((m,k)=>{ const b=el('button','link',m.name); b.onclick=()=>selectNode(m); p.append(b); if(k<members.length-1) p.append(document.createTextNode(', ')); }); side.appendChild(p); }
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
   side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)
