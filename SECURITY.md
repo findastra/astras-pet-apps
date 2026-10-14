@@ -40,6 +40,7 @@ The pets are the guards. These are the walls they guard. Each one is planned unl
 | The big red button (L4): revoke every key, stop every agent, cut agent network | A rogue agent that is already inside | Designed |
 | Animal guard and the gate in the scripts | A repo making itself an animal | **Built** |
 | Integrity hashes on the map's scripts | A hacked CDN running code in the map | **Built** |
+| Public pages name services, never their addresses; the build removes addresses, ports and personal paths, and stops on anything that looks like a secret | The public site mapping the services on Astra's PC, or publishing a key | **Built.** [docs/local-services-20261014.md](docs/local-services-20261014.md) |
 
 ## The security team
 
