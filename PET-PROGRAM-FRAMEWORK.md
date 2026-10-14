@@ -89,6 +89,11 @@ everything about that tool inside it.
 
 ## 4. Tools: ON/OFF and sick, enforced, not just shown
 
+- **Missing programs are not errors** (Astra, 2026-10-14). A pet first checks whether the programs it looks after are on
+  this PC. If they are not (a friend without VR software running Rift Rabbit, say), the pet shows **"not on this PC"**
+  (the asleep mood, 9) and sends nothing. It never raises errors, alarms or tickets for software that was never
+  installed. Developers call this feature detection, or graceful degradation.
+
 - The ON/OFF state lives in the core (the Farm), not in the tool's own storage, so a compromised tool cannot turn
   itself back on. The runtime checks it before the tool runs; the checkbox on the page only asks the core.
 - Anyone on the farm may turn a tool **OFF**. Turning it back **ON** after a security OFF needs L4 approval and is logged.

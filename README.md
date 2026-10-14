@@ -11,8 +11,10 @@ her pets, which you can delete or change.
 
 **Install** (no administrator rights needed):
 1. Download the latest **[release](https://github.com/findastra/astras-pet-os/releases)** (Source code, zip) and unzip it.
-2. In the unzipped folder, run:
-   `powershell -ExecutionPolicy Bypass -File .\installer\install-astras-pet-os-20261014.ps1`
+2. In the unzipped folder, **double-click `install-astras-pet-os-20261014.cmd`**. If Windows asks whether to run it, choose Run.
+   (Prefer typing? Open that folder in File Explorer, click the address bar, type `powershell`, press Enter, then run
+   `powershell -ExecutionPolicy Bypass -File .\installer\install-astras-pet-os-20261014.ps1`. A PowerShell window opened
+   from the Start menu starts in another folder, so the command would not find the installer there.)
    It copies the files to `%LOCALAPPDATA%\Programs\astras-pet-os`, **builds the desktop pets from source on your PC**
    with the C# compiler that ships with Windows (no pre-built program to trust), and adds Start menu shortcuts:
    Astra's PetOS, System Map, **Stop Astra's PetOS (big red button)** and Uninstall. It does **not** start with Windows
