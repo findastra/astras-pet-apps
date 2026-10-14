@@ -27,6 +27,36 @@ export function assetPaths(registry, id) {
 
 const esc = (s) => s.replace(/\|/g, '\\|');
 
+/** Pet Program number of a repo (pets.json pet_programs), or null. Astra, 2026-10-13. */
+export const petNo = (registry, repo) => (registry.pet_programs?.numbers || []).find((n) => n.repo === repo)?.no ?? null;
+export const MARK = { yes: '✅', part: '🟡', no: '—' };
+export const PROGRAMS_START = '<!-- pet-programs:start (generated from pets.json pet_programs by scripts/update-readme.mjs; do not edit by hand) -->';
+export const PROGRAMS_END = '<!-- pet-programs:end -->';
+
+/** Every Pet Program by number, with its three built levels (level 4, the Human, is the same for all). */
+export function buildProgramList(registry) {
+  const kind = (repo) => (registry.pets || []).some((p) => p.repo === repo) ? 'registered'
+    : (registry.pipeline || []).some((p) => p.repo === repo) ? 'pipeline'
+    : (registry.seeds?.pets || []).some((p) => p.repo === repo) ? 'seed (draft program)' : 'unregistered';
+  const rows = (registry.pet_programs?.numbers || []).map((n) => `| ${n.no} | **${esc(n.pet)}** | ${kind(n.repo)} | ${n.created} | ${MARK[n.levels.root]} | ${MARK[n.levels.program]} | ${MARK[n.levels.harness]} |`);
+  return ['| Pet Program # | Pet | Kind | Created | 1 Root Program(s) | 2 Pet Program | 3 Agentic Harness |', '|---|---|---|---|---|---|---|', ...rows].join('\n');
+}
+
+export const GROUPS_START = '<!-- level-groups:start (generated from pets.json pet_programs by scripts/update-readme.mjs; do not edit by hand) -->';
+export const GROUPS_END = '<!-- level-groups:end -->';
+/** The Pet Programs grouped by how far each level is built, so what needs work reads at a glance. */
+export function buildLevelGroups(registry) {
+  const nums = registry.pet_programs?.numbers || [];
+  const names = (key, v) => nums.filter((n) => n.levels[key] === v).map((n) => `#${n.no} ${n.pet}`).join(', ') || 'none';
+  const head = '| Level | ✅ Built | 🟡 Partly there (needs work) | — Not built (needs work) |';
+  const rows = [['root', '1 Root Program(s)'], ['program', '2 Pet Program'], ['harness', '3 Agentic Harness']]
+    .map(([k, label]) => `| **${label}** | ${names(k, 'yes')} | ${names(k, 'part')} | ${names(k, 'no')} |`);
+  const errs = Object.entries(registry.pet_programs?.errors || {}).map(([code, what]) => {
+    const who = nums.filter((n) => n.errors.includes(code)).map((n) => `#${n.no} ${n.pet}`);
+    return who.length ? `| ${what} | ${who.join(', ')} |` : null; }).filter(Boolean);
+  return [head, '|---|---|---|---|', ...rows, '', '| Error | Pet Programs |', '|---|---|', ...errs].join('\n');
+}
+
 export function buildTable(registry) {
   const rows = (registry.pets || []).map((p) => {
     const repo = `https://github.com/${OWNER}/${p.repo}`;
@@ -34,15 +64,24 @@ export function buildTable(registry) {
     const availability = p.published === false ? 'not on GitHub yet' : p.visibility === 'private' ? 'private repo' : `[Download ZIP](${repo}/archive/refs/heads/main.zip)`;
     const get = `${p.interface_url ? `[Open app](${p.interface_url}) · ` : ''}${availability}`;
     const name = accessible ? `**[${esc(p.pet)}](${repo})**` : `**${esc(p.pet)}**`;
-    return `| ${name} | ${p.role} | ${p.status} | ${esc(p.job)} | ${get} |`;
+    return `| ${petNo(registry, p.repo) ?? ''} | ${name} | ${p.role} | ${p.status} | ${esc(p.job)} | ${get} |`;
   });
-  return ['| Pet | Role | Status | What it does | Get it |', '|---|---|---|---|---|', ...rows].join('\n');
+  return ['| # | Pet | Role | Status | What it does | Get it |', '|---|---|---|---|---|---|', ...rows].join('\n');
 }
 
 export function applyTable(readme, registry) {
   const a = readme.indexOf(START), b = readme.indexOf(END);
   if (a < 0 || b < a) throw new Error('README.md is missing the pets:start / pets:end markers');
-  return readme.slice(0, a) + START + '\n' + buildTable(registry) + '\n' + readme.slice(b);
+  let out = readme.slice(0, a) + START + '\n' + buildTable(registry) + '\n' + readme.slice(b);
+  const c = out.indexOf(PROGRAMS_START), d = out.indexOf(PROGRAMS_END);
+  if (c >= 0 && d > c) out = out.slice(0, c) + PROGRAMS_START + '\n' + buildProgramList(registry) + '\n' + out.slice(d);
+  return out;
+}
+
+/** Replace the text between two markers; unchanged if the markers are missing. */
+export function applyBlock(text, start, end, body) {
+  const a = text.indexOf(start), b = text.indexOf(end);
+  return a < 0 || b < a ? text : text.slice(0, a) + start + '\n' + body + '\n' + text.slice(b);
 }
 
 /** Problems with pets.json, the README table, and (when given) the built frames index

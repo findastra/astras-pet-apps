@@ -83,6 +83,10 @@ export function buildSystemMap(registry, extra, template, icons = {}) {
   const data = systemMapData(registry, extra);
   // A pet's own icon in art/icons/ (its newest look) wins over its older mood frame.
   for (const n of data.nodes) { n.icon = icons['node:' + n.id] || (n.art && icons[n.art]) || null; delete n.art; }
+  // Each Pet Program's number, built levels and errors, so the map shows health at a glance (Astra, 2026-10-13).
+  const pp = registry.pet_programs || { numbers: [] };
+  for (const n of data.nodes) { const e = pp.numbers.find((x) => x.repo === (n.repo || n.id)); if (e) n.pp = { no: e.no, levels: e.levels, errors: e.errors }; }
+  data.ppLevels = pp.levels || {}; data.ppErrors = pp.errors || {};
   return template.replace('__DATA__', () => JSON.stringify(data).replaceAll('<', '\\u003c'));
 }
 

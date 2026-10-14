@@ -19,6 +19,10 @@ Every pet app is a set of parts. Each part has **one** name, used everywhere: RE
 
 So: the pet floating on the desktop is the **desktop pet** (an *icon* is the still taskbar picture), its pop-up lines are **bubbles**, the box you type into is **quick chat**, and the window it opens is just its **app**.
 
+## The four intelligence levels
+
+Every pet app is built in four levels ([INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md)). Short names: **root program** (level 1, the external programs it runs and looks after), **pet program** (level 2, the pet itself: its tools and features), **agentic harness** / **agent** (level 3: a harness before an AI model is seated in it, an agent while seated) and **human** (level 4). Each pet program has a **Pet Program #**, given in creation order and never reused.
+
 ## The pet's art
 
 | Part | Call it | What it is |

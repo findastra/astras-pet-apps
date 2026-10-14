@@ -1242,5 +1242,544 @@
       "repo": "fuzzbois",
       "why": "Local art project, not published."
     }
-  ]
+  ],
+  "pet_programs": {
+    "about": "Pet Programs are serialized as they are created: each gets a Pet Program number in creation order and keeps it for life. Numbers are never reused or reordered, even if a pet is renamed, retired, or moves between the Kennel (community lab) and the Farm (native OS); for a community pet, its number is given when it moves to the native OS. Numbers 1 to 36 were assigned retroactively on 2026-10-13 from the hub's git history and each repo's first commit; pets created at the same moment keep their registry order. A seed has no number until its Pet Program exists. Level marks: yes = built and working, part = partly there, no = not built. Astra, 2026-10-13.",
+    "levels": {
+      "1": {
+        "name": "Root Program(s)",
+        "detail": "The external programs the pet executes and looks after. Several pets can share one Root Program."
+      },
+      "2": {
+        "name": "Pet Program",
+        "detail": "The alive, intelligent part: generates tools for and manages the runtimes of its Root Programs, has its own features (fed by Root Program data, the Agentic Harness and the Human), and decides when to escalate to level 3, calling an AI into its Agentic Harness to solve outside problems, change designs on GitHub and make troubleshooting decisions. Several Pet Programs can call the same Root Program."
+      },
+      "3": {
+        "name": "Agentic Harness",
+        "detail": "Called by the Pet Program (level 2) or the Human (level 4): an available AI model (Anthropic, OpenAI or other) is seated in it to form the Agent. It is an Agentic Harness before it is seated, and an Agent while seated."
+      },
+      "4": {
+        "name": "Human",
+        "detail": "Astra (or any user) enters information, approves and decides."
+      }
+    },
+    "errors": {
+      "name-mismatch": "name mismatch",
+      "pc-not-linked": "PC folder not connected to its GitHub repo",
+      "pc-only": "only on the PC, not on GitHub",
+      "unmerged": "stuck in an unmerged pull request or on a branch",
+      "not-scheduled": "scheduled task not installed",
+      "not-registered": "missing from the registry",
+      "art": "art missing or different",
+      "wrong-repo": "code in the wrong repo",
+      "not-installed": "a Root Program it looks after is not installed"
+    },
+    "numbers": [
+      {
+        "no": 1,
+        "repo": "astras-pet-os",
+        "pet": "Friendly Farmer",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 2,
+        "repo": "github-goldfish",
+        "pet": "GitHub Goldfish",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "wrong-repo"
+        ]
+      },
+      {
+        "no": 3,
+        "repo": "data-dealer",
+        "pet": "Chip",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "part"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 4,
+        "repo": "api-fairy",
+        "pet": "API Fairy",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 5,
+        "repo": "unity-unicorn",
+        "pet": "Unity Unicorn",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "part"
+        },
+        "errors": [
+          "unmerged",
+          "pc-only"
+        ]
+      },
+      {
+        "no": 6,
+        "repo": "learn-python",
+        "pet": "Python Panther",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 7,
+        "repo": "vrchat-ai-astra",
+        "pet": "Astra Wisp",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 8,
+        "repo": "health-hummy",
+        "pet": "Health Hummy",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 9,
+        "repo": "finance-finch",
+        "pet": "Finance Finch",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 10,
+        "repo": "mommys",
+        "pet": "Mommy's Mommies",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 11,
+        "repo": "paper-girl",
+        "pet": "Patty",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 12,
+        "repo": "file-master",
+        "pet": "File Master",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "part"
+        },
+        "errors": [
+          "not-scheduled"
+        ]
+      },
+      {
+        "no": 13,
+        "repo": "findastra-discord-presence",
+        "pet": "Discord Damsel",
+        "created": "2026-10-07",
+        "evidence": "joined the hub registry in its first commit (2d8c362, 2026-10-07 21:42 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "yes",
+          "harness": "no"
+        },
+        "errors": [
+          "unmerged"
+        ]
+      },
+      {
+        "no": 14,
+        "repo": "portfolio-puffer",
+        "pet": "Portfolio Puffer",
+        "created": "2026-10-08",
+        "evidence": "joined the hub registry in 1df0f2d (2026-10-08 21:19 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 15,
+        "repo": "drum-dog",
+        "pet": "Drum Dog",
+        "created": "2026-10-08",
+        "evidence": "joined the hub registry in 1df0f2d (2026-10-08 21:19 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "not-installed"
+        ]
+      },
+      {
+        "no": 16,
+        "repo": "vscode-angel",
+        "pet": "VSCode Angel",
+        "created": "2026-10-08",
+        "evidence": "joined the hub registry in 1df0f2d (2026-10-08 21:19 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 17,
+        "repo": "ghost-protocol",
+        "pet": "Gone Ghost",
+        "created": "2026-10-08",
+        "evidence": "joined the hub registry in 1df0f2d (2026-10-08 21:19 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "yes",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 18,
+        "repo": "project-parrot",
+        "pet": "Project Parrot",
+        "created": "2026-10-08",
+        "evidence": "joined the hub registry in 1df0f2d (2026-10-08 21:19 Denver); same-time pets keep registry order",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 19,
+        "repo": "voicemeeter-bug",
+        "pet": "Voicemeeter Bug",
+        "created": "2026-10-08",
+        "evidence": "made by OpenAI Codex on 2026-10-08; joined the hub in 01aae84 (2026-10-09 01:40 Denver); repo created 2026-10-11",
+        "levels": {
+          "root": "yes",
+          "program": "yes",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 20,
+        "repo": "claude-bot",
+        "pet": "Claude Bot",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 01:05 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 21,
+        "repo": "rgbee",
+        "pet": "RGBee",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 09:04 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 22,
+        "repo": "astras-gif-maker",
+        "pet": "Gif Giraffe",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:46:29 Denver, born as a pet app",
+        "levels": {
+          "root": "yes",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-not-linked"
+        ]
+      },
+      {
+        "no": 23,
+        "repo": "meme-fiend",
+        "pet": "Meme Fiend",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:46:53 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 24,
+        "repo": "rift-rabbit",
+        "pet": "Rift Rabbit",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:48:55 Denver, born as a pet app",
+        "levels": {
+          "root": "yes",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 25,
+        "repo": "deck-duck",
+        "pet": "Deck Duck",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:50:36 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "not-installed"
+        ]
+      },
+      {
+        "no": 26,
+        "repo": "mesh-moth",
+        "pet": "Mesh Moth",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:50:40 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 27,
+        "repo": "fuzzboi-friend",
+        "pet": "Fuzzboi Friend",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:50:53 Denver, born as a pet app",
+        "levels": {
+          "root": "yes",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 28,
+        "repo": "wifi-butterfly",
+        "pet": "Wifi Butterfly",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:51:06 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 29,
+        "repo": "backup-beaver",
+        "pet": "Backup Beaver",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:51:28 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 30,
+        "repo": "patch-cat",
+        "pet": "Patch Cat",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:51:48 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 31,
+        "repo": "mail-snail",
+        "pet": "Mail Snail",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:52:01 Denver, born as a pet app",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": []
+      },
+      {
+        "no": 32,
+        "repo": "raspberry-berry",
+        "pet": "Raspberry Pi",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:56:02 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "name-mismatch"
+        ]
+      },
+      {
+        "no": 33,
+        "repo": "mine-mole",
+        "pet": "Mine Mole",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 16:57:30 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "art"
+        ]
+      },
+      {
+        "no": 34,
+        "repo": "chat-rat",
+        "pet": "Chat Rat",
+        "created": "2026-10-09",
+        "evidence": "repo created 2026-10-09 23:34:43 Denver, born as a pet app",
+        "levels": {
+          "root": "part",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": [
+          "not-registered"
+        ]
+      },
+      {
+        "no": 35,
+        "repo": "spoonfed",
+        "pet": "Spoonfed Sugarcube",
+        "created": "2026-10-11",
+        "evidence": "repo created 2026-10-11 13:29 Denver (the Spoonfed app lived on the PC before that)",
+        "levels": {
+          "root": "yes",
+          "program": "no",
+          "harness": "no"
+        },
+        "errors": [
+          "unmerged",
+          "name-mismatch",
+          "art"
+        ]
+      },
+      {
+        "no": 36,
+        "repo": "platform-platypus",
+        "pet": "Platform Platypus",
+        "created": "2026-10-11",
+        "evidence": "local draft app with pet.json on the PC; card 010 (dated 2026-10-11, committed 2026-10-12)",
+        "levels": {
+          "root": "no",
+          "program": "part",
+          "harness": "no"
+        },
+        "errors": [
+          "pc-only"
+        ]
+      }
+    ]
+  }
 }

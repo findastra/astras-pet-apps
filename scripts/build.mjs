@@ -4,7 +4,8 @@
 //   art/frames/index.json        what was built, and which pets are still placeholders
 //   cage-data.js                 the registry and frame paths for cage.html
 //   ROSTER.md                    the running list of who lives here
-//   README.md                    the pet table between the pets:start / pets:end markers
+//   README.md                    the pet table and the Pet Program list between their markers
+//   INTELLIGENCE-LEVELS.md       the Pet Programs grouped by level, between its markers
 //   art/roster.png               every pet in every mood on one labelled sheet
 //   RELATIONS.md, MOOD-KEY.md   how the pets relate, and what each mood means for each pet (relations-20261009.mjs)
 //   system-map-20261012.html       the 3D map of Astra's PetOS, from pets.json and system-map.json (system-map-20261012.mjs)
@@ -16,7 +17,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { buildFrames } from './build-frames.mjs';
 import { buildRoster } from './roster.mjs';
-import { applyTable } from './lib.mjs';
+import { applyTable, applyBlock, GROUPS_START, GROUPS_END, buildLevelGroups } from './lib.mjs';
 import { MOODS, decodePng } from './sheet-to-sprites.mjs';
 import { buildRelations, buildMoodKey } from './relations-20261009.mjs';
 import { buildSystemMap, readSystemMapSources, SYSTEM_MAP } from './system-map-20261012.mjs';
@@ -65,6 +66,8 @@ writeFileSync('MOOD-KEY.md', buildMoodKey(registry));
 const readme = readFileSync('README.md', 'utf8');
 const nextReadme = applyTable(readme, registry);
 if (nextReadme !== readme) writeFileSync('README.md', nextReadme);
+const levels = readFileSync('INTELLIGENCE-LEVELS.md', 'utf8'), nextLevels = applyBlock(levels, GROUPS_START, GROUPS_END, buildLevelGroups(registry));
+if (nextLevels !== levels) writeFileSync('INTELLIGENCE-LEVELS.md', nextLevels);
 
 if (!metadataOnly) execFileSync(process.execPath, ['scripts/frames-sheet.mjs', '--thumb', '96'], { stdio: 'ignore' });
 

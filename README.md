@@ -9,37 +9,93 @@
 This is the development home of **Astra's PetOS** (`ASTRAS_PET_OS`). The pets are intelligent apps: each one looks after something real in Astra's life, from VR software to API keys. The **Friendly Farmer** organizes the pets. **The Farm** is the native OS where they will live and run, and **the Kennel** is the community lab where other people's pets are built and adopted (both planned).
 
 - **[Astra's PetOS System Map](system-map-20261012.html)** (the 3D PFD): every pet, program, model and device, and what flows between them.
-- **[INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md)**: what each pet has built of its three levels of intelligence (program, runtime, agentic harness).
+- **[INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md)**: the four intelligence levels of every intelligent app (pet), and what each Pet Program has built of them.
 - **[ASTRAS_PET_OS.md](ASTRAS_PET_OS.md)**: the architecture, with Astra's amendments at the top. The migration plan is [docs/migration/PLAN.md](docs/migration/PLAN.md).
 
 ![Every character in every mood](art/roster.png)
 
 Every pet has the same nine moods (idle, blink, happy, curious, worried, sad, sick, alarmed, sleep). What each part of a pet app is called is in [PET-WORDS.md](PET-WORDS.md). Drawings are **drafts** unless their roster notes record Astra's approval.
 
+## Intelligence levels and Pet Program numbers
+
+Every intelligent app (also known as the **pet**) has four intelligence levels. Full definitions and every pet's detail: [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md).
+
+| Level | Name | What it is |
+|---|---|---|
+| 1 | **Root Program(s)** | The external programs the pet executes and looks after. Several pets can share one Root Program. |
+| 2 | **Pet Program** | The alive, intelligent part, and the pet itself: generates tools for and manages the runtimes of its Root Programs, has its own features, and decides when to escalate to level 3: calling an AI into its Agentic Harness to solve outside problems, change designs on GitHub and make troubleshooting decisions. |
+| 3 | **Agentic Harness** | Called by the Pet Program or the Human. An AI model (Anthropic, OpenAI or other) is seated in it to form the **Agent**: an Agentic Harness before it is seated, an Agent while seated. |
+| 4 | **Human** | You: enter information, approve and decide. |
+
+Pet Programs are serialized as they are created: every one has a **Pet Program #**, given in creation order and kept for life (never reused, even when a pet is renamed, retired, or later moves between the Kennel and the Farm). 1 to 36 were numbered from the git history on 2026-10-13; a seed gets the next number when its program is created. ✅ built · 🟡 partly there · — not built.
+
+<!-- pet-programs:start (generated from pets.json pet_programs by scripts/update-readme.mjs; do not edit by hand) -->
+| Pet Program # | Pet | Kind | Created | 1 Root Program(s) | 2 Pet Program | 3 Agentic Harness |
+|---|---|---|---|---|---|---|
+| 1 | **Friendly Farmer** | registered | 2026-10-07 | ✅ | 🟡 | — |
+| 2 | **GitHub Goldfish** | registered | 2026-10-07 | ✅ | 🟡 | — |
+| 3 | **Chip** | registered | 2026-10-07 | ✅ | 🟡 | 🟡 |
+| 4 | **API Fairy** | registered | 2026-10-07 | — | 🟡 | — |
+| 5 | **Unity Unicorn** | registered | 2026-10-07 | ✅ | 🟡 | 🟡 |
+| 6 | **Python Panther** | registered | 2026-10-07 | ✅ | 🟡 | — |
+| 7 | **Astra Wisp** | registered | 2026-10-07 | ✅ | 🟡 | — |
+| 8 | **Health Hummy** | registered | 2026-10-07 | — | 🟡 | — |
+| 9 | **Finance Finch** | registered | 2026-10-07 | — | 🟡 | — |
+| 10 | **Mommy's Mommies** | registered | 2026-10-07 | 🟡 | 🟡 | — |
+| 11 | **Patty** | registered | 2026-10-07 | ✅ | — | — |
+| 12 | **File Master** | registered | 2026-10-07 | ✅ | 🟡 | 🟡 |
+| 13 | **Discord Damsel** | registered | 2026-10-07 | ✅ | ✅ | — |
+| 14 | **Portfolio Puffer** | registered | 2026-10-08 | — | 🟡 | — |
+| 15 | **Drum Dog** | registered | 2026-10-08 | 🟡 | 🟡 | — |
+| 16 | **VSCode Angel** | registered | 2026-10-08 | 🟡 | 🟡 | — |
+| 17 | **Gone Ghost** | registered | 2026-10-08 | ✅ | — | — |
+| 18 | **Project Parrot** | registered | 2026-10-08 | — | 🟡 | — |
+| 19 | **Voicemeeter Bug** | registered | 2026-10-08 | ✅ | ✅ | — |
+| 20 | **Claude Bot** | pipeline | 2026-10-09 | — | — | — |
+| 21 | **RGBee** | pipeline | 2026-10-09 | 🟡 | 🟡 | — |
+| 22 | **Gif Giraffe** | pipeline | 2026-10-09 | ✅ | — | — |
+| 23 | **Meme Fiend** | pipeline | 2026-10-09 | 🟡 | 🟡 | — |
+| 24 | **Rift Rabbit** | pipeline | 2026-10-09 | ✅ | 🟡 | — |
+| 25 | **Deck Duck** | pipeline | 2026-10-09 | — | 🟡 | — |
+| 26 | **Mesh Moth** | pipeline | 2026-10-09 | 🟡 | 🟡 | — |
+| 27 | **Fuzzboi Friend** | pipeline | 2026-10-09 | ✅ | — | — |
+| 28 | **Wifi Butterfly** | pipeline | 2026-10-09 | — | 🟡 | — |
+| 29 | **Backup Beaver** | pipeline | 2026-10-09 | — | 🟡 | — |
+| 30 | **Patch Cat** | pipeline | 2026-10-09 | — | 🟡 | — |
+| 31 | **Mail Snail** | pipeline | 2026-10-09 | — | 🟡 | — |
+| 32 | **Raspberry Pi** | pipeline | 2026-10-09 | 🟡 | 🟡 | — |
+| 33 | **Mine Mole** | pipeline | 2026-10-09 | 🟡 | 🟡 | — |
+| 34 | **Chat Rat** | unregistered | 2026-10-09 | 🟡 | — | — |
+| 35 | **Spoonfed Sugarcube** | pipeline | 2026-10-11 | ✅ | — | — |
+| 36 | **Platform Platypus** | seed (draft program) | 2026-10-11 | — | 🟡 | — |
+<!-- pet-programs:end -->
+
+Seeds (Pole Puff, Procreate Panda, Skill Scout, OSC Sealion, Piranesi Nessi, Photo Dodo, Video Vulture, Closet Cat) and the roadmap pets have no Pet Program yet, so no number.
+
 ## Who lives here
 
 <!-- pets:start (generated from pets.json by scripts/update-readme.mjs; do not edit by hand) -->
-| Pet | Role | Status | What it does | Get it |
-|---|---|---|---|---|
-| **[Friendly Farmer](https://github.com/findastra/astras-pet-os)** | host | growing | Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra. The Farmer’s desk opens every app. He will run the Farm, the native OS of Astra’s PetOS. | [Open app](apps/astras-pet-apps-20261008.html) · [Download ZIP](https://github.com/findastra/astras-pet-os/archive/refs/heads/main.zip) |
-| **[GitHub Goldfish](https://github.com/findastra/github-goldfish)** | pet | growing | Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors. | [Open app](apps/github-goldfish-20261008.html) · [Download ZIP](https://github.com/findastra/github-goldfish/archive/refs/heads/main.zip) |
-| **Chip** | pet | hatching | Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her. | [Open app](apps/data-dealer-20261008.html) · private repo |
-| **[API Fairy](https://github.com/findastra/api-fairy)** | pet | growing | Keeps notes about your API keys, never the keys themselves: where each lives and what uses it, which keys have gone stale, and which new keys to get. Lives in the corner of the Windows desktop. | [Open app](apps/api-fairy-20261008.html) · [Download ZIP](https://github.com/findastra/api-fairy/archive/refs/heads/main.zip) |
-| **[Unity Unicorn](https://github.com/findastra/unity-unicorn)** | pet | hatching | A local Unity and VRChat desk with avatar plans, 26 dated tools, open-arch audits, concise summaries and evidenced execution history. | [Open app](apps/unity-unicorn-20261008.html) · [Download ZIP](https://github.com/findastra/unity-unicorn/archive/refs/heads/main.zip) |
-| **[Python Panther](https://github.com/findastra/learn-python)** | pet | hatching | A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons. | [Open app](apps/learn-python-20261008.html) · [Download ZIP](https://github.com/findastra/learn-python/archive/refs/heads/main.zip) |
-| **[Astra Wisp](https://github.com/findastra/vrchat-ai-astra)** | pet | hatching | Watches the health of VRChat AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session. | [Open app](apps/vrchat-ai-astra-20261008.html) · [Download ZIP](https://github.com/findastra/vrchat-ai-astra/archive/refs/heads/main.zip) |
-| **[Health Hummy](https://github.com/findastra/health-hummy)** | pet | hatching | Personal health tracker: weight lifting by body group and sets, cardio, and pole plans. Your data stays on your PC and is never committed. | [Open app](apps/health-hummy-20261008.html) · [Download ZIP](https://github.com/findastra/health-hummy/archive/refs/heads/main.zip) |
-| **[Finance Finch](https://github.com/findastra/finance-finch)** | pet | hatching | Personal finance tracker across your bank, savings and investment accounts. It reads balances and never moves money. A yellow canary. Your data stays on your PC and is never committed. | [Open app](apps/finance-finch-20261008.html) · [Download ZIP](https://github.com/findastra/finance-finch/archive/refs/heads/main.zip) |
-| **[Mommy's Mommies](https://github.com/findastra/mommys)** | pet | hatching | A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned. | [Open app](apps/mommys-20261008.html) · [Download ZIP](https://github.com/findastra/mommys/archive/refs/heads/main.zip) |
-| **[Patty](https://github.com/findastra/paper-girl)** | pet | growing | Runs Paper Girl, a free science discovery desk: real research, publisher explanations and fresh articles. | [Open app](https://findastra.github.io/paper-girl/) · [Download ZIP](https://github.com/findastra/paper-girl/archive/refs/heads/main.zip) |
-| **[File Master](https://github.com/findastra/file-master)** | pet | growing | Organizes your files and finds systemic errors. Shows every mass change before making it, with undo. Opens or edits programs only after Test Tortoise tests the change and Gatekeeper Goddess and Astra approve it (planned). | [Open app](apps/file-master-20261008.html) · [Download ZIP](https://github.com/findastra/file-master/archive/refs/heads/main.zip) |
-| **[Discord Damsel](https://github.com/findastra/findastra-discord-presence)** | pet | hatching | Opens the installed OpenAI and Anthropic Discord presence controls, with a manual setup checklist. | [Open app](apps/findastra-discord-presence-20261008.html) · [Download ZIP](https://github.com/findastra/findastra-discord-presence/archive/refs/heads/main.zip) |
-| **[Portfolio Puffer](https://github.com/findastra/portfolio-puffer)** | pet | hatching | Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual. | [Open app](apps/portfolio-puffer-20261008.html) · [Download ZIP](https://github.com/findastra/portfolio-puffer/archive/refs/heads/main.zip) |
-| **[Drum Dog](https://github.com/findastra/drum-dog)** | pet | hatching | Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted. Ableton Live connections are planned. | [Open app](apps/drum-dog-20261008.html) · [Download ZIP](https://github.com/findastra/drum-dog/archive/refs/heads/main.zip) |
-| **[VSCode Angel](https://github.com/findastra/vscode-angel)** | pet | hatching | Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned. | [Open app](apps/vscode-angel-20261008.html) · [Download ZIP](https://github.com/findastra/vscode-angel/archive/refs/heads/main.zip) |
-| **[Gone Ghost](https://github.com/findastra/ghost-protocol)** | pet | hatching | Watches the public Ghost Protocol website and checks Astra’s own security against its research: a personal cybersecurity checklist and the steps she has completed. | [Open app](https://findastra.github.io/ghost-protocol/) · [Download ZIP](https://github.com/findastra/ghost-protocol/archive/refs/heads/main.zip) |
-| **[Project Parrot](https://github.com/findastra/project-parrot)** | pet | hatching | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | [Open app](apps/project-parrot-20261008.html) · [Download ZIP](https://github.com/findastra/project-parrot/archive/refs/heads/main.zip) |
-| **Voicemeeter Bug** | pet | growing | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | [Open app](apps/voicemeeter-bug-20261008.html) · private repo |
+| # | Pet | Role | Status | What it does | Get it |
+|---|---|---|---|---|---|
+| 1 | **[Friendly Farmer](https://github.com/findastra/astras-pet-os)** | host | growing | Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra. The Farmer’s desk opens every app. He will run the Farm, the native OS of Astra’s PetOS. | [Open app](apps/astras-pet-apps-20261008.html) · [Download ZIP](https://github.com/findastra/astras-pet-os/archive/refs/heads/main.zip) |
+| 2 | **[GitHub Goldfish](https://github.com/findastra/github-goldfish)** | pet | growing | Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors. | [Open app](apps/github-goldfish-20261008.html) · [Download ZIP](https://github.com/findastra/github-goldfish/archive/refs/heads/main.zip) |
+| 3 | **Chip** | pet | hatching | Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her. | [Open app](apps/data-dealer-20261008.html) · private repo |
+| 4 | **[API Fairy](https://github.com/findastra/api-fairy)** | pet | growing | Keeps notes about your API keys, never the keys themselves: where each lives and what uses it, which keys have gone stale, and which new keys to get. Lives in the corner of the Windows desktop. | [Open app](apps/api-fairy-20261008.html) · [Download ZIP](https://github.com/findastra/api-fairy/archive/refs/heads/main.zip) |
+| 5 | **[Unity Unicorn](https://github.com/findastra/unity-unicorn)** | pet | hatching | A local Unity and VRChat desk with avatar plans, 26 dated tools, open-arch audits, concise summaries and evidenced execution history. | [Open app](apps/unity-unicorn-20261008.html) · [Download ZIP](https://github.com/findastra/unity-unicorn/archive/refs/heads/main.zip) |
+| 6 | **[Python Panther](https://github.com/findastra/learn-python)** | pet | hatching | A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons. | [Open app](apps/learn-python-20261008.html) · [Download ZIP](https://github.com/findastra/learn-python/archive/refs/heads/main.zip) |
+| 7 | **[Astra Wisp](https://github.com/findastra/vrchat-ai-astra)** | pet | hatching | Watches the health of VRChat AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session. | [Open app](apps/vrchat-ai-astra-20261008.html) · [Download ZIP](https://github.com/findastra/vrchat-ai-astra/archive/refs/heads/main.zip) |
+| 8 | **[Health Hummy](https://github.com/findastra/health-hummy)** | pet | hatching | Personal health tracker: weight lifting by body group and sets, cardio, and pole plans. Your data stays on your PC and is never committed. | [Open app](apps/health-hummy-20261008.html) · [Download ZIP](https://github.com/findastra/health-hummy/archive/refs/heads/main.zip) |
+| 9 | **[Finance Finch](https://github.com/findastra/finance-finch)** | pet | hatching | Personal finance tracker across your bank, savings and investment accounts. It reads balances and never moves money. A yellow canary. Your data stays on your PC and is never committed. | [Open app](apps/finance-finch-20261008.html) · [Download ZIP](https://github.com/findastra/finance-finch/archive/refs/heads/main.zip) |
+| 10 | **[Mommy's Mommies](https://github.com/findastra/mommys)** | pet | hatching | A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned. | [Open app](apps/mommys-20261008.html) · [Download ZIP](https://github.com/findastra/mommys/archive/refs/heads/main.zip) |
+| 11 | **[Patty](https://github.com/findastra/paper-girl)** | pet | growing | Runs Paper Girl, a free science discovery desk: real research, publisher explanations and fresh articles. | [Open app](https://findastra.github.io/paper-girl/) · [Download ZIP](https://github.com/findastra/paper-girl/archive/refs/heads/main.zip) |
+| 12 | **[File Master](https://github.com/findastra/file-master)** | pet | growing | Organizes your files and finds systemic errors. Shows every mass change before making it, with undo. Opens or edits programs only after Test Tortoise tests the change and Gatekeeper Goddess and Astra approve it (planned). | [Open app](apps/file-master-20261008.html) · [Download ZIP](https://github.com/findastra/file-master/archive/refs/heads/main.zip) |
+| 13 | **[Discord Damsel](https://github.com/findastra/findastra-discord-presence)** | pet | hatching | Opens the installed OpenAI and Anthropic Discord presence controls, with a manual setup checklist. | [Open app](apps/findastra-discord-presence-20261008.html) · [Download ZIP](https://github.com/findastra/findastra-discord-presence/archive/refs/heads/main.zip) |
+| 14 | **[Portfolio Puffer](https://github.com/findastra/portfolio-puffer)** | pet | hatching | Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual. | [Open app](apps/portfolio-puffer-20261008.html) · [Download ZIP](https://github.com/findastra/portfolio-puffer/archive/refs/heads/main.zip) |
+| 15 | **[Drum Dog](https://github.com/findastra/drum-dog)** | pet | hatching | Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted. Ableton Live connections are planned. | [Open app](apps/drum-dog-20261008.html) · [Download ZIP](https://github.com/findastra/drum-dog/archive/refs/heads/main.zip) |
+| 16 | **[VSCode Angel](https://github.com/findastra/vscode-angel)** | pet | hatching | Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned. | [Open app](apps/vscode-angel-20261008.html) · [Download ZIP](https://github.com/findastra/vscode-angel/archive/refs/heads/main.zip) |
+| 17 | **[Gone Ghost](https://github.com/findastra/ghost-protocol)** | pet | hatching | Watches the public Ghost Protocol website and checks Astra’s own security against its research: a personal cybersecurity checklist and the steps she has completed. | [Open app](https://findastra.github.io/ghost-protocol/) · [Download ZIP](https://github.com/findastra/ghost-protocol/archive/refs/heads/main.zip) |
+| 18 | **[Project Parrot](https://github.com/findastra/project-parrot)** | pet | hatching | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | [Open app](apps/project-parrot-20261008.html) · [Download ZIP](https://github.com/findastra/project-parrot/archive/refs/heads/main.zip) |
+| 19 | **Voicemeeter Bug** | pet | growing | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | [Open app](apps/voicemeeter-bug-20261008.html) · private repo |
 <!-- pets:end -->
 
 The generated count and running list, with every mood of every character, are in [ROSTER.md](ROSTER.md). Gone Ghost's website, [Ghost Protocol](https://findastra.github.io/ghost-protocol/), is already live; Astra approved the ghost artwork on 2026-10-08.

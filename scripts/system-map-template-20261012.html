@@ -79,6 +79,8 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 .close{justify-self:end}
 .navpad{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;backdrop-filter:blur(6px)}
 .navpad .btn{min-width:44px;min-height:36px;justify-content:center}
+.zoompct{display:inline-flex;align-items:center;gap:2px;color:var(--muted);font-size:12.5px;padding:0 4px}
+.zoompct input{width:3.6em;font:inherit;text-align:right;background:var(--well);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:6px 8px}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
 /* Minimize (Astra, 2026-10-13): both panels fold down to their title bar so the map is free. */
 .bar{display:flex;align-items:center;gap:8px}
@@ -112,7 +114,7 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   </div>
   <div class="search">
     <label class="label" for="q">Search</label>
-    <input id="q" type="search" placeholder="Pet, program, job…" autocomplete="off" aria-controls="res">
+    <input id="q" type="search" placeholder="Pet, program, job, or #number…" autocomplete="off" aria-controls="res">
     <div class="res" id="res" hidden role="listbox"></div>
   </div>
   <div class="row" role="group" aria-label="View">
@@ -120,9 +122,11 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
     <button class="btn" id="vHub" aria-pressed="false">Links to every pet</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
+    <button class="btn" id="vHealth" aria-pressed="true" title="Ring around every Pet Program: red has an error; green, amber or grey for how far its Pet Program is built">Health rings</button>
     <button class="btn" id="vCode">Code list</button>
     <button class="btn" id="vReset">Show everything</button>
   </div>
+  <p class="sub">Health rings: <b style="color:#ff2d55">red</b> has an error · <b style="color:#4be08a">green</b> Pet Program works · <b style="color:#ffb020">amber</b> partly built · <b style="color:#8a90ad">grey</b> not built yet. The number before a pet's name is its Pet Program #.</p>
   <p class="sub">Every item in the keys below is a switch: click it to hide or show that kind of thing.</p>
   <div class="label">Line colour = architecture layer (click to hide)</div>
   <div class="legend" id="layerLegend"></div>
@@ -138,8 +142,9 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 
 <aside class="side" id="side" hidden aria-live="polite"></aside>
 <nav class="navpad" aria-label="Move around the map">
-  <button class="btn" id="nZoomIn" title="Zoom in" aria-label="Zoom in">＋</button>
   <button class="btn" id="nZoomOut" title="Zoom out" aria-label="Zoom out">－</button>
+  <label class="zoompct" title="Zoom: type a percentage and press Enter (100% is the whole map)"><input id="nZoomPct" type="text" inputmode="numeric" value="100" aria-label="Zoom percent" size="4">%</label>
+  <button class="btn" id="nZoomIn" title="Zoom in" aria-label="Zoom in">＋</button>
   <button class="btn" id="nReset" title="Back to the whole map">Reset view</button>
   <button class="btn" id="nSpin" aria-pressed="true" title="Slowly turn the map">Spin</button>
 </nav>
@@ -249,12 +254,22 @@ function makeIcon(n){
     g.fillText(n.name.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(),64,68); tex.needsUpdate=true; }
   sp.visible=false; sp.userData.node=n; return sp;
 }
-const meshes = [], icons = [], labelEls = {};
+// Health ring around every Pet Program (Astra, 2026-10-13): red = has an error; otherwise how far its
+// Pet Program (level 2) is built: green working, amber partly, grey not yet.
+const HEALTH = {error:'#ff2d55', yes:'#4be08a', part:'#ffb020', no:'#8a90ad'};
+const healthOf = n => !n.pp ? null : n.pp.errors.length ? 'error' : n.pp.levels.program;
+function makeRing(n){ const h=healthOf(n); if(!h) return null;
+  const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
+  g.strokeStyle=HEALTH[h]; g.lineWidth=h==='error'?14:9; g.beginPath(); g.arc(64,64,54,0,Math.PI*2); g.stroke();
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false})); sp.userData.health=h; return sp; }
+let healthOn = true;
+const meshes = [], icons = [], rings = [], labelEls = {};
 const labelsBox = document.getElementById('labels');
 DATA.nodes.forEach(n=>{
   const m = makeAvatar(n); m.position.copy(pos[n.id]); m.userData.node = n; scene.add(m); meshes.push(m); n.mesh=m;
   const ic = makeIcon(n); ic.position.copy(pos[n.id]); scene.add(ic); icons.push(ic); n.iconSprite=ic;
-  const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
+  const rg = makeRing(n); if(rg){ rg.position.copy(pos[n.id]); scene.add(rg); rings.push(rg); n.ring=rg; }
+  const el = document.createElement('div'); el.className='lbl'+(['host','you','model','infrastructure'].includes(n.type)?' big':''); el.textContent=(n.pp?`#${n.pp.no} `:'')+n.name; labelsBox.appendChild(el); labelEls[n.id]=el;
 });
 
 // ---------- links: bowed curves, flow dots, and an invisible tube on each so it can be clicked ----------
@@ -375,9 +390,9 @@ function apply(){
     const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
     m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
     m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
-    n.iconSprite.material.opacity = on ? 1 : .12;
+    n.iconSprite.material.opacity = on ? 1 : .12; if(n.ring) n.ring.material.opacity = on ? 1 : .12;
     // The harness has no dot of its own: the glass shell is the harness.
-    const keep=nodeOn(n), solid=n.type!=='harness', asIcon=iconMode&&!!n.icon; m.visible=keep&&solid&&!asIcon; n.iconSprite.visible=keep&&solid&&asIcon; labelEls[n.id].dataset.off = keep?'':'1'; });
+    const keep=nodeOn(n), solid=n.type!=='harness', asIcon=iconMode&&!!n.icon; m.visible=keep&&solid&&!asIcon; n.iconSprite.visible=keep&&solid&&asIcon; if(n.ring) n.ring.visible=keep&&healthOn; labelEls[n.id].dataset.off = keep?'':'1'; });
   const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass;
   const glassHot = fid && nodeById[fid] && nodeById[fid].type==='harness';
   harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055;
@@ -425,6 +440,7 @@ function selectNode(n){
   const c=el('span','chip',DATA.types[n.type]+(n.status?` · ${n.status}`:'')+(n.state==='planned'&&!['seed','roadmap'].includes(n.type)?' · planned':'')); c.style.color=TYPE[n.type].color; side.appendChild(c);
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
+  if(n.pp) side.appendChild(levelsBlock(n));
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
   side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)
@@ -436,6 +452,14 @@ function selectNode(n){
   if(!list.length) ul.appendChild(el('li','why','No connections in the views that are switched on.'));
   side.appendChild(ul); side.hidden=false;
 }
+// The pet's four intelligence levels and its errors (pets.json pet_programs).
+function levelsBlock(n){ const box=el('div','langs'), M={yes:'✅',part:'🟡',no:'—'};
+  box.appendChild(el('div','label',`Pet Program #${n.pp.no} · intelligence levels`));
+  [['1','root'],['2','program'],['3','harness']].forEach(([k,key])=>{ const L=DATA.ppLevels[k]||{}; const row=el('div','lang');
+    row.append(el('div','',`${M[n.pp.levels[key]]}  ${k} ${L.name||key}`)); box.appendChild(row); });
+  box.appendChild(el('div','lang',`👤  4 ${(DATA.ppLevels['4']||{}).name||'Human'}: you`));
+  n.pp.errors.forEach(e=>{ const d=el('div','lang',`⚠ ${DATA.ppErrors[e]||e}`); d.style.color=HEALTH.error; box.appendChild(d); });
+  return box; }
 function codeBlock(n){
   const box=el('div','langs');
   const has = n.code && n.code.languages.length;
@@ -461,6 +485,7 @@ function showCodeList(){
   side.appendChild(ul); side.hidden=false;
 }
 document.getElementById('vCode').onclick=showCodeList;
+document.getElementById('vHealth').onclick=()=>{ healthOn=!healthOn; document.getElementById('vHealth').setAttribute('aria-pressed',healthOn); apply(); };
 function selectPair(pair){
   selectedPair=pair; selected=null; apply();
   const [a,b]=pair.split('|').map(i=>nodeById[i]);
@@ -480,7 +505,7 @@ const q=document.getElementById('q'), res=document.getElementById('res'); let re
 function runSearch(){
   const s=q.value.trim().toLowerCase();
   if(!s){ matches=null; res.hidden=true; apply(); return; }
-  const found=DATA.nodes.filter(n=>[n.name,n.job,n.id,DATA.types[n.type],langOf(n)].join(' ').toLowerCase().includes(s))
+  const num=/^#?(\d+)$/.exec(s); const found=DATA.nodes.filter(n=>num ? n.pp&&n.pp.no===+num[1] : [n.name,n.job,n.id,DATA.types[n.type],langOf(n),n.pp?'#'+n.pp.no:''].join(' ').toLowerCase().includes(s))
     .sort((x,y)=>(y.name.toLowerCase().startsWith(s))-(x.name.toLowerCase().startsWith(s)));
   matches=new Set(found.map(n=>n.id)); resItems=found.slice(0,12); resOn=0; res.replaceChildren();
   if(!found.length){ res.appendChild(el('div','why','  Nothing matches.')); }
@@ -535,7 +560,7 @@ function focusPoint(){ if(selected&&pos[selected.id]) return pos[selected.id].cl
   return new THREE.Vector3(); }
 renderer.domElement.addEventListener('wheel',e=>{ e.preventDefault(); autoSpin=false; fly=null;
   const off=camera.position.clone().sub(controls.target);
-  const len=Math.min(Math.max(off.length()*Math.pow(1.0015,e.deltaY),controls.minDistance),controls.maxDistance);
+  const len=Math.min(Math.max(off.length()*Math.pow(1.0005,Math.max(-120,Math.min(120,e.deltaY))),controls.minDistance),controls.maxDistance);
   controls.target.lerp(focusPoint(),.35); camera.position.copy(controls.target).add(off.setLength(len)); },{passive:false});
 let midDrag=null;
 renderer.domElement.addEventListener('mousedown',e=>{ if(e.button===1) e.preventDefault(); }); // no browser auto-scroll
@@ -550,8 +575,16 @@ addEventListener('pointermove',e=>{ if(!midDrag) return; const dx=e.clientX-midD
 addEventListener('pointerup',e=>{ if(e.button===1) midDrag=null; });
 // ---------- on-screen navigation: zoom, reset, spin (Astra, 2026-10-12) ----------
 function zoomBy(k){ fly=null; const f=focusPoint(), off=camera.position.clone().sub(controls.target); const len=Math.min(Math.max(off.length()*k,controls.minDistance),controls.maxDistance); fly={t0:performance.now(),fromT:controls.target.clone(),toT:f,fromC:camera.position.clone(),toC:f.clone().add(off.setLength(len))}; }
-document.getElementById('nZoomIn').onclick=()=>zoomBy(.7);
-document.getElementById('nZoomOut').onclick=()=>zoomBy(1.4);
+document.getElementById('nZoomIn').onclick=()=>zoomBy(1/1.25);
+document.getElementById('nZoomOut').onclick=()=>zoomBy(1.25);
+// Zoom % (Astra, 2026-10-13): 100% is the whole map from the home view; 200% is twice as close.
+const HOME_DIST = new THREE.Vector3(...HOME_CAM).length(), pctBox=document.getElementById('nZoomPct');
+const zoomPct = () => Math.round(HOME_DIST/camera.position.distanceTo(controls.target)*100);
+function setZoomPct(p){ p=Math.min(Math.max(p, Math.round(HOME_DIST/controls.maxDistance*100)), Math.round(HOME_DIST/controls.minDistance*100));
+  zoomBy((HOME_DIST/(p/100))/camera.position.distanceTo(controls.target)); }
+pctBox.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const p=parseFloat(pctBox.value); if(p>0) setZoomPct(p); pctBox.blur(); } if(e.key==='Escape') pctBox.blur(); });
+pctBox.addEventListener('focus',()=>pctBox.select());
+setInterval(()=>{ if(document.activeElement!==pctBox) pctBox.value=zoomPct(); },150);
 document.getElementById('nReset').onclick=()=>{ close(); fly={t0:performance.now(),fromT:controls.target.clone(),toT:new THREE.Vector3(),fromC:camera.position.clone(),toC:new THREE.Vector3(...HOME_CAM)}; camera.up.set(0,1,0); };
 const spinBtn=document.getElementById('nSpin'); spinBtn.setAttribute('aria-pressed',autoSpin);
 spinBtn.onclick=()=>{ autoSpin=!autoSpin; spinBtn.setAttribute('aria-pressed',autoSpin); };
@@ -595,6 +628,7 @@ function placeLabels(){
   DATA.nodes.forEach(n=>{ const lab=labelEls[n.id], asIcon=iconMode&&!!n.icon, obj=asIcon?n.iconSprite:n.mesh;
     const d=camera.position.distanceTo(n.mesh.position), wpp=2*d*tanHalf/H; // world units per screen pixel at that depth
     if(asIcon){ const base=Math.max(TYPE[n.type].r*3.2,1.4)*(fid===n.id?1.35:1); const s=Math.max(base,ICON_MIN_PX*wpp); n.iconSprite.scale.set(s,s,1); }
+    if(n.ring){ const core=asIcon?n.iconSprite.scale.x*.62:TYPE[n.type].r*n.mesh.scale.x; const s=Math.max(core*2.5, (asIcon?ICON_MIN_PX:14)*1.25*wpp); n.ring.scale.set(s,s,1); }
     if(lab.dataset.off||(!obj.visible&&n.type!=='harness')){ lab.style.opacity=0; return; } // the glass harness has no shape, only its label
     v.copy(n.mesh.position).project(camera); if(v.z>1||v.x<-1.2||v.x>1.2||v.y<-1.2||v.y>1.2){ lab.style.opacity=0; return; }
     const half=(asIcon?n.iconSprite.scale.y/2:TYPE[n.type].r*n.mesh.scale.x)/wpp;

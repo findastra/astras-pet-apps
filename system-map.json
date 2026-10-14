@@ -16,10 +16,10 @@
     "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
     "model": "AI model",
     "infrastructure": "Infrastructure",
-    "own-program": "Program made by Astra",
-    "program": "Program made by others",
+    "own-program": "Made by Astra: a pet's own program or a project it looks after (named after its pet)",
+    "program": "Root Program made by others",
     "host-machine": "Device",
-    "harness": "AI harness",
+    "harness": "Agentic Harness (seated: Agent)",
     "assistant": "AI assistant (builds the pets)"
   },
   "carries": {
@@ -31,7 +31,8 @@
     "directs": "your requests, decisions and approvals to an AI assistant, in conversation",
     "reports": "an AI assistant answering you: results with evidence, questions only you can decide, links to what changed",
     "card": "a handoff card or brief left for another assistant to pick up",
-    "audio": "sound travelling: microphones in, speakers and headphones out, and the virtual cables in between (drawn as a wave)"
+    "audio": "sound travelling: microphones in, speakers and headphones out, and the virtual cables in between (drawn as a wave)",
+    "signs-in": "Proves it is really you: a hardware key tap to sign in or approve"
   },
   "nodes": [
     {
@@ -100,7 +101,7 @@
     },
     {
       "id": "profile",
-      "name": "GitHub profile",
+      "name": "Friendly Farmer · GitHub profile",
       "type": "own-program",
       "state": "now",
       "job": "findastra/findastra: the profile README the Farmer's profile round keeps matched to the repos.",
@@ -109,7 +110,7 @@
     },
     {
       "id": "openai-discord-presence",
-      "name": "OpenAI Discord Presence",
+      "name": "Discord Damsel · OpenAI presence",
       "type": "own-program",
       "state": "now",
       "job": "Windows app that shows Codex activity on Astra's Discord profile. One of Discord Damsel's programs.",
@@ -118,7 +119,7 @@
     },
     {
       "id": "anthropic-discord-presence",
-      "name": "Anthropic Discord Presence",
+      "name": "Discord Damsel · Anthropic presence",
       "type": "own-program",
       "state": "now",
       "job": "Windows app that shows Claude activity on Astra's Discord profile. One of Discord Damsel's programs.",
@@ -154,7 +155,7 @@
     },
     {
       "id": "infinite-pole-world",
-      "name": "Astra's Infinite Pole (world)",
+      "name": "Pole Puff · Astra's Infinite Pole",
       "type": "own-program",
       "state": "now",
       "job": "Astra's VRChat world (findastra/astras-infinite-pole). Pole Puff manages it.",
@@ -163,7 +164,7 @@
     },
     {
       "id": "piranesi-house-world",
-      "name": "Piranesi House (world)",
+      "name": "Piranesi Nessi · Piranesi House",
       "type": "own-program",
       "state": "now",
       "job": "Astra's Piranesi-inspired VRChat world (findastra/piranesi-house). Piranesi Nessi manages it.",
@@ -543,12 +544,12 @@
     },
     {
       "id": "security-key",
-      "name": "Hardware security key",
+      "name": "YubiKey (security key)",
       "type": "host-machine",
       "state": "now",
       "layer": 1,
       "category": "Device",
-      "job": "The physical key on your keychain that you tap or plug in to sign in (a FIDO2 or passkey authenticator). It proves it is really you: to your accounts, and later to the Farm and to approvals. ASTRAS_PET_OS lists one in the cyberdeck for hardware-backed sign-in, not as a replacement for encrypted storage, backups or recovery codes."
+      "job": "Your YubiKey: the physical key you tap or plug in to sign in (FIDO2 / passkey). You now use it to sign in to GitHub, where every pet lives (Astra, 2026-10-13). Later it can confirm it is you to the Farm and to Gatekeeper Goddess approvals. Its secret never leaves the key, so its backup is a second registered key plus recovery codes kept offline, not a copy."
     },
     {
       "id": "chatgpt",
@@ -902,7 +903,7 @@
     },
     {
       "id": "the-barn",
-      "name": "The Barn",
+      "name": "Friendly Farmer · desk and rounds",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -911,7 +912,7 @@
     },
     {
       "id": "key-ring",
-      "name": "Key Ring",
+      "name": "API Fairy · Windows app",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -920,7 +921,7 @@
     },
     {
       "id": "ai-astra",
-      "name": "AI Astra",
+      "name": "Astra Wisp · AI Astra",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -929,7 +930,7 @@
     },
     {
       "id": "data-dealer-project",
-      "name": "Data Dealer",
+      "name": "Chip · Data Dealer",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -938,7 +939,7 @@
     },
     {
       "id": "file-kingdom",
-      "name": "File Kingdom",
+      "name": "File Master · scanner and undo tools",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -947,7 +948,7 @@
     },
     {
       "id": "unity-stable",
-      "name": "Unity Stable",
+      "name": "Unity Unicorn · tool library",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -956,7 +957,7 @@
     },
     {
       "id": "audio-rescue",
-      "name": "Audio Rescue",
+      "name": "Voicemeeter Bug · Windows app",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -965,7 +966,7 @@
     },
     {
       "id": "paper-girl-site",
-      "name": "Paper Girl",
+      "name": "Patty · Paper Girl site",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -974,7 +975,7 @@
     },
     {
       "id": "ghost-protocol-site",
-      "name": "Ghost Protocol",
+      "name": "Gone Ghost · Ghost Protocol site",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -983,7 +984,7 @@
     },
     {
       "id": "gif-maker",
-      "name": "Astra’s GIF Maker",
+      "name": "Gif Giraffe · Astra’s GIF Maker",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -992,7 +993,7 @@
     },
     {
       "id": "spoonfed-app",
-      "name": "Spoonfed",
+      "name": "Spoonfed Sugarcube · Spoonfed app",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -1163,7 +1164,7 @@
     },
     {
       "id": "fuzzbois-site",
-      "name": "Fuzzbois",
+      "name": "Fuzzboi Friend · Fuzzbois site",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -1172,7 +1173,7 @@
     },
     {
       "id": "fuzz-factory",
-      "name": "Fuzz Factory",
+      "name": "Fuzzboi Friend · make-your-own site",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -1181,7 +1182,7 @@
     },
     {
       "id": "dubstep-gunsmith",
-      "name": "Dubstep Gunsmith",
+      "name": "Unity Unicorn · Dubstep Gunsmith",
       "type": "own-program",
       "state": "now",
       "layer": 6,
@@ -2588,14 +2589,14 @@
       "to": "the-barn",
       "carries": "opens",
       "state": "now",
-      "why": "The Barn is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "api-fairy",
       "to": "key-ring",
       "carries": "opens",
       "state": "now",
-      "why": "Key Ring is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "key-ring",
@@ -2630,7 +2631,7 @@
       "to": "file-kingdom",
       "carries": "opens",
       "state": "now",
-      "why": "File Kingdom is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "file-kingdom",
@@ -2644,7 +2645,7 @@
       "to": "unity-stable",
       "carries": "opens",
       "state": "now",
-      "why": "Unity Stable is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "unity-stable",
@@ -2658,7 +2659,7 @@
       "to": "audio-rescue",
       "carries": "opens",
       "state": "now",
-      "why": "Audio Rescue is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "audio-rescue",
@@ -3015,7 +3016,7 @@
       "to": "fuzz-factory",
       "carries": "opens",
       "state": "now",
-      "why": "Fuzz Factory is this pet’s own program."
+      "why": "This is the pet’s own Pet Program."
     },
     {
       "from": "fuzzbois-site",
@@ -3037,6 +3038,48 @@
       "carries": "manages",
       "state": "planned",
       "why": "Unity Unicorn’s gunsmith-loadout tool reads the Gunsmith’s loadouts (in draft PR #1)."
+    },
+    {
+      "from": "astra",
+      "to": "windows-pc",
+      "carries": "directs",
+      "state": "now",
+      "why": "You sit at the Desktop PC and work from it every day (Astra, 2026-10-13)."
+    },
+    {
+      "from": "astra",
+      "to": "security-key",
+      "carries": "directs",
+      "state": "now",
+      "why": "You carry the YubiKey and tap it to prove it is you (Astra, 2026-10-13)."
+    },
+    {
+      "from": "security-key",
+      "to": "github",
+      "carries": "signs-in",
+      "state": "now",
+      "why": "You now sign in to GitHub with the YubiKey (Astra, 2026-10-13). GitHub is where every pet lives, so this key guards the whole system."
+    },
+    {
+      "from": "security-key",
+      "to": "windows-pc",
+      "carries": "signs-in",
+      "state": "now",
+      "why": "The key plugs into the Desktop PC when you sign in from it."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "security-key",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "The physical security layer (Astra, 2026-10-13): Gatekeeper Goddess keeps the list of accounts the key is registered on, checks a backup key is registered too, and asks for a key tap before consequential approvals."
+    },
+    {
+      "from": "backup-beaver",
+      "to": "security-key",
+      "carries": "manages",
+      "state": "suggested",
+      "why": "A YubiKey cannot be copied, so its backup is a second registered key plus the recovery codes, kept offline in a safe place. Backup Beaver tracks where those are and when they were last checked; it never stores the codes or a key (Astra, 2026-10-13)."
     }
   ],
   "layers": {
@@ -3045,7 +3088,7 @@
       "detail": "Assistants and scripts that build and change the pets: Claude Code, Codex and the art pipeline. They work through GitHub and handoff cards; they are not part of any pet at runtime."
     },
     "1": {
-      "name": "You",
+      "name": "You, the Human (level 4)",
       "detail": "You, your devices and the Farm you reach every pet from."
     },
     "2": {
@@ -3057,16 +3100,16 @@
       "detail": "The independent pet that organizes the pets (intelligent apps) and runs the Farm."
     },
     "4": {
-      "name": "Individual pet agents",
-      "detail": "Every pet: registered, pipeline, seeds and roadmap. Each runs on its own and talks to the others directly."
+      "name": "Pet Programs (level 2)",
+      "detail": "Every pet: its Pet Program, the alive part that manages its Root Programs and decides when to escalate to its Agentic Harness. Registered, pipeline, seeds and roadmap."
     },
     "5": {
-      "name": "AI harness (per pet)",
-      "detail": "Each pet's own harness: AI model, skills and tools, memory, scheduler, inbox, communication, permissions and guardrails."
+      "name": "Agentic Harness (level 3)",
+      "detail": "Each Pet Program's own Agentic Harness: an AI model (Anthropic, OpenAI or other) is seated in it to form the Agent, when the Pet Program or the Human calls."
     },
     "6": {
-      "name": "Real programs and integrations",
-      "detail": "Real programs: the ones Astra made sit on their own inner shell (pink cubes), the ones made by others on the shell just outside (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
+      "name": "Root Programs (level 1)",
+      "detail": "The external programs the pets execute and look after: the ones Astra made on their own inner shell (pink cubes), the ones made by others just outside (peach cubes). Several pets can share one Root Program."
     }
   },
   "type_layers": {
@@ -3137,7 +3180,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3175,7 +3218,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3216,7 +3259,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3244,7 +3287,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
           }
         ]
@@ -3282,7 +3325,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Type a hex code and the page draws that exact Fuzzboi as a PNG, right in the browser."
           }
         ]
@@ -3291,7 +3334,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "The security checklist and its content pages, saved in your browser."
           }
         ]
@@ -3314,7 +3357,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
           }
         ]
@@ -3323,7 +3366,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "A Python practice desk that checks your answers in the browser, so you can practise without installing Python."
           }
         ]
@@ -3332,7 +3375,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3341,7 +3384,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3350,7 +3393,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3359,7 +3402,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3431,7 +3474,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3440,7 +3483,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3449,7 +3492,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3472,7 +3515,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Plans and previews lighting scenes in the browser; sending them to real lights is planned."
           }
         ]
@@ -3481,7 +3524,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3556,7 +3599,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -3565,7 +3608,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -3574,7 +3617,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file. Finding unpaid bills is planned and not built yet."
           }
         ]

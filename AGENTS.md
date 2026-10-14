@@ -11,7 +11,7 @@ no "I'll read it if I need it". This applies to small tasks too.
    [ASTRAS_PET_OS.md](ASTRAS_PET_OS.md),
    [docs/migration/PLAN.md](docs/migration/PLAN.md), [PET-FILES.md](PET-FILES.md),
    [PET-WORDS.md](PET-WORDS.md) and [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md): which of the three
-   levels (program, runtime, agentic harness) each intelligent app has built. Each intelligent app has its
+   levels (1 root program, 2 pet program, 3 agentic harness / agent, 4 human) each intelligent app has built, by Pet Program #. Each intelligent app has its
    own chat; when you change a level, update that app's row with the date and your evidence.
 2. In the pet's own repo: its `AGENTS.md`, `CLAUDE.md`, every `SKILL.md`, `handoffs/` and
    `pet.json`.
@@ -123,3 +123,4 @@ Astra's PetOS System Map, also called the 3D PFD (`system-map-20261012.html`, `s
 ASTRAS_PET_OS name and top-level architecture file (`ASTRAS_PET_OS.md`) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12.
 Astra's PetOS restructuring with Claude Opus 5.5 (`claude-opus-5-5`), head chat, 2026-10-12: repo renamed to astras-pet-os; the Cage retired from the Farmer's job and the README; names Gone Ghost and Patty; jobs from Astra's descriptions; seeds Photo Dodo and Video Vulture; Journal Jellyfish; INTELLIGENCE-LEVELS.md (program, runtime, updates, agentic harness, errors); the System Map's own-program shell, scroll and scroll-click controls, and pet icons (art/icons, art/seeds drafts).
 System Map on phones with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-13: Minimize on the key and detail panels (keys start minimized on phones), pet app icons by default on phones with a finger-sized minimum, labels that never overlap each other or a pet's icon, and the selection lifted above the detail panel.
+Four intelligence levels and Pet Program numbers (`pet_programs` in pets.json, generated lists in README.md and INTELLIGENCE-LEVELS.md, `test/pet-programs-test-20261013.mjs`), map nodes named after their pets, health rings, zoom % and slower scrolling, and the YubiKey's physical security links, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-13. A new Pet Program takes the next number in `pet_programs`; never renumber.
