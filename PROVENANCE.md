@@ -6,6 +6,22 @@ prove it?* Companion to [SECURITY.md](SECURITY.md) and [INTELLIGENCE-LEVELS.md](
 Nothing written in a plain file can be made impossible to remove, so provenance works like a cow's ear tag: a
 **cryptographic signature**. Removing or changing it is *detected*, and the farm refuses to run what does not check out.
 
+## The Pet Passport (for people)
+
+Every pet carries a **Pet Passport**, a tool box on its pet program page, built from the layers below. Real pets have one too:
+
+| On a real pet | In Astra's PetOS |
+|---|---|
+| **Microchip** | Its signature: a unique identity nobody can fake |
+| **Pedigree papers** | Its lineage: the repo it came from, and who it was "bred" from (forks) |
+| **Passport stamps** | Every install, move and update, with dates and versions |
+| **Vaccination card** | Every security patch applied |
+| **Vet records** | Its vet-clinic tickets and cures |
+
+Developers measure the same thing against **SLSA** (Supply-chain Levels for Software Artifacts), the industry standard
+for build provenance, which has levels just like INTELLIGENCE-LEVELS.md: Build L0 (none) to L3 (hardened, signed
+builds). Astra's PetOS is at **SLSA Build L0** today and aims for L2 with the first signed releases.
+
 ## The layers
 
 | Layer | What it proves | How | Status |

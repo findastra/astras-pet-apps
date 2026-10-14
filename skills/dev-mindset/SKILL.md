@@ -29,6 +29,8 @@ Astra wants other software developers to read her build without frustration. She
 | Agent key | Short-lived session token with an audit trail | Issued per agent session by Iron Gates; records agent, model, person, device, place. |
 | The Police Station | Security monitoring (a SOC with intrusion detection) | Detects and contains (switches OFF); never authorizes. |
 | The alarm | Security incident alert | Everywhere at once; past breaches marked "found, not active". |
+| Pet Passport | Provenance record (signatures, lineage, release history, patches, incidents); measured with SLSA levels | Microchip = signature, pedigree = lineage, stamps = installs and updates, vaccinations = patches, vet records = tickets. Decided 2026-10-14. |
+| Security hats | Ethics (white, grey, black hat) plus teams (red, blue, purple) | Avoid "Red Hat" alone: it is also a Linux company. Decided 2026-10-14. |
 | ON/OFF on a tool or connection | Kill switch / feature flag | Enforced by the core, not just shown on the page. |
 | Sick checkbox | User-reported defect | Feeds the Farmer's `broken-tools-on-the-farm`. |
 | Backlog (`<pet-program>-backlog`) | Backlog | Entries and weekly runs carry versions; the store itself never does, so it is never lost. |
