@@ -25,7 +25,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px
 #labels{position:fixed;inset:0;pointer-events:none;overflow:hidden}
 .lbl{position:absolute;left:0;top:0;font-size:11px;white-space:nowrap;color:var(--fg);text-shadow:0 0 4px #000,0 0 2px #000;will-change:transform,opacity}
 .lbl.big{font-size:13px;font-weight:500}
-.hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(370px,calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
+.hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:min(var(--hud-w,370px),calc(100vw - 24px));max-height:calc(100% - 24px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px;backdrop-filter:blur(6px)}
 h1{font-family:var(--display);font-size:1.5rem;margin:0;line-height:1;letter-spacing:-.01em}
 h1 span{color:var(--you)}
 .sub{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
@@ -36,9 +36,9 @@ h1 span{color:var(--you)}
 .sw{width:14px;height:3px;border-radius:2px;display:inline-block}
 .sw.d{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
-.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;font-size:12px;color:var(--muted)}
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:4px 10px;font-size:12px;color:var(--muted)}
 .legend span{display:flex;align-items:center;gap:6px}
-.shapes{display:grid;gap:5px;font-size:12px;color:var(--muted)}
+.shapes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:5px 14px;font-size:12px;color:var(--muted)}
 .shapes div{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center}
 /* Every key item is a switch: click to hide or show that kind of thing on the map. */
 button.key{font:inherit;color:inherit;background:none;border:0;padding:2px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
@@ -50,6 +50,19 @@ button.key[aria-pressed="false"] span,button.key[aria-pressed="false"]>.t{text-d
 button.key:focus-visible{outline:2px solid var(--host);outline-offset:1px}
 .shapes b{color:var(--fg);font-weight:500}
 .shapes svg{width:18px;height:18px}
+/* Protection rings and their R W X tags (Astra, 2026-10-13): eye-catching, not large. */
+.rwx-title{font-family:var(--display);font-size:1.05rem;letter-spacing:.14em;margin:0;line-height:1.1}
+.rwx-title i{font-style:normal;color:var(--host)} .rwx-title i+i{color:var(--you)} .rwx-title i+i+i{color:var(--pipe)}
+.rings{display:grid;gap:2px;font-size:12px;color:var(--muted)}
+.rings .ring{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;padding:2px 0}
+.rings .glass{border-top:1px dashed var(--l5);border-bottom:1px dashed var(--l5);color:var(--l5);font-weight:500;padding:3px 0;margin:2px 0}
+.rings .ring b{color:var(--fg);font-weight:500}
+.rwx{display:inline-flex;gap:2px;font:700 10.5px/1 var(--mono)}
+.rwx b{width:15px;height:15px;display:grid;place-items:center;border-radius:4px;color:var(--bg)!important}
+.rwx .r{background:var(--host)} .rwx .w{background:var(--you)} .rwx .x{background:var(--pipe)}
+.rwx .gate{background:none;box-shadow:inset 0 0 0 1.5px var(--you);color:var(--you)!important}
+.rwx .off{background:none;color:var(--muted)!important;opacity:.4}
+.animal{color:var(--host)}
 .label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
 .search{position:relative}
 .search input{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--well);color:var(--fg)}
@@ -79,9 +92,15 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 .close{justify-self:end}
 .navpad{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;backdrop-filter:blur(6px)}
 .navpad .btn{min-width:44px;min-height:36px;justify-content:center}
+/* Drag bar on the key panel's right edge (Astra, 2026-10-13): drag it right to widen the panel and see more without scrolling. */
+.grip{position:fixed;width:16px;cursor:ew-resize;touch-action:none;background:none;border:0;padding:0;z-index:3;display:grid;place-items:center}
+.grip::before{content:"";width:4px;height:48px;border-radius:2px;background:var(--raise-edge);opacity:.8}
+.grip:hover::before,.grip:focus-visible::before,.grip.on::before{background:var(--host);opacity:1}
+.grip:focus-visible{outline:none}
 .tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;max-width:280px}
 @media (max-width:700px){
   .hud{width:auto;right:12px;max-height:46%}
+  .grip{display:none}
   .hud .legend,.hud .shapes,.hud details,.hud .types-h,.hud .sub{display:none}
   .side{top:auto;bottom:calc(68px + env(safe-area-inset-bottom,0px));max-height:46%;width:auto;left:12px}
 }
@@ -92,7 +111,12 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
 <section class="hud">
   <div>
     <h1>Astra's PetOS <span>System Map</span></h1>
-    <p class="sub">Every pet, and what each one talks to. The Farmer sits at the centre and organizes the pets around him. Each pet lives inside its own glass AI harness. Further out are the AI models and the real programs the pets look after, and on the outside are you, your devices and the AI assistants that build everything. Lines show what flows between them. Click anything for details.</p>
+    <p class="sub">Every pet, and what each one talks to, in protection rings. The core and the Farmer sit at the centre, then the pets, then the pet programs Astra made. The glass agent harness wraps all of them: <b class="animal">🐾 everything inside the harness is an animal</b>, and an agent in the seat can only control animals. Outside the glass are the AI models, third-party programs, your devices and you. Lines show what flows between them. Click anything for details.</p>
+  </div>
+  <div>
+    <p class="rwx-title"><i>READ</i> · <i>WRITE</i> · <i>EXECUTE</i></p>
+    <p class="sub">What the agent in the seat may do on each ring, inside out. <span class="rwx"><b class="gate">W</b></span> = only through a pull request Astra merges.</p>
+    <div class="rings" id="ringKey"></div>
   </div>
   <div class="search">
     <label class="label" for="q">Search</label>
@@ -117,9 +141,10 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
   <div class="label types-h">Colour key (nodes, click to hide)</div>
   <div class="legend" id="nodeLegend"></div>
   <details open><summary>Moving around (like Unity)</summary><p class="sub" style="margin-top:6px"><b>Right-drag</b> to look around; while holding it, <b>W A S D</b> fly, <b>Q</b>/<b>E</b> down and up, <b>Shift</b> faster (the keys also work without the mouse). <b>Scroll</b> zooms toward the centre, or toward what you selected. <b>Scroll-click drag</b> (hold the wheel down) or <b>left-drag</b> spins the sphere freely in any direction, with no stops; <b>Shift + scroll-click drag</b> pans. <b>F</b> frames what you selected (or every pet). On a phone: one finger orbits, two fingers zoom and pan.</p></details>
-  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a sphere for its job and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every pet (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
+  <details><summary>How to use it</summary><p class="sub" style="margin-top:6px"> Click a shape for its job, its ring and every connection; click a line for everything that flows both ways between its two ends. Moving dots show which way information flows. Links to every pet (pets that reach every other pet) stay hidden until you switch them on or click one of those pets.</p></details>
 </section>
 
+<button class="grip" id="grip" type="button" role="separator" aria-orientation="vertical" aria-valuemin="300" aria-label="Key panel width" title="Drag to widen or narrow the key panel. Arrow keys work too; double-click to reset."></button>
 <aside class="side" id="side" hidden aria-live="polite"></aside>
 <nav class="navpad" aria-label="Move around the map">
   <button class="btn" id="nZoomIn" title="Zoom in" aria-label="Zoom in">＋</button>
@@ -146,9 +171,34 @@ const TYPE = {
 // they reach through it, and outermost you and your devices. Development sits apart, outside the running system.
 // Roomier centre (Astra, 2026-10-12): every shell sits further out than the first version.
 // The glass sphere around the pets is twice the first diameter (Astra, 2026-10-12): pets spread out inside it.
-const LAYER_R = {2:10, 3:20, 4:34, 5:58, 6:66, 0:72, 1:78};
-const OWN_R = 44; // pet programs (programs and websites Astra made): their own shell just outside the pets, inside the glass harness (Astra, 2026-10-13)
-const HARNESS_R = 52; // the agentic harness wraps the pets and pet programs, below the root programs at LAYER_R[6] (Astra, 2026-10-13)
+// Protection rings (Astra, 2026-10-13), inside out: core, Farmer, pets, pet programs, then the glass agent harness.
+// Everything inside the glass is an ANIMAL: the agent in the seat may read, write and execute it (core writes only
+// through a pull request Astra merges). Outside the glass: models, third-party programs, devices, advisers, you.
+const LAYER_R = {2:10, 3:20, 4:34, 5:58, 6:66, 0:76, 1:80};
+const OWN_R = 44;     // ring 3: pet programs (programs and websites Astra made), inside the glass just outside the pets
+const HARNESS_R = 52; // the glass agent harness: the R W X line, below the third-party programs at LAYER_R[6]
+const DEVICE_R = 72;  // ring 6: every device on one ring
+const SEAT = new THREE.Vector3(0,HARNESS_R,0), DONUT_R = 3.4; // the seat on top of the glass; the donut is the harness program
+// Pinned spots: the harness programs on the donut, and the models above its hole, waiting to take the seat.
+const PIN = {'agent-harness':SEAT.clone(), 'claude-code':new THREE.Vector3(DONUT_R,HARNESS_R,0), codex:new THREE.Vector3(-DONUT_R,HARNESS_R,0),
+  claude:new THREE.Vector3(0,LAYER_R[5],0), openai:new THREE.Vector3(0,LAYER_R[5],0).applyAxisAngle(new THREE.Vector3(1,0,0),.13),
+  'local-models':new THREE.Vector3(0,LAYER_R[5],0).applyAxisAngle(new THREE.Vector3(1,0,0),-.13)};
+const radiusOf = n => n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : n.type==='host-machine' ? DEVICE_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0);
+// What the agent in the seat may do on each ring: on, gate (only through a pull request Astra merges) or off.
+const RINGS = [
+  {ring:0, name:'Core', what:'Pet Directory, Program Manager, the Farm, Startup Star', r:LAYER_R[2], rwx:['on','gate','on'], animal:true},
+  {ring:1, name:'Friendly Farmer', what:'orchestrator and package manager', r:LAYER_R[3], rwx:['on','gate','on'], animal:true},
+  {ring:2, name:'Pets', what:'every intelligent app', r:LAYER_R[4], rwx:['on','on','on'], animal:true},
+  {ring:3, name:'Pet programs', what:'the programs, sites and worlds Astra made', r:OWN_R, rwx:['on','on','on'], animal:true},
+  {ring:'H', name:'Agent harness', what:'the glass: the R W X line. Claude Code or Codex is the donut at the seat', r:HARNESS_R, glass:true},
+  {ring:4, name:'AI models', what:'called, never rewritten; local models change only through Astra', r:LAYER_R[5], rwx:['off','off','on']},
+  {ring:5, name:'Third-party programs', what:'run and read, never rewritten', r:LAYER_R[6], rwx:['on','off','on']},
+  {ring:6, name:'Devices', what:'read and operated through drivers and apps', r:DEVICE_R, rwx:['on','off','on']},
+  {ring:7, name:'Advisers', what:'ChatGPT: no access; ideas reach the Farm only through Astra', r:LAYER_R[0], rwx:['off','off','off']},
+  {ring:8, name:'You', what:'Astra grants every permission', r:LAYER_R[1], rwx:['off','off','off']},
+];
+const ringOf = n => { if(n.type==='harness'||(n.type==='assistant'&&PIN[n.id])) return RINGS[4]; const r=radiusOf(n); return RINGS.reduce((a,b)=>Math.abs(b.r-r)<Math.abs(a.r-r)?b:a); };
+const rwxHtml = g => g.rwx ? `<span class="rwx">${['R','W','X'].map((c,i)=>`<b class="${g.rwx[i]==='on'?c.toLowerCase():g.rwx[i]}" title="${['Read','Write','Execute'][i]}: ${g.rwx[i]==='on'?'yes':g.rwx[i]==='gate'?'only through a pull request Astra merges':'no'}">${c}</b>`).join('')}</span>` : '';
 const HOME_CAM = [0,48,185];
 const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:css('--l4'),5:css('--l5'),6:css('--l6')};
 const STATE = {
@@ -190,7 +240,7 @@ const pos = {};
   // Each node lives on its shell (radius) and moves freely around it: links pull, nodes push.
   let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
   const ids=DATA.nodes.map(n=>n.id), P={}, R={};
-  DATA.nodes.forEach(n=>{ R[n.id]= n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
+  DATA.nodes.forEach(n=>{ R[n.id]= radiusOf(n); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
     P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
   const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3();
   for(let step=0;step<500;step++){
@@ -201,7 +251,25 @@ const pos = {};
       d.multiplyScalar(f/dist); F[ids[a]].add(d); F[ids[b]].sub(d); }
     springs.forEach(e=>{ d.subVectors(P[e.to],P[e.from]); const f=.04; F[e.from].addScaledVector(d,f); F[e.to].addScaledVector(d,-f); });
     const cool=1-step/560;
-    ids.forEach(i=>{ if(nodeById[i].type==='harness') { P[i].set(0,HARNESS_R,0); return; } if(F[i].length()>3) F[i].setLength(3); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
+    ids.forEach(i=>{ if(PIN[i]) { P[i].copy(PIN[i]); return; } if(F[i].length()>3) F[i].setLength(3); P[i].addScaledVector(F[i],cool); P[i].setLength(R[i]); });
+  }
+  // Use the whole sphere (Astra, 2026-10-13). The links pull every ring toward the same side, so the map filled about
+  // half the sphere. Each ring is stretched around one shared axis by rank: a node keeps its direction around the
+  // axis and its order away from it, so neighbours stay neighbours and clusters stay clusters, but they fan out over
+  // the whole sphere. (An evenly re-seeded layout, tried on 2026-10-12, broke the clusters and was reverted.)
+  const axis=new THREE.Vector3(); ids.forEach(i=>{ if(!PIN[i]) axis.add(P[i].clone().normalize()); });
+  if(axis.length()>1e-6){ axis.normalize();
+    const e1=new THREE.Vector3().crossVectors(axis,Math.abs(axis.y)<.9?new THREE.Vector3(0,1,0):new THREE.Vector3(1,0,0)).normalize(), e2=new THREE.Vector3().crossVectors(axis,e1);
+    const polar=i=>Math.acos(Math.max(-1,Math.min(1,P[i].clone().normalize().dot(axis))));
+    const rings={}; ids.forEach(i=>{ if(!PIN[i]) (rings[R[i].toFixed(1)]||=[]).push(i); });
+    Object.values(rings).forEach(g=>{ if(g.length<3) return; g.sort((a,b)=>polar(a)-polar(b));
+      g.forEach((i,k)=>{ const u=P[i].clone().normalize(), phi=Math.atan2(u.dot(e2),u.dot(e1)), t=.2*polar(i)+.8*Math.acos(1-2*(k+.5)/g.length);
+        P[i].copy(axis).multiplyScalar(Math.cos(t)).addScaledVector(e1,Math.sin(t)*Math.cos(phi)).addScaledVector(e2,Math.sin(t)*Math.sin(phi)).setLength(R[i]); }); });
+    // a short relax so nodes that landed close together step apart; pinned nodes stay put
+    for(let step=0;step<60;step++){ const F={}; ids.forEach(i=>F[i]=new THREE.Vector3());
+      for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){ if(Math.abs(R[ids[a]]-R[ids[b]])>1.5) continue;
+        d.subVectors(P[ids[a]],P[ids[b]]); const dist=Math.max(d.length(),.3); if(dist>9) continue; d.multiplyScalar(30/(dist*dist*dist)); F[ids[a]].add(d); F[ids[b]].sub(d); }
+      ids.forEach(i=>{ if(PIN[i]) return; if(F[i].length()>1.5) F[i].setLength(1.5); P[i].addScaledVector(F[i],1-step/60).setLength(R[i]); }); }
   }
   ids.forEach(i=>pos[i]=P[i]);
 })();
@@ -210,7 +278,27 @@ const harnessGlass = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,64,32), n
 scene.add(harnessGlass);
 const harnessWire = new THREE.Mesh(new THREE.SphereGeometry(HARNESS_R,24,12), new THREE.MeshBasicMaterial({color:css('--l5'),wireframe:true,transparent:true,opacity:.12}));
 scene.add(harnessWire);
-const shells = [LAYER_R[3],LAYER_R[4],LAYER_R[5],OWN_R,LAYER_R[6],LAYER_R[1]].map(r=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,48,24),new THREE.MeshBasicMaterial({color:css('--shell'),wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
+const shells = RINGS.filter(g=>!g.glass&&g.ring!==0).map(g=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(g.r,48,24),new THREE.MeshBasicMaterial({color:css('--shell'),wireframe:true,transparent:true,opacity:.035})); scene.add(s); return s; });
+// The donut at the seat: the harness program (Claude Code or Codex). The model in the seat sits in its hole.
+const donut = new THREE.Mesh(new THREE.TorusGeometry(DONUT_R,.42,16,72), new THREE.MeshStandardMaterial({color:css('--l5'),emissive:css('--l5'),emissiveIntensity:.35,roughness:.4,transparent:true,opacity:.9}));
+donut.position.copy(SEAT); donut.rotation.x=Math.PI/2; scene.add(donut);
+// R W X tags: one tag per ring, fanned up the left side of the sphere from the inside out, always facing you.
+const tagSpot = (g,i) => { const e=(-50+i*11)*Math.PI/180; return new THREE.Vector3(-Math.cos(e)*.82, Math.sin(e), Math.cos(e)*.57).multiplyScalar(g.r+(g.ring===0?3:1)); };
+const ringTags = RINGS.map((g,i)=>{
+  const c=document.createElement('canvas'); c.width=640; c.height=112; const x=c.getContext('2d');
+  x.fillStyle='rgba(10,20,48,.86)'; x.strokeStyle=g.glass?css('--l5'):g.animal?css('--host'):'#4a5fa8'; x.lineWidth=4;
+  x.beginPath(); (x.roundRect||x.rect).call(x,4,4,632,104,52); x.fill(); x.stroke();
+  x.textBaseline='middle'; x.font='600 38px "IBM Plex Sans",system-ui,sans-serif'; x.fillStyle=g.glass?css('--l5'):css('--fg');
+  x.fillText((g.animal?'🐾 ':'')+(g.glass?'HARNESS · R W X LINE':(`RING ${g.ring} · ${g.name}`).toUpperCase()),34,58);
+  if(g.rwx){ const cols={R:css('--host'),W:css('--you'),X:css('--pipe')}; ['R','W','X'].forEach((L,i)=>{ const bx=452+i*58, s=g.rwx[i];
+    x.beginPath(); (x.roundRect||x.rect).call(x,bx,26,50,62,10); if(s==='on'){ x.fillStyle=cols[L]; x.fill(); } else if(s==='gate'){ x.strokeStyle=cols[L]; x.lineWidth=5; x.stroke(); }
+    x.font='800 40px "IBM Plex Mono",monospace'; x.fillStyle=s==='on'?css('--bg'):s==='gate'?cols[L]:'rgba(183,191,220,.35)'; x.textAlign='center'; x.fillText(L,bx+25,59); x.textAlign='left'; }); }
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false,depthWrite:false}));
+  const w=Math.min(22,6+g.r*.4); sp.scale.set(w,w*112/640,1); sp.position.copy(tagSpot(g,i)); sp.renderOrder=10; scene.add(sp); return sp; });
+// The ring key in the panel: the same tags, inside out, with the glass line between animals and everything else.
+document.getElementById('ringKey').innerHTML = RINGS.map(g=> g.glass
+  ? `<div class="ring glass">━━ ${g.name}: ${g.what}</div>`
+  : `<div class="ring">${rwxHtml(g)}<span><b>${g.animal?'🐾 ':''}Ring ${g.ring} · ${g.name}</b>: ${g.what}</span></div>`).join('');
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
@@ -290,24 +378,26 @@ Object.entries(DATA.layers).forEach(([k,L])=>{ const n=DATA.links.filter(l=>l.la
     const s=document.createElement('span'); s.textContent=`${k} ${L.name} · ${n}`; b.append(d,s); },
     ()=>{ hiddenLayers.has(+k) ? hiddenLayers.delete(+k) : hiddenLayers.add(+k); });
   keyButtons.push([b,()=>!hiddenLayers.has(+k)]); });
-{ const b=keyButton(ll, 'The faint wire spheres that mark each layer', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color=css('--shell');
-    const s=document.createElement('span'); s.textContent='Layer shell outlines'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
+{ const b=keyButton(ll, 'The faint wire spheres that mark each protection ring, and their R W X tags', b=>{ const d=document.createElement('i'); d.className='sw d'; d.style.color=css('--shell');
+    const s=document.createElement('span'); s.textContent='Ring outlines and R W X tags'; b.append(d,s); }, ()=>{ shellsOn=!shellsOn; });
   keyButtons.push([b,()=>shellsOn]); }
 const SHAPES=[
-  ['<circle cx="9" cy="9" r="7"/>','Sphere','an Intelligent App (Pet): each pet is one intelligent app (Friendly Farmer is gold, near the centre); also you, on the outer edge','layers 3 and 4'],
-  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass shell','the AI harness: one layer wrapped around every pet agent (each pet runs its own copy). Click the edge of the glass for its details','layer 5'],
-  ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model: Claude, OpenAI, local models','layer 5'],
-  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','infrastructure: Pet Directory, Program Manager and the Kennel at the core; the Farm website out with you; the desktop host with the programs','by layer'],
-  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Cube','a real program, website, world or cloud service: pink cubes are pet programs, the programs and websites Astra made, on their own shell inside the glass harness just outside the pets; peach cubes outside the glass are root programs made by others','layer 6'],
-  ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, Raspberry Pi, Flipper Zero','outer shell'],
-  ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','an AI assistant that builds the pets (Claude Code, Codex): development, not part of the running system','layer 0'],
+  ['<circle cx="9" cy="9" r="7"/>','Sphere','🐾 a pet (intelligent app), ring 2; the Friendly Farmer is the gold one, ring 1. Also you, on the outermost ring'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Pink cube','🐾 a pet program: a program, site or world Astra made. Ring 3, inside the harness, just outside the pets. R W X','--own'],
+  ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass ring','the agent harness, wrapped around rings 0 to 3: the R W X line. Click its edge for details'],
+  ['<path d="M9 4a5 5 0 1 0 .01 0M9 1a8 8 0 1 1-.01 0" fill-rule="evenodd"/>','Donut','the seat on top of the glass: the harness program in use (Claude Code or Codex). The model in the seat sits in its hole','--l5'],
+  ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model (Claude, OpenAI, local models), ring 4, above the seat. Called, never rewritten'],
+  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Peach cube','a third-party program made by others: apps, drivers, virtual audio, cloud services. Ring 5, outside the harness. R X only','--program'],
+  ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, headsets, trackers, Raspberry Pi. Ring 6. R X only'],
+  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','🐾 the core, ring 0: Pet Directory, Program Manager, the Farm, Startup Star. The Kennel (other people\'s pets, waiting to be checked) sits outside the harness'],
+  ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','a harness program on the donut (Claude Code, Codex), or an adviser outside with no access (ChatGPT)'],
 ];
 // Which node types each shape stands for; hiding a shape hides all of them.
-const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Glass shell':['harness'], Diamond:['model'], Gem:['infrastructure'], Cube:['own-program','program'], Cylinder:['host-machine'], Pyramid:['assistant']};
+const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Pink cube':['own-program'], 'Glass ring':['harness'], Donut:['harness'], Diamond:['model'], 'Peach cube':['program'], Cylinder:['host-machine'], Gem:['infrastructure'], Pyramid:['assistant']};
 const sk=document.getElementById('shapeKey');
-SHAPES.forEach(([svg,name,what])=>{ const types=SHAPE_TYPES[name]||[];
+SHAPES.forEach(([svg,name,what,colour])=>{ const types=SHAPE_TYPES[name]||[]; const ink=colour?css(colour):css('--fg');
   const b=keyButton(sk, `Hide or show every ${name.toLowerCase()}`, b=>{
-    b.innerHTML=`<svg viewBox="0 0 18 18" aria-hidden="true" fill="${css('--fg')}" stroke="${css('--fg')}">${svg}</svg>`;
+    b.innerHTML=`<svg viewBox="0 0 18 18" aria-hidden="true" fill="${ink}" stroke="${ink}">${svg}</svg>`;
     const s=document.createElement('span'); const t=document.createElement('b'); t.textContent=name; s.append(t, document.createTextNode(': '+what)); b.appendChild(s); },
     ()=>{ const allOn=types.every(t=>!hiddenTypes.has(t)); types.forEach(t=>allOn?hiddenTypes.add(t):hiddenTypes.delete(t)); });
   keyButtons.push([b,()=>{ const on=types.filter(t=>!hiddenTypes.has(t)).length; return on===types.length ? true : on ? 'mixed' : false; }]); });
@@ -355,14 +445,15 @@ function apply(){
     n.iconSprite.material.opacity = on ? 1 : .12;
     // The harness has no dot of its own: the glass shell is the harness.
     const keep=nodeOn(n), solid=n.type!=='harness'; m.visible=keep&&solid&&!iconMode; n.iconSprite.visible=keep&&solid&&iconMode; labelEls[n.id].dataset.off = keep?'':'1'; });
-  const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass;
+  const glass=!hiddenTypes.has('harness'); harnessGlass.visible=glass; harnessWire.visible=glass; donut.visible=glass;
   const glassHot = fid && nodeById[fid] && nodeById[fid].type==='harness';
-  harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055;
-  shells.forEach(s=>s.visible=shellsOn);
+  harnessWire.material.opacity = glassHot ? .4 : .12; harnessGlass.material.opacity = glassHot ? .1 : .055; donut.material.emissiveIntensity = glassHot ? .9 : .35;
+  shells.forEach(s=>s.visible=shellsOn); ringTags.forEach(s=>s.visible=shellsOn);
 }
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
 function pick(ev){ const r=renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1); ray.setFromCamera(mouse,camera);
   const hn=ray.intersectObjects((iconMode?icons:meshes).filter(o=>o.visible))[0]; if(hn) return {node:hn.object.userData.node};
+  if(donut.visible && harnessNode && ray.intersectObject(donut)[0]) return {node:harnessNode};
   const hl=ray.intersectObjects(hits.filter(h=>h.visible))[0]; if(hl) return {link:hl.object.userData.link};
   // The glass harness is picked only near its visible rim, so clicks through the middle still reach what is inside.
   if(harnessGlass.visible && harnessNode){ const miss=ray.ray.distanceToPoint(new THREE.Vector3()); if(miss>HARNESS_R*.88 && miss<HARNESS_R*1.03) return {node:harnessNode}; }
@@ -395,13 +486,17 @@ function selectNode(n){
   selected=n; selectedPair=null; apply(); flyTo(n.id);
   head(n.name);
   const c=el('span','chip',DATA.types[n.type]+(n.status?` · ${n.status}`:'')+(n.state==='planned'&&!['seed','roadmap'].includes(n.type)?' · planned':'')); c.style.color=TYPE[n.type].color; side.appendChild(c);
+  const g=ringOf(n), rc=el('p','meta');
+  rc.innerHTML = g.glass ? `<b style="color:${css('--l5')}">The agent harness: the R W X line.</b> Everything inside it is an animal the agent in the seat can control.`
+    : `${rwxHtml(g)} <b class="${g.animal?'animal':''}">${g.animal?'\u{1F43E} Animal \u00b7 ':''}Ring ${g.ring} \u00b7 ${g.name}</b>${g.animal?': inside the harness, so the agent in the seat can control it'+(g.rwx[1]==='gate'?' (writes only through a pull request Astra merges)':''):': outside the harness, never rewritten by an agent'}.`;
+  side.appendChild(rc);
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
   side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)
     : links.filter(l=>(l.from===n.id||l.to===n.id)&&shown[l.state]&&(!l.everyApp||showHub||l.from===n.id));
-  if(n.type==='harness') side.appendChild(el('p','why','Its connections are the glass shell itself: every pet agent sits inside it, and models and programs are reached through it. "Every pet" rows stand for one link per pet.'));
+  if(n.type==='harness') side.appendChild(el('p','why','Its connections are the glass ring itself: every animal (rings 0 to 3) sits inside it, and models, third-party programs and devices are reached through it. The donut on top is the seat: the harness program in use (Claude Code or Codex), with a model in its hole. "Every pet" rows stand for one link per pet.'));
   const outN=list.filter(l=>l.from===n.id).length, inN=list.length-outN;
   side.appendChild(el('div','label',`${outN} sent · ${inN} received`));
   const ul=el('ul','conns'); list.forEach(l=>ul.appendChild(flowItem(l)));
@@ -535,7 +630,22 @@ function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=inner
   if(shift) camera.setViewOffset(innerWidth,innerHeight,-shift,0,innerWidth,innerHeight); else camera.clearViewOffset();
   const pad=document.querySelector('.navpad'); if(pad) pad.style.left=(innerWidth/2+shift)+'px';
   camera.updateProjectionMatrix(); controls.handleResize(); }
-addEventListener('resize',resize); resize();
+// Drag bar: widen or narrow the key panel. The width is remembered on this device only.
+const hudEl=document.querySelector('.hud'), grip=document.getElementById('grip'), HUD_MIN=300, HUD_KEY='system-map-hud-width';
+const hudMax=()=>Math.max(HUD_MIN,Math.round(innerWidth*.7));
+function placeGrip(){ const r=hudEl.getBoundingClientRect(); grip.style.left=(r.right-8)+'px'; grip.style.top=r.top+'px'; grip.style.height=r.height+'px';
+  grip.setAttribute('aria-valuemax',hudMax()); grip.setAttribute('aria-valuenow',Math.round(r.width)); }
+function setHudWidth(w,save){ w=Math.min(hudMax(),Math.max(HUD_MIN,Math.round(w))); document.documentElement.style.setProperty('--hud-w',w+'px'); placeGrip(); resize();
+  if(save) try{ localStorage.setItem(HUD_KEY,String(w)); }catch(e){} }
+grip.addEventListener('pointerdown',e=>{ e.preventDefault(); grip.setPointerCapture(e.pointerId); grip.classList.add('on');
+  const x0=e.clientX, w0=hudEl.getBoundingClientRect().width, move=ev=>setHudWidth(w0+ev.clientX-x0,false);
+  const up=()=>{ grip.classList.remove('on'); grip.removeEventListener('pointermove',move); grip.removeEventListener('pointerup',up); setHudWidth(hudEl.getBoundingClientRect().width,true); };
+  grip.addEventListener('pointermove',move); grip.addEventListener('pointerup',up); });
+grip.addEventListener('keydown',e=>{ const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!d) return; e.preventDefault(); setHudWidth(hudEl.getBoundingClientRect().width+d*(e.shiftKey?60:20),true); });
+grip.addEventListener('dblclick',()=>{ document.documentElement.style.removeProperty('--hud-w'); try{ localStorage.removeItem(HUD_KEY); }catch(e){} placeGrip(); resize(); });
+try{ const w=Number(localStorage.getItem(HUD_KEY)); if(w) document.documentElement.style.setProperty('--hud-w',Math.min(hudMax(),Math.max(HUD_MIN,w))+'px'); }catch(e){}
+if('ResizeObserver' in window) new ResizeObserver(placeGrip).observe(hudEl);
+addEventListener('resize',()=>{ resize(); placeGrip(); }); resize(); placeGrip();
 const v=new THREE.Vector3(); let last=performance.now();
 function frame(now){
   const dt=Math.min(Math.max((now-last)/1000,0),.05); last=now; // never backwards: the wavy audio curves cannot take a negative point

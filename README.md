@@ -10,6 +10,7 @@ This is the development home of **Astra's PetOS** (`ASTRAS_PET_OS`). The pets ar
 
 - **[Astra's PetOS System Map](system-map-20261012.html)** (the 3D PFD): every pet, program, model and device, and what flows between them.
 - **[INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md)**: what each pet has built of its three levels of intelligence (program, runtime, agentic harness).
+- **[PROTECTION-RINGS.md](PROTECTION-RINGS.md)**: how the farm stays safe. 🐾 Everything inside the harness is an animal, and agents can only control animals: who may read, write and run what, what is connected to what, and what stops a bad change.
 - **[ASTRAS_PET_OS.md](ASTRAS_PET_OS.md)**: the architecture, with Astra's amendments at the top. The migration plan is [docs/migration/PLAN.md](docs/migration/PLAN.md).
 
 ![Every character in every mood](art/roster.png)

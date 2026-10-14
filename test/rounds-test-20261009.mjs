@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { isAnimal, assertAnimal, assertInside } from '../scripts/animal-guard-20261013.mjs';
 import { allPets, moodKey, isDue, auditPet, auditFarmer, adoptSubmission, discover, displayMood, needsFromSnapshot, runRound, MOODS } from '../scripts/farmer-rounds-20261009.mjs';
 import { buildRelations, buildMoodKey } from '../scripts/relations-20261009.mjs';
 import { syncProfile } from '../scripts/farmer-profile-20261009.mjs';
@@ -104,8 +105,9 @@ test('submissions: taken once, only when dated, only known keys', () => {
   assert.deepEqual(adoptSubmission(r, entry, { cage: { submit: { job: 'undated' } } }), []);
 });
 
-test('discovery adds unknown pet repos to the pipeline and ignores everything else', () => {
+test('discovery puts unknown pet repos at the gate (candidates), never straight into the pipeline', () => {
   const r = clone();
+  const pipeline = r.pipeline.length;
   const added = discover(r, [
     { name: 'new-newt', isPet: true, private: true, petJson: { pet: 'New Newt', job: 'Placeholder: a newt.' } },
     { name: 'not-a-pet', isPet: false },
@@ -113,10 +115,24 @@ test('discovery adds unknown pet repos to the pipeline and ignores everything el
     { name: 'forked', isPet: true, fork: true },
   ], '2026-10-10');
   assert.deepEqual(added.map((p) => p.repo), ['new-newt']);
-  const e = r.pipeline.at(-1);
-  assert.equal(e.pet, 'New Newt');
+  assert.equal(r.pipeline.length, pipeline, 'a repo must not make itself an animal');
+  const e = r.candidates.at(-1);
+  assert.equal(e.name, 'New Newt');
   assert.equal(e.visibility, 'private');
-  assert.equal(e.audit.needs, 'a job: what should I do?');
+  assert.match(e.why, /waiting at the gate/);
+  assert.deepEqual(discover(r, [{ name: 'new-newt', isPet: true }], '2026-10-11'), [], 'a waiting candidate is not added twice');
+});
+
+test('the animal guard only lets scripts act on pets in the registry', () => {
+  assert.ok(isAnimal(registry, 'file-master'));
+  assert.ok(isAnimal(registry, 'findastra/file-master'));
+  assert.ok(isAnimal(registry, 'astras-pet-os'));
+  assert.equal(isAnimal(registry, 'someone-else/file-master'), false);
+  assert.equal(isAnimal(registry, 'voicemeeter'), false);
+  assert.equal(isAnimal(registry, 'piranesi-house'), false, 'a candidate is not an animal until Astra moves it in');
+  assert.throws(() => assertAnimal(registry, 'new-newt', 'tag'), /Animal guard/);
+  assert.ok(assertInside('pets/file-master', 'art/idle.png'));
+  assert.throws(() => assertInside('pets/file-master', '../api-fairy/keys.json'), /outside/);
 });
 
 test('the Farmer is sick when he cannot see private repos, and worried while pets wait', () => {
@@ -137,6 +153,7 @@ test('a whole round, against a pretend GitHub', async () => {
   };
   const report = await runRound({ registry: r, status, github, token: null, ownerToken: null, now: new Date('2026-10-10T13:00:00Z'), log: () => {}, all: true });
   assert.deepEqual(report.discovered, ['new-newt']);
+  assert.ok(!allPets(r).some((p) => p.repo === 'new-newt'), 'a new repo waits at the gate; it is not a pet yet');
   assert.ok(report.unreadable.includes('data-dealer'), 'private pets are unreadable without FARMER_TOKEN');
   assert.equal(status.pets['astras-pet-os'].mood, 'sick');
   assert.equal(status.pets['data-dealer'].mood, 'sleep');

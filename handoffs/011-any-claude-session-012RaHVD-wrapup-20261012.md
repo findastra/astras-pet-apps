@@ -24,7 +24,7 @@ screenshots (her desktop full of pets, and the tray star) near the top of the RE
   `PetLife`/`Mover` port in `scripts/desktop-pets-20261008.cs` that is **not wired** into
   `PetWindow.Step`, `Scatter` or the self-test and has **never been compiled**.
 - Nothing was written to Astra's PC. Files were only *read/staged* from
-  `C:\Users\audra\Documents\Projects\findastra-pet-apps` (folder access granted 2026-10-09).
+  `%USERPROFILE%\Documents\Projects\findastra-pet-apps` (folder access granted 2026-10-09).
   No build, restart or install was done there.
 - Screenshots (2026-10-11): **not committed** — Astra said "hold up, we will update later".
 - Tests: none run on the WIP branch. `main` was not changed except this card.

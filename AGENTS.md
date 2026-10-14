@@ -21,6 +21,17 @@ no "I'll read it if I need it". This applies to small tasks too.
    before doing anything else.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
+## Protection rings and animal code (Astra, 2026-10-13)
+**🐾 Everything inside the harness is an animal. Agents can only control animals.** Read
+[PROTECTION-RINGS.md](PROTECTION-RINGS.md) and `skills/farm-security`, `skills/dev-mindset` and
+`skills/new-pet-or-tool` before changing anything. In short:
+- This repo is the core (ring 0): every change lands on a branch and merges only with Astra's approval.
+  Pets and pet programs (rings 2 and 3) are worked on branches too.
+- Nobody becomes an animal by saying so. New pets wait in `candidates` until Astra moves them in; scripts that act
+  on a repo call `scripts/animal-guard-20261013.mjs` first.
+- Farms never connect to each other; GitHub is the only shared place. Local models change only through Astra.
+- Warn Astra plainly when a word or structure she uses is a blatant programming error, with the standard term.
+
 ## One copy of each repo, always on GitHub (Astra, 2026-10-12)
 Work was being lost between assistants because every chat kept its own copy of the repos
 (`Documents\ChatGPT\...`, `Documents\Codex\<date>\...`) and some never pushed. From now on:

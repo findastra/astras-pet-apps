@@ -184,20 +184,19 @@ export function adoptSubmission(registry, entry, petJson) {
 
 /** Pet repos on GitHub that the Cage does not list yet become pipeline entries. */
 export function discover(registry, repos, today) {
-  const known = new Set([...allPets(registry).map((p) => p.repo), registry.cage]);
+  const known = new Set([...allPets(registry).map((p) => p.repo), registry.cage, ...(registry.candidates || []).map((c) => c.repo)]);
   const added = [];
   for (const r of repos) {
     if (known.has(r.name) || r.fork || r.archived) continue;
     if (!r.isPet) continue;
+    // The gate (Astra, 2026-10-13): a repo never makes itself an animal. A newly found pet waits in `candidates`
+    // until Astra merges a pull request that moves it into the pipeline (scripts/animal-guard-20261013.mjs).
+    if ((registry.candidates || []).some((c) => c.repo === r.name)) continue;
     const pj = r.petJson || {};
-    const job = typeof pj.job === 'string' && pj.job ? pj.job : (r.description || 'Job not decided yet.');
-    const entry = {
-      repo: r.name, pet: typeof pj.pet === 'string' && pj.pet ? pj.pet : r.name, visibility: r.private ? 'private' : 'public',
-      status: STATUSES.includes(pj.status) ? pj.status : 'hatching', job, added: today,
-      audit: { cadence: 'weekly', subject: 'my plan', needs: /^placeholder\b|not decided/i.test(job) ? 'a job: what should I do?' : 'something only you can do' },
-      note: `Found on GitHub by the Farmer's round, ${today}.`,
-    };
-    (registry.pipeline ||= []).push(entry);
+    const name = typeof pj.pet === 'string' && pj.pet ? pj.pet.trim().slice(0, 40) : r.name;
+    const job = typeof pj.job === 'string' && pj.job ? pj.job.trim().slice(0, 300) : (r.description || 'Job not decided yet.');
+    const entry = { name, repo: r.name, why: `Found on GitHub by the Farmer's round, ${today}: waiting at the gate for Astra. Says its job is: ${job}`, found: today, visibility: r.private ? 'private' : 'public' };
+    (registry.candidates ||= []).push(entry);
     added.push(entry);
   }
   return added;
@@ -257,7 +256,7 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
   const byName = new Map(repos.map((r) => [r.name, r]));
   const report = { today, discovered: [], submissions: [], audited: [], unreadable: [], missing: [] };
 
-  // 1. Discovery: a repo with a pet.json or the pet-app topic is a pet.
+  // 1. Discovery: a repo with a pet.json or the pet-app topic asks to be a pet. It waits at the gate (candidates).
   const unknown = repos.filter((r) => !allPets(registry).some((p) => p.repo === r.name) && r.name !== registry.cage && !r.fork && !r.archived);
   for (const r of unknown) {
     const snap = await github.snapshot(r, ownerToken || token, false);

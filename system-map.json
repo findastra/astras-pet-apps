@@ -14,13 +14,13 @@
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
     "seed": "Seed Intelligent App (Pet): approved name",
     "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
-    "model": "AI model",
-    "infrastructure": "Infrastructure",
-    "own-program": "Program made by Astra",
-    "program": "Program made by others",
-    "host-machine": "Device",
-    "harness": "AI harness",
-    "assistant": "AI assistant (builds the pets)"
+    "model": "AI model, ring 4",
+    "infrastructure": "Core infrastructure, ring 0",
+    "own-program": "Pet program (made by Astra), ring 3",
+    "program": "Third-party program (made by others), ring 5",
+    "host-machine": "Device, ring 6",
+    "harness": "Agent harness (the glass and the seat)",
+    "assistant": "Harness program or adviser"
   },
   "carries": {
     "builds": "code and changes made by an assistant on a branch, from a handoff card",
@@ -36,19 +36,19 @@
   "nodes": [
     {
       "id": "farm",
-      "name": "The Farm (native OS)",
+      "name": "The Farm (your native home)",
       "type": "infrastructure",
       "state": "planned",
       "job": "The native OS of Astra's PetOS: the first-party home where your pets live and run, organized by the Farmer. Its face is the Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
-      "layer": 1
+      "layer": 2
     },
     {
       "id": "kennel",
       "name": "The Kennel (community lab)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel).",
-      "layer": 2
+      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel). It is public and sits outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
+      "layer": 6
     },
     {
       "id": "program-manager",
@@ -72,7 +72,7 @@
       "type": "infrastructure",
       "state": "now",
       "job": "The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
-      "layer": 6
+      "layer": 2
     },
     {
       "id": "claude",
@@ -95,7 +95,7 @@
       "name": "Local models",
       "type": "model",
       "state": "planned",
-      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2).",
+      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2). Self-hosted on Astra’s local network. They can take the seat and work alongside Claude, but no agent writes to them directly: every change goes through Astra.",
       "layer": 5
     },
     {
@@ -530,16 +530,16 @@
       "name": "Claude Code",
       "type": "assistant",
       "state": "now",
-      "layer": 0,
-      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. Development, not part of the running pets."
+      "layer": 5,
+      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
     },
     {
       "id": "codex",
       "name": "Codex",
       "type": "assistant",
       "state": "now",
-      "layer": 0,
-      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. Development, not part of the running pets."
+      "layer": 5,
+      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
     },
     {
       "id": "security-key",
@@ -556,7 +556,7 @@
       "type": "assistant",
       "state": "now",
       "layer": 0,
-      "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex."
+      "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex. An adviser outside the system: no access to the Farm; its ideas reach it only through Astra."
     },
     {
       "id": "msi-center",
@@ -902,21 +902,21 @@
     },
     {
       "id": "the-barn",
-      "name": "The Barn",
+      "name": "pet-program-1",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "The Friendly Farmer’s desk inside the Farm: every pet’s status, follow-ups and what needs Astra, with his daily rounds and this System Map. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "The Friendly Farmer’s desk inside the Farm: every pet’s status, follow-ups and what needs Astra, with his daily rounds and this System Map. Name not assigned yet (idea: The Barn); see docs/naming-20261013.md."
     },
     {
       "id": "key-ring",
-      "name": "Key Ring",
+      "name": "pet-program-4",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "API Fairy’s Windows app: the key scanner and dashboard. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "API Fairy’s Windows app: the key scanner and dashboard. Name not assigned yet (idea: Key Ring); see docs/naming-20261013.md."
     },
     {
       "id": "ai-astra",
@@ -938,30 +938,30 @@
     },
     {
       "id": "file-kingdom",
-      "name": "File Kingdom",
+      "name": "pet-program-12",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "File Master’s scanner, plan and undo tools. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "File Master’s scanner, plan and undo tools. Name not assigned yet (idea: File Kingdom); see docs/naming-20261013.md."
     },
     {
       "id": "unity-stable",
-      "name": "Unity Stable",
+      "name": "pet-program-5",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Unity Unicorn’s tool library and editor tools for avatars and worlds. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Unity Unicorn’s tool library and editor tools for avatars and worlds. Name not assigned yet (idea: Unity Stable); see docs/naming-20261013.md."
     },
     {
       "id": "audio-rescue",
-      "name": "Audio Rescue",
+      "name": "pet-program-19",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Voicemeeter Bug’s Windows app: asks Voicemeeter to restart its audio engine when a device reconnects. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Voicemeeter Bug’s Windows app: asks Voicemeeter to restart its audio engine when a device reconnects. Name not assigned yet (idea: Audio Rescue); see docs/naming-20261013.md."
     },
     {
       "id": "paper-girl-site",
@@ -973,13 +973,22 @@
       "job": "The free science discovery website (findastra.github.io/paper-girl), run by Patty."
     },
     {
+      "id": "am-i-a-ghost",
+      "name": "Am I a Ghost?",
+      "type": "own-program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Gone Ghost’s pet program (Astra, 2026-10-13): the private controls that change Ghost Protocol, and an exact local copy of the public site that runs only on the PC (a local environment; Ghost Protocol is production). His privacy tools live here too: the internet scrub and name-eraser, whose name lists never leave the PC."
+    },
+    {
       "id": "ghost-protocol-site",
       "name": "Ghost Protocol",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "The public cybersecurity website (findastra.github.io/ghost-protocol), watched by Gone Ghost."
+      "job": "The public, hosted side (production) of Gone Ghost’s pet program Am I a Ghost?: the cybersecurity website at findastra.github.io/ghost-protocol."
     },
     {
       "id": "gif-maker",
@@ -1172,12 +1181,12 @@
     },
     {
       "id": "fuzz-factory",
-      "name": "Fuzz Factory",
+      "name": "pet-program-30",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Fuzzboi Friend’s own page (findastra.github.io/fuzzboi-friend): make your own Fuzzboi. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Fuzzboi Friend’s own page (findastra.github.io/fuzzboi-friend): make your own Fuzzboi. Name not assigned yet (idea: Fuzz Factory); see docs/naming-20261013.md."
     },
     {
       "id": "dubstep-gunsmith",
@@ -2683,10 +2692,10 @@
     },
     {
       "from": "ghost-protocol",
-      "to": "ghost-protocol-site",
+      "to": "am-i-a-ghost",
       "carries": "opens",
-      "state": "now",
-      "why": "Ghost Protocol is this pet’s own program."
+      "state": "planned",
+      "why": "Am I a Ghost? is this pet’s own program."
     },
     {
       "from": "ghost-protocol-site",
@@ -3037,20 +3046,27 @@
       "carries": "manages",
       "state": "planned",
       "why": "Unity Unicorn’s gunsmith-loadout tool reads the Gunsmith’s loadouts (in draft PR #1)."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "ghost-protocol-site",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Its controls change the public site, and its local copy is the same site running only on the PC."
     }
   ],
   "layers": {
     "0": {
       "name": "Development (outside the running system)",
-      "detail": "Assistants and scripts that build and change the pets: Claude Code, Codex and the art pipeline. They work through GitHub and handoff cards; they are not part of any pet at runtime."
+      "detail": "Advisers and build scripts outside the running system: ChatGPT and the art pipeline. They have no access to the Farm; their work reaches it only through Astra, GitHub and handoff cards."
     },
     "1": {
       "name": "You",
-      "detail": "You, your devices and the Farm you reach every pet from."
+      "detail": "You and your devices. You grant every permission."
     },
     "2": {
       "name": "Program Manager and Pet Directory",
-      "detail": "Who exists and what real programs each pet has. Today the Pet Directory is pets.json; Program Manager is planned."
+      "detail": "The core, ring 0: Pet Directory (pets.json), Program Manager, the Farm and Startup Star. Agents read and run it; writes go only through a pull request Astra merges."
     },
     "3": {
       "name": "Friendly Farmer",
@@ -3062,11 +3078,11 @@
     },
     "5": {
       "name": "AI harness (per pet)",
-      "detail": "Each pet's own harness: AI model, skills and tools, memory, scheduler, inbox, communication, permissions and guardrails."
+      "detail": "The agent harness: the glass around rings 0 to 3 (the R W X line), the donut at the seat (Claude Code or Codex) and the AI models that take the seat. Everything inside the glass is an animal."
     },
     "6": {
       "name": "Real programs and integrations",
-      "detail": "Real programs: the ones Astra made are pet programs on their own shell just outside the pets, inside the agentic harness (pink cubes); root programs made by others sit outside the harness (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
+      "detail": "Real programs: pet programs Astra made sit inside the harness, ring 3, just outside the pets (pink cubes); third-party programs made by others sit outside the harness, ring 5 (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
     }
   },
   "type_layers": {
