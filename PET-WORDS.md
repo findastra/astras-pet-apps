@@ -40,6 +40,10 @@ So: the pet floating on the desktop is the **desktop pet** (an *icon* is the sti
 
 ## The Cage
 
+*Simpler since 2026-10-14 (Astra): the Friendly Farmer is the pet program icon and The Farm is his pet program. The
+Cage is a retired name for the old pets page, and "the Farmer's desk" is now The Farm's page. AI models are called
+farmhands; they are not pets.*
+
 | Call it | Meaning |
 |---|---|
 | **the Cage** | `cage.html`, the page where the pets live, and this repo. |

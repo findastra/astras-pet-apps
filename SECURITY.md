@@ -71,11 +71,30 @@ Roles marked **confirmed** were confirmed by Astra on 2026-10-14. Turn on **Secu
 | Respond | Forensic Ferret | pet-program-70 | Investigates breaches: timeline, which key, which agent | Roadmap |
 | Respond | (vet-clinic triage) | pet-program-77 | Community advisories when a problem affects other farms | Seed |
 | Recover | Backup Beaver | pet-program-28 | Versioned backups off the PC that agents cannot delete | Pipeline |
+| Recover | Rescue Retriever | The Recovery Room | Rebuilds the farm after a shutdown from the verified release and clean backups, then restarts it in the safe order; isolated, no farmhand in its seat | Seed |
 | Test | White Hat Weasel | pet-program-67 | **Red team:** attacks your own farm, only inside the sandbox, with L4's OK, and reports what got through | Roadmap, role confirmed |
 | Test | Test Tortoise | pet-program-51 | **The checker agent** for maker-checker, and a security test for every hole ever fixed | Roadmap, role confirmed |
 
 **Do we have enough pets?** Yes: about twenty pets already cover every job above, so no new pets are needed. What is
 missing is the walls, not the guards.
+
+## Farmhands: which AI models may take a seat
+
+AI models are **farmhands**: they are not pets, they are who sits in the seat and drives the pets. Each has its own icon.
+Only farmhands on the **allowlist** (kept by Iron Gates, changed only with L4's approval) can get a key, and every key
+is bound to that exact farmhand, harness, device and person. Trust is **earned in levels** (graduated trust):
+
+| Farmhand | Trust level | What it may do |
+|---|---|---|
+| Claude (via Claude Code), chosen OpenAI models (via Codex) | Allowed helpers | Take a seat with a short-lived key, within each pet's grants. They help build and test Astra's own model. |
+| Astra's local farmhand (in training) | Short leash, earning trust | Fingerprinted (a hash of its weights); few grants at first. L4 promotes it as it passes her tests, until she relies on it most. |
+| AI Astra's mind (the local model inside VRChat AI Astra, shown as Astra Wisp) | Narrow avenues | Her own pet program and the VRChat chatbox bridge only: no files, no keys, no other pets. |
+| Anything else | Not allowed | Cannot get a key, so it cannot act. The Police Station alarms if one tries. |
+
+A cloud model cannot prove cryptographically which model answered; we trust the provider over an encrypted
+connection. A local farmhand can be checked: its weights' fingerprint must match. Note: the providers' terms restrict
+training other models on their outputs; using them to help build a model (code, data cleaning, testing) is different.
+Check the current terms before training.
 
 ## A rogue agent: what happens
 
@@ -95,6 +114,34 @@ The standard incident steps, with the pets that do them.
 *independent*: a different model or provider, their own context, read-only, and never shown the untrusted text that
 started the change. Four copies of the same model share the same blind spots. And anything the pets "learn" about
 attackers becomes a rule only after L4 approves it, so an intruder cannot teach the guards to look away.
+
+## The shutdown protocol and recovery
+
+**Shutdown (containment, not a crash)**, in levels. On an alarm the Police Station does levels 1 to 3 at once; level 4
+only when L4 presses it. Only L4 turns anything back on.
+
+| Level | What happens |
+|---|---|
+| 1 | Every agent key is revoked (Iron Gates). |
+| 2 | Every agent stops: the agent account's processes end. |
+| 3 | Agent network is cut (the firewall blocks the agent account). |
+| 4 | All network off (L4 only). |
+
+**Recovery: Rescue Retriever (The Recovery Room).** It runs isolated: from a read-only known-good copy, under its own
+account, with **no farmhand in its seat**, so a compromised agent cannot steer the cleanup.
+
+1. **Find what changed.** Compare the installed farm, fingerprint by fingerprint, with the signed release on GitHub.
+   Every difference is something the breach touched. Forensic Ferret's timeline says when it started.
+2. **Clean code.** Reinstall from the verified release.
+3. **Clean data.** Restore the newest backup from **before** the incident (Backup Beaver keeps versioned copies).
+4. **Fresh keys.** Every old key stays dead; API Fairy lists every key to rotate outside the farm too.
+5. **Restart in the safe order** (watchers before workers, verify before trust, least power first):
+   1. security and logging: the Police Station and Log Lynx start recording; Iron Gates checks its key store and allowlist;
+   2. the core (The Farm), verified against the release;
+   3. the network, allowlist only, still no agents;
+   4. the pets, one at a time, with no farmhands (L1 and L2 only); the Friendly Farmer health-checks each;
+   5. farmhands last, with new keys, only with L4's approval.
+6. **Learn.** White Hat Weasel turns the attack into a sandbox drill and Test Tortoise adds a test.
 
 ## How we prove it
 
