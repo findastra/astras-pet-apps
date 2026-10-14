@@ -1085,15 +1085,15 @@
     },
     {
       "repo": "raspberry-berry",
-      "pet": "Raspberry Pi",
+      "pet": "Raspberry Pi Berry",
       "visibility": "private",
       "status": "hatching",
-      "job": "Placeholder for a raspberry-berry pet. It will be a small companion for a Raspberry Pi.",
+      "job": "Raspberry Pi Berry’s pet program is Raspberry Pi Maker (Astra, 2026-10-13): keeps track of Astra’s Raspberry Pi projects and tells her which Pis need a backup or an OS update.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
         "subject": "my plan",
-        "needs": "a job: what should the Raspberry Pi pet do?"
+        "needs": "a job: what should Raspberry Pi Maker do?"
       }
     },
     {

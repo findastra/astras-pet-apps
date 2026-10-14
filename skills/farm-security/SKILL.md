@@ -61,5 +61,17 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 - Agents say who they are: a `claude/` or `codex/` branch and a `Co-Authored-By` line. Until agents have their own
   identity (Astra is deciding), they act on Astra's account, so these marks are the only record of who did what.
 
-## 7. When unsure
+## 7. L4, kill switches and the maker-checker rule
+- **L4 is the verified human who owns the entire secure ecosystem.** Every security change, permission and exception
+  to a default goes to L4, who sees the request and authorizes it or not.
+- Every tool and every connection between pets has an ON/OFF kill switch. Its state lives in the core, so nothing can
+  turn itself back on. Anyone may turn one off; turning it back on after a security OFF needs L4.
+- Changes follow the maker-checker rule: a **maker agent** proposes on a branch, a separate **read-only checker
+  agent** verifies intent, permissions and the diff (ideally another model, in its own context, without the
+  untrusted input), and L4 approves. Two agents that disagree go to L4 after two rounds.
+- Log Lynx records approvals in an append-only log; it never creates one.
+- Security patches reach other farms only as signed releases they pull and their own L4 approves. Nobody pushes into
+  another person's farm. Details: [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md), sections 4, 8 and 9.
+
+## 8. When unsure
 Stop and ask Astra. Name the ring, the R W X involved and what crosses which boundary.

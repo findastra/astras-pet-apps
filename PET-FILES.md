@@ -2,6 +2,10 @@
 
 *Part of the Cage ([README](README.md)). The GitHub Goldfish checks these rules across the whole account.*
 
+**Every pet program is built to [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md)** (Astra, 2026-10-13): tool boxes with
+versioned labels, ON/OFF and sick on every tool, the notes tool and backlog, the chat bot, links by kind, the status line,
+its System Map node, and data that survives updates. Names and versions follow its section 2.
+
 Every pet app is its own repo under `findastra`, named in lowercase words joined by hyphens. Every pet repo has:
 
 | File or setting | Rule |

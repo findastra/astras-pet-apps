@@ -74,7 +74,9 @@
       "state": "now",
       "job": "A tool of The Farm (no face, not a pet). The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
       "layer": 2,
-      "of": "farm"
+      "of": "farm",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-startup-star-v1.0"
     },
     {
       "id": "system-map",
@@ -84,7 +86,21 @@
       "state": "now",
       "layer": 2,
       "category": "Tool",
-      "job": "A tool of The Farm: this 3D map of every pet, program, model and device, in protection rings, with what flows between them (findastra.github.io/astras-pet-os/system-map-20261012.html). Built by npm run build from system-map.json and pets.json."
+      "job": "A tool of The Farm: this 3D map of every pet, program, model and device, in protection rings, with what flows between them (findastra.github.io/astras-pet-os/system-map-20261012.html). Built by npm run build from system-map.json and pets.json.",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-astras-pet-os-system-map-v1.0"
+    },
+    {
+      "id": "broken-tools-on-the-farm",
+      "name": "broken-tools-on-the-farm",
+      "type": "tool",
+      "of": "farm",
+      "state": "planned",
+      "layer": 2,
+      "category": "Tool",
+      "job": "A tool of The Farm: every tool on every pet that is marked sick, turned off or failing its health check, and which pets use it, so the Friendly Farmer knows when his pets’ tools are broken (PET-PROGRAM-FRAMEWORK.md, section 4).",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-broken-tools-on-the-farm-v1.0"
     },
     {
       "id": "claude",
@@ -956,7 +972,21 @@
       "state": "planned",
       "layer": 6,
       "category": "Tool",
-      "job": "A tool of File Master’s pet program: notices every newly installed program anywhere on the PC (with Everything when it is installed, else the installed-programs list and Start menu), and lists what is new. Read only."
+      "job": "A tool of File Master’s pet program: notices every newly installed program anywhere on the PC (with Everything when it is installed, else the installed-programs list and Start menu), and lists what is new. Read only.",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-new-programs-watch-v1.0"
+    },
+    {
+      "id": "repo-catcher",
+      "name": "repo-catcher",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of File Master’s pet program: finds old or stale repos on the PC that were never pushed. Lists each one’s folder location first, then the date it was created, newest at the top; click a row to open the folder. Read only.",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-repo-catcher-v1.0"
     },
     {
       "id": "unity-stable",
@@ -1002,7 +1032,9 @@
       "state": "planned",
       "layer": 6,
       "category": "Tool",
-      "job": "A tool of Am I a Ghost? (Gone Ghost): replaces a name with another (USER by default) in files inside the Farm. Dry run first, then Astra approves the plan, with an undo log. Anywhere else on the PC needs a scope from Iron Gates. Its name list stays on the PC."
+      "job": "A tool of Am I a Ghost? (Gone Ghost): replaces a name with another (USER by default) in files inside the Farm. Dry run first, then Astra approves the plan, with an undo log. Anywhere else on the PC needs a scope from Iron Gates. Its name list stays on the PC.",
+      "version": "v1.0",
+      "label": "am-i-a-ghost-v1.0-name-eraser-v1.0"
     },
     {
       "id": "internet-scrub",
@@ -1012,7 +1044,9 @@
       "state": "planned",
       "layer": 6,
       "category": "Tool",
-      "job": "A tool of Am I a Ghost? (Gone Ghost): finds a person’s details on websites and data brokers and walks through removing them. Its list of what to remove stays on the PC."
+      "job": "A tool of Am I a Ghost? (Gone Ghost): finds a person’s details on websites and data brokers and walks through removing them. Its list of what to remove stays on the PC.",
+      "version": "v1.0",
+      "label": "am-i-a-ghost-v1.0-internet-scrub-v1.0"
     },
     {
       "id": "ghost-protocol-site",
@@ -3192,6 +3226,27 @@
       "carries": "builds",
       "state": "now",
       "why": "npm run build makes the page from system-map.json and pets.json."
+    },
+    {
+      "from": "farm",
+      "to": "broken-tools-on-the-farm",
+      "carries": "opens",
+      "state": "planned",
+      "why": "broken-tools-on-the-farm is a tool of The Farm."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "repo-catcher",
+      "carries": "opens",
+      "state": "planned",
+      "why": "repo-catcher is a tool of File Master’s pet program."
+    },
+    {
+      "from": "repo-catcher",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Scans the PC’s folders for repos that were never pushed."
     }
   ],
   "layers": {

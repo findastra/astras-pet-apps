@@ -18,6 +18,16 @@ Astra wants other software developers to read her build without frustration. She
 ## Glossary: Astra's PetOS words and the standard terms
 | Astra's PetOS | Standard software term | Notes |
 |---|---|---|
+| L1, L2, L3, L4 | Intelligence levels: program, runtime, agentic harness, and the verified human | L4 is the verified human who owns the entire secure ecosystem and approves everything that matters. Decided 2026-10-13. |
+| Maker agent / checker agent | Maker-checker rule (four-eyes, two-person rule) | Was "offensive / defensive agent"; in security "offensive" means attacking. Decided 2026-10-13. |
+| Versions with `v` | Version tags (`v1.0`) | `pet-program-3-v1.0-icon-2-v1.0`: a name keeps its number, a version never hides inside it. Decided 2026-10-13. |
+| Tool box | Card or panel with a title (HTML `fieldset` with a `legend`) | Border with the versioned label on top, everything about the tool inside. |
+| Connection box | Integration panel (what flows between two services) | Its own border colour; titled with the other pet's icon name. |
+| ON/OFF on a tool or connection | Kill switch / feature flag | Enforced by the core, not just shown on the page. |
+| Sick checkbox | User-reported defect | Feeds the Farmer's `broken-tools-on-the-farm`. |
+| Backlog (`<pet-program>-backlog`) | Backlog | Entries and weekly runs carry versions; the store itself never does, so it is never lost. |
+| Weekly backlog run | Scheduled job | Weekly by default; more often needs L4. |
+| Data survives updates | Schema version, migration, export and import | |
 | Ring (the 3D map's spheres) | Protection ring | Was "shell"; developers hear "command shell". Decided 2026-10-13. |
 | R W X tags | rwx permissions (read, write, execute) | Not "RWE". Decided 2026-10-13. |
 | Pet program | Program (an app, site, world, service or script) Astra made | Umbrella term; see "app vs program". |

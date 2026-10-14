@@ -75,7 +75,7 @@ flowchart LR
   mail_snail["Mail Snail *"]
   mine_mole["Mine Mole *"]
   mesh_moth["Mesh Moth *"]
-  raspberry_berry["Raspberry Pi *"]
+  raspberry_berry["Raspberry Pi Berry *"]
   wifi_butterfly["Wifi Butterfly *"]
   pets ==>|registry| astras_pet_os
   astras_pet_os ==>|status| pets
@@ -159,8 +159,8 @@ flowchart LR
 | Mommy's Mommies | Discord Damsel | `cue` | planned | Mommy's Mommies lists a Discord connection as planned; Discord Damsel manages Astra's Discord apps. |
 | GitHub Goldfish | Portfolio Puffer | `shipped` | idea | Portfolio Puffer plans a GitHub connection; the Goldfish already reads the whole account. |
 | Mine Mole * | Finance Finch | `findings` | idea | Whether mining is worth the power is a money question for Finance Finch. Finance data stays on the PC. |
-| Mesh Moth * | Raspberry Pi * | `status` | idea | The cyberdeck plan puts a LoRa HAT on the Pi: the Meshtastic node runs on the Raspberry Pi. |
-| Wifi Butterfly * | Raspberry Pi * | `status` | idea | The cyberdeck plan puts a Wi-Fi HAT on the Pi. |
+| Mesh Moth * | Raspberry Pi Berry * | `status` | idea | The cyberdeck plan puts a LoRa HAT on the Pi: the Meshtastic node runs on the Raspberry Pi. |
+| Wifi Butterfly * | Raspberry Pi Berry * | `status` | idea | The cyberdeck plan puts a Wi-Fi HAT on the Pi. |
 
 ### Private pets
 

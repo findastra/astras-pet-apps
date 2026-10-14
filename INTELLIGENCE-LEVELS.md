@@ -1,13 +1,19 @@
 # Intelligence levels: what each intelligent app has built
 
 Every intelligent app (a pet) grows through **three levels of intelligence**, as decided for
-ASTRAS_PET_OS ([ASTRAS_PET_OS.md](ASTRAS_PET_OS.md), section 2) and drawn on the [System Map](system-map-20261012.html):
+ASTRAS_PET_OS ([ASTRAS_PET_OS.md](ASTRAS_PET_OS.md), section 2) and drawn on the [System Map](system-map-20261012.html),
+and answers to a fourth: **L4, the verified human who owns the entire secure ecosystem**.
+
+**Written L1, L2, L3 and L4 from 2026-10-13 (Astra).** The columns below numbered 1, 2 and 3 are L1, L2 and L3.
 
 | Level | Name | What it is | Map layer |
 |---|---|---|---|
-| 1 | **Program** | The base: real software that does the useful job (a Windows app, editor tools, a website, a web app). | 6 Real programs |
-| 2 | **Runtime** | Runs on its own, without you opening it: scheduler, inbox, saved state, health. Keeps working when the Farm, the Farmer or the desktop star is closed. | 4 Pet agents |
-| 3 | **Agentic harness** | The AI layer: model adapter (Claude, GPT or local), skills, tools, memory, permissions, task executor. Decides what to do next. | 5 AI harness (per pet) |
+| L1 | **Program** | The base: real software that does the useful job (a Windows app, editor tools, a website, a web app). | 6 Real programs |
+| L2 | **Runtime** | Runs on its own, without you opening it: scheduler, inbox, saved state, health. Keeps working when the Farm, the Farmer or the desktop star is closed. | 4 Pet agents |
+| L3 | **Agentic harness** | The AI layer: model adapter (Claude, GPT or local), skills, tools, memory, permissions, task executor. Decides what to do next. | 5 AI harness (per pet) |
+| L4 | **Verified human** | The verified human who owns the entire secure ecosystem (on Astra's farm, Astra; on another user's farm, that user). Approves every security change, every permission and every exception to a default, such as an L3 agent running more often than weekly. Not something a pet builds: every pet answers to L4. | 1 You (ring 8) |
+
+Every pet program is built to [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md).
 
 **Levels:** ✅ built and verified · 🟡 partly there (see note) · — not built.
 **Program names:** each pet's program has a different name from the pet, so the two are easy to tell apart. *Italic* names are suggestions for Astra to approve; **bold** names are the program's real name today. **Made by Astra** programs are hers; **made by others** are other people's software the pet looks after (on the map: pink cubes and peach cubes, on separate shells).

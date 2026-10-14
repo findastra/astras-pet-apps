@@ -28,7 +28,7 @@ for(const id of ['claude-bot','rgbee','mine-mole','mail-snail','patch-cat','back
 }
 for(const id of ['wifi-butterfly','chat-rat'])add(id,id==='chat-rat'?'Chat Rat':'Wifi Butterfly',join(projects,id,'art'),'idle-20261009.png','blink-20261009.png');
 add('deck-duck','Deck Duck',join(projects,'deck-duck','art','frames'),'neutral.png','blink.png');
-add('raspberry-berry','Raspberry Pi',join(projects,'raspberry-berry','art','frames'),'idle-20261010.png','blink-20261010.png');
+add('raspberry-berry','Raspberry Pi Berry',join(projects,'raspberry-berry','art','frames'),'idle-20261010.png','blink-20261010.png');
 add('meme-fiend','Meme Fiend',join(projects,'meme-fiend','art'),'meme-fiend-20261009.png','meme-fiend-20261009.png');
 add('fuzzboi-friend','Fuzzboi Friend',join(cache,'fuzzboi-friend','art'),'idle-20261009.png','blink-20261009.png');
 add('gif-giraffe','Gif Giraffe',join(cache,'astras-gif-maker','art','frames','gif-giraffe'),'idle.png','blink.png','astras-gif-maker');

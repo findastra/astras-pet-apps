@@ -195,7 +195,7 @@ const RINGS = [
   {ring:5, name:'Third-party programs', what:'satellites: programs, libraries and services made by others. Run and read, never rewritten', r:LAYER_R[6], rwx:['on','off','on']},
   {ring:6, name:'Devices', what:'read and operated through drivers and apps', r:DEVICE_R, rwx:['on','off','on']},
   {ring:7, name:'Advisers', what:'ChatGPT: no access; ideas reach the Farm only through Astra', r:LAYER_R[0], rwx:['off','off','off']},
-  {ring:8, name:'You', what:'Astra grants every permission', r:LAYER_R[1], rwx:['off','off','off']},
+  {ring:8, name:'You (L4)', what:'the verified human who owns the entire secure ecosystem: grants every permission and approves every security change', r:LAYER_R[1], rwx:['off','off','off']},
 ];
 const ringOf = n => { if(n.type==='harness'||(n.type==='assistant'&&PIN[n.id])) return RINGS[4]; const r=radiusOf(n); return RINGS.reduce((a,b)=>Math.abs(b.r-r)<Math.abs(a.r-r)?b:a); };
 const rwxHtml = g => g.rwx ? `<span class="rwx">${['R','W','X'].map((c,i)=>`<b class="${g.rwx[i]==='on'?c.toLowerCase():g.rwx[i]}" title="${['Read','Write','Execute'][i]}: ${g.rwx[i]==='on'?'yes':g.rwx[i]==='gate'?'only through a pull request Astra merges':'no'}">${c}</b>`).join('')}</span>` : '';
@@ -309,14 +309,26 @@ function mergeGeos(parts){ const pos=[], nor=[], idx=[]; let off=0;
   const out=new THREE.BufferGeometry(); out.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); out.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3)); out.setIndex(idx); return out; }
 const hammerGeo = r => mergeGeos([[new THREE.BoxGeometry(r*.26,r*1.7,r*.26),0,-r*.25,0],[new THREE.BoxGeometry(r*1.25,r*.42,r*.42),0,r*.68,0]]);
 const satelliteGeo = r => mergeGeos([[new THREE.BoxGeometry(r*.7,r*.7,r*.7),0,0,0],[new THREE.BoxGeometry(r*1.05,r*.07,r*.6),r*.95,0,0],[new THREE.BoxGeometry(r*1.05,r*.07,r*.6),-r*.95,0,0]]);
+function starWandGeo(r){ const s=new THREE.Shape(); for(let i=0;i<10;i++){ const a=Math.PI/2+i*Math.PI/5, rr=i%2?r*.42:r; i?s.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):s.moveTo(Math.cos(a)*rr,Math.sin(a)*rr); }
+  const star=new THREE.ExtrudeGeometry(s,{depth:r*.22,bevelEnabled:false}); star.translate(0,0,-r*.11);
+  return mergeGeos([[star,0,r*.55,0],[new THREE.BoxGeometry(r*.16,r*1.5,r*.16),0,-r*.7,0]]); }
 function makeAvatar(n){
   const t = TYPE[n.type], planned = n.state==='planned' && n.type!=='seed';
-  const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='tetra' ? new THREE.TetrahedronGeometry(t.r*1.2) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
+  const geo = n.id==='desktop-host' ? starWandGeo(t.r*1.6) : t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='tetra' ? new THREE.TetrahedronGeometry(t.r*1.2) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
     : t.shape==='hammer' ? hammerGeo(t.r*1.4) : t.shape==='satellite' ? satelliteGeo(t.r*1.4)
     : t.shape==='box' ? new THREE.BoxGeometry(t.r*1.4,t.r*1.4,t.r*1.4) : t.shape==='cyl' ? new THREE.CylinderGeometry(t.r*.8,t.r*.8,t.r*1.2,24) : new THREE.SphereGeometry(t.r,32,20);
   const mat = new THREE.MeshStandardMaterial({color:t.color, emissive:t.color, emissiveIntensity:.28, roughness:.45, metalness:.1,
     transparent:true, opacity:planned?.55:1});
-  const m = new THREE.Mesh(geo, mat); m.userData.baseOpacity = planned?.55:1; return m;
+  if(n.id==='desktop-host'){ mat.color.set(css('--host')); mat.emissive.set(css('--host')); mat.metalness=.35; }
+  const m = new THREE.Mesh(geo, mat); m.userData.baseOpacity = planned?.55:1;
+  if(n.id==='desktop-host') m.onBeforeRender=(r,s,cam)=>m.quaternion.copy(cam.quaternion); // the star always faces you
+  if(n.id==='desktop-host'){ // sparkles that twinkle around the star
+    const pts=[]; for(let i=0;i<14;i++){ const a=i*2.4, rr=.9+(i%4)*.35; pts.push(Math.cos(a)*rr, .4+Math.sin(i*1.7)*.9, Math.sin(a)*rr); }
+    const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+    const sp=new THREE.Points(sg,new THREE.PointsMaterial({color:css('--seed'),size:.22,transparent:true,depthWrite:false}));
+    sp.onBeforeRender=()=>{ const k=performance.now()/1000; sp.material.opacity=.45+.55*Math.abs(Math.sin(k*2.2)); sp.rotation.y=k*.6; sp.material.size=.16+.1*Math.abs(Math.sin(k*3.1)); };
+    m.add(sp); }
+  return m;
 }
 // Icon mode: the pet's own idle mood frame, or a round badge with its initials for everything else.
 function makeIcon(n){
@@ -398,6 +410,7 @@ const SHAPES=[
   ['<path d="M3 3h9v4H3zM6 7h3v9.5H6z"/>','Hammer','🐾 a tool: any other program a pet program makes or owns (the System Map, Startup Star, name-eraser). Same ring and permissions as its pet program, never more','--tool'],
   ['<path d="M6.5 6.5h5v5h-5zM1 8h4.5v2H1zM12.5 8H17v2h-4.5z"/>','Satellite','third-party: a program, library or service made by others (Voicemeeter, Steam, three.js, Google Fonts). Ring 5, outside the harness. R X only','--program'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, headsets, trackers, Raspberry Pi. Ring 6. R X only'],
+  ['<path d="M9 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L9 11.8 4.8 14l.8-4.7L2.2 6l4.7-.7z"/>','Star wand','⭐ Startup Star, a tool of The Farm: it starts the desktop pets when you sign in to Windows','--host'],
   ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','🐾 the core, ring 0: The Farm (the Friendly Farmer\'s pet program), Pet Directory, Program Manager. The Kennel (other people\'s pets, waiting to be checked) sits outside the harness'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','a harness program on the donut (Claude Code, Codex), or an adviser outside with no access (ChatGPT)'],
 ];
@@ -481,7 +494,7 @@ renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0
 // ---------- detail panel ----------
 const side=document.getElementById('side');
 const el=(tag,cls,text)=>{const e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e;};
-function close(){ selected=null; selectedPair=null; side.hidden=true; apply(); }
+function close(){ selected=null; selectedPair=null; side.hidden=true; apply(); try{ if(location.hash) history.replaceState(null,'',location.pathname+location.search); }catch(e){} }
 function head(title){ side.replaceChildren(); const c=el('button','btn close','Close'); c.onclick=close; side.append(c, el('h2','',title)); }
 function flowItem(l, perspective){
   const li=el('li'); const st=el('span','chip',`Layer ${l.layer} · ${STATE_WORD[l.state]}`); st.style.color=LAYER_COLOR[l.layer];
@@ -493,7 +506,7 @@ function flowItem(l, perspective){
 }
 function selectNode(n){
   selected=n; selectedPair=null; apply(); flyTo(n.id);
-  head(n.name);
+  head(n.name); try{ history.replaceState(null,'','#node='+encodeURIComponent(n.id)); }catch(e){}
   const c=el('span','chip',DATA.types[n.type]+(n.status?` · ${n.status}`:'')+(n.state==='planned'&&!['seed','roadmap'].includes(n.type)?' · planned':'')); c.style.color=TYPE[n.type].color; side.appendChild(c);
   const g=ringOf(n), rc=el('p','meta');
   rc.innerHTML = g.glass ? `<b style="color:${css('--l5')}">The agent harness: the R W X line.</b> Everything inside it is an animal the agent in the seat can control.`
@@ -502,7 +515,8 @@ function selectNode(n){
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
   if(n.type==='tool'&&nodeById[n.of]){ const p=el('p','meta'); const b=el('button','link',nodeById[n.of].name); b.onclick=()=>selectNode(nodeById[n.of]);
-    p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p); }
+    p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p);
+    if(n.label){ const lb=el('p','meta'); lb.append(document.createTextNode('Tool box label: ')); lb.appendChild(el('code','',n.label)); side.appendChild(lb); } }
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
   side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)
@@ -675,5 +689,8 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 apply(); requestAnimationFrame(frame);
+// Every pet program page links here as #node=<its node id>, so the map opens on it (PET-PROGRAM-FRAMEWORK.md, section 3).
+function openFromHash(){ const m=location.hash.match(/node=([^&]+)/); const id=m&&decodeURIComponent(m[1]); if(id&&nodeById[id]&&(!selected||selected.id!==id)) selectNode(nodeById[id]); }
+addEventListener('hashchange',openFromHash); openFromHash();
 </script>
 </body></html>

@@ -36,6 +36,9 @@ third-party dependency, not a tool.
 6. Recommend one owner, with one sentence of why, and offer one alternative. Ask Astra.
 7. Record the decision: the pet's repo (README and `pet.json` tools list), `pets.json` job text,
    the naming table, and a handoff card for the pet's chat.
+8. Build it to [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md): a new tool gets its own tool box with a
+   versioned label (`<pet-program>-v<version>-<tool>-v<tool version>`), ON/OFF, sick, its links and how it is used.
+   A new pet program gets every block of the framework page and passes its checklist.
 
 ## Decisions so far
 | Tool | Owner | Why | Date |
@@ -44,3 +47,6 @@ third-party dependency, not a tool.
 | name-eraser (replace a name, default `USER`, in files) | Gone Ghost (pending Astra's final OK on scope) | Same privacy job; runs as a dry run, then an approved plan with undo. | 2026-10-13 |
 | New-programs watch (every newly installed program, anywhere on the PC) | File Master | He already scans the whole PC; uses Everything (voidtools) when installed. | 2026-10-13 |
 | Picking and installing pets for a user (package manager) | Friendly Farmer | He already hatches pets; no distributor pet needed. | 2026-10-13 |
+| repo-catcher (old or stale repos on the PC that were never pushed: location, created date, newest first, click to open) | File Master | He already scans the whole PC for files and projects. | 2026-10-13 |
+| broken-tools-on-the-farm (every tool marked sick, turned off or failing, and which pets use it) | Friendly Farmer (The Farm) | He has to know when the tools his pets use are broken. | 2026-10-13 |
+| harness-strapper (example Unity tool: download on its title, which avatars it is rigged on, a sick box) | Unity Unicorn | Unity tools are hers; every tool box shows how it is used in the projects. | 2026-10-13 |
