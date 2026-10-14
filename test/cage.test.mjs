@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { validate, buildTable, applyTable, assetPaths, START, END } from '../scripts/lib.mjs';
@@ -256,10 +256,12 @@ test('README markers are present and ordered', () => {
 });
 
 test('no personal data, tokens or work info in the repo files', () => {
-  for (const f of ['README.md', 'ROSTER.md', 'AGENTS.md', 'PET-FILES.md', 'pets.json', 'cage.html', 'cage-data.js', 'scripts/generate-pets.mjs']) {
+  // Handoffs, docs and skills too, and C:/Users/ as well as C:\Users\ (Astra, 2026-10-13: no personal paths anywhere).
+  const md = (dir) => existsSync(new URL('../' + dir, import.meta.url)) ? readdirSync(new URL('../' + dir, import.meta.url), { recursive: true }).map((n) => String(n).replace(/\\/g, '/')).filter((n) => n.endsWith('.md')).map((n) => dir + '/' + n) : [];
+  for (const f of ['README.md', 'ROSTER.md', 'AGENTS.md', 'PET-FILES.md', 'PROTECTION-RINGS.md', 'pets.json', 'system-map.json', 'cage.html', 'cage-data.js', 'scripts/generate-pets.mjs', ...md('handoffs'), ...md('docs'), ...md('skills')]) {
     const t = read(f);
     assert.ok(!/ghp_[A-Za-z0-9]{20}/.test(t), `${f} has a GitHub token`);
     assert.ok(!/sk-[A-Za-z0-9_-]{20}/.test(t), `${f} has an API key`);
-    assert.ok(!/C:\\Users\\/.test(t), `${f} has a personal path`);
+    assert.ok(!/C:[\\/]+Users[\\/]+(?!example\b|<)/i.test(t), `${f} has a personal path`);
   }
 });

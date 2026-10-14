@@ -9,7 +9,8 @@
 // installed; otherwise prints the page where each release can be made by hand.
 // Safe to re-run: an existing correct tag is left alone; a tag on any other commit stops the run.
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
+import { assertAnimal } from './animal-guard-20261013.mjs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -30,6 +31,10 @@ const run = (cmd, args, opts = {}) => execFileSync(cmd, args, { encoding: 'utf8'
 const has = (cmd) => { try { run(cmd, ['--version']); return true; } catch { return false; } };
 const gh = has('gh');
 let problems = 0;
+
+// Animal guard (2026-10-13): only pets in the registry may be tagged or released.
+const registry = JSON.parse(readFileSync(new URL('../pets.json', import.meta.url), 'utf8'));
+for (const [repo] of RELEASES) assertAnimal(registry, repo, 'tag and release');
 
 for (const [repo, short, title] of RELEASES) {
   const url = `https://github.com/findastra/${repo}`;

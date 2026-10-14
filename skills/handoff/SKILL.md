@@ -46,6 +46,10 @@ heartbeat log to `watcher.cs`, commit `abc1234` on branch `x`, not pushed" is.
 Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 
 ## Hatching or changing a pet
+- **Build every pet program to [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md)** and run its checklist
+  (its last section) before you push: versioned names everywhere, tool boxes with ON/OFF and sick, the notes tool and
+  backlog, the chat bot, links by kind, the status line, its System Map node, and data that survives updates.
+  Also follow `skills/farm-security` and `skills/new-pet-or-tool`. A new pet waits at the gate until L4 lets it in.
 - A new pet repo needs `pet.json` with an `audit` block, the `pet-app` topic, and an AGENTS.md that links
   `findastra/astras-pet-os` and its PET-FILES.md. The Farmer's daily round finds it and adds it to the
   pipeline; leave a `farmer-register-<repo>` card in `astras-pet-os/handoffs/` too.

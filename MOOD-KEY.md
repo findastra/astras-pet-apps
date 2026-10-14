@@ -55,7 +55,7 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 | **Wifi Butterfly** * | my plan | weekly, Tuesday | a job: what should Wifi Butterfly do |
 | **Deck Duck** * | my plan | weekly, Wednesday | a job: what should Deck Duck do |
 | **Mesh Moth** * | the Meshtastic node plan | weekly, Thursday | a job: what should Mesh Moth watch |
-| **Raspberry Pi** * | my plan | weekly, Friday | a job: what should the Raspberry Pi pet do |
+| **Raspberry Pi Berry** * | my plan | weekly, Friday | a job: what should Raspberry Pi Maker do |
 | **Platform Platypus** * | how Astra's pages look across iPhone, Android, iPad and desktop | weekly, Saturday | something only you can do |
 
 \* in the pipeline: on GitHub, not registered in the Cage yet.

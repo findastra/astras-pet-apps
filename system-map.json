@@ -14,13 +14,14 @@
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
     "seed": "Seed Intelligent App (Pet): approved name",
     "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
-    "model": "AI model",
-    "infrastructure": "Infrastructure",
-    "own-program": "Program made by Astra",
-    "program": "Program made by others",
-    "host-machine": "Device",
-    "harness": "AI harness",
-    "assistant": "AI assistant (builds the pets)"
+    "model": "AI model, ring 4",
+    "infrastructure": "Core infrastructure, ring 0",
+    "own-program": "Pet program (made by Astra), ring 3",
+    "program": "Third-party (made by others), ring 5",
+    "host-machine": "Device, ring 6",
+    "harness": "Agent harness (the glass and the seat)",
+    "assistant": "Harness program or adviser",
+    "tool": "Tool: belongs to a pet program, same ring and permissions"
   },
   "carries": {
     "builds": "code and changes made by an assistant on a branch, from a handoff card",
@@ -36,19 +37,35 @@
   "nodes": [
     {
       "id": "farm",
-      "name": "The Farm (native OS)",
+      "name": "The Farm",
       "type": "infrastructure",
       "state": "planned",
-      "job": "The native OS of Astra's PetOS: the first-party home where your pets live and run, organized by the Farmer. Its face is the Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
-      "layer": 1
+      "job": "The Friendly Farmer’s pet program (pet-program-1) and the core of Astra’s PetOS, ring 0: the native home where your pets live and run, organized by the Farmer. It holds the Pet Directory and Program Manager, and its tools are the System Map and Startup Star. Astra’s PetOS is a platform that runs on Windows, not an operating system. Repo: astras-pet-os today; it splits later into the-farm (the app) and astras-pet-os (registry and docs).",
+      "layer": 2
     },
     {
       "id": "kennel",
       "name": "The Kennel (community lab)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel).",
-      "layer": 2
+      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel). It is public and sits outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
+      "layer": 6
+    },
+    {
+      "id": "vet-clinic",
+      "name": "The vet-clinic (community tickets)",
+      "type": "infrastructure",
+      "state": "planned",
+      "layer": 6,
+      "job": "Is your pet sick? A public issue tracker on GitHub: a farmer opens a ticket (vet-clinic-ticket-NNNN) with the sick tool’s code and error, after name-eraser and the secret scan; other farmers diagnose it and may offer a cure (a code fix). One tier below Kennel-verified: every community answer carries a warning and never runs by itself; a cure goes through quarantine, a checker agent and the farm’s L4. Every ticket is logged, and cures that work for many farms become official patches (PET-PROGRAM-FRAMEWORK.md, section 10). Outside the harness, like the Kennel."
+    },
+    {
+      "id": "the-shed",
+      "name": "The Shed (community tools and tricks)",
+      "type": "infrastructure",
+      "state": "planned",
+      "layer": 6,
+      "job": "Public, like the Kennel but for tools and tricks made by other creators (findastra/the-shed). Everything there is untrusted until it is quarantined, checked and approved by a farm’s L4. Trust tiers: official, Shed-verified, community (with a warning). Outside the harness."
     },
     {
       "id": "program-manager",
@@ -68,11 +85,38 @@
     },
     {
       "id": "desktop-host",
-      "name": "Startup Star (desktop host)",
-      "type": "infrastructure",
+      "name": "Startup Star",
+      "type": "tool",
       "state": "now",
-      "job": "The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
-      "layer": 6
+      "job": "A tool of The Farm (no face, not a pet). The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
+      "layer": 2,
+      "of": "farm",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-startup-star-v1.0"
+    },
+    {
+      "id": "system-map",
+      "name": "Astra’s PetOS System Map",
+      "type": "tool",
+      "of": "farm",
+      "state": "now",
+      "layer": 2,
+      "category": "Tool",
+      "job": "A tool of The Farm: this 3D map of every pet, program, model and device, in protection rings, with what flows between them (findastra.github.io/astras-pet-os/system-map-20261012.html). Built by npm run build from system-map.json and pets.json.",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-astras-pet-os-system-map-v1.0"
+    },
+    {
+      "id": "broken-tools-on-the-farm",
+      "name": "broken-tools-on-the-farm",
+      "type": "tool",
+      "of": "farm",
+      "state": "planned",
+      "layer": 2,
+      "category": "Tool",
+      "job": "A tool of The Farm: every tool on every pet that is marked sick, turned off or failing its health check, and which pets use it, so the Friendly Farmer knows when his pets’ tools are broken (PET-PROGRAM-FRAMEWORK.md, section 4).",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-broken-tools-on-the-farm-v1.0"
     },
     {
       "id": "claude",
@@ -95,7 +139,7 @@
       "name": "Local models",
       "type": "model",
       "state": "planned",
-      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2).",
+      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2). Self-hosted on Astra’s local network. They can take the seat and work alongside Claude, but no agent writes to them directly: every change goes through Astra.",
       "layer": 5
     },
     {
@@ -184,7 +228,7 @@
       "name": "Gatekeeper Goddess",
       "type": "roadmap",
       "state": "planned",
-      "job": "Security and approvals: human-facing approvals and security monitoring.",
+      "job": "Security and approvals: human-facing approvals and security monitoring. Pet program: Iron Gates. Issues the grants and the short-lived agent keys; never approves her own.",
       "layer": 4
     },
     {
@@ -530,16 +574,16 @@
       "name": "Claude Code",
       "type": "assistant",
       "state": "now",
-      "layer": 0,
-      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. Development, not part of the running pets."
+      "layer": 5,
+      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
     },
     {
       "id": "codex",
       "name": "Codex",
       "type": "assistant",
       "state": "now",
-      "layer": 0,
-      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. Development, not part of the running pets."
+      "layer": 5,
+      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
     },
     {
       "id": "security-key",
@@ -556,7 +600,7 @@
       "type": "assistant",
       "state": "now",
       "layer": 0,
-      "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex."
+      "job": "OpenAI’s chat assistant. Where the ASTRAS_PET_OS architecture was first worked out (2026-10-11) and where you think ideas through. It does not edit the repos; its decisions reach them through Claude Code and Codex. An adviser outside the system: no access to the Farm; its ideas reach it only through Astra."
     },
     {
       "id": "msi-center",
@@ -901,22 +945,25 @@
       "job": "Malware scanning. Installed."
     },
     {
-      "id": "the-barn",
-      "name": "The Barn",
+      "id": "key-ring",
+      "name": "API Fairy Ring",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "The Friendly Farmer’s desk inside the Farm: every pet’s status, follow-ups and what needs Astra, with his daily rounds and this System Map. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "API Fairy’s pet program (Astra, 2026-10-14): the key scanner and dashboard. Its api-fairy-mushroom-circle shows every agent key: active keys float in the circle, expired keys go into the chest."
     },
     {
-      "id": "key-ring",
-      "name": "Key Ring",
-      "type": "own-program",
-      "state": "now",
+      "id": "api-fairy-mushroom-circle",
+      "name": "api-fairy-mushroom-circle",
+      "type": "tool",
+      "of": "key-ring",
+      "state": "planned",
       "layer": 6,
-      "category": "Made by Astra",
-      "job": "API Fairy’s Windows app: the key scanner and dashboard. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "category": "Tool",
+      "version": "v1.0",
+      "label": "api-fairy-ring-v1.0-api-fairy-mushroom-circle-v1.0",
+      "job": "A tool of API Fairy Ring: every agent session key Gatekeeper Goddess issues, ours or external. Active keys float inside the mushroom circle with a list (agent, model, person, device, place, pets, grants, expiry); expired keys leave the circle for the chest, with their own list. The secret part of a key is never shown."
     },
     {
       "id": "ai-astra",
@@ -938,30 +985,66 @@
     },
     {
       "id": "file-kingdom",
-      "name": "File Kingdom",
+      "name": "pet-program-12",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "File Master’s scanner, plan and undo tools. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "File Master’s scanner, plan and undo tools. Name not assigned yet (idea: File Kingdom); see docs/naming-20261013.md."
+    },
+    {
+      "id": "new-programs-watch",
+      "name": "New-programs watch",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of File Master’s pet program: notices every newly installed program anywhere on the PC (with Everything when it is installed, else the installed-programs list and Start menu), and lists what is new. Read only.",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-new-programs-watch-v1.0"
+    },
+    {
+      "id": "repo-catcher",
+      "name": "repo-catcher",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of File Master’s pet program: finds old or stale repos on the PC that were never pushed. Lists each one’s folder location first, then the date it was created, newest at the top; click a row to open the folder. Read only.",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-repo-catcher-v1.0"
+    },
+    {
+      "id": "everything-search-tool",
+      "name": "everything-search",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool (shared)",
+      "version": "v1.0",
+      "label": "pet-program-12-v1.0-everything-search-v1.0",
+      "job": "A shared tool of File Master’s pet program: its connector to Everything (third-party search). One copy; other pets get grants from Iron Gates. File Master: the whole PC, read only. Wifi Butterfly: its own folder only, read only, 50 results per search."
     },
     {
       "id": "unity-stable",
-      "name": "Unity Stable",
+      "name": "pet-program-5",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Unity Unicorn’s tool library and editor tools for avatars and worlds. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Unity Unicorn’s tool library and editor tools for avatars and worlds. Name not assigned yet (idea: Unity Stable); see docs/naming-20261013.md."
     },
     {
       "id": "audio-rescue",
-      "name": "Audio Rescue",
+      "name": "pet-program-19",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Voicemeeter Bug’s Windows app: asks Voicemeeter to restart its audio engine when a device reconnects. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Voicemeeter Bug’s Windows app: asks Voicemeeter to restart its audio engine when a device reconnects. Name not assigned yet (idea: Audio Rescue); see docs/naming-20261013.md."
     },
     {
       "id": "paper-girl-site",
@@ -973,13 +1056,55 @@
       "job": "The free science discovery website (findastra.github.io/paper-girl), run by Patty."
     },
     {
+      "id": "am-i-a-ghost",
+      "name": "Am I a Ghost?",
+      "type": "own-program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Gone Ghost’s pet program (Astra, 2026-10-13): the private controls that change Ghost Protocol, and an exact local copy of the public site that runs only on the PC (a local environment; Ghost Protocol is production). His privacy tools live here too: the internet scrub and name-eraser, whose name lists never leave the PC."
+    },
+    {
+      "id": "the-police-station",
+      "name": "The Police Station",
+      "type": "own-program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Pet Police Officer’s pet program: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach (findastra/the-police-station)."
+    },
+    {
+      "id": "name-eraser",
+      "name": "name-eraser",
+      "type": "tool",
+      "of": "am-i-a-ghost",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of Am I a Ghost? (Gone Ghost): replaces a name with another (USER by default) in files inside the Farm. Dry run first, then Astra approves the plan, with an undo log. Anywhere else on the PC needs a scope from Iron Gates. Its name list stays on the PC.",
+      "version": "v1.0",
+      "label": "am-i-a-ghost-v1.0-name-eraser-v1.0"
+    },
+    {
+      "id": "internet-scrub",
+      "name": "Internet scrub",
+      "type": "tool",
+      "of": "am-i-a-ghost",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of Am I a Ghost? (Gone Ghost): finds a person’s details on websites and data brokers and walks through removing them. Its list of what to remove stays on the PC.",
+      "version": "v1.0",
+      "label": "am-i-a-ghost-v1.0-internet-scrub-v1.0"
+    },
+    {
       "id": "ghost-protocol-site",
       "name": "Ghost Protocol",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "The public cybersecurity website (findastra.github.io/ghost-protocol), watched by Gone Ghost."
+      "job": "The public, hosted side (production) of Gone Ghost’s pet program Am I a Ghost?: the cybersecurity website at findastra.github.io/ghost-protocol."
     },
     {
       "id": "gif-maker",
@@ -1172,12 +1297,12 @@
     },
     {
       "id": "fuzz-factory",
-      "name": "Fuzz Factory",
+      "name": "pet-program-30",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "Fuzzboi Friend’s own page (findastra.github.io/fuzzboi-friend): make your own Fuzzboi. (Suggested name, 2026-10-12: the pet and its program have different names.)"
+      "job": "Fuzzboi Friend’s own page (findastra.github.io/fuzzboi-friend): make your own Fuzzboi. Name not assigned yet (idea: Fuzz Factory); see docs/naming-20261013.md."
     },
     {
       "id": "dubstep-gunsmith",
@@ -1187,6 +1312,42 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Astra’s catalog site for avatar gun effects and loadouts, made with Codex on 2026-10-12. Its source is only in Codex’s workspace on the PC, not on GitHub yet."
+    },
+    {
+      "id": "threejs",
+      "name": "three.js r128",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party 3D library the System Map draws with, loaded from cdnjs, with its TrackballControls add-on from jsDelivr. Loaded without an integrity hash yet (PROTECTION-RINGS.md, gap 6)."
+    },
+    {
+      "id": "google-fonts",
+      "name": "Google Fonts",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party font service: Bricolage Grotesque and IBM Plex for the System Map."
+    },
+    {
+      "id": "web-browser",
+      "name": "Web browser (WebGL)",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "The third-party program that runs the System Map and every pet page; WebGL draws the 3D."
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party runtime that runs npm run build and the tests."
     }
   ],
   "links": [
@@ -2584,13 +2745,6 @@
       "why": "No pet looks after design and streaming tools yet. The Farmer incubates new pets; a streaming pet would own these. (Meme Fiend is private, so it does not connect out.)"
     },
     {
-      "from": "astras-pet-os",
-      "to": "the-barn",
-      "carries": "opens",
-      "state": "now",
-      "why": "The Barn is this pet’s own program."
-    },
-    {
       "from": "api-fairy",
       "to": "key-ring",
       "carries": "opens",
@@ -2683,10 +2837,10 @@
     },
     {
       "from": "ghost-protocol",
-      "to": "ghost-protocol-site",
+      "to": "am-i-a-ghost",
       "carries": "opens",
-      "state": "now",
-      "why": "Ghost Protocol is this pet’s own program."
+      "state": "planned",
+      "why": "Am I a Ghost? is this pet’s own program."
     },
     {
       "from": "ghost-protocol-site",
@@ -3037,20 +3191,216 @@
       "carries": "manages",
       "state": "planned",
       "why": "Unity Unicorn’s gunsmith-loadout tool reads the Gunsmith’s loadouts (in draft PR #1)."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "ghost-protocol-site",
+      "carries": "manages",
+      "state": "planned",
+      "why": "Its controls change the public site, and its local copy is the same site running only on the PC."
+    },
+    {
+      "from": "farm",
+      "to": "desktop-host",
+      "carries": "opens",
+      "state": "now",
+      "why": "Startup Star is a tool of The Farm."
+    },
+    {
+      "from": "farm",
+      "to": "system-map",
+      "carries": "opens",
+      "state": "now",
+      "why": "The System Map is a tool of The Farm; The Farm’s page links it plainly."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "name-eraser",
+      "carries": "opens",
+      "state": "planned",
+      "why": "name-eraser is a tool of Am I a Ghost?."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "internet-scrub",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The internet scrub is a tool of Am I a Ghost?."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "new-programs-watch",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The new-programs watch is a tool of File Master’s pet program."
+    },
+    {
+      "from": "new-programs-watch",
+      "to": "everything-search",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Asks Everything (voidtools) for programs added anywhere on the PC, when it is installed."
+    },
+    {
+      "from": "system-map",
+      "to": "threejs",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Draws the 3D map with three.js r128 and TrackballControls."
+    },
+    {
+      "from": "system-map",
+      "to": "google-fonts",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Its headings and labels use Bricolage Grotesque and IBM Plex."
+    },
+    {
+      "from": "system-map",
+      "to": "web-browser",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Runs in any browser with WebGL, including iPad and iPhone."
+    },
+    {
+      "from": "system-map",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Hosted on GitHub Pages."
+    },
+    {
+      "from": "nodejs",
+      "to": "system-map",
+      "carries": "builds",
+      "state": "now",
+      "why": "npm run build makes the page from system-map.json and pets.json."
+    },
+    {
+      "from": "farm",
+      "to": "broken-tools-on-the-farm",
+      "carries": "opens",
+      "state": "planned",
+      "why": "broken-tools-on-the-farm is a tool of The Farm."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "repo-catcher",
+      "carries": "opens",
+      "state": "planned",
+      "why": "repo-catcher is a tool of File Master’s pet program."
+    },
+    {
+      "from": "repo-catcher",
+      "to": "windows-pc",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Scans the PC’s folders for repos that were never pushed."
+    },
+    {
+      "from": "farm",
+      "to": "vet-clinic",
+      "carries": "reports",
+      "state": "planned",
+      "why": "A sick pet’s ticket goes out only after name-eraser, the secret scan and L4’s OK on the exact text."
+    },
+    {
+      "from": "vet-clinic",
+      "to": "kennel",
+      "carries": "directs",
+      "state": "planned",
+      "why": "Cures that work for many farms are reviewed and move up to Kennel-verified, then official patches."
+    },
+    {
+      "from": "vet-clinic",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Tickets and cures live in a public GitHub repo, the only shared place."
+    },
+    {
+      "from": "key-ring",
+      "to": "api-fairy-mushroom-circle",
+      "carries": "opens",
+      "state": "planned",
+      "why": "api-fairy-mushroom-circle is a tool of API Fairy Ring."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "everything-search-tool",
+      "carries": "opens",
+      "state": "planned",
+      "why": "everything-search is a shared tool owned by File Master’s pet program."
+    },
+    {
+      "from": "everything-search-tool",
+      "to": "everything-search",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Asks Everything (voidtools) to search the PC."
+    },
+    {
+      "from": "wifi-butterfly",
+      "to": "everything-search-tool",
+      "carries": "opens",
+      "state": "planned",
+      "why": "Grant from Iron Gates: its own folder only, read only, 50 results per search."
+    },
+    {
+      "from": "pet-police-officer",
+      "to": "the-police-station",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The Police Station is this pet’s own program."
+    },
+    {
+      "from": "the-police-station",
+      "to": "gatekeeper-goddess",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Alerts her to unpermitted agent changes that could affect who she lets in."
+    },
+    {
+      "from": "the-police-station",
+      "to": "astra",
+      "carries": "reports",
+      "state": "planned",
+      "why": "The alarm: the Officer on the desktop, red banners on every pet page and the map, a phone alert."
+    },
+    {
+      "from": "gatekeeper-goddess",
+      "to": "key-ring",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Every key and grant she issues shows on API Fairy Ring."
+    },
+    {
+      "from": "the-shed",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Submissions live in a public GitHub repo, the only shared place."
+    },
+    {
+      "from": "the-shed",
+      "to": "skill-scout",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Skill Scout tracks every trick a farm adopts from the Shed."
     }
   ],
   "layers": {
     "0": {
       "name": "Development (outside the running system)",
-      "detail": "Assistants and scripts that build and change the pets: Claude Code, Codex and the art pipeline. They work through GitHub and handoff cards; they are not part of any pet at runtime."
+      "detail": "Advisers and build scripts outside the running system: ChatGPT and the art pipeline. They have no access to the Farm; their work reaches it only through Astra, GitHub and handoff cards."
     },
     "1": {
       "name": "You",
-      "detail": "You, your devices and the Farm you reach every pet from."
+      "detail": "You and your devices. You grant every permission."
     },
     "2": {
       "name": "Program Manager and Pet Directory",
-      "detail": "Who exists and what real programs each pet has. Today the Pet Directory is pets.json; Program Manager is planned."
+      "detail": "The core, ring 0: Pet Directory (pets.json), Program Manager, the Farm and Startup Star. Agents read and run it; writes go only through a pull request Astra merges."
     },
     "3": {
       "name": "Friendly Farmer",
@@ -3062,11 +3412,11 @@
     },
     "5": {
       "name": "AI harness (per pet)",
-      "detail": "Each pet's own harness: AI model, skills and tools, memory, scheduler, inbox, communication, permissions and guardrails."
+      "detail": "The agent harness: the glass around rings 0 to 3 (the R W X line), the donut at the seat (Claude Code or Codex) and the AI models that take the seat. Everything inside the glass is an animal."
     },
     "6": {
       "name": "Real programs and integrations",
-      "detail": "Real programs: the ones Astra made are pet programs on their own shell just outside the pets, inside the agentic harness (pink cubes); root programs made by others sit outside the harness (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
+      "detail": "Real programs: pet programs Astra made sit inside the harness, ring 3, just outside the pets (pink cubes); third-party programs made by others sit outside the harness, ring 5 (peach cubes). Desktop apps, websites, worlds, local files, data sources, cloud services and APIs."
     }
   },
   "type_layers": {
