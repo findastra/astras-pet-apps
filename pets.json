@@ -1220,6 +1220,12 @@
         "repo": null,
         "job": "Triages the vet-clinic: labels tickets, checks them for leaked secrets, and tests offered cures in isolation. Never merges anything.",
         "note": "Approved by Astra on 2026-10-14 as a new pet; its pet program (pet-program-77) and icon names are not assigned yet (idea: Vet Clinic / Vetted Vet)."
+      },
+      {
+        "pet": "Rescue Retriever",
+        "repo": null,
+        "job": "Runs The Recovery Room: after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order, isolated and with no farmhand in its seat.",
+        "note": "Approved by Astra on 2026-10-14. Pet program: The Recovery Room (repo findastra/the-recovery-room)."
       }
     ],
     "already_in_pipeline": [

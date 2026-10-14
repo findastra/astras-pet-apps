@@ -227,12 +227,22 @@ Every agent, ours or **external**, needs a **key** to operate a pet. That is how
 - **Security jobs, no overlap:** Gatekeeper Goddess decides who may do what and issues keys and grants. Pet Police
   Officer watches, alarms and switches OFF. Log Lynx keeps the records. Forensic Ferret investigates past breaches.
   API Fairy shows the keys. L4 approves.
+- **Farmhands:** the AI models that take the seat are farmhands, not pets. Only farmhands on the allowlist get a key,
+  and trust is earned in levels ([SECURITY.md](SECURITY.md)). A pet program never trusts a farmhand by itself.
+- **Shutdown and recovery:** on an alarm, keys are revoked, agents stop and agent network is cut (containment, not a
+  crash). Rescue Retriever (The Recovery Room) rebuilds and restarts the farm in the safe order; only L4 turns
+  anything back on ([SECURITY.md](SECURITY.md)).
 
 ## 13. The first run: How to Take Care of Your Farm!
 
 When someone first installs Astra's PetOS, it opens straight to the **System Map**. The Friendly Farmer appears in a
 chat, the way he does at The Farm, and walks them through **How to Take Care of Your Farm!**, a tutorial (a trick of
 The Farm). Its steps are still to be written with Astra.
+
+**Seeds for you.** With the user's OK, the Friendly Farmer's seed-suggester (a tool of The Farm) reads the names of
+the programs installed on the PC, read only and never leaving it, and suggests seeds: pets he can hatch for them, and
+pets they could adopt from the Kennel. Every example pet on the map also offers **Make one like this for me**, which
+copies a request for the user's own AI to start a seed like it on their farm.
 
 ## 14. Checklist for a new or updated pet program
 

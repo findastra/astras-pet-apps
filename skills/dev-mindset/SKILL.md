@@ -28,6 +28,10 @@ Astra wants other software developers to read her build without frustration. She
 | The Shed | Plugin / extension registry | Third-party tools and tricks, like the Kennel for pets. |
 | Agent key | Short-lived session token with an audit trail | Issued per agent session by Iron Gates; records agent, model, person, device, place. |
 | The Police Station | Security monitoring (a SOC with intrusion detection) | Detects and contains (switches OFF); never authorizes. |
+| Farmhand | AI model (LLM) that takes the seat | Not a pet. Claude, OpenAI, local models. Only allowlisted farmhands get keys. Decided 2026-10-14. |
+| Trust levels for farmhands | Graduated trust, allowlisting | A local model is promoted by L4 as it passes tests. |
+| Shutdown levels | Incident containment (NIST SP 800-61) | Not a "system crash": it is stopped on purpose. |
+| Recovery, safe startup order | Incident recovery; ordered service startup | Watchers before workers, verify before trust, least power first. |
 | The alarm | Security incident alert | Everywhere at once; past breaches marked "found, not active". |
 | Pet Passport | Provenance record (signatures, lineage, release history, patches, incidents); measured with SLSA levels | Microchip = signature, pedigree = lineage, stamps = installs and updates, vaccinations = patches, vet records = tickets. Decided 2026-10-14. |
 | Security hats | Ethics (white, grey, black hat) plus teams (red, blue, purple) | Avoid "Red Hat" alone: it is also a Linux company. Decided 2026-10-14. |

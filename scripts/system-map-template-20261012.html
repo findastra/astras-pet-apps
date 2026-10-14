@@ -210,7 +210,7 @@ const RINGS = [
   {ring:2, name:'Pets', what:'every intelligent app', r:LAYER_R[4], rwx:['on','on','on'], animal:true},
   {ring:3, name:'Pet programs', what:'the programs, sites and worlds Astra made', r:OWN_R, rwx:['on','on','on'], animal:true},
   {ring:'H', name:'Agent harness', what:'the glass: the R W X line. Claude Code or Codex is the donut at the seat', r:HARNESS_R, glass:true},
-  {ring:4, name:'AI models', what:'called, never rewritten; local models change only through Astra', r:LAYER_R[5], rwx:['off','off','on']},
+  {ring:4, name:'Farmhands (AI models)', what:'only those on the allowlist get keys; called, never rewritten; local farmhands change only through Astra', r:LAYER_R[5], rwx:['off','off','on']},
   {ring:5, name:'Third-party programs', what:'satellites: programs, libraries and services made by others. Run and read, never rewritten', r:LAYER_R[6], rwx:['on','off','on']},
   {ring:6, name:'Devices', what:'read and operated through drivers and apps', r:DEVICE_R, rwx:['on','off','on']},
   {ring:7, name:'Advisers', what:'ChatGPT: no access; ideas reach the Farm only through Astra', r:LAYER_R[0], rwx:['off','off','off']},
@@ -411,16 +411,20 @@ const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
   const mid=a.clone().add(b).multiplyScalar(.5); const out=mid.length()<.5?new THREE.Vector3(0,1,0):mid.clone().normalize();
   mid.addScaledVector(out, a.distanceTo(b)*.12 + (i%3)*.12);
   const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
+  // Lines stop at the edge of each shape, so nothing runs through a pet's face (Astra, 2026-10-14).
+  const padOf = id => Math.max((TYPE[nodeById[id].type]||{r:.4}).r*1.8,.6);
+  const edgeT = (from,pad,dir) => { for(let k=0;k<=60;k++){ const tt=dir>0?k/60:1-k/60; if(curve.getPoint(tt).distanceTo(from)>=pad) return tt; } return dir>0?0:1; };
+  const t0=edgeT(a,padOf(l.from),1), t1=Math.max(t0+.05,edgeT(b,padOf(l.to),-1)), span=t=>t0+t*(t1-t0);
   // Audio is drawn as a sound wave (Astra, 2026-10-12): sound travelling between microphones, Voicemeeter, virtual cables, speakers and headphones.
-  let path=curve;
+  let path=new THREE.CatmullRomCurve3(Array.from({length:25},(_,k)=>curve.getPoint(span(k/24))));
   if(l.carries==='audio'){ const len=a.distanceTo(b), n=Math.max(60,Math.round(len*4)), waves=Math.max(4,Math.round(len/3)), pts=[];
-    for(let k=0;k<=n;k++){ const t=k/n, p=curve.getPoint(t), tan=curve.getTangent(t), side=new THREE.Vector3().crossVectors(tan,p.lengthSq()>1e-6?p.clone().normalize():new THREE.Vector3(0,1,0)).normalize();
+    for(let k=0;k<=n;k++){ const t=k/n, p=curve.getPoint(span(t)), tan=curve.getTangent(span(t)), side=new THREE.Vector3().crossVectors(tan,p.lengthSq()>1e-6?p.clone().normalize():new THREE.Vector3(0,1,0)).normalize();
       if(side.lengthSq()<1e-6) side.set(0,1,0); pts.push(p.addScaledVector(side,Math.sin(t*waves*Math.PI*2)*.5*Math.sin(t*Math.PI))); }
     path=new THREE.CatmullRomCurve3(pts); }
   const dash = md ? md.dash : st.dash;
   const mat = dash ? new THREE.LineDashedMaterial({color:col,dashSize:dash[0],gapSize:dash[1],transparent:true,opacity:md?.9:st.op})
                      : new THREE.LineBasicMaterial({color:col,transparent:true,opacity:st.op});
-  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(l.carries==='audio'?240:40)),mat); if(st.dash) line.computeLineDistances(); scene.add(line);
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(l.carries==='audio'?240:40)),mat); if(dash) line.computeLineDistances(); scene.add(line);
   const hit=new THREE.Mesh(new THREE.TubeGeometry(path,l.carries==='audio'?90:20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
   let dot=null;
   if(l.state==='now'||l.state==='planned'){ dot=new THREE.Mesh(new THREE.SphereGeometry(.09,8,6),new THREE.MeshBasicMaterial({color:col,transparent:true})); scene.add(dot); }
@@ -461,7 +465,7 @@ const SHAPES=[
   ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Pink cube','🐾 a pet program: a program, site or world Astra made. Ring 3, inside the harness, just outside the pets. R W X','--own'],
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass ring','the agent harness, wrapped around rings 0 to 3: the R W X line. Click its edge for details'],
   ['<path d="M9 4a5 5 0 1 0 .01 0M9 1a8 8 0 1 1-.01 0" fill-rule="evenodd"/>','Donut','the seat on top of the glass: the harness program in use (Claude Code or Codex). The model in the seat sits in its hole','--l5'],
-  ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model (Claude, OpenAI, local models), ring 4, above the seat. Called, never rewritten'],
+  ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','a farmhand: an AI model that takes the seat (Claude, OpenAI, Astra\'s local farmhands). Ring 4. Only farmhands on the allowlist get keys; called, never rewritten'],
   ['<path d="M3 3h9v4H3zM6 7h3v9.5H6z"/>','Hammer','🐾 a tool: any other program a pet program makes or owns (the System Map, Startup Star, name-eraser). Same ring and permissions as its pet program, never more','--tool'],
   ['<path d="M6.5 6.5h5v5h-5zM1 8h4.5v2H1zM12.5 8H17v2h-4.5z"/>','Satellite','third-party: a program, library or service made by others (Voicemeeter, Steam, three.js, Google Fonts). Ring 5, outside the harness. R X only','--program'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, headsets, trackers, Raspberry Pi. Ring 6. R X only'],
@@ -593,7 +597,11 @@ function selectNode(n){
     const a=el('a','','github.com/findastra/'+repo); a.href='https://github.com/findastra/'+repo; a.target='_blank'; a.rel='noopener'; note.appendChild(a);
     note.append(document.createTextNode('. To remove it from your own farm, or get it back later, see '));
     const g=el('a','','Make it yours'); g.href='https://github.com/findastra/astras-pet-os/blob/main/MAKE-IT-YOURS.md'; g.target='_blank'; g.rel='noopener'; note.append(g, document.createTextNode('.'));
-    side.append(b, note); }
+    side.append(b, note);
+    if(EXAMPLES[n.id]){ const mk=el('button','btn','Make one like this for me'); const prompt=`Friendly Farmer: I like ${n.name} from Astra's PetOS (github.com/findastra/${repo}). Make me a seed like it for my own farm: look at the programs installed on my PC (read only, ask me first), suggest how it should work for me, and take it through your normal hatching steps. Show me each step before you do it.`;
+      const out=el('p','why','Copied. Paste it to your AI (Claude or ChatGPT) on your own farm.'); out.hidden=true;
+      mk.onclick=()=>{ try{ navigator.clipboard.writeText(prompt); }catch(e){} out.hidden=false; out.textContent='Copied. Paste this to your AI on your own farm: '+prompt; };
+      side.append(mk, out); } }
   if(n.type==='tool'&&nodeById[n.of]){ const p=el('p','meta'); const b=el('button','link',nodeById[n.of].name); b.onclick=()=>selectNode(nodeById[n.of]);
     p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p);
     if(n.label){ const lb=el('p','meta'); lb.append(document.createTextNode('Tool box label: ')); lb.appendChild(el('code','',n.label)); side.appendChild(lb); } }

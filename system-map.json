@@ -14,7 +14,7 @@
     "pipeline": "Pipeline Intelligent App (Pet): repo, no art yet",
     "seed": "Seed Intelligent App (Pet): approved name",
     "roadmap": "Roadmap Intelligent App (Pet): ASTRAS_PET_OS v5.2",
-    "model": "AI model, ring 4",
+    "model": "Farmhand (AI model), ring 4",
     "infrastructure": "Core infrastructure, ring 0",
     "own-program": "Pet program (made by Astra), ring 3",
     "program": "Third-party (made by others), ring 5",
@@ -49,7 +49,7 @@
       "name": "The Kennel (community lab)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "the-kennel (findastra/the-kennel): the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel). It is public and sits outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
+      "job": "the-kennel (findastra/the-kennel): the community lab, where other people’s pets are submitted, checked and adopted. Public and outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
       "layer": 6
     },
     {
@@ -120,11 +120,23 @@
       "label": "the-farm-v1.0-broken-tools-on-the-farm-v1.0"
     },
     {
+      "id": "seed-suggester",
+      "name": "seed-suggester",
+      "type": "tool",
+      "of": "farm",
+      "state": "planned",
+      "layer": 2,
+      "category": "Tool",
+      "version": "v1.0",
+      "label": "the-farm-v1.0-seed-suggester-v1.0",
+      "job": "A tool of The Farm (Astra, 2026-10-14): with your OK, the Friendly Farmer reads the names of the programs installed on your PC (from File Master’s list; read only, stays on the PC) and suggests seeds: pets he can hatch for you, and pets you could adopt from the Kennel. Every example pet also offers \"Make one like this for me\"."
+    },
+    {
       "id": "claude",
       "name": "Claude (Anthropic)",
       "type": "model",
       "state": "now",
-      "job": "Anthropic's models, as a pet's AI model at runtime: pet agents will call Claude on demand through their harness (planned), and Claude Bot's quick chat talks to it.",
+      "job": "A cloud farmhand on the allowlist: may take the seat with a short-lived key. Anthropic's models, as a pet's AI model at runtime: pet agents will call Claude on demand through their harness (planned), and Claude Bot's quick chat talks to it.",
       "layer": 5
     },
     {
@@ -132,16 +144,24 @@
       "name": "OpenAI",
       "type": "model",
       "state": "now",
-      "job": "OpenAI's models, as a pet's AI model at runtime (planned, through the harness). Today OpenAI image generation is also used by the art pipeline to draw every pet's mood sheet, which is development work, not runtime.",
+      "job": "A cloud farmhand on the allowlist: may take the seat with a short-lived key. OpenAI's models, as a pet's AI model at runtime (planned, through the harness). Today OpenAI image generation is also used by the art pipeline to draw every pet's mood sheet, which is development work, not runtime.",
       "layer": 5
     },
     {
       "id": "local-models",
-      "name": "Local models",
+      "name": "Astra’s local farmhand (in training)",
       "type": "model",
       "state": "planned",
-      "job": "Models running on Astra's own GPU, catalogued by Llama Librarian and benchmarked by Inference Iguana (ASTRAS_PET_OS v5.2). Self-hosted on Astra’s local network. They can take the seat and work alongside Claude, but no agent writes to them directly: every change goes through Astra.",
+      "job": "Astra’s own local model, self-hosted on her network. Starts on a short leash (fingerprinted, few grants) and earns trust as it passes Astra’s tests, until she relies on it more than the cloud farmhands. Claude and OpenAI help build it in the meantime. Changed only through Astra.",
       "layer": 5
+    },
+    {
+      "id": "ai-astra-mind",
+      "name": "AI Astra’s mind (local farmhand)",
+      "type": "model",
+      "state": "now",
+      "layer": 5,
+      "job": "The local model inside VRChat AI Astra (represented by Astra Wisp). Her only avenues: her own pet program and the VRChat chatbox bridge. No files, no keys, no other pets."
     },
     {
       "id": "profile",
@@ -1085,6 +1105,15 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Pet Police Officer’s pet program: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach (findastra/the-police-station)."
+    },
+    {
+      "id": "the-recovery-room",
+      "name": "The Recovery Room",
+      "type": "own-program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Made by Astra",
+      "job": "Rescue Retriever’s pet program (Astra, 2026-10-14): after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order. Runs isolated: from a read-only known-good copy, under its own account, with no farmhand in its seat."
     },
     {
       "id": "name-eraser",
@@ -3699,6 +3728,48 @@
       "carries": "opens",
       "state": "planned",
       "why": "footprint-meter is a tool of Token Toucan."
+    },
+    {
+      "from": "ai-astra-mind",
+      "to": "ai-astra",
+      "carries": "model",
+      "state": "now",
+      "why": "The model that runs AI Astra. Allowed avenues only: her own program and the VRChat chatbox."
+    },
+    {
+      "from": "farm",
+      "to": "seed-suggester",
+      "carries": "opens",
+      "state": "planned",
+      "why": "seed-suggester is a tool of The Farm."
+    },
+    {
+      "from": "seed-suggester",
+      "to": "new-programs-watch",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Reads the installed-programs list (read only, with a grant)."
+    },
+    {
+      "from": "rescue-retriever",
+      "to": "the-recovery-room",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The Recovery Room is this pet’s own program."
+    },
+    {
+      "from": "the-police-station",
+      "to": "the-recovery-room",
+      "carries": "reports",
+      "state": "planned",
+      "why": "After a shutdown, the Police Station hands over to The Recovery Room."
+    },
+    {
+      "from": "the-recovery-room",
+      "to": "backup-beaver",
+      "carries": "reports",
+      "state": "planned",
+      "why": "Asks for the newest clean backup from before the incident."
     }
   ],
   "layers": {
@@ -4276,7 +4347,8 @@
     "pet-program-77-icon-77": "blue",
     "backup-beaver": "blue",
     "white-hat-weasel": "red",
-    "test-tortoise": "purple"
+    "test-tortoise": "purple",
+    "rescue-retriever": "blue"
   },
   "examples": {
     "infinite-pole-world": "astras-infinite-pole",

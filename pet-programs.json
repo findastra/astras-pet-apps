@@ -1185,6 +1185,21 @@
         "text": "Keeps vetted research on AI agents, agentic harnesses, security and provenance, applies it to Astra’s PetOS, and writes the research paper.",
         "reviewed": false
       }
+    },
+    {
+      "number": 80,
+      "program": "The Recovery Room",
+      "assigned": true,
+      "icon": "Rescue Retriever",
+      "idea": null,
+      "stage": "seed",
+      "repo": "the-recovery-room",
+      "repo_exists": false,
+      "mini_descriptor": {
+        "label": "the-recovery-room-v1.0-mini-descriptor-v1.0",
+        "text": "After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order.",
+        "reviewed": false
+      }
     }
   ]
 }
