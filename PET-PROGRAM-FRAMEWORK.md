@@ -66,7 +66,8 @@ everything about that tool inside it.
 5. **The pet program's own tool boxes**, one per tool. Every tool box has:
    - an **ON/OFF** switch (a kill switch): OFF stops the tool at once, for a suspected security breach;
    - a **sick** checkbox: "this tool is broken from my point of view" (it goes to the Farmer's
-     `broken-tools-on-the-farm` and to the backlog);
+     `broken-tools-on-the-farm` and to the backlog), with **Take it to the vet-clinic** to ask the community
+     (section 10);
    - its version, what it does in one plain line, its links, and how it is used. A Unity Unicorn tool such as
      `harness-strapper` links its download on the title and lists which avatars it is rigged on.
 6. **Connection boxes**, one for every other pet this pet program talks to. They use a different border colour from
@@ -161,7 +162,34 @@ Two agents that disagree escalate to L4 after two rounds.
   signed security patches automatically.
 - Nobody pushes into another person's farm. Farms pull; GitHub is the only shared place.
 
-## 10. Checklist for a new or updated pet program
+## 10. Is your pet sick? The vet-clinic (community help)
+
+Astra's PetOS is meant for anyone to adopt: an open-source personal AI platform that its community keeps healthy,
+the way Linux distributions take bug reports and fixes from their users. The **vet-clinic** is where that happens.
+
+- **What it is:** a public issue tracker on GitHub (the only shared place; farms still never connect to each other).
+  A farmer whose pet is sick opens a **ticket**; other farmers diagnose it and may offer a **cure** (a code fix,
+  as a pull request or patch).
+- **Names:** ticket `vet-clinic-ticket-<NNNN>`, titled `<pet-program>-v<version>: <what is wrong>`; a cure is
+  `vet-clinic-ticket-<NNNN>-cure-<N>`.
+- **Before a ticket is posted** (on the farmer's own PC): only the sick tool's code and the error are attached, never
+  private data. name-eraser and the secret scan run first, and the farmer's L4 approves the exact text that goes out.
+  Private pets (health, finance, memes, privacy tools) post a description and the error only, never their code.
+- **Trust tiers**, highest first. Every answer shows its tier:
+  1. **Official:** signed releases from the project's maintainers.
+  2. **Kennel-verified:** pets and fixes reviewed and adopted through the Kennel.
+  3. **vet-clinic community:** answers and cures from other farmers. **Every one carries a warning:** unverified
+     code from someone you do not know. It never runs automatically.
+- **Using a cure:** treated like a pet from another farm (the sick cow rule). It goes into quarantine, a checker agent
+  reviews it against the ticket, and the farm's L4 approves it before it runs.
+- **Everything is logged.** Every ticket, answer and cure stays on GitHub, and Log Lynx keeps the farm's own copy.
+  Cures that work for many farms are reviewed by the maintainers and become official patches, so community fixes
+  improve the whole platform.
+- **Who runs it:** until a professional security engineer joins (when teams begin), the project's maintainer (Astra)
+  is the moderator, with a triage pet that labels tickets, checks for leaked secrets, and runs offered cures in an
+  isolated test (CI). The triage pet never merges anything.
+
+## 11. Checklist for a new or updated pet program
 
 - [ ] Names and versions follow section 2 everywhere: repo, files, icons, tool box labels, backlog.
 - [ ] `pet.json` lists `framework`, every tool (name, version, intended use, public or private) and its links by kind.

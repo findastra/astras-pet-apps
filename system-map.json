@@ -52,6 +52,14 @@
       "layer": 6
     },
     {
+      "id": "vet-clinic",
+      "name": "The vet-clinic (community tickets)",
+      "type": "infrastructure",
+      "state": "planned",
+      "layer": 6,
+      "job": "Is your pet sick? A public issue tracker on GitHub: a farmer opens a ticket (vet-clinic-ticket-NNNN) with the sick tool’s code and error, after name-eraser and the secret scan; other farmers diagnose it and may offer a cure (a code fix). One tier below Kennel-verified: every community answer carries a warning and never runs by itself; a cure goes through quarantine, a checker agent and the farm’s L4. Every ticket is logged, and cures that work for many farms become official patches (PET-PROGRAM-FRAMEWORK.md, section 10). Outside the harness, like the Kennel."
+    },
+    {
       "id": "program-manager",
       "name": "Program Manager",
       "type": "infrastructure",
@@ -3247,6 +3255,27 @@
       "carries": "runs-on",
       "state": "planned",
       "why": "Scans the PC’s folders for repos that were never pushed."
+    },
+    {
+      "from": "farm",
+      "to": "vet-clinic",
+      "carries": "reports",
+      "state": "planned",
+      "why": "A sick pet’s ticket goes out only after name-eraser, the secret scan and L4’s OK on the exact text."
+    },
+    {
+      "from": "vet-clinic",
+      "to": "kennel",
+      "carries": "directs",
+      "state": "planned",
+      "why": "Cures that work for many farms are reviewed and move up to Kennel-verified, then official patches."
+    },
+    {
+      "from": "vet-clinic",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Tickets and cures live in a public GitHub repo, the only shared place."
     }
   ],
   "layers": {
