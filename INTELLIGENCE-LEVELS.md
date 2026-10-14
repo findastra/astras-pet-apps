@@ -4,13 +4,15 @@ Every intelligent app (a pet) grows through **three levels of intelligence**, as
 ASTRAS_PET_OS ([ASTRAS_PET_OS.md](ASTRAS_PET_OS.md), section 2) and drawn on the [System Map](system-map-20261012.html),
 and answers to a fourth: **L4, the verified human who owns the entire secure ecosystem**.
 
-**Written L1, L2, L3 and L4 from 2026-10-13 (Astra).** The columns below numbered 1, 2 and 3 are L1, L2 and L3.
+**Written L1, L2, L3 and L4 from 2026-10-13; L1 and L2 redrawn on 2026-10-14 (Astra).** In the per-pet table below,
+column 1 (the pet's own program) and column 2 (its runtime) together are L2 today, column 3 is L3, and the programs and
+tools a pet runs (L1) are listed in its code and links.
 
 | Level | Name | What it is | Map layer |
 |---|---|---|---|
-| L1 | **Program** | The base: real software that does the useful job (a Windows app, editor tools, a website, a web app). | 6 Real programs |
-| L2 | **Runtime** | Runs on its own, without you opening it: scheduler, inbox, saved state, health. Keeps working when the Farm, the Farmer or the desktop star is closed. | 4 Pet agents |
-| L3 | **Agentic harness** | The AI layer: model adapter (Claude, GPT or local), skills, tools, memory, permissions, task executor. Decides what to do next. | 5 AI harness (per pet) |
+| L1 | **Programs** | The programs that do the work: third-party programs the pet runs (SteamVR, Voicemeeter, Unity) and the pet's own tools. | Rings 3 and 5 |
+| L2 | **Pet program** | The pet's dashboard, and its runtime: it runs on its own without you opening it (scheduler, inbox, saved state, health), and keeps working when the Farm, the Farmer or Startup Star is closed. | Ring 3 |
+| L3 | **Agentic harness** | An AI model sits in the pet program's harness and becomes its agent: model adapter (Claude, GPT or local), skills (tricks), tools, memory, permissions, task executor. Decides what to do next. | The harness and its seat |
 | L4 | **Verified human** | The verified human who owns the entire secure ecosystem (on Astra's farm, Astra; on another user's farm, that user). Approves every security change, every permission and every exception to a default, such as an L3 agent running more often than weekly. Not something a pet builds: every pet answers to L4. | 1 You (ring 8) |
 
 Every pet program is built to [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md).

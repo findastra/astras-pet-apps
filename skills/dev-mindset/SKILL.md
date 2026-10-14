@@ -18,7 +18,7 @@ Astra wants other software developers to read her build without frustration. She
 ## Glossary: Astra's PetOS words and the standard terms
 | Astra's PetOS | Standard software term | Notes |
 |---|---|---|
-| L1, L2, L3, L4 | Intelligence levels: program, runtime, agentic harness, and the verified human | L4 is the verified human who owns the entire secure ecosystem and approves everything that matters. Decided 2026-10-13. |
+| L1, L2, L3, L4 | Intelligence levels: programs (third-party and tools), pet program (dashboard and runtime), agentic harness, verified human | L4 is the verified human who owns the entire secure ecosystem and approves everything that matters. Decided 2026-10-13, L1 and L2 redrawn 2026-10-14. |
 | Maker agent / checker agent | Maker-checker rule (four-eyes, two-person rule) | Was "offensive / defensive agent"; in security "offensive" means attacking. Decided 2026-10-13. |
 | Versions with `v` | Version tags (`v1.0`) | `pet-program-3-v1.0-icon-2-v1.0`: a name keeps its number, a version never hides inside it. Decided 2026-10-13. |
 | Tool box | Card or panel with a title (HTML `fieldset` with a `legend`) | Border with the versioned label on top, everything about the tool inside. |

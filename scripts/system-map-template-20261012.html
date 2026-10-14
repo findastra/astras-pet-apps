@@ -127,11 +127,13 @@ ul.conns button.link{font:inherit;color:var(--fg);background:none;border:0;paddi
     <button class="btn" id="vNow" aria-pressed="false">Works today</button>
     <button class="btn" id="vAll" aria-pressed="true">Everything planned</button>
     <button class="btn" id="vHub" aria-pressed="false">Links to every pet</button>
+    <button class="btn" id="vNet" aria-pressed="false" title="How the devices are physically connected: Wi-Fi, Ethernet, Bluetooth, USB and more">Network view</button>
     <button class="btn" id="vIcon" aria-pressed="false">Pet icons</button>
     <button class="btn" id="vCode">Code list</button>
     <button class="btn" id="vReset">Show everything</button>
   </div>
   <p class="sub">Every item in the keys below is a switch: click it to hide or show that kind of thing.</p>
+  <div class="legend" id="netLegend" hidden></div>
   <div class="label">Line colour = architecture layer (click to hide)</div>
   <div class="legend" id="layerLegend"></div>
   <div class="label">Line style = how real it is (click to hide)</div>
@@ -204,6 +206,14 @@ const LAYER_COLOR = {0:css('--l0'),1:css('--l1'),2:css('--l2'),3:css('--l3'),4:c
 const STATE = {
   now:{dash:null,op:.75}, planned:{dash:[.6,.25],op:.7}, idea:{dash:[.15,.2],op:.6}, architecture:{dash:[.35,.35],op:.4}, suggested:{dash:[.1,.12],op:.85},
 };
+// Network view (Astra, 2026-10-14): how bits physically travel between devices. These lines grow with devices, not with
+// pets: a new pet adds no network lines, its traffic rides on these.
+const MEDIUM = { 'wi-fi':{name:'Wi-Fi',color:'#7fd1ff',dash:[.5,.3]}, ethernet:{name:'Ethernet',color:'#e8e8e8',dash:null},
+  bluetooth:{name:'Bluetooth',color:'#8f9bff',dash:[.2,.2]}, '2.4ghz':{name:'2.4 GHz dongle radio',color:'#5fe0c8',dash:[.35,.15]},
+  usb:{name:'USB / cable',color:'#b7bfdc',dash:null}, video:{name:'DisplayPort / HDMI',color:'#d0d0ff',dash:null},
+  cellular:{name:'Cellular',color:'#9be37a',dash:[.8,.3]}, nfc:{name:'NFC (tap)',color:'#ff9ecb',dash:[.1,.15]},
+  lora:{name:'LoRa mesh',color:'#ffb86b',dash:[1,.4]}, internet:{name:'Internet (ISP)',color:'#ffffff',dash:[.15,.1]} };
+let netOn = false;
 const LANG_COLOR = {'HTML':'#e34c26','JavaScript':'#f1e05a','TypeScript':'#3178c6','C#':'#178600','Python':'#3572a5','PowerShell':'#5391fe','Batchfile':'#c1f12e','CSS':'#663399','Shell':'#89e051','SQL':'#e38c00'};
 const langOf = n => (n.code?.languages||[]).map(l=>l.language).join(' ');
 const shown = {now:true,planned:true,idea:true,architecture:true,suggested:true};
@@ -242,7 +252,7 @@ const pos = {};
   const ids=DATA.nodes.map(n=>n.id), P={}, R={};
   DATA.nodes.forEach(n=>{ R[n.id]= radiusOf(n); const u=rnd()*2-1, t=rnd()*Math.PI*2, s=Math.sqrt(1-u*u);
     P[n.id]=new THREE.Vector3(s*Math.cos(t), u, s*Math.sin(t)).multiplyScalar(Math.max(R[n.id],.001)); });
-  const springs = DATA.links.filter(l=>!l.everyApp), d=new THREE.Vector3();
+  const springs = DATA.links.filter(l=>!l.everyApp&&l.carries!=='network'), d=new THREE.Vector3(); // network links do not move the layout
   for(let step=0;step<500;step++){
     const F={}; ids.forEach(i=>F[i]=new THREE.Vector3());
     for(let a=0;a<ids.length;a++) for(let b=a+1;b<ids.length;b++){
@@ -353,7 +363,7 @@ DATA.nodes.forEach(n=>{
 const pairKey = (a,b)=> a<b ? a+'|'+b : b+'|'+a;
 const viaGlass = l => nodeById[l.from].type==='harness' || nodeById[l.to].type==='harness';
 const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
-  const a=pos[l.from], b=pos[l.to], st=STATE[l.state], col=LAYER_COLOR[l.layer];
+  const a=pos[l.from], b=pos[l.to], st=STATE[l.state], md=l.carries==='network'&&MEDIUM[l.medium], col=md?md.color:LAYER_COLOR[l.layer];
   const mid=a.clone().add(b).multiplyScalar(.5); const out=mid.length()<.5?new THREE.Vector3(0,1,0):mid.clone().normalize();
   mid.addScaledVector(out, a.distanceTo(b)*.12 + (i%3)*.12);
   const curve=new THREE.QuadraticBezierCurve3(a.clone(),mid,b.clone());
@@ -363,7 +373,8 @@ const links = DATA.links.filter(l=>!viaGlass(l)).map((l,i)=>{
     for(let k=0;k<=n;k++){ const t=k/n, p=curve.getPoint(t), tan=curve.getTangent(t), side=new THREE.Vector3().crossVectors(tan,p.lengthSq()>1e-6?p.clone().normalize():new THREE.Vector3(0,1,0)).normalize();
       if(side.lengthSq()<1e-6) side.set(0,1,0); pts.push(p.addScaledVector(side,Math.sin(t*waves*Math.PI*2)*.5*Math.sin(t*Math.PI))); }
     path=new THREE.CatmullRomCurve3(pts); }
-  const mat = st.dash ? new THREE.LineDashedMaterial({color:col,dashSize:st.dash[0],gapSize:st.dash[1],transparent:true,opacity:st.op})
+  const dash = md ? md.dash : st.dash;
+  const mat = dash ? new THREE.LineDashedMaterial({color:col,dashSize:dash[0],gapSize:dash[1],transparent:true,opacity:md?.9:st.op})
                      : new THREE.LineBasicMaterial({color:col,transparent:true,opacity:st.op});
   const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(l.carries==='audio'?240:40)),mat); if(st.dash) line.computeLineDistances(); scene.add(line);
   const hit=new THREE.Mesh(new THREE.TubeGeometry(path,l.carries==='audio'?90:20,.16,5,false),new THREE.MeshBasicMaterial({visible:false})); hit.userData.link=null; scene.add(hit);
@@ -438,6 +449,10 @@ function syncView(){ document.getElementById('vNow').setAttribute('aria-pressed'
 document.getElementById('vNow').onclick=()=>setView(true);
 document.getElementById('vAll').onclick=()=>setView(false);
 document.getElementById('vHub').onclick=()=>{showHub=!showHub; syncView(); apply();};
+// Network view: only the physical links between devices, coloured by medium; everything else steps back.
+{ const nlg=document.getElementById('netLegend');
+  nlg.innerHTML = Object.values(MEDIUM).map(m=>`<span><i class="sw${m.dash?' d':''}" style="background:${m.color};color:${m.color}"></i>${m.name}</span>`).join('');
+  document.getElementById('vNet').onclick=()=>{ netOn=!netOn; document.getElementById('vNet').setAttribute('aria-pressed',netOn); nlg.hidden=!netOn; apply(); }; }
 let iconMode=false;
 document.getElementById('vIcon').onclick=()=>{ iconMode=!iconMode; document.getElementById('vIcon').setAttribute('aria-pressed',iconMode);
   apply(); };
@@ -446,6 +461,7 @@ document.getElementById('vIcon').onclick=()=>{ iconMode=!iconMode; document.getE
 let hovered=null, selected=null, selectedPair=null, matches=null;
 const isHubNode = id => links.some(l=>l.everyApp&&l.from===id);
 function linkVisible(l, focusId){
+  if((l.carries==='network')!==netOn) return false; // the network view and the flow view never mix
   if(!shown[l.state]) return false;
   if(l.carries==='audio' && !audioOn) return false;
   if(hiddenLayers.has(l.layer) || !nodeOn(nodeById[l.from]) || !nodeOn(nodeById[l.to])) return false;
@@ -501,7 +517,7 @@ function flowItem(l, perspective){
   const top=el('div'); const from=el('button','link',nodeById[l.from].name), to=el('button','link',nodeById[l.to].name);
   from.onclick=()=>selectNode(nodeById[l.from]); to.onclick=()=>selectNode(nodeById[l.to]);
   top.append(from, document.createTextNode(' → '), to, document.createTextNode(' '), st);
-  const kind=el('div','kind',`${l.carries}: ${DATA.carries[l.carries]||''}`);
+  const kind=el('div','kind',l.carries==='network'&&MEDIUM[l.medium] ? `network: ${MEDIUM[l.medium].name}` : `${l.carries}: ${DATA.carries[l.carries]||''}`);
   li.append(top, kind, el('div','why',l.why)); return li;
 }
 function selectNode(n){

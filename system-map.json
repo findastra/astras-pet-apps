@@ -32,7 +32,8 @@
     "directs": "your requests, decisions and approvals to an AI assistant, in conversation",
     "reports": "an AI assistant answering you: results with evidence, questions only you can decide, links to what changed",
     "card": "a handoff card or brief left for another assistant to pick up",
-    "audio": "sound travelling: microphones in, speakers and headphones out, and the virtual cables in between (drawn as a wave)"
+    "audio": "sound travelling: microphones in, speakers and headphones out, and the virtual cables in between (drawn as a wave)",
+    "network": "Network: how data physically travels between devices (Wi-Fi, Ethernet, Bluetooth, 2.4 GHz dongle radio, USB, cellular, NFC, LoRa). Shown in the Network view."
   },
   "nodes": [
     {
@@ -48,7 +49,7 @@
       "name": "The Kennel (community lab)",
       "type": "infrastructure",
       "state": "planned",
-      "job": "astras-kennel: the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel). It is public and sits outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
+      "job": "the-kennel (findastra/the-kennel): the community lab, where other people's pets are built, tried, reviewed and adopted. Developers submit a link to their own repo; security checks and adoption happen here, and a pet only moves to the Farm with consent. Does not exist yet (ASTRAS_PET_OS, Kennel). It is public and sits outside the harness, like a quarantine pen: a pet from the Kennel never enters anyone’s Farm until it is signed, checked and adopted by that Farm’s owner.",
       "layer": 6
     },
     {
@@ -1249,6 +1250,42 @@
       "layer": 6,
       "category": "Audio",
       "job": "Speaker bar with a microphone, connected to the Desktop PC."
+    },
+    {
+      "id": "home-router",
+      "name": "Home router (Wi-Fi)",
+      "type": "host-machine",
+      "state": "now",
+      "layer": 6,
+      "category": "Network",
+      "job": "The Wi-Fi router and access point every home device joins, and the way out to the internet. Wifi Butterfly watches it. Model to confirm."
+    },
+    {
+      "id": "internet",
+      "name": "Internet (ISP)",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Network service",
+      "job": "Your internet provider: every cloud service, AI model and GitHub sits beyond it. Third-party."
+    },
+    {
+      "id": "cell-carrier",
+      "name": "Cell carrier",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Network service",
+      "job": "Your phones’ mobile network (cellular data), separate from home Wi-Fi. Third-party."
+    },
+    {
+      "id": "lora-mesh",
+      "name": "LoRa mesh (Meshtastic)",
+      "type": "program",
+      "state": "planned",
+      "layer": 6,
+      "category": "Network service",
+      "job": "Long-range, low-power radio mesh for the cyberdeck’s Raspberry Pi (Mesh Moth’s job). Works with no internet at all."
     },
     {
       "id": "steam-streaming-audio",
@@ -3387,6 +3424,262 @@
       "carries": "reports",
       "state": "planned",
       "why": "Skill Scout tracks every trick a farm adopts from the Shed."
+    },
+    {
+      "from": "windows-pc",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "ethernet",
+      "state": "suggested",
+      "why": "Wired, if the desktop is plugged into the router; otherwise Wi-Fi. To confirm."
+    },
+    {
+      "from": "laptop-pc",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "macbook-pro",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "ipad",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "iphone-new",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "iphone-old",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "android",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "quest-pro",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Wireless PC VR (Air Link or Virtual Desktop) streams over the home Wi-Fi."
+    },
+    {
+      "from": "quest-3",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Wireless PC VR (Air Link or Virtual Desktop) streams over the home Wi-Fi."
+    },
+    {
+      "from": "quest-3",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "Link cable, when used instead of Wi-Fi."
+    },
+    {
+      "from": "raspberry-pi",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Connects over wi-fi."
+    },
+    {
+      "from": "smart-pin",
+      "to": "home-router",
+      "carries": "network",
+      "medium": "wi-fi",
+      "state": "suggested",
+      "why": "Planned pin; Wi-Fi or Bluetooth depending on the model chosen."
+    },
+    {
+      "from": "iphone-new",
+      "to": "cell-carrier",
+      "carries": "network",
+      "medium": "cellular",
+      "state": "suggested",
+      "why": "Connects over cellular."
+    },
+    {
+      "from": "iphone-old",
+      "to": "cell-carrier",
+      "carries": "network",
+      "medium": "cellular",
+      "state": "suggested",
+      "why": "Connects over cellular."
+    },
+    {
+      "from": "android",
+      "to": "cell-carrier",
+      "carries": "network",
+      "medium": "cellular",
+      "state": "suggested",
+      "why": "Connects over cellular."
+    },
+    {
+      "from": "home-router",
+      "to": "internet",
+      "carries": "network",
+      "medium": "internet",
+      "state": "suggested",
+      "why": "The home connection to your internet provider."
+    },
+    {
+      "from": "cell-carrier",
+      "to": "internet",
+      "carries": "network",
+      "medium": "internet",
+      "state": "suggested",
+      "why": "Mobile data reaches the internet through the carrier."
+    },
+    {
+      "from": "index-controllers",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "2.4ghz",
+      "state": "suggested",
+      "why": "SteamVR controllers talk to the PC through a 2.4 GHz radio (in the headset or a dongle), not Bluetooth."
+    },
+    {
+      "from": "vr-trackers",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "2.4ghz",
+      "state": "suggested",
+      "why": "Each tracker pairs with its own 2.4 GHz dongle on the PC."
+    },
+    {
+      "from": "base-stations",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "bluetooth",
+      "state": "suggested",
+      "why": "Only for power on/off; tracking itself is infrared laser sweeps, not data."
+    },
+    {
+      "from": "woojer-vest",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "bluetooth",
+      "state": "suggested",
+      "why": "Bluetooth, or a 3.5 mm audio cable. To confirm."
+    },
+    {
+      "from": "speaker-bar",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "bluetooth",
+      "state": "suggested",
+      "why": "Bluetooth, optical or USB. To confirm."
+    },
+    {
+      "from": "razer-viper",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "2.4ghz",
+      "state": "suggested",
+      "why": "Wireless (HyperSpeed dongle) or USB cable, depending on the model. To confirm."
+    },
+    {
+      "from": "razer-kraken",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "USB, or a 2.4 GHz dongle on the wireless models. To confirm."
+    },
+    {
+      "from": "logitech-brio",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "Connects over usb."
+    },
+    {
+      "from": "microphone",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "USB, or XLR through an audio interface. To confirm."
+    },
+    {
+      "from": "dell-monitor",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "video",
+      "state": "suggested",
+      "why": "DisplayPort or HDMI."
+    },
+    {
+      "from": "security-key",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "Plugged in to sign in."
+    },
+    {
+      "from": "security-key",
+      "to": "iphone-new",
+      "carries": "network",
+      "medium": "nfc",
+      "state": "suggested",
+      "why": "Tapped to sign in on the phone."
+    },
+    {
+      "from": "flipper-zero",
+      "to": "windows-pc",
+      "carries": "network",
+      "medium": "usb",
+      "state": "suggested",
+      "why": "USB, and it can act as a keyboard: a USB gadget the Police Station should watch."
+    },
+    {
+      "from": "flipper-zero",
+      "to": "android",
+      "carries": "network",
+      "medium": "bluetooth",
+      "state": "suggested",
+      "why": "The Flipper app pairs over Bluetooth."
+    },
+    {
+      "from": "raspberry-pi",
+      "to": "lora-mesh",
+      "carries": "network",
+      "medium": "lora",
+      "state": "suggested",
+      "why": "The LoRa HAT joins the Meshtastic mesh."
     }
   ],
   "layers": {

@@ -32,17 +32,17 @@ export function systemMapData(registry, extra) {
   const expand = (id) => id === '@pets' || id === 'pets' ? [...group('pet'), ...group('pipeline')]
     : id === '@seeds' ? group('seed') : id === '@roadmap' ? group('roadmap') : [id];
   const links = [];
-  const push = (from, to, carries, state, why, everyApp = false) => {
+  const push = (from, to, carries, state, why, everyApp = false, medium) => {
     for (const a of expand(from)) for (const b of expand(to)) {
       if (!nodes.has(a)) throw new Error(`unknown "from": ${a}`);
       if (!nodes.has(b)) throw new Error(`unknown "to": ${b}`);
       if (a === b) continue;
-      links.push({ from: a, to: b, carries, state, why, everyApp });
+      links.push({ from: a, to: b, carries, state, why, everyApp, ...(medium ? { medium } : {}) });
     }
   };
   for (const l of registry.relations.links) push(l.from, l.to, l.carries, l.state, l.why);
   for (const s of registry.seeds?.pets || []) for (const w of s.works_with || []) push(slug(s.pet), w.pet, 'findings', 'planned', w.why);
-  for (const l of extra.links) push(l.from, l.to, l.carries, l.state, l.why, [l.from, l.to].includes('@pets'));
+  for (const l of extra.links) push(l.from, l.to, l.carries, l.state, l.why, [l.from, l.to].includes('@pets'), l.medium); // medium: how a network link physically travels (2026-10-14)
 
   // Which architecture layer a link belongs to, so its colour matches Astra's chart:
   // 0 development (assistants building pets, the art pipeline): outside the running system;
