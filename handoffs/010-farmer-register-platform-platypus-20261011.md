@@ -1,5 +1,5 @@
 ---
-status: open (waiting on Astra: create findastra/platform-platypus on GitHub and OK the push; OK one paid art sheet)
+status: in progress (repo created 2026-10-13: findastra/platform-platypus; art draft in art/seeds/; registration waits on Astra's art OK)
 for: farmer
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-11
 needs: PET-FILES.md, pets.json, platform-platypus pet.json

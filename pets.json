@@ -1095,6 +1095,20 @@
         "subject": "my plan",
         "needs": "a job: what should the Raspberry Pi pet do?"
       }
+    },
+    {
+      "repo": "platform-platypus",
+      "pet": "Platform Platypus",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms.",
+      "added": "2026-10-13",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "how Astra's pages look across iPhone, Android, iPad and desktop",
+        "needs": "something only you can do"
+      },
+      "note": "Repo created 2026-10-13 with Astra's OK; moved from the seeds."
     }
   ],
   "seeds": {
@@ -1138,12 +1152,6 @@
             "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
           }
         ]
-      },
-      {
-        "pet": "Platform Platypus",
-        "repo": "platform-platypus",
-        "job": "Shows a page on iPhone, Android, iPad and desktop at once, checks it is presentable and the same on each, and compares screenshots from two platforms.",
-        "note": "Local draft app with pet.json on Astra's PC (Documents/Projects/platform-platypus, Claude Opus 5.5, 2026-10-11). Not on GitHub yet."
       },
       {
         "pet": "Piranesi Nessi",

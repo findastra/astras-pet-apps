@@ -3578,6 +3578,15 @@
             "why": "Placeholder page only: one HTML file. Finding unpaid bills is planned and not built yet."
           }
         ]
+      },
+      "platform-platypus": {
+        "languages": [
+          {
+            "language": "HTML",
+            "percent": 100.0,
+            "why": "One page that runs in any browser, so it can preview and check other pages on every device size without installing anything."
+          }
+        ]
       }
     }
   }
