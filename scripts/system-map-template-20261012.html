@@ -11,7 +11,7 @@
   /* Warm on navy (Astra, 2026-10-12): reds, oranges, yellows and pinks on a navy night sky. */
   --bg:#0a1430; --panel:rgba(14,26,62,.92); --line:#2b3d75; --fg:#fff4ec; --muted:#b7bfdc;
   --raise:#1c2c63; --raise-edge:#4a5fa8; --well:#0d1a40; --shell:#4a5fa8;
-  --host:#ffd23f; --you:#ff4fa3; --pet:#ff4d5e; --pipe:#ff8c3a; --seed:#fff07a; --road:#d99aaa; --model:#ff6f3c; --infra:#ffb3cf; --program:#ffd6a5; --own:#ff9ecb; --machine:#f7a072;
+  --host:#ffd23f; --you:#ff4fa3; --pet:#ff4d5e; --pipe:#ff8c3a; --seed:#fff07a; --road:#d99aaa; --model:#ff6f3c; --infra:#ffb3cf; --program:#ffd6a5; --own:#ff9ecb; --tool:#ffb86b; --machine:#f7a072;
   --l0:#9c93b5; --l1:#ff4fa3; --l2:#ffb3cf; --l3:#ffd23f; --l4:#ff4d5e; --l5:#ff8c3a; --l6:#ffd6a5;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -163,7 +163,7 @@ const TYPE = {
   host:{color:css('--host'),r:.95,shape:'sphere'}, pet:{color:css('--pet'),r:.55,shape:'sphere'},
   pipeline:{color:css('--pipe'),r:.44,shape:'sphere'}, seed:{color:css('--seed'),r:.38,shape:'sphere'},
   roadmap:{color:css('--road'),r:.34,shape:'sphere'}, infrastructure:{color:css('--infra'),r:.6,shape:'gem'},
-  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.36,shape:'box'}, 'own-program':{color:css('--own'),r:.42,shape:'box'},
+  harness:{color:css('--l5'),r:.45,shape:'sphere'}, model:{color:css('--model'),r:.7,shape:'octa'}, program:{color:css('--program'),r:.42,shape:'satellite'}, 'own-program':{color:css('--own'),r:.42,shape:'box'}, tool:{color:css('--tool'),r:.5,shape:'hammer'},
   'host-machine':{color:css('--machine'),r:.55,shape:'cyl'}, you:{color:css('--you'),r:.8,shape:'sphere'}, assistant:{color:css('--l0'),r:.6,shape:'tetra'},
 };
 // Shells follow the architecture layers. Neutral registry at the core (Program Manager is not the Farmer's),
@@ -183,16 +183,16 @@ const SEAT = new THREE.Vector3(0,HARNESS_R,0), DONUT_R = 3.4; // the seat on top
 const PIN = {'agent-harness':SEAT.clone(), 'claude-code':new THREE.Vector3(DONUT_R,HARNESS_R,0), codex:new THREE.Vector3(-DONUT_R,HARNESS_R,0),
   claude:new THREE.Vector3(0,LAYER_R[5],0), openai:new THREE.Vector3(0,LAYER_R[5],0).applyAxisAngle(new THREE.Vector3(1,0,0),.13),
   'local-models':new THREE.Vector3(0,LAYER_R[5],0).applyAxisAngle(new THREE.Vector3(1,0,0),-.13)};
-const radiusOf = n => n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : n.type==='host-machine' ? DEVICE_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0);
+const radiusOf = n => n.type==='tool' && n.of && nodeById[n.of] ? radiusOf(nodeById[n.of]) : n.type==='harness' ? HARNESS_R : n.type==='own-program' ? OWN_R : n.type==='host-machine' ? DEVICE_R : LAYER_R[n.layer] + (n.type==='roadmap' ? .8 : 0);
 // What the agent in the seat may do on each ring: on, gate (only through a pull request Astra merges) or off.
 const RINGS = [
-  {ring:0, name:'Core', what:'Pet Directory, Program Manager, the Farm, Startup Star', r:LAYER_R[2], rwx:['on','gate','on'], animal:true},
+  {ring:0, name:'Core', what:'The Farm (the Farmer\'s pet program): Pet Directory, Program Manager and its tools', r:LAYER_R[2], rwx:['on','gate','on'], animal:true},
   {ring:1, name:'Friendly Farmer', what:'orchestrator and package manager', r:LAYER_R[3], rwx:['on','gate','on'], animal:true},
   {ring:2, name:'Pets', what:'every intelligent app', r:LAYER_R[4], rwx:['on','on','on'], animal:true},
   {ring:3, name:'Pet programs', what:'the programs, sites and worlds Astra made', r:OWN_R, rwx:['on','on','on'], animal:true},
   {ring:'H', name:'Agent harness', what:'the glass: the R W X line. Claude Code or Codex is the donut at the seat', r:HARNESS_R, glass:true},
   {ring:4, name:'AI models', what:'called, never rewritten; local models change only through Astra', r:LAYER_R[5], rwx:['off','off','on']},
-  {ring:5, name:'Third-party programs', what:'run and read, never rewritten', r:LAYER_R[6], rwx:['on','off','on']},
+  {ring:5, name:'Third-party programs', what:'satellites: programs, libraries and services made by others. Run and read, never rewritten', r:LAYER_R[6], rwx:['on','off','on']},
   {ring:6, name:'Devices', what:'read and operated through drivers and apps', r:DEVICE_R, rwx:['on','off','on']},
   {ring:7, name:'Advisers', what:'ChatGPT: no access; ideas reach the Farm only through Astra', r:LAYER_R[0], rwx:['off','off','off']},
   {ring:8, name:'You', what:'Astra grants every permission', r:LAYER_R[1], rwx:['off','off','off']},
@@ -302,9 +302,17 @@ document.getElementById('ringKey').innerHTML = RINGS.map(g=> g.glass
 
 // ---------- nodes ----------
 // makeAvatar is the single swap point: return a loaded 3D model of the pet here later instead of a shape.
+// Two small built shapes (Astra, 2026-10-13): a hammer for a tool, a satellite for a third-party program.
+function mergeGeos(parts){ const pos=[], nor=[], idx=[]; let off=0;
+  parts.forEach(([g,x,y,z])=>{ g.translate(x,y,z); const p=g.attributes.position.array, nn=g.attributes.normal.array; pos.push(...p); nor.push(...nn);
+    (g.index?Array.from(g.index.array):[...Array(p.length/3).keys()]).forEach(i=>idx.push(i+off)); off+=p.length/3; });
+  const out=new THREE.BufferGeometry(); out.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); out.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3)); out.setIndex(idx); return out; }
+const hammerGeo = r => mergeGeos([[new THREE.BoxGeometry(r*.26,r*1.7,r*.26),0,-r*.25,0],[new THREE.BoxGeometry(r*1.25,r*.42,r*.42),0,r*.68,0]]);
+const satelliteGeo = r => mergeGeos([[new THREE.BoxGeometry(r*.7,r*.7,r*.7),0,0,0],[new THREE.BoxGeometry(r*1.05,r*.07,r*.6),r*.95,0,0],[new THREE.BoxGeometry(r*1.05,r*.07,r*.6),-r*.95,0,0]]);
 function makeAvatar(n){
   const t = TYPE[n.type], planned = n.state==='planned' && n.type!=='seed';
   const geo = t.shape==='octa' ? new THREE.OctahedronGeometry(t.r) : t.shape==='tetra' ? new THREE.TetrahedronGeometry(t.r*1.2) : t.shape==='gem' ? new THREE.DodecahedronGeometry(t.r)
+    : t.shape==='hammer' ? hammerGeo(t.r*1.4) : t.shape==='satellite' ? satelliteGeo(t.r*1.4)
     : t.shape==='box' ? new THREE.BoxGeometry(t.r*1.4,t.r*1.4,t.r*1.4) : t.shape==='cyl' ? new THREE.CylinderGeometry(t.r*.8,t.r*.8,t.r*1.2,24) : new THREE.SphereGeometry(t.r,32,20);
   const mat = new THREE.MeshStandardMaterial({color:t.color, emissive:t.color, emissiveIntensity:.28, roughness:.45, metalness:.1,
     transparent:true, opacity:planned?.55:1});
@@ -387,13 +395,14 @@ const SHAPES=[
   ['<circle cx="9" cy="9" r="7.5" fill-opacity=".18" stroke-width="1.2"/>','Glass ring','the agent harness, wrapped around rings 0 to 3: the R W X line. Click its edge for details'],
   ['<path d="M9 4a5 5 0 1 0 .01 0M9 1a8 8 0 1 1-.01 0" fill-rule="evenodd"/>','Donut','the seat on top of the glass: the harness program in use (Claude Code or Codex). The model in the seat sits in its hole','--l5'],
   ['<path d="M9 1 17 9 9 17 1 9Z"/>','Diamond','an AI model (Claude, OpenAI, local models), ring 4, above the seat. Called, never rewritten'],
-  ['<rect x="2.5" y="2.5" width="13" height="13" rx="1.5"/>','Peach cube','a third-party program made by others: apps, drivers, virtual audio, cloud services. Ring 5, outside the harness. R X only','--program'],
+  ['<path d="M3 3h9v4H3zM6 7h3v9.5H6z"/>','Hammer','🐾 a tool: any other program a pet program makes or owns (the System Map, Startup Star, name-eraser). Same ring and permissions as its pet program, never more','--tool'],
+  ['<path d="M6.5 6.5h5v5h-5zM1 8h4.5v2H1zM12.5 8H17v2h-4.5z"/>','Satellite','third-party: a program, library or service made by others (Voicemeeter, Steam, three.js, Google Fonts). Ring 5, outside the harness. R X only','--program'],
   ['<rect x="4" y="1.5" width="10" height="15" rx="4"/>','Cylinder','a device: PCs, phones, iPad, headsets, trackers, Raspberry Pi. Ring 6. R X only'],
-  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','🐾 the core, ring 0: Pet Directory, Program Manager, the Farm, Startup Star. The Kennel (other people\'s pets, waiting to be checked) sits outside the harness'],
+  ['<path d="M9 1.5 16.5 7 13.6 16H4.4L1.5 7Z"/>','Gem','🐾 the core, ring 0: The Farm (the Friendly Farmer\'s pet program), Pet Directory, Program Manager. The Kennel (other people\'s pets, waiting to be checked) sits outside the harness'],
   ['<path d="M9 1.5 16.5 15.5H1.5Z"/>','Pyramid','a harness program on the donut (Claude Code, Codex), or an adviser outside with no access (ChatGPT)'],
 ];
 // Which node types each shape stands for; hiding a shape hides all of them.
-const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Pink cube':['own-program'], 'Glass ring':['harness'], Donut:['harness'], Diamond:['model'], 'Peach cube':['program'], Cylinder:['host-machine'], Gem:['infrastructure'], Pyramid:['assistant']};
+const SHAPE_TYPES = {Sphere:['host','pet','pipeline','seed','roadmap','you'], 'Pink cube':['own-program'], Hammer:['tool'], 'Glass ring':['harness'], Donut:['harness'], Diamond:['model'], Satellite:['program'], Cylinder:['host-machine'], Gem:['infrastructure'], Pyramid:['assistant']};
 const sk=document.getElementById('shapeKey');
 SHAPES.forEach(([svg,name,what,colour])=>{ const types=SHAPE_TYPES[name]||[]; const ink=colour?css(colour):css('--fg');
   const b=keyButton(sk, `Hide or show every ${name.toLowerCase()}`, b=>{
@@ -492,6 +501,8 @@ function selectNode(n){
   side.appendChild(rc);
   const lc=el('span','chip',`Layer ${n.layer}: ${DATA.layers[n.layer].name}`+(n.category?` · ${n.category}`:'')); lc.style.color=LAYER_COLOR[n.layer]; side.appendChild(lc);
   side.appendChild(el('p','job',n.job||'No job recorded.'));
+  if(n.type==='tool'&&nodeById[n.of]){ const p=el('p','meta'); const b=el('button','link',nodeById[n.of].name); b.onclick=()=>selectNode(nodeById[n.of]);
+    p.append(document.createTextNode('\u{1F528} A tool of '), b, document.createTextNode(': same ring and permissions as its pet program, never more.')); side.appendChild(p); }
   if(n.repo){ const m=el('p','meta'); const a=el('a','', 'findastra/'+n.repo); a.href='https://github.com/findastra/'+n.repo; a.target='_blank'; a.rel='noopener'; m.append(a, document.createTextNode(n.visibility?` · ${n.visibility}`:'')); side.appendChild(m); }
   side.appendChild(codeBlock(n));
   const list = n.type==='harness' ? DATA.links.filter(l=>l.from===n.id||l.to===n.id).filter((l,i,a)=>!l.everyApp||a.findIndex(x=>x.everyApp&&x.why===l.why)===i)

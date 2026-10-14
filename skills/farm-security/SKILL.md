@@ -56,6 +56,8 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 ## 6. Provenance
 - Signed commits and releases (the ear tag) plus a visible "by Astra" credit and license. Removing either is detected,
   not prevented; the Farm refuses to run a pet whose signature does not check out (planned).
+- Astra signs her own commits with her security key (touch required; [docs/sign-commits-20261013.md](../../docs/sign-commits-20261013.md)). Never turn on
+  `commit.gpgsign` for her, and never ask her to touch the key for an agent's commit.
 - Agents say who they are: a `claude/` or `codex/` branch and a `Co-Authored-By` line. Until agents have their own
   identity (Astra is deciding), they act on Astra's account, so these marks are the only record of who did what.
 

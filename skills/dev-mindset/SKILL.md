@@ -22,6 +22,9 @@ Astra wants other software developers to read her build without frustration. She
 | R W X tags | rwx permissions (read, write, execute) | Not "RWE". Decided 2026-10-13. |
 | Pet program | Program (an app, site, world, service or script) Astra made | Umbrella term; see "app vs program". |
 | Pet program icon | Mascot / character | The image files are icons; the character name is the mascot. |
+| Tool | A program, page, script or utility that belongs to a pet program | Same ring and permissions as its pet program, never more. In AI, "tool" also means a function an agent can call; keep them the same thing: a pet's tools are what its connector offers. Drawn as a hammer. Decided 2026-10-13. |
+| Third-party dependency | Library, font or service your code uses (three.js, Google Fonts, GitHub Pages) | Third-party, ring 5, drawn as a satellite like third-party programs. |
+| Build output | A generated file (`system-map-20261012.html`) | Made by `npm run build`; never edited by hand. |
 | Third-party program | Third-party software | Was "root program"; "root" means superuser to developers. Decided 2026-10-13. |
 | Animal / animal code | Code inside the trust boundary the seated agent may change | Everything inside the harness is an animal. See `skills/farm-security`. |
 | Agentic harness / the seat | Agent harness (Claude Code, Codex) | The model is the agent that sits in the seat. |

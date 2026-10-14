@@ -17,10 +17,11 @@
     "model": "AI model, ring 4",
     "infrastructure": "Core infrastructure, ring 0",
     "own-program": "Pet program (made by Astra), ring 3",
-    "program": "Third-party program (made by others), ring 5",
+    "program": "Third-party (made by others), ring 5",
     "host-machine": "Device, ring 6",
     "harness": "Agent harness (the glass and the seat)",
-    "assistant": "Harness program or adviser"
+    "assistant": "Harness program or adviser",
+    "tool": "Tool: belongs to a pet program, same ring and permissions"
   },
   "carries": {
     "builds": "code and changes made by an assistant on a branch, from a handoff card",
@@ -36,10 +37,10 @@
   "nodes": [
     {
       "id": "farm",
-      "name": "The Farm (your native home)",
+      "name": "The Farm",
       "type": "infrastructure",
       "state": "planned",
-      "job": "The native OS of Astra's PetOS: the first-party home where your pets live and run, organized by the Farmer. Its face is the Farm website: a card for every pet with status, real program links and an always-visible suggestion box, reachable from any device. Your chart shows it beside You and beside the Farmer: it is one website that the Farmer runs. Planned (ASTRAS_PET_OS section 4).",
+      "job": "The Friendly Farmer’s pet program (pet-program-1) and the core of Astra’s PetOS, ring 0: the native home where your pets live and run, organized by the Farmer. It holds the Pet Directory and Program Manager, and its tools are the System Map and Startup Star. Astra’s PetOS is a platform that runs on Windows, not an operating system. Repo: astras-pet-os today; it splits later into the-farm (the app) and astras-pet-os (registry and docs).",
       "layer": 2
     },
     {
@@ -68,11 +69,22 @@
     },
     {
       "id": "desktop-host",
-      "name": "Startup Star (desktop host)",
-      "type": "infrastructure",
+      "name": "Startup Star",
+      "type": "tool",
       "state": "now",
-      "job": "The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
-      "layer": 2
+      "job": "A tool of The Farm (no face, not a pet). The Windows tray Star and the desktop pets that roam your real desktop. Reads pets.json and the art index (scripts/desktop-pets-20261011.cs). Hiding it never stops a pet working.",
+      "layer": 2,
+      "of": "farm"
+    },
+    {
+      "id": "system-map",
+      "name": "Astra’s PetOS System Map",
+      "type": "tool",
+      "of": "farm",
+      "state": "now",
+      "layer": 2,
+      "category": "Tool",
+      "job": "A tool of The Farm: this 3D map of every pet, program, model and device, in protection rings, with what flows between them (findastra.github.io/astras-pet-os/system-map-20261012.html). Built by npm run build from system-map.json and pets.json."
     },
     {
       "id": "claude",
@@ -901,15 +913,6 @@
       "job": "Malware scanning. Installed."
     },
     {
-      "id": "the-barn",
-      "name": "pet-program-1",
-      "type": "own-program",
-      "state": "now",
-      "layer": 6,
-      "category": "Made by Astra",
-      "job": "The Friendly Farmer’s desk inside the Farm: every pet’s status, follow-ups and what needs Astra, with his daily rounds and this System Map. Name not assigned yet (idea: The Barn); see docs/naming-20261013.md."
-    },
-    {
       "id": "key-ring",
       "name": "pet-program-4",
       "type": "own-program",
@@ -946,6 +949,16 @@
       "job": "File Master’s scanner, plan and undo tools. Name not assigned yet (idea: File Kingdom); see docs/naming-20261013.md."
     },
     {
+      "id": "new-programs-watch",
+      "name": "New-programs watch",
+      "type": "tool",
+      "of": "file-kingdom",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of File Master’s pet program: notices every newly installed program anywhere on the PC (with Everything when it is installed, else the installed-programs list and Start menu), and lists what is new. Read only."
+    },
+    {
       "id": "unity-stable",
       "name": "pet-program-5",
       "type": "own-program",
@@ -980,6 +993,26 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Gone Ghost’s pet program (Astra, 2026-10-13): the private controls that change Ghost Protocol, and an exact local copy of the public site that runs only on the PC (a local environment; Ghost Protocol is production). His privacy tools live here too: the internet scrub and name-eraser, whose name lists never leave the PC."
+    },
+    {
+      "id": "name-eraser",
+      "name": "name-eraser",
+      "type": "tool",
+      "of": "am-i-a-ghost",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of Am I a Ghost? (Gone Ghost): replaces a name with another (USER by default) in files inside the Farm. Dry run first, then Astra approves the plan, with an undo log. Anywhere else on the PC needs a scope from Iron Gates. Its name list stays on the PC."
+    },
+    {
+      "id": "internet-scrub",
+      "name": "Internet scrub",
+      "type": "tool",
+      "of": "am-i-a-ghost",
+      "state": "planned",
+      "layer": 6,
+      "category": "Tool",
+      "job": "A tool of Am I a Ghost? (Gone Ghost): finds a person’s details on websites and data brokers and walks through removing them. Its list of what to remove stays on the PC."
     },
     {
       "id": "ghost-protocol-site",
@@ -1196,6 +1229,42 @@
       "layer": 6,
       "category": "Made by Astra",
       "job": "Astra’s catalog site for avatar gun effects and loadouts, made with Codex on 2026-10-12. Its source is only in Codex’s workspace on the PC, not on GitHub yet."
+    },
+    {
+      "id": "threejs",
+      "name": "three.js r128",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party 3D library the System Map draws with, loaded from cdnjs, with its TrackballControls add-on from jsDelivr. Loaded without an integrity hash yet (PROTECTION-RINGS.md, gap 6)."
+    },
+    {
+      "id": "google-fonts",
+      "name": "Google Fonts",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party font service: Bricolage Grotesque and IBM Plex for the System Map."
+    },
+    {
+      "id": "web-browser",
+      "name": "Web browser (WebGL)",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "The third-party program that runs the System Map and every pet page; WebGL draws the 3D."
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "type": "program",
+      "state": "now",
+      "layer": 6,
+      "category": "Dependency",
+      "job": "Third-party runtime that runs npm run build and the tests."
     }
   ],
   "links": [
@@ -2593,13 +2662,6 @@
       "why": "No pet looks after design and streaming tools yet. The Farmer incubates new pets; a streaming pet would own these. (Meme Fiend is private, so it does not connect out.)"
     },
     {
-      "from": "astras-pet-os",
-      "to": "the-barn",
-      "carries": "opens",
-      "state": "now",
-      "why": "The Barn is this pet’s own program."
-    },
-    {
       "from": "api-fairy",
       "to": "key-ring",
       "carries": "opens",
@@ -3053,6 +3115,83 @@
       "carries": "manages",
       "state": "planned",
       "why": "Its controls change the public site, and its local copy is the same site running only on the PC."
+    },
+    {
+      "from": "farm",
+      "to": "desktop-host",
+      "carries": "opens",
+      "state": "now",
+      "why": "Startup Star is a tool of The Farm."
+    },
+    {
+      "from": "farm",
+      "to": "system-map",
+      "carries": "opens",
+      "state": "now",
+      "why": "The System Map is a tool of The Farm; The Farm’s page links it plainly."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "name-eraser",
+      "carries": "opens",
+      "state": "planned",
+      "why": "name-eraser is a tool of Am I a Ghost?."
+    },
+    {
+      "from": "am-i-a-ghost",
+      "to": "internet-scrub",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The internet scrub is a tool of Am I a Ghost?."
+    },
+    {
+      "from": "file-kingdom",
+      "to": "new-programs-watch",
+      "carries": "opens",
+      "state": "planned",
+      "why": "The new-programs watch is a tool of File Master’s pet program."
+    },
+    {
+      "from": "new-programs-watch",
+      "to": "everything-search",
+      "carries": "runs-on",
+      "state": "planned",
+      "why": "Asks Everything (voidtools) for programs added anywhere on the PC, when it is installed."
+    },
+    {
+      "from": "system-map",
+      "to": "threejs",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Draws the 3D map with three.js r128 and TrackballControls."
+    },
+    {
+      "from": "system-map",
+      "to": "google-fonts",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Its headings and labels use Bricolage Grotesque and IBM Plex."
+    },
+    {
+      "from": "system-map",
+      "to": "web-browser",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Runs in any browser with WebGL, including iPad and iPhone."
+    },
+    {
+      "from": "system-map",
+      "to": "github",
+      "carries": "runs-on",
+      "state": "now",
+      "why": "Hosted on GitHub Pages."
+    },
+    {
+      "from": "nodejs",
+      "to": "system-map",
+      "carries": "builds",
+      "state": "now",
+      "why": "npm run build makes the page from system-map.json and pets.json."
     }
   ],
   "layers": {

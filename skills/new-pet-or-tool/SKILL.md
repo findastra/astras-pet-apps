@@ -19,6 +19,12 @@ like a package manager. Every farm can end up with different pets and versions; 
 A **new pet** only when the job needs its own program, its own data and its own schedule that no
 existing pet already owns. Otherwise it is a **tool of the pet whose job it fits.**
 
+Each pet has exactly **one pet program**. Every other program that pet program makes or owns is a **tool** of it
+(Astra, 2026-10-13): it sits on the same ring with the same permissions, never more, and the pet program's page
+links it. Example: Friendly Farmer (pet program icon) → The Farm (pet program) → Astra's PetOS System Map and
+Startup Star (tools of The Farm). Anything made by someone else that a tool uses (three.js, Google Fonts) is a
+third-party dependency, not a tool.
+
 ## Steps
 1. Restate the need in one line and name the standard software term for it (`skills/dev-mindset`).
 2. List the 1 to 3 pets whose jobs come closest (`pets.json`, `docs/naming-*.md`, the System Map).

@@ -23,6 +23,9 @@ Claude Opus 5.5, head chat. Checked the System Map's shape key, names, rings and
 | 13 | The Farmer's daily round made any repo with a `pet.json` or `pet-app` topic an animal by itself. | New repos now wait at the gate (`candidates`) for Astra. Animal guard added and tested. |
 | 14 | Only half the sphere was used. | Each ring is spread over the whole sphere by rank, keeping neighbours together. |
 | 15 | The key panel could not be widened. | Drag bar on its right edge; keys use more columns when wide. |
+| 16 | The Farm and the Farmer's pet program were two separate nodes. | One node: **The Farm**, pet-program-1, the core. Its tools (the System Map, Startup Star) hang off it. |
+| 17 | Programs a pet program owns had no kind of their own; the System Map was not on the map. | **Tools**, drawn as hammers on their pet program's ring: the System Map, Startup Star, name-eraser, the internet scrub, the new-programs watch. |
+| 18 | Third-party programs were cubes like pet programs, and the libraries and services the map uses were missing. | Everything third-party is a **satellite** on ring 5, including three.js, Google Fonts, the web browser and Node.js. |
 
 ## Open: needs Astra's decision
 
