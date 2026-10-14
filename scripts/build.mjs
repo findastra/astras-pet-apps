@@ -12,6 +12,7 @@
 // This replaces build-art.mjs, which drew the original 32x32 pets by hand.
 // Generating new art is separate and costs money: see generate-pets.mjs.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { buildPetProgramsPage } from './pet-programs-20261014.mjs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { buildFrames } from './build-frames.mjs';
@@ -60,6 +61,7 @@ const names = Object.fromEntries([
 writeFileSync('ROSTER.md', buildRoster(registry, MOODS, names, data.frames));
 writeFileSync('RELATIONS.md', buildRelations(registry));
 writeFileSync('MOOD-KEY.md', buildMoodKey(registry));
+writeFileSync('PET-PROGRAMS.md', buildPetProgramsPage(JSON.parse(readFileSync('pet-programs.json', 'utf8')))); // every pet program and its mini-descriptor (2026-10-14)
 { const { extra, template, icons } = readSystemMapSources(); writeFileSync(SYSTEM_MAP.output, buildSystemMap(registry, extra, template, icons)); }
 
 const readme = readFileSync('README.md', 'utf8');

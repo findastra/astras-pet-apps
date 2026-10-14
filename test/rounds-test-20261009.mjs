@@ -123,6 +123,16 @@ test('discovery puts unknown pet repos at the gate (candidates), never straight 
   assert.deepEqual(discover(r, [{ name: 'new-newt', isPet: true }], '2026-10-11'), [], 'a waiting candidate is not added twice');
 });
 
+test('approved seed and roadmap repos are known pets, not newcomers at the gate', () => {
+  const r = clone();
+  const added = discover(r, [{ name: 'pet-program-47', isPet: true, petJson: { pet: 'Queue Quokka' } }, { name: 'stranger-pet', isPet: true }], '2026-10-14', ['pet-program-47']);
+  assert.deepEqual(added.map((p) => p.repo), ['stranger-pet']);
+  const programs = JSON.parse(readFileSync(new URL('../pet-programs.json', import.meta.url), 'utf8')).programs;
+  assert.equal(programs.length, new Set(programs.map((p) => p.number)).size, 'every pet program number is used once');
+  assert.equal(programs.length, new Set(programs.map((p) => p.repo)).size, 'every pet program has its own repo');
+  for (const p of programs) assert.ok(p.mini_descriptor.text && p.mini_descriptor.label.endsWith('-v1.0-mini-descriptor-v1.0'), `${p.number} has a mini-descriptor`);
+});
+
 test('the animal guard only lets scripts act on pets in the registry', () => {
   assert.ok(isAnimal(registry, 'file-master'));
   assert.ok(isAnimal(registry, 'findastra/file-master'));

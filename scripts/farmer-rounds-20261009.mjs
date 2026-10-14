@@ -183,8 +183,10 @@ export function adoptSubmission(registry, entry, petJson) {
 }
 
 /** Pet repos on GitHub that the Cage does not list yet become pipeline entries. */
-export function discover(registry, repos, today) {
-  const known = new Set([...allPets(registry).map((p) => p.repo), registry.cage, ...(registry.candidates || []).map((c) => c.repo)]);
+export function discover(registry, repos, today, approved = []) {
+  // approved: the repos of seed and roadmap pets Astra already approved (pet-programs.json, in the core). They are known
+  // pets, not newcomers, so they do not queue at the gate. A repo's own pet.json can never put itself on this list.
+  const known = new Set([...allPets(registry).map((p) => p.repo), registry.cage, ...(registry.candidates || []).map((c) => c.repo), ...approved]);
   const added = [];
   for (const r of repos) {
     if (known.has(r.name) || r.fork || r.archived) continue;
@@ -250,7 +252,7 @@ export function denverDate(d = new Date()) {
   return `${p.year}-${p.month}-${p.day}`;
 }
 
-export async function runRound({ registry, status, token, ownerToken, validateProblems = [], now = new Date(), log = console.log, only = null, all = false, github = { listRepos, snapshot } }) {
+export async function runRound({ registry, status, token, ownerToken, validateProblems = [], now = new Date(), log = console.log, only = null, all = false, approved = [], github = { listRepos, snapshot } }) {
   const today = denverDate(now);
   const repos = await github.listRepos(token, ownerToken);
   const byName = new Map(repos.map((r) => [r.name, r]));
@@ -263,7 +265,7 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
     r.isPet = !!(snap.petJson || r.topics.includes('pet-app'));
     r.petJson = snap.petJson;
   }
-  report.discovered = discover(registry, unknown, today).map((p) => p.repo);
+  report.discovered = discover(registry, unknown, today, approved).map((p) => p.repo);
 
   // 2 and 3. Submissions every day; self-audits when due.
   status.pets ||= {};
@@ -317,6 +319,7 @@ if (process.argv[1] && import.meta.url === new URL('file://' + process.argv[1]).
     registry, status, validateProblems,
     token: process.env.GITHUB_TOKEN, ownerToken: process.env.FARMER_TOKEN || null,
     only: onlyArg ? onlyArg.slice(7).split(',') : null, all: args.includes('--all'),
+    approved: existsSync('pet-programs.json') ? JSON.parse(readFileSync('pet-programs.json', 'utf8')).programs.map((p) => p.repo) : [],
   });
   if (!args.includes('--dry-run')) {
     if (report.discovered.length || report.submissions.length || JSON.stringify(registry) !== readFileSync('pets.json', 'utf8')) registry.updated = report.today;
