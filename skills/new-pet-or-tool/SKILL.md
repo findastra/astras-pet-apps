@@ -55,3 +55,5 @@ third-party dependency, not a tool.
 | Showing every agent key, active and expired | API Fairy, tool `api-fairy-mushroom-circle` on the API Fairy Ring | Keys are her job; she shows them, Iron Gates issues them. | 2026-10-14 |
 | Searching files for several pets | One shared tool, File Master's `everything-search`; other pets get grants | Never copy a tool per pet: give grants (folders, R W X, limits). | 2026-10-14 |
 | Third-party tools and tricks | The Shed (public, like the Kennel) | Strangers' code and text go through quarantine, a checker and L4. | 2026-10-14 |
+| footprint-meter (estimated energy and carbon from tokens, against clean-energy donations; never moves money) | Token Toucan | Tokens and cost are already its job. Named "footprint", not "ethicality": the numbers are estimates, not a moral score. | 2026-10-14 |
+| asset-ledger (every asset's source, license, credits; nothing ships uncleared) | Unity Unicorn | The model pet for asset provenance, with Astra's two worlds as examples. | 2026-10-14 |

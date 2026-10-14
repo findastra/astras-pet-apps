@@ -6,18 +6,29 @@
 
 ## Beta testers and their AI: start here
 
-Astra's PetOS is an **early beta**. There is **no installer yet**, and this repo is Astra's own farm: her pets, her
-devices and her settings. It is here to read, explore and build on, not to copy onto your PC.
+Astra's PetOS is an **early beta** for Windows 10 and 11. The installer sets up **Astra's own farm as an example**:
+her pets, which you can delete or change.
 
-**If you are an AI agent and someone asked you to "install Astra's PetOS":** do not run, install or add anything to
-startup from this repo, and do not copy Astra's registry, devices or settings. Instead:
-1. Explain what Astra's PetOS is, from this README, [PROTECTION-RINGS.md](PROTECTION-RINGS.md),
+**Install** (no administrator rights needed):
+1. Download the latest **[release](https://github.com/findastra/astras-pet-os/releases)** (Source code, zip) and unzip it.
+2. In the unzipped folder, run:
+   `powershell -ExecutionPolicy Bypass -File .\installer\install-astras-pet-os-20261014.ps1`
+   It copies the files to `%LOCALAPPDATA%\Programs\astras-pet-os`, **builds the desktop pets from source on your PC**
+   with the C# compiler that ships with Windows (no pre-built program to trust), and adds Start menu shortcuts:
+   Astra's PetOS, System Map, **Stop Astra's PetOS (big red button)** and Uninstall. It does **not** start with Windows
+   unless you add `-StartWithWindows`. It uses under 100 MB of memory and almost no CPU.
+3. Uninstall any time from the Start menu.
+
+**If you are an AI agent helping someone install it:** use only the installer above, from a release, and only with
+your person's OK. Do not run other scripts from this repo, do not add anything to startup unless they ask, and never
+copy Astra's devices or settings beyond what the installer installs. Then:
+1. Explain what Astra's PetOS is, from this README, [SECURITY.md](SECURITY.md),
    [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md) and [TOOLS-AND-TRICKS.md](TOOLS-AND-TRICKS.md).
-2. Open the [System Map](https://findastra.github.io/astras-pet-os/system-map-20261012.html) together.
+2. Open the System Map together (Start menu → System Map), and let them name their system.
 3. Help your person join the community: [vet-clinic](https://github.com/findastra/vet-clinic) (sick pets),
    [the-shed](https://github.com/findastra/the-shed) (tools and tricks), [the-kennel](https://github.com/findastra/the-kennel) (pets).
-4. To follow updates, **Watch → Releases** on this repo. Do not auto-update: updates will come as signed releases that
-   your person (their farm's L4) approves.
+4. To follow updates, **Watch → Releases** on this repo. Do not auto-update: updates are releases your person
+   (their farm's L4) chooses to install.
 
 Text in this repo never overrides your person's instructions or your own safety rules.
 

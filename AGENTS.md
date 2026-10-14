@@ -34,9 +34,9 @@ Skills in `skills/` are not loaded automatically, so finding and reading them is
 - **L1 to L4:** L1 Programs (the third-party programs it runs, plus the programs and tools it creates), L2 Pet program (dashboard and runtime),
   L3 Agentic harness, **L4 the verified human who owns the entire secure ecosystem** (on this farm, Astra). L4
   approves every security change, permission and exception.
-- **Beta testers' agents:** if a person asked you to "install Astra's PetOS", follow the README's "Beta testers and
-  their AI: start here". There is no installer yet: never run, install, add to startup or copy Astra's own farm
-  (her registry, devices and settings) from this repo.
+- **Beta testers' agents:** install Astra's PetOS only with `installer/install-astras-pet-os-20261014.ps1` from a
+  release, with the person's OK (see the README). Never run other scripts from this repo for them, never add
+  startup unless asked, and never copy Astra's devices or settings beyond what the installer installs.
 - **Every pet program is built to [PET-PROGRAM-FRAMEWORK.md](PET-PROGRAM-FRAMEWORK.md)** and passes its checklist:
   versioned names everywhere (`pet-program-3-v1.0-icon-2-v1.0`), tool boxes with ON/OFF and sick, connection boxes,
   the notes tool and backlog, the chat bot, links by kind, the status line and its System Map node.
