@@ -267,12 +267,12 @@ const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.5)); renderer.setClearColor(css('--bg'));
 stage.appendChild(renderer.domElement);
 const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(css('--bg'), .0012);
-const camera = new THREE.PerspectiveCamera(50,1,.1,500); camera.position.set(...HOME_CAM);
+const camera = new THREE.PerspectiveCamera(50,1,.02,500); camera.position.set(...HOME_CAM);
 // Trackball, not orbit: it turns freely in every direction, over the top and under the bottom, with no stops.
 const controls = new THREE.TrackballControls(camera, renderer.domElement);
 let autoSpin = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 controls.rotateSpeed = 1.2; controls.zoomSpeed = 1.4; controls.panSpeed = .6; controls.dynamicDampingFactor = .2;
-controls.minDistance = 2; controls.maxDistance = 320;
+controls.minDistance = .3; controls.maxDistance = 320;
 // The switch maps mouse BUTTONS to actions: left (0) rotates, middle (1) pans, right (2) is left free for fly-look.
 controls.mouseButtons = {LEFT:0, MIDDLE:-9, RIGHT:-8}; controls.noZoom = true; // scroll and scroll-click drag are handled below
 controls.keys = ['NoKeyA','NoKeyS','NoKeyD']; // keep A, S and D for flying, not the trackball's key modes
@@ -386,16 +386,37 @@ function makeAvatar(n){
   return m;
 }
 // Icon mode: the pet's own idle mood frame, or a round badge with its initials for everything else.
+function coinSpinAngle(elapsed){const t=Math.max(0,Math.min(1,elapsed/5000));return Math.PI*8*(1-Math.pow(1-t,3));}
 function makeIcon(n){
-  const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
-  const tex=new THREE.CanvasTexture(c), sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false}));
-  const sz=Math.max(TYPE[n.type].r*3.2,1.4); sp.scale.set(sz,sz,1);
-  if(n.icon){ const img=new Image(); img.onload=()=>{ g.drawImage(img,0,0,128,128); tex.needsUpdate=true; }; img.src=n.icon; }
-  else { g.fillStyle=TYPE[n.type].color; g.globalAlpha=.9; g.beginPath(); g.arc(64,64,56,0,Math.PI*2); g.fill(); g.globalAlpha=1;
-    g.fillStyle=css('--bg'); g.font='bold 44px system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
-    g.fillText(n.name.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(),64,68); tex.needsUpdate=true; }
-  sp.visible=false; sp.userData.node=n; return sp;
+  const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+  const tex=new THREE.CanvasTexture(c);tex.magFilter=THREE.NearestFilter;tex.minFilter=THREE.LinearFilter;
+  const face=new THREE.MeshBasicMaterial({map:tex,transparent:true,alphaTest:.001,depthWrite:true,side:THREE.DoubleSide});
+  const gold=new THREE.MeshStandardMaterial({color:0xe9b637,metalness:.85,roughness:.22,transparent:true,side:THREE.DoubleSide});
+  const sp=new THREE.Mesh(new THREE.PlaneGeometry(1,1),[face,gold]);
+  const sz=Math.max(TYPE[n.type].r*3.2,1.4);sp.scale.setScalar(sz);
+  function extrude(){
+    const w=c.width,h=c.height,alpha=g.getImageData(0,0,w,h).data,vertices=[],uv=[];
+    const tri=(a,b,d)=>{for(const p of [a,b,d]){vertices.push(...p);uv.push(p[0]+.5,p[1]+.5);}};
+    const quad=(a,b,d,e)=>{tri(a,b,d);tri(a,d,e);};
+    const z=.025; // Exactly five percent of icon width, no round backing.
+    quad([-.5,-.5,z],[.5,-.5,z],[.5,.5,z],[-.5,.5,z]);
+    quad([.5,-.5,-z],[-.5,-.5,-z],[-.5,.5,-z],[.5,.5,-z]);
+    const frontCount=vertices.length/3;
+    const solid=(x,y)=>x>=0&&x<w&&y>=0&&y<h&&alpha[(y*w+x)*4+3]>=8;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(solid(x,y)){
+      const l=x/w-.5,r=(x+1)/w-.5,t=.5-y/h,b=.5-(y+1)/h;
+      if(!solid(x-1,y))quad([l,b,-z],[l,b,z],[l,t,z],[l,t,-z]);
+      if(!solid(x+1,y))quad([r,t,-z],[r,t,z],[r,b,z],[r,b,-z]);
+      if(!solid(x,y-1))quad([l,t,-z],[l,t,z],[r,t,z],[r,t,-z]);
+      if(!solid(x,y+1))quad([r,b,-z],[r,b,z],[l,b,z],[l,b,-z]);
+    }
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geometry.addGroup(0,frontCount,0);geometry.addGroup(frontCount,vertices.length/3-frontCount,1);geometry.computeVertexNormals();sp.geometry.dispose();sp.geometry=geometry;tex.needsUpdate=true;
+  }
+  if(n.icon){const img=new Image();img.onload=()=>{c.width=img.naturalWidth;c.height=img.naturalHeight;g.drawImage(img,0,0);extrude();};img.src=n.icon;}
+  else {g.fillStyle=TYPE[n.type].color;g.fillRect(8,8,112,112);g.fillStyle=css('--bg');g.font='bold 44px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n.name.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(),64,68);extrude();}
+  sp.visible=false;sp.userData.node=n;sp.userData.spinStarted=null;return sp;
 }
+
 const meshes = [], icons = [], labelEls = {};
 const labelsBox = document.getElementById('labels');
 DATA.nodes.forEach(n=>{
@@ -551,7 +572,7 @@ function apply(){
     const hot = (fid&&n.id===fid) || (matches&&matches.has(n.id)&&!fid&&!selectedPair);
     m.material.emissiveIntensity = hot ? .9 : .28; m.material.opacity = on ? m.userData.baseOpacity : .1;
     m.scale.setScalar(fid&&n.id===fid ? 1.35 : 1); labelEls[n.id].dataset.dim = on?'':'1';
-    n.iconSprite.material.opacity = on ? 1 : .12;
+    n.iconSprite.material.forEach(material=>material.opacity=on?1:.12);
     // The harness has no dot of its own: the glass shell is the harness.
     const keep=nodeOn(n), solid=n.type!=='harness'&&!APP_PROVIDER[n.id]; m.visible=keep&&solid&&!iconMode; n.iconSprite.visible=keep&&solid&&iconMode; labelEls[n.id].dataset.off = keep?'':'1'; });
   const glass=nodeOn(nodeById['agent-harness']) && shellsOn; harnessGlass.visible=glass; harnessWire.visible=glass;
@@ -579,7 +600,7 @@ function updateHover(){ const ev=pendingPointer; pendingPointer=null; if(!ev) re
 renderer.domElement.addEventListener('pointerleave',()=>{pendingPointer=null;hovered=null;tip.hidden=true;apply();});
 let downAt=null; renderer.domElement.addEventListener('pointerdown',ev=>{downAt=[ev.clientX,ev.clientY]; autoSpin=false;});
 renderer.domElement.addEventListener('pointerup',ev=>{ if(!downAt||ev.button!==0) { downAt=null; return; } const moved=Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1]); downAt=null; if(moved>5) return;
-  const p=pick(ev); if(!p) return close(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
+  const p=pick(ev); if(!p) return close(); if(iconMode&&p.node&&!matchMedia('(prefers-reduced-motion: reduce)').matches)p.node.iconSprite.userData.spinStarted=performance.now(); p.node ? selectNode(p.node) : selectPair(p.link.pair); });
 
 // ---------- detail panel ----------
 const side=document.getElementById('side');
@@ -794,6 +815,7 @@ function frame(now){
   if(autoSpin && !looking && !fly){ const off=camera.position.clone().sub(controls.target); off.applyAxisAngle(camera.up, dt*.12); camera.position.copy(controls.target).add(off); camera.lookAt(controls.target); }
   if(!looking) controls.update();
   links.forEach(l=>{ if(l.dot&&l.dot.visible){ l.t=((l.t+dt*.25)%1+1)%1; l.dot.position.copy(l.curve.getPoint(l.t)); } });
+  icons.forEach(icon=>{if(!icon.visible)return;icon.quaternion.copy(camera.quaternion);const started=icon.userData.spinStarted;if(started!==null){const t=Math.min(1,(now-started)/5000);icon.rotateY(coinSpinAngle(now-started));if(t>=1)icon.userData.spinStarted=null;}});
   renderer.render(scene,camera);
   const W=innerWidth,H=innerHeight;
   DATA.nodes.forEach(n=>{ const lab=labelEls[n.id]; v.copy(n.mesh.position); v.y+=TYPE[n.type].r+.25; v.project(camera);

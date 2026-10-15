@@ -366,8 +366,10 @@ Goldfish reference: github-auditor contains ten named error-search expansions; n
 
 ## Shared footer-template — 2026-10-14
 
-Use apps/footer-template-20261014.js and its editor for the bottom signature. Rounded border, exactly one horizontal line: Made by Astra, YYYY-MM-DD, Find Out More → GitHub / Pole TikTok / VR TikTok icon links, Take Me Home! → spinning Friendly Farmer coin. Links are icons only with accessible names and hover labels. Allow enough height for the coin and horizontal scrolling on narrow screens; never wrap. Keep license, language and provenance details above this signature. Date is explicit, not a visit counter. See docs/footer-template-20261014.md for editor, export, build and rollout limits.
+Use apps/footer-template-20261014.js and its editor for the bottom signature. No decorative border or background, exactly one horizontal line: Made by Astra, YYYY-MM-DD, Find Out More → GitHub / Pole TikTok / VR TikTok icon links, Take Me Home! → spinning Friendly Farmer coin. Links are icons only with accessible names and hover labels. Allow enough height for the coin and horizontal scrolling on narrow screens; never wrap. Keep license, language and provenance details above this signature. Date is explicit, not a visit counter. See docs/footer-template-20261014.md for editor, export, build and rollout limits.
 
 ## Quiet page frame — 2026-10-14
 
 Keep app content centered, with roughly 72 CSS pixels (0.75 CSS inches) of outer space on large screens, shrinking to 16px on phones. Use apps/pet-page-spacing-20261014.css. Keep tool details behind named rounded disclosures; preserve existing functionality. This is visual spacing, not a literal physical-inch guarantee across displays.
+
+Owner correction, 2026-10-14: footer is writing and icons only, without a decorative border or panel. Every 2D pet coin uses a fixed 64px canvas, exact pet silhouette, mirrored back and 5%-width shiny gold sides; it spins continuously (respect reduced motion). On the System Map the pet-shaped coin stays still until clicked, then spins four turns over five seconds with deceleration to rest. No round coin disc. Native artwork resolution still limits close-up detail.

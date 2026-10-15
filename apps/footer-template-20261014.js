@@ -13,11 +13,11 @@
     render() {
       const root = this.shadowRoot;
       root.innerHTML = `<style>
-        :host{display:block;--footer-border:#d994c6;--footer-background:#211c2b;--footer-color:#fff1fa;--footer-radius:22px;--footer-coin:58px}
-        *{box-sizing:border-box}footer{border:2px solid var(--footer-border);border-radius:var(--footer-radius);background:var(--footer-background);color:var(--footer-color);padding:8px 18px;overflow-x:auto;font:14px/1.4 system-ui,sans-serif}
+        :host{display:block;--footer-border:#d994c6;--footer-background:#211c2b;--footer-radius:22px;--footer-coin:64px}
+        *{box-sizing:border-box}footer{border:0;background:transparent;color:var(--footer-color,inherit);padding:8px 0;overflow-x:auto;font:14px/1.4 system-ui,sans-serif}
         .line{display:flex;align-items:center;justify-content:center;gap:16px;white-space:nowrap;flex-wrap:nowrap;min-width:max-content;min-height:calc(var(--footer-coin) + 10px)}
-        .group{display:inline-flex;align-items:center;gap:8px;flex:none}a{display:inline-grid;place-items:center;color:inherit;width:40px;height:44px;border-radius:12px;text-decoration:none}a:hover{background:#ffffff18}a:focus-visible{outline:3px solid var(--footer-border);outline-offset:3px}svg{width:25px;height:25px;fill:currentColor}.pole{color:#ff99cd}.vr{color:#84ddff}.divider{opacity:.35}
-        .home{width:calc(var(--footer-coin) + 10px);height:calc(var(--footer-coin) + 10px);perspective:500px}.coin{position:relative;width:var(--footer-coin);height:var(--footer-coin);transform-style:preserve-3d;animation:footer-spin 6s linear infinite}.face,.edge{position:absolute;inset:0;border-radius:50%;background:linear-gradient(125deg,#fff6b7,#d58d14 45%,#fff0a0 65%,#a56206);border:1px solid #fbe18c}.face{backface-visibility:hidden;display:grid;place-items:center;transform:translateZ(calc(var(--footer-coin) * .025))}.back{transform:rotateY(180deg) translateZ(calc(var(--footer-coin) * .025))}.face img{width:88%;height:88%;object-fit:contain;image-rendering:pixelated}.home:hover .coin,.home:focus-visible .coin{animation-play-state:paused}@keyframes footer-spin{to{transform:rotateY(360deg)}}@media(prefers-reduced-motion:reduce){.coin{animation:none}}
+        .group{display:inline-flex;align-items:center;gap:8px;flex:none}a{display:inline-grid;place-items:center;color:inherit;width:40px;height:44px;border-radius:12px;text-decoration:none}a:hover{background:#ffffff18}a:focus-visible{outline:3px solid var(--footer-border);outline-offset:3px}svg{width:25px;height:25px;fill:currentColor}.pole,.vr{color:inherit}.divider{opacity:.35}
+        .home{width:calc(var(--footer-coin) + 10px);height:calc(var(--footer-coin) + 10px);perspective:500px}.coin{position:relative;width:var(--footer-coin);height:var(--footer-coin);transform-style:preserve-3d;animation:footer-spin 6s linear infinite}.face,.edge{position:absolute;inset:0}.edge{background:linear-gradient(125deg,#fff6b7,#d58d14 45%,#fff0a0 65%,#a56206);mask-size:contain;mask-repeat:no-repeat;mask-position:center}.face{backface-visibility:hidden;display:grid;place-items:center;transform:translateZ(calc(var(--footer-coin) * .025))}.back{transform:rotateY(180deg) translateZ(calc(var(--footer-coin) * .025))}.face img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}.back img{transform:scaleX(-1)}.home:hover .coin,.home:focus-visible .coin{animation-play-state:paused}@keyframes footer-spin{to{transform:rotateY(360deg)}}@media(prefers-reduced-motion:reduce){.coin{animation:none}}
       </style><footer aria-label="Made by Astra — signature and links"><div class="line"><span>Made by Astra</span><time></time><span class="divider" aria-hidden="true">│</span><span class="group more">Find Out More →</span><span class="divider" aria-hidden="true">│</span><span class="group home-group">Take Me Home! →</span></div></footer>`;
       const date = this.getAttribute('date') || '2026-10-14';
       const validDate = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) && new Date(date).toISOString().slice(0,10) === date;
@@ -27,9 +27,10 @@
         const a=link(label,safe(this.getAttribute(key),url),key);a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+art+'</svg>';root.querySelector('.more').append(a);
       }
       const home=link('The Farm — Friendly Farmer',safe(this.getAttribute('home'),base+'apps/astras-pet-apps-20261008.html'),'home');
+      const art=safe(this.getAttribute('farmer'),base+'art/icons/astras-pet-os-20261012.png');
       const coin=document.createElement('span');coin.className='coin';coin.setAttribute('aria-hidden','true');
-      for(let i=0;i<9;i++){const edge=document.createElement('span');edge.className='edge';edge.style.transform=`translateZ(calc(var(--footer-coin) * ${(i-4)*.00625}))`;coin.append(edge);}
-      for(const side of ['face','face back']){const face=document.createElement('span');face.className=side;const img=document.createElement('img');img.alt='';img.src=safe(this.getAttribute('farmer'),base+'art/icons/astras-pet-os-20261012.png');face.append(img);coin.append(face);}
+      for(let i=0;i<9;i++){const edge=document.createElement('span');edge.className='edge';edge.style.maskImage='url("'+art+'")';edge.style.transform=`translateZ(calc(var(--footer-coin) * ${(i-4)*.00625}))`;coin.append(edge);}
+      for(const side of ['face','face back']){const face=document.createElement('span');face.className=side;const img=document.createElement('img');img.alt='';img.src=art;face.append(img);coin.append(face);}
       home.append(coin);root.querySelector('.home-group').append(home);
     }
   }

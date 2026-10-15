@@ -11,7 +11,7 @@ test('providers keep stable IDs and have exact owner-requested labels and altern
 });
 test('repeated visibility changes clear hidden focus and restore independent rings without allocating objects',()=>{
   const nodes=[{id:'farm',type:'infrastructure'},{id:'openai',type:'model'},{id:'codex',type:'assistant'},{id:'agent-harness',type:'harness'}];
-  for(const n of nodes)n.iconSprite={material:{}};
+  for(const n of nodes)n.iconSprite={material:[{},{}]};
   const meshes=nodes.map(n=>({userData:{node:n,baseOpacity:1},material:{},scale:{setScalar(){}}}));
   const makeLink=(from,to)=>({from,to,state:'planned',pair:[from,to].sort().join('|'),line:{material:{}},hit:{},dot:{}});
   const links=[makeLink('farm','openai'),makeLink('farm','codex'),makeLink('codex','openai')];
@@ -40,4 +40,11 @@ test('hover events coalesce and pointer cancellation releases navigation',()=>{
   vm.runInContext('updateHover()',c);assert.equal(calls.length,1);
   assert.match(template,/pointercancel',releaseNavigation/);
   assert.doesNotMatch(template,/new THREE.TubeGeometry|preserveDrawingBuffer:true/);
+});
+
+test('coin spin starts still, slows down and stops after four turns',()=>{
+ const c=vm.createContext({});vm.runInContext(template.match(/function coinSpinAngle[^\n]+/)[0],c);
+ const at=t=>vm.runInContext('coinSpinAngle('+t+')',c);
+ assert.equal(at(0),0);assert.equal(at(5000),Math.PI*8);assert.equal(at(9000),at(5000));
+ let prior=Infinity;for(let t=0;t<5000;t+=500){const step=at(t+500)-at(t);assert.ok(step>=0&&step<prior);prior=step;}
 });

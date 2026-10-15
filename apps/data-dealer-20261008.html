@@ -329,12 +329,13 @@ td.num{text-align:right}
 /* Chip coin / Cyber Deck — OpenAI Codex (GPT-6), 2026-10-14. */
 .pet-launch{width:88px;height:88px;background:transparent;border:0;box-shadow:none;border-radius:50%;perspective:500px;right:24px;bottom:40px}
 .pet-launch::before,.pet::before{display:none}.pet-launch:hover{transform:none}.pet-launch:focus-visible{outline:3px solid #fff;outline-offset:5px}
-.chip-coin{position:relative;width:80px;height:80px;transform-style:preserve-3d;animation:chip-coin-spin 4s linear infinite;pointer-events:none}
-.chip-coin .coin-edge,.chip-coin .coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden}
-.chip-coin .coin-edge{backface-visibility:visible;background:conic-gradient(from 20deg,#885000,#fff7ad,#b77d0b,#fff4a0,#704000,#ffd760,#885000);border:1px solid #9a650d}
-.chip-coin .coin-face{display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ffffa4,#d9e25a 65%,#acb936);border:2px solid #050700;box-shadow:inset 0 0 0 2px #eac54b;transform:translateZ(2px)}
-.chip-coin .coin-back{transform:rotateY(180deg) translateZ(2px)}
-.pet-launch .coin-face canvas{width:64px;height:48px;background:transparent;border:0;border-radius:0;image-rendering:pixelated}
+.chip-coin{position:relative;width:64px;height:64px;transform-style:preserve-3d;animation:chip-coin-spin 4s linear infinite;pointer-events:none}
+.chip-coin .coin-edge,.chip-coin .coin-face{position:absolute;inset:0;backface-visibility:hidden}
+.chip-coin .coin-edge{backface-visibility:visible;background:conic-gradient(from 20deg,#885000,#fff7ad,#b77d0b,#fff4a0,#704000,#ffd760,#885000);mask-size:contain;mask-repeat:no-repeat;mask-position:center}
+.chip-coin .coin-face{display:grid;place-items:center;background:transparent;border:0;box-shadow:none;transform:translateZ(1.6px)}
+.chip-coin .coin-back{transform:rotateY(180deg) translateZ(1.6px)}
+.pet-launch .coin-face canvas{width:64px;height:64px;background:transparent;border:0;border-radius:0;image-rendering:pixelated}
+.coin-back canvas{transform:scaleX(-1)}
 .coin-pause{position:fixed;right:20px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:40;background:#18222b;color:#fff;border:1px solid #75818e;border-radius:7px;padding:4px 8px;font-size:11px;cursor:pointer}
 .pet-launch{bottom:calc(40px + env(safe-area-inset-bottom,0px))}.coin-paused .chip-coin{animation:none;transform:rotateY(0deg)}
 @keyframes chip-coin-spin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
@@ -1092,9 +1093,9 @@ function drawPet(cv,face,bob,blink){
 }
 function drawCoinFace(cv,face,blink){
   const source=document.createElement('canvas');source.width=32;source.height=24;
-  drawPet(source,face,0,blink);const src=source.getContext('2d').getImageData(11,7,10,9);
-  for(let i=0;i<src.data.length;i+=4)if(src.data[i]===195&&src.data[i+1]===211&&src.data[i+2]===155)src.data[i+3]=0;
-  const c=cv.getContext('2d');c.clearRect(0,0,32,24);c.putImageData(src,11,7);
+  drawPet(source,face,0,blink);const src=source.getContext('2d').getImageData(7,4,18,17);
+  for(let y=0;y<17;y++)for(let x=0;x<18;x++){const i=(y*18+x)*4;if(src.data[i]===195&&src.data[i+1]===211&&src.data[i+2]===155){if(x>=3&&x<=14&&y>=1&&y<=11){src.data[i]=238;src.data[i+1]=255;src.data[i+2]=52;}else src.data[i+3]=0;}}
+  cv.width=cv.height=18;cv.getContext('2d').putImageData(src,0,0);
 }
 function petTick(){
   if(document.hidden)return;
@@ -1102,6 +1103,7 @@ function petTick(){
   PET.blinkIn--; const blink=PET.blinkIn<=0; if(PET.blinkIn<=-1) PET.blinkIn=6+Math.floor(Math.random()*8);
   const f=petFace();
   drawCoinFace($("#pet-mini"),f,blink);drawCoinFace($("#pet-back"),f,blink);
+  const coinMask=$("#pet-mini").toDataURL();document.querySelectorAll(".chip-coin .coin-edge").forEach((edge,i)=>{edge.style.maskImage='url("'+coinMask+'")';edge.style.transform="translateZ("+((i-8)*.2)+"px)";});
   if(!$("#pet").hidden) drawPet($("#pet-big"),f,PET.bob,blink);
 }
 function pips(n){return Array.from({length:4},(_,i)=>`<i class="${i<n?"on":""}"></i>`).join("")}
