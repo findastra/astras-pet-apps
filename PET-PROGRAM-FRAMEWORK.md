@@ -355,3 +355,19 @@ Never display actual credentials in tooltips or ask for them in chat.
 ## Coin launcher clarification — 2026-10-14
 
 Pet Program chat launchers use each approved pet icon as a spinning coin, bottom-right, with shiny gold sides at 5% diameter depth. See docs/pet-coins-20261014.md and Flash Audit A44-A49. Chip is the initial source implementation; System Map coins remain planned. Existing art and accessibility must be preserved. The chatbot is wanted, and each pet has a separate conversation/permission scope on shared infrastructure. Backend enforcement remains independently required. Desktop double-click shows/hides the program window; it does not stop background work.
+
+## Standard expandable tool cards — 2026-10-14
+
+Required for all tools in new Pet Programs. Use compact rounded bubble cards. The collapsed card shows only the exact approved tool ID. ON/OFF and Sick checkboxes appear on the left inside the expanded card. Clicking its summary or using Enter/Space expands the description, version, implementation status, scope/settings, actions, result/progress and any child tools. Keep toggles inside the expanded content, separate from the summary trigger. Sick is manual health reporting, not an OFF switch. Retain per-tool persisted health and enabled state, explicit execution gates and accessible labels.
+
+Keep approved parent tools stable; related checks are nested expansions rather than flooding the top-level page. Each child tool retains its own controls. A parent OFF prevents running its child tools through that parent; a child OFF excludes that child's operation/results as documented. Overlap must be explained and totals deduplicated. Closing a card does not stop work or change its controls. Opening a tool whose settings are collapsed reveals the settings. Tutorial tools remain a separate section and launch L3 chat. Show honest planned/disconnected status; UI controls are not security enforcement.
+
+Goldfish reference: github-auditor contains ten named error-search expansions; naming-corrections, never-say-checker, report-exporter and flash-audit remain top-level tools. Existing programs migrate when edited/audited; this standard alone does not retroactively change them.
+
+## Shared footer-template — 2026-10-14
+
+Use apps/footer-template-20261014.js and its editor for the bottom signature. Rounded border, exactly one horizontal line: Made by Astra, YYYY-MM-DD, Find Out More → GitHub / Pole TikTok / VR TikTok icon links, Take Me Home! → spinning Friendly Farmer coin. Links are icons only with accessible names and hover labels. Allow enough height for the coin and horizontal scrolling on narrow screens; never wrap. Keep license, language and provenance details above this signature. Date is explicit, not a visit counter. See docs/footer-template-20261014.md for editor, export, build and rollout limits.
+
+## Quiet page frame — 2026-10-14
+
+Keep app content centered, with roughly 72 CSS pixels (0.75 CSS inches) of outer space on large screens, shrinking to 16px on phones. Use apps/pet-page-spacing-20261014.css. Keep tool details behind named rounded disclosures; preserve existing functionality. This is visual spacing, not a literal physical-inch guarantee across displays.

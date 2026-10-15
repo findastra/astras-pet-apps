@@ -88,3 +88,6 @@ console.log(metadataOnly
   : `Built ${Object.keys(index.pets).length} pets x ${MOODS.length} moods at ${index.size}px: frames, cage-data.js, ROSTER.md, README table, art/roster.png.`);
 if (placeholders.length) console.log(`Placeholder art (regenerate when you can): ${placeholders.join(', ')}`);
 if (missing.length) { console.error(`No art at all for: ${missing.join(', ')}`); process.exit(1); }
+
+// Shared Pet Program signature, after all generated output.
+execFileSync(process.execPath, ["scripts/build-footers-20261014.mjs"], { stdio: "inherit" });

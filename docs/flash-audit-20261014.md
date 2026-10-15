@@ -86,6 +86,8 @@ After **each round**, and after substantial owner corrections within a round:
 | A48 | Motion and performance | Gold edge is shiny without sparkle particles; verify visible spin, reduced-motion static fallback, pause control, hidden-tab/offscreen suspension and hide/unhide cleanup without extra animation loops. |
 | A49 | Coin consistency and runtime truth | Compare page/map assets and proportions; test real navigation and connected/disconnected chat honestly. Coin appearance does not establish an L3 backend or permissions. |
 
+| A50 | Expandable tool bubbles | All new-program tools use compact rounded cards; only exact approved IDs remain visible collapsed; left ON/Sick controls appear inside the expansion. Verify keyboard expansion, independent toggles, persisted state, parent/child gates, visible status/version/actions when expanded, and settings revealed by Open tool. Keep child checks under approved parents and tutorials separate. Collapse must not cancel or run work. |
+
 ## 3. Complete audit matrix
 
 | ID | Check | Evidence required / exception to report |
@@ -222,3 +224,7 @@ agent-optional tutorial wording. These are requirements, not implemented UI clai
   also covers behavior and tools beyond the passport.
 
 Keep Flash Audit until Astra chooses otherwise; no renaming based on suggestions alone.
+
+## Shared footer check A51 — 2026-10-14
+
+Verify footer-template: one rounded bordered line, Made by Astra and valid YYYY-MM-DD date; icon-only GitHub, Pole TikTok (@astra_on_fire), VR TikTok (@findastra), and spinning Farmer coin linking The Farm. Check accessible names, focus, reduced motion, coin fit, narrow-screen scrolling, editor save/reset/export, and no executable link schemes. Record deployment evidence separately for the hub and each individual repo. Latest tool-card correction: collapsed bubbles show the tool name only; all ON/OFF, Sick, description and actions are inside the rounded expansion.
