@@ -27,6 +27,9 @@ namespace AstraDesktopPets {
     internal static string TestStateFile { get { return Path.Combine(Path.GetDirectoryName(StateFile),"desktop-pets-test-status-20261008.json"); } }
     internal static string Exe { get { return Path.Combine(Root,"bin","desktop-pets-20261008.exe"); } }
     internal static string StartupCommand { get { return "\"" + Exe + "\" \"" + Root + "\" --startup"; } }
+    // Discord Damsel's launcher: starts OpenAI and Anthropic Discord Presence in Automatic, then opens her page.
+    internal static string DamselStart { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Projects","findastra-discord-presence","start-discord-damsel-20261014.cmd"); } }
+    internal static bool StartDamsel() { if(!File.Exists(DamselStart))return false;Process.Start(new ProcessStartInfo(DamselStart) { UseShellExecute=true,WindowStyle=ProcessWindowStyle.Minimized,WorkingDirectory=Path.GetDirectoryName(DamselStart) });return true; }
     internal static string BugExe { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"ChatGPT","Voicemeeter Bug","voicemeeter-bug-20261008.exe"); } }
     internal static Dictionary<string,object> Read(string relative) { return Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(SafePath(relative))); }
     internal static string SafePath(string relative) {
@@ -614,6 +617,7 @@ namespace AstraDesktopPets {
     internal void OpenPet(PetSprite pet) {
       testActions.Add("open:"+pet.Id);if(test){WriteStatus();return;}
       if(pet.Id=="voicemeeter-bug"){PetFiles.StartBug("--status");return;}
+      if(pet.Id=="discord-damsel"&&PetFiles.StartDamsel())return;
       Uri url;if(Uri.TryCreate(pet.Interface,UriKind.Absolute,out url)) { if(url.Scheme=="https"||url.Scheme=="http")Process.Start(new ProcessStartInfo(url.AbsoluteUri){UseShellExecute=true}); }
       else if(!String.IsNullOrWhiteSpace(pet.Interface))PetFiles.Open(pet.Interface);
     }

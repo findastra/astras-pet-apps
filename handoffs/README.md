@@ -8,6 +8,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
+| [014: Rebuild the desktop pets so Discord Damsel starts both presence apps](014-any-rebuild-desktop-for-discord-damsel-20261014.md) | any | open, waits on Astra: one rebuild |
 | [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |
 | [001: Register Claude Bot in the Cage](001-farmer-register-claude-bot.md) | Farmer | open |
