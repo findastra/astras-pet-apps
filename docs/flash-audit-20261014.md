@@ -59,6 +59,26 @@ If source rules remain contradictory, report the conflict rather than silently c
 8. Recheck affected items, publish a branch checkpoint and record what remains. Advance
    through the list without marking unchecked items complete.
 
+### Mandatory checkpoint and preview after every round
+
+After **each round**, and after substantial owner corrections within a round:
+
+1. Save decisions, evidence, unresolved questions, next pet number and remaining count
+   to a dated repository audit record before relying on chat history. Preserve answers
+   across context/token limits. Distinguish reviewed rounds from repaired applications.
+2. Run checks appropriate to the changes, commit the round's authorized files and push
+   to GitHub. Verify push success and record the branch/commit. If nothing changed,
+   verify synchronization without making an empty commit. Do not reset other work.
+3. Refresh the existing right-side preview after changing its displayed content, so
+   Astra can inspect the result. Preserve entered data; do not reload a dirty form
+   without addressing unsaved work. Keep the relevant preview visible for the round.
+4. A public GitHub Pages view only changes after deployment. A branch push does not
+   deploy or authorize merging. Refresh/check after confirmed deployment and say plainly
+   when the public page remains old. For documentation-only changes, show the updated
+   instruction/audit file; do not suggest the unchanged app has been updated.
+5. Hand off the next round with exact progress and open decisions. Never count a
+   Not verified check as passed merely to finish a round.
+
 ## 3. Complete audit matrix
 
 | ID | Check | Evidence required / exception to report |
