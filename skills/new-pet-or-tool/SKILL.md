@@ -43,6 +43,7 @@ third-party dependency, not a tool.
 ## Decisions so far
 | Tool | Owner | Why | Date |
 |---|---|---|---|
+| Flash Audit (working name; pet onboarding and exception-only audit rounds) | GitHub Goldfish / GitHub Aquarium | Repository and consistency auditing already belong to Goldfish. Manual instruction sheet: docs/flash-audit-20261014.md; automated interface not built. | 2026-10-14 |
 | Internet scrub (remove a person's details from sites and data brokers) | Gone Ghost | Privacy is his job; going ghost is his name. Target list stays on the PC. | 2026-10-13 |
 | name-eraser (replace a name, default `USER`, in files) | Gone Ghost (pending Astra's final OK on scope) | Same privacy job; runs as a dry run, then an approved plan with undo. | 2026-10-13 |
 | New-programs watch (every newly installed program, anywhere on the PC) | File Master | He already scans the whole PC; uses Everything (voidtools) when installed. | 2026-10-13 |
