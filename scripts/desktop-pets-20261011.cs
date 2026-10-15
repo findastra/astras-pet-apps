@@ -28,7 +28,8 @@ namespace AstraDesktopPets {
     internal static string Exe { get { return Path.Combine(Root,"bin","desktop-pets-20261008.exe"); } }
     internal static string StartupCommand { get { return "\"" + Exe + "\" \"" + Root + "\" --startup"; } }
     // Discord Damsel's launcher: starts OpenAI and Anthropic Discord Presence in Automatic, then opens her page.
-    internal static string DamselStart { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Projects","findastra-discord-presence","start-discord-damsel-20261014.cmd"); } }
+    // Pet Programs is the folder's new name (Astra, 2026-10-14); Projects until it is renamed.
+    internal static string DamselStart { get { string docs=Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);foreach(var home in new[]{"Pet Programs","Projects"}){string file=Path.Combine(docs,home,"findastra-discord-presence","start-discord-damsel-20261014.cmd");if(File.Exists(file))return file;}return Path.Combine(docs,"Pet Programs","findastra-discord-presence","start-discord-damsel-20261014.cmd"); } }
     internal static bool StartDamsel() { if(!File.Exists(DamselStart))return false;Process.Start(new ProcessStartInfo(DamselStart) { UseShellExecute=true,WindowStyle=ProcessWindowStyle.Minimized,WorkingDirectory=Path.GetDirectoryName(DamselStart) });return true; }
     internal static string BugExe { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"ChatGPT","Voicemeeter Bug","voicemeeter-bug-20261008.exe"); } }
     internal static Dictionary<string,object> Read(string relative) { return Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(SafePath(relative))); }

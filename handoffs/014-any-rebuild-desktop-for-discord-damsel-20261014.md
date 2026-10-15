@@ -10,7 +10,7 @@ needs: scripts/desktop-pets-20261011.cs, build-desktop-pets-20261011.ps1, findas
   each app's `src/launch.js --background --automatic` (new flag: switches the running app to Automatic through its own
   local control API) and then opens Damsel's page. Tests: 76 pass.
 - This repo, branch `claude/damsel-starts-presence-20261014`: `scripts/desktop-pets-20261011.cs` double-click on
-  `discord-damsel` runs `%USERPROFILE%\Documents\Projects\findastra-discord-presence\start-discord-damsel-20261014.cmd`
+  `discord-damsel` runs `start-discord-damsel-20261014.cmd` from `%USERPROFILE%\Documents\Pet Programs\findastra-discord-presence` (or `Documents\Projects` before the rename)
   (minimized) when it exists, otherwise opens her page as before. Not compiled: the cloud session has no C# compiler.
   `npm test` passes (79).
 - Not changed: `pets.json`. Its validator only allows http(s) or dated HTML interfaces, which is right; the launch goes
