@@ -1,3 +1,7 @@
+> Footer correction, 2026-10-15: combine status, attribution, date and links in one centered horizontal row, framed by thin lines above and below. Separate items with a vertically centered sparkle with 0.5cm CSS margins on both sides. Let clearly separated groups wrap into spacious, slightly staggered rows on narrow screens. Never add a horizontal footer scrollbar.
+
+> Owner correction, 2026-10-15: coins are retired across all Pet Programs, including footer icons. Use Chip's original yellow cell-phone shell, green LCD and black outline for every chatbot. Preserve each pet's actual chat and connection state. A cyberdeck redesign comes later. This supersedes all coin and non-phone styling instructions below.
+
 # Pet Program Framework
 
 The standard every pet program follows: what its page shows, how its tools, data, versions, backlog and agents
@@ -64,12 +68,12 @@ everything about that tool inside it.
    own AI subscriptions (Claude, ChatGPT, local models, whatever they have) and remembers the answer on that device;
    the user can change it any time. It signs in through the user's own accounts; no API key is stored in the page.
    Every program uses its exact current pet icon as the chat launcher. Start with a
-   shared chat panel design, without requiring Chip's phone-shaped container.
-   Header: **Astra's Cyber Deck — [Pet name] Chat**, for example Project Parrot Chat.
+   shared chat panel using Chip's original yellow phone, green LCD and black outline.
+   Header: **[Pet name] Chat**, for example Project Parrot Chat. A cyberdeck redesign is deferred.
    Show actual L3 connection/seat status; a disconnected chat must not fake responses.
 5. **The pet program's own tool boxes**, one per tool. Every tool box has:
    - an **ON/OFF** switch (a kill switch): OFF stops the tool at once, for a suspected security breach;
-   - a manual **sick** checkbox on the **left** of each tool, labelled **Not working**:
+   - a manual **maintenance light** paired with the power light on the **left** of each tool:
      "this tool is broken from my point of view" (it goes to the Farmer's
      `broken-tools-on-the-farm` and to the backlog), with **Take it to the vet-clinic** to ask the community
      (section 10);
@@ -87,7 +91,7 @@ everything about that tool inside it.
 7. **Links tool box**, grouped by kind (section 5).
 8. **Backlog health tool box:** healthy / needs attention / unhealthy, with the L3 agent's diagnosis of what is
    unhealthy, the date of the next weekly run, and the schedule.
-9. **Pet Passport tool box** (`<pet-program>-v<version>-pet-passport-v<version>`): its microchip (signature), pedigree
+9. **Pet Collar tool box** (`<pet-program>-v<version>-pet-collar-v<version>`): its microchip (signature), pedigree
    (where it came from), passport stamps (installs and updates), vaccination card (security patches) and vet records
    (vet-clinic tickets). See [PROVENANCE.md](PROVENANCE.md).
 10. **Footer:** the coding languages used, from the repo; credit "by Astra" and the license; signature status.
@@ -100,7 +104,7 @@ everything about that tool inside it.
   installed. Developers call this feature detection, or graceful degradation.
 
 - The ON/OFF state lives in the core (the Farm), not in the tool's own storage, so a compromised tool cannot turn
-  itself back on. The runtime checks it before the tool runs; the checkbox on the page only asks the core.
+  itself back on. The runtime checks it before the tool runs; the page control only asks the core; a disconnected control must state its local-only scope.
 - Anyone on the farm may turn a tool **OFF**. Turning it back **ON** after a security OFF needs L4 approval and is logged.
 - **The Farmer's `broken-tools-on-the-farm`** tool box lists every tool marked sick, turned off, or failing its
   health check, across every pet, with which pets use it.
@@ -289,7 +293,7 @@ with a clear explanation; do not highlight an unrelated element or claim complet
 Respect reduced motion and provide accessible step/target announcements.
 
 Tutorial tools stay visible in their page tool boxes, with the same **left-side manual
-Not working health checkbox** and **separate ON/OFF switch** as other tools. These
+maintenance light** and **separate ON/OFF switch** as other tools. These
 controls must not be hidden exclusively inside chat. OFF prevents launch and stops
 the active tour/highlight; marking Not working records a defect independently of OFF.
 Marking a tutorial complete does not grant permissions or execute its steps.
@@ -352,30 +356,31 @@ Never display actual credentials in tooltips or ask for them in chat.
 - [ ] Plain developer language throughout; no marketing.
 - [ ] Follows [PROTECTION-RINGS.md](PROTECTION-RINGS.md): it is an animal only once L4 lets it in.
 
-## Coin launcher clarification — 2026-10-14
+## Current shared presentation standard — 2026-10-15
 
-Pet Program chat launchers use each approved pet icon as a spinning coin, bottom-right, with shiny gold sides at 5% diameter depth. See docs/pet-coins-20261014.md and Flash Audit A44-A49. Chip is the initial source implementation; System Map coins remain planned. Existing art and accessibility must be preserved. The chatbot is wanted, and each pet has a separate conversation/permission scope on shared infrastructure. Backend enforcement remains independently required. Desktop double-click shows/hides the program window; it does not stop background work.
+The October 14 coin, pink-base-theme, hidden-checkbox and horizontally scrolling footer
+instructions are retired. Use the original yellow Chip phone with the current pet's
+artwork; preserve real chat handlers. Tools use rounded expandable bubbles and the
+paired indicator-light controls below, visible even while collapsed. Closing a tool
+never disables it. OFF prevents new actions through every launcher and stops the page's
+associated polling; native background workers have explicitly separate controls.
+Nested tools retain their own stable IDs, independent state and execution gates.
 
-## Standard expandable tool cards — 2026-10-14
+Use `apps/pet-phone-20261015.js`, `apps/pet-paper-20261015.js` and their CSS as the shared
+source. `scripts/sync-program-shells-20261015.mjs` updates existing local pet entries;
+`node scripts/build-footers-20261014.mjs` updates hub copies. Chip must also be rebuilt
+from `dashboard/src.html`. Shared UI does not imply an L3 connection or OS kill switch.
 
-Required for all tools in new Pet Programs. Use compact rounded bubble cards. The collapsed card shows only the exact approved tool ID. ON/OFF and Sick checkboxes appear on the left inside the expanded card. Clicking its summary or using Enter/Space expands the description, version, implementation status, scope/settings, actions, result/progress and any child tools. Keep toggles inside the expanded content, separate from the summary trigger. Sick is manual health reporting, not an OFF switch. Retain per-tool persisted health and enabled state, explicit execution gates and accessible labels.
+The shared footer has a light background, thin top/bottom rules, centered wrapping
+status and signature groups, spaced sparkles, and a static Farmer home icon. All
+content stays accessible at mobile width. No coins or horizontal footer scrolling.
 
-Keep approved parent tools stable; related checks are nested expansions rather than flooding the top-level page. Each child tool retains its own controls. A parent OFF prevents running its child tools through that parent; a child OFF excludes that child's operation/results as documented. Overlap must be explained and totals deduplicated. Closing a card does not stop work or change its controls. Opening a tool whose settings are collapsed reveals the settings. Tutorial tools remain a separate section and launch L3 chat. Show honest planned/disconnected status; UI controls are not security enforcement.
+### Owner visual standard — 2026-10-15
+Every visible text item must sit inside a bubble, card, label plate, or other intentional background; never leave raw copy floating on the stationery. Emotion labels use the normal page text color, set into the rounded speech-bubble border, with the pet on the right. Status and emotion settings need their own surfaces. Keep the portrait sheet fixed in width and let footer groups wrap into spacious, slightly staggered rows between its top and bottom rules. No horizontal footer scrollbar, clipping, or hidden footer links. Verify at desktop and mobile widths; preserve Clicker Training.
 
-Goldfish reference: github-auditor contains ten named error-search expansions; naming-corrections, never-say-checker, report-exporter and flash-audit remain top-level tools. Existing programs migrate when edited/audited; this standard alone does not retroactively change them.
 
-## Shared footer-template — 2026-10-14
+### Base structure and application launchers — owner correction 2026-10-15
+Order: Third Party Programs, Your Programs, Your Tools, then one shared two-column section with Your Tutorials on the left and Your Notes on the right. Stack that pair on narrow screens. Preserve Clicker Training and About below it. Application rows use square cloud-framed tiles containing actual application icons and names, with one-click launch actions; do not hide launchers behind a disclosure or send an installed-app launcher to a marketing website. Clearly distinguish installers from standalone apps (BetterDiscord opens its verified installer; it is a Discord modification). Launch routes must be fixed and bounded, with visible failure feedback. Verify the real application launch separately from rendering. No invented app integrations. Damsel uses slightly deeper blue wrinkled stationery with purple/light-blue controls and small neon-pink accents; no pink base theme or sharp diagonal folds.
 
-Use apps/footer-template-20261014.js and its editor for the bottom signature. No decorative border or background, exactly one horizontal line: Made by Astra, YYYY-MM-DD, Find Out More → GitHub / Pole TikTok / VR TikTok icon links, Take Me Home! → spinning Friendly Farmer coin. Links are icons only with accessible names and hover labels. Allow enough height for the coin and horizontal scrolling on narrow screens; never wrap. Keep license, language and provenance details above this signature. Date is explicit, not a visit counter. See docs/footer-template-20261014.md for editor, export, build and rollout limits.
 
-## Quiet page frame — 2026-10-14
-
-Keep app content centered, with roughly 72 CSS pixels (0.75 CSS inches) of outer space on large screens, shrinking to 16px on phones. Use apps/pet-page-spacing-20261014.css. Keep tool details behind named rounded disclosures; preserve existing functionality. This is visual spacing, not a literal physical-inch guarantee across displays.
-
-Owner correction, 2026-10-14: footer is writing and icons only, without a decorative border or panel. Every 2D pet coin uses a fixed 64px canvas, exact pet silhouette, mirrored back and 5%-width shiny gold sides; it spins continuously (respect reduced motion). On the System Map the pet-shaped coin stays still until clicked, then spins four turns over five seconds with deceleration to rest. No round coin disc. Native artwork resolution still limits close-up detail.
-
-Latest footer layout, 2026-10-14 (supersedes the one-line signature requirement): three centered groups with small decorative sparkles. Date is below Made by Astra; tightly spaced icon links are below Find Out More; the mirrored Farmer silhouette is below Take Me Home! Footer Farmer coin is 32px (half size), retaining 5% depth. Keep the footer unframed. Reduce top padding above contents in the footer editor panels and center labels/actions where readable. Other program chat launchers remain 64px.
-
-Footer alignment correction (2026-10-14): undo the centering request only. Use left-aligned editor content and footer groups; retain stacked date/icons/coin, 32px Farmer, compact icon spacing, decorative sparkles, and reduced panel padding.
-
-Visual standard correction (2026-10-14): reject the A–J kits. Center the combined mascot-and-text identity block, with mascot always on the left and text on the right. Tool names use bright, content-width bubbles grouped and centered; expanded controls sit underneath. Preserve left-aligned tool names and controls. Use the cute pink/light-blue Aquarium direction with small border accents. Clicking any pet coin triggers a fast decelerating flip while preserving its action and reduced-motion preference. Audit each page visually; this rule is not proof that every independent app has been migrated.
+Tool controls standard (2026-10-15): two compact glossy, lightly sparkling status-light buttons stacked together on the left edge of each tool bubble, vertically centered when possible and aligned at the top for expanded content. Keep a fixed 6px gap between the lights; move the pair as one unit. Top: green on / red off. Bottom: blue working / orange owner-marked maintenance. No visible ON or Not Working text. Keep title tooltips, explicit accessible state labels, keyboard focus and reduced-motion support. Both lamps remain usable when collapsed or disabled; maintenance toggles persist and feed existing health reporting. Blue is the manual health flag, not proof of a successful runtime check.

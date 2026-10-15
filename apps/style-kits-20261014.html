@@ -14,11 +14,155 @@
 @media(max-width:760px){.gallery{grid-template-columns:1fr}body{padding:0 16px;margin:24px auto}.kit{padding:16px}}
 
 body{background:#e0f3ff;color:#4b2845}html{background:#e0f3ff}header p{color:#80516e}header h1{font-size:28px}.new-preview{max-width:850px;margin:auto}.intro{display:flex;align-items:center;justify-content:center;gap:24px;width:fit-content;max-width:100%;margin:24px auto 32px;text-align:left}.intro h2{font-size:34px;margin:0}.intro p{margin:5px 0}.eyebrow{font-size:11px;letter-spacing:.14em;color:#89506e}.farmer-flip{border:0;background:transparent;cursor:pointer;perspective:500px;padding:0;flex-shrink:0}.coin{position:relative;display:block;width:90px;height:90px;transform-style:preserve-3d;animation:gentle 6s linear infinite}.coin img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}@keyframes gentle{to{transform:rotateY(360deg)}}.tool-panel,.tutorial-panel{position:relative;background:#fff3fb;border:2px solid #e2a1c8;border-radius:24px;padding:20px;margin:22px 0;box-shadow:0 5px 0 #c88eaf}.tool-panel::after,.tutorial-panel::after{content:'✧';position:absolute;top:9px;right:15px;color:#be5994;font-size:15px}.tool-panel h2,.tutorial-panel h2{text-align:center;font-size:19px;margin:0 0 5px}.hint{text-align:center;color:#81536f;font-size:13px;margin:4px 0 18px}.bubble-group{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:12px}.bubble-group details{width:fit-content;max-width:100%;border:0;background:transparent;margin:0}.bubble-group summary{display:block;width:fit-content;margin:0 auto;border:1px solid #be438c;background:#ff91cd;color:#442039;border-radius:999px;padding:10px 17px;font-size:14px;font-weight:700;box-shadow:0 3px 0 #c45b99}.bubble-group summary::after{content:none}.bubble-group details[open]{border:1px solid #dda0c4;border-radius:20px;padding:10px;background:#fffafe;max-width:340px}.bubble-body{padding:12px 5px 0;font-size:13px;text-align:left}.bubble-body button{background:#ffb9df;border:1px solid #b85b91;border-radius:12px;padding:7px 12px;color:#442039}.tutorial-panel{background:#f9f2ff}.tutorial-panel .bubble-group{margin-top:16px}.tutorial-panel summary{background:#e5b4ff;border-color:#9a63ad;box-shadow:0 3px 0 #b187c2}astra-footer{margin:32px auto;max-width:650px;color:#4b2845}@media(prefers-reduced-motion:reduce){.coin{animation:none}}@media(max-width:500px){.intro{gap:12px}.intro h2{font-size:26px}.coin{width:64px;height:64px}}
-</style></head><body><header><p>ASTRA’S PET PROGRAMS · NEW STYLE PREVIEW</p><h1>A little farm, a lot less clutter.</h1><p>Farmer on the left. Text on the right. Bright little tool bubbles together.</p></header>
+</style><link rel="stylesheet" href="pet-page-spacing-20261014.css"></head><body><header><p>ASTRA’S PET PROGRAMS · NEW STYLE PREVIEW</p><h1>A little farm, a lot less clutter.</h1><p>Farmer on the left. Text on the right. Bright little tool bubbles together.</p></header>
 <main class="new-preview"><section class="intro"><button class="farmer-flip" aria-label="Flip Friendly Farmer coin"><span class="coin" data-pet-coin><img src="../art/icons/astras-pet-os-20261012.png" alt="Friendly Farmer"></span></button><div><p class="eyebrow">YOUR LITTLE DIGITAL WORLD</p><h2>The Farm</h2><p>Welcome home, Astra.<br>Your pets and their tools, all in one place.</p></div></section>
 <section class="tool-panel"><h2>What shall we do today?</h2><p class="hint">Pick a bright bubble to see its controls.</p><div class="bubble-group"></div></section>
 <section class="tutorial-panel"><h2>A little help from your pet</h2><div class="bubble-group tutorials"></div></section></main><astra-footer date="2026-10-14"></astra-footer>
 <script src="footer-template-20261014.js"></script><script>
 const farmerCoin=document.querySelector('[data-pet-coin]');const farmerArt=farmerCoin.querySelector('img').src;farmerCoin.innerHTML='';for(let i=0;i<9;i++){const edge=document.createElement('span');edge.style.cssText=`position:absolute;inset:0;background:linear-gradient(125deg,#fff6b7,#c18412,#fff0a0);mask:url("${farmerArt}") center/contain no-repeat;transform:translateZ(${(i-4)*.5625}px)`;farmerCoin.append(edge)}for(const back of [false,true]){const face=document.createElement('span');face.style.cssText='position:absolute;inset:0;backface-visibility:hidden;transform:'+(back?'rotateY(180deg) ':'')+'translateZ(2.25px)';const img=document.createElement('img');img.src=farmerArt;img.alt='';if(back)img.style.transform='scaleX(-1)';face.append(img);farmerCoin.append(face)}
 for(const [target,names] of [['.bubble-group',['pet-roster','daily-rounds','system-map','notes-and-backlog','pet-adoption','seed-suggestions']],['.tutorials',['play-with-friendly-farmer','care-for-friendly-farmer']]])for(const name of names){const el=document.createElement('details');el.innerHTML=`<summary>${name}</summary><div class="bubble-body"><label><input type="checkbox" checked> ON</label><label><input type="checkbox"> Sick</label><p>${name==='pet-roster'?'Find your pets and open their Pet Programs.':'Preview of this tool’s description and controls.'}</p><button type="button">Preview tool</button><p class="feedback" role="status"></p></div>`;el.querySelector('button').onclick=()=>el.querySelector('.feedback').textContent='Style preview only — no background tool was run.';document.querySelector(target).append(el)}
+</script><style data-astra-phone-baseline>
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone,:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch{--neon:#d9e25a;--neon-ink:#0a0b05;--lcd:#c3d39b;--lcd-ink:#1f2b0e;--lcd-mid:#7d8f55;--f-pixel:"Silkscreen","IBM Plex Mono",ui-monospace,monospace;--f-lcd:"VT323","IBM Plex Mono",ui-monospace,monospace}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:76px;height:92px;border-radius:24px 24px 28px 28px;background:var(--neon);border:3px solid var(--neon-ink);box-shadow:0 0 0 3px var(--neon),0 0 10px color-mix(in srgb,var(--neon) 18%,transparent);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch::before{content:"";position:absolute;top:-14px;left:14px;width:8px;height:12px;background:var(--neon);border:3px solid var(--neon-ink);border-bottom:0;border-radius:5px 5px 0 0}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch canvas{width:52px;height:39px;image-rendering:pixelated;background:var(--lcd);border:3px solid var(--neon-ink);border-radius:9px}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch .lbl{font:700 10px/1 var(--f-pixel);color:var(--neon-ink);letter-spacing:.12em}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch .badge{position:absolute;top:-10px;right:-10px;background:var(--neon-ink);color:var(--neon);font:700 11px/1 var(--f-pixel);border-radius:999px;padding:5px 7px;border:2px solid var(--neon)}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch:hover{transform:translateY(-2px)}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch:focus-visible,:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone button:focus-visible,:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone input:focus-visible{outline:3px solid var(--neon-ink);outline-offset:2px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:41;width:min(400px,calc(100vw - 32px));height:min(680px,calc(100vh - 120px));height:min(680px,calc(100dvh - 120px));background:var(--neon);border:3px solid var(--neon-ink);border-radius:34px 34px 40px 40px;box-shadow:0 0 0 3px var(--neon),0 0 12px color-mix(in srgb,var(--neon) 15%,transparent);display:flex;flex-direction:column;padding:14px 14px 16px;gap:10px;color:var(--neon-ink)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone::before{content:"";position:absolute;top:-18px;left:34px;width:10px;height:15px;background:var(--neon);border:3px solid var(--neon-ink);border-bottom:0;border-radius:6px 6px 0 0}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-head{display:flex;align-items:center;gap:10px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-head b{font:700 18px/1 var(--f-pixel);letter-spacing:.08em}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-head span{font:400 10px/1.2 var(--f-pixel);letter-spacing:.06em;opacity:.75}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-x{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--neon-ink);color:var(--neon);border:0;font:700 16px/1 var(--f-pixel);cursor:pointer}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .lcd{background:var(--lcd);border:3px solid var(--neon-ink);border-radius:16px;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--lcd-ink) 12%,transparent);color:var(--lcd-ink)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-screen{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;padding:8px 12px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-screen canvas{width:128px;height:96px;image-rendering:pixelated;display:block}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-stats{display:grid;gap:7px;font:700 11px/1 var(--f-pixel);letter-spacing:.06em}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pips{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pips i{width:9px;height:9px;border:2px solid var(--lcd-ink);display:inline-block}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pips i.on{background:var(--lcd-ink)}
+#st-state{font:400 18px/1 var(--f-lcd);letter-spacing:0}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-log{flex:1;min-height:0;overflow:auto;padding:10px 12px;font:20px/1.12 var(--f-lcd);display:flex;flex-direction:column;gap:8px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pm{white-space:pre-wrap;overflow-wrap:anywhere;max-width:92%}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pm.bot::before{content:"CHIP> ";color:var(--lcd-mid)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pm.me{align-self:flex-end;background:var(--lcd-ink);color:var(--lcd);padding:4px 9px;border-radius:10px 10px 2px 10px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pm.sys{color:var(--lcd-mid);font-size:17px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-quick{display:flex;gap:6px;flex-wrap:wrap}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-quick button{background:var(--neon-ink);color:var(--neon);border:0;border-radius:999px;padding:7px 10px;font:700 9.5px/1 var(--f-pixel);letter-spacing:.06em;cursor:pointer}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-quick button:hover{background:#2a2d12}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-in{display:flex;gap:8px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-in input{flex:1;min-width:0;background:#eef0cf;color:var(--neon-ink);border:3px solid var(--neon-ink);border-radius:12px;padding:6px 10px;font:20px/1 var(--f-lcd)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-in button{background:var(--neon-ink);color:var(--neon);border:0;border-radius:12px;padding:0 14px;font:700 11px/1 var(--f-pixel);letter-spacing:.08em;cursor:pointer}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-tabs{display:flex;gap:6px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-tabs button{flex:1;background:transparent;color:var(--neon-ink);border:3px solid var(--neon-ink);border-radius:10px;padding:7px 0;font:700 10px/1 var(--f-pixel);letter-spacing:.08em;cursor:pointer}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-tabs button[aria-pressed="true"]{background:var(--neon-ink);color:var(--neon)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pet-goals{flex:1;min-height:0;overflow:auto;padding:8px 12px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg-h{font:700 10px/1 var(--f-pixel);letter-spacing:.1em;margin:12px 0 4px;color:var(--lcd-mid)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;padding:7px 0;border-bottom:2px dotted color-mix(in srgb,var(--lcd-ink) 28%,transparent)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg:last-child{border-bottom:0}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg .bx{width:14px;height:14px;border:2px solid var(--lcd-ink);margin-top:3px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg.done .bx{background:var(--lcd-ink)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg .t{font:20px/1.05 var(--f-lcd);overflow-wrap:anywhere}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg.done .t{text-decoration:line-through;opacity:.6}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg .pgm{font:16px/1.1 var(--f-lcd);color:var(--lcd-mid);overflow-wrap:anywhere}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg-btns button{background:var(--lcd-ink);color:var(--lcd);border:0;border-radius:6px;padding:5px 8px;font:700 9px/1 var(--f-pixel);letter-spacing:.06em;cursor:pointer}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .pg-btns button[disabled]{opacity:.5}
+
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch{inset:auto 18px 18px auto!important;min-width:0;box-sizing:border-box!important;transform:none!important;perspective:none!important}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch img{width:52px!important;height:39px!important;object-fit:contain;image-rendering:pixelated;background:var(--lcd);border:3px solid var(--neon-ink);border-radius:9px;box-sizing:content-box}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone{inset:auto 18px 18px auto!important;margin:0!important;max-height:calc(100dvh - 60px);box-sizing:border-box!important;overflow:visible!important;text-align:left}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone:not([open])[role=dialog],dialog:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone:not([open]),:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone[hidden]{display:none!important}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone h2{font:700 18px/1.15 var(--f-pixel);color:var(--neon-ink);margin:0}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone p{font:18px/1.2 var(--f-lcd);color:var(--lcd-ink)}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone .phone-display{flex:1;overflow:auto;padding:12px;min-height:0}
+:is(#tower-chat,#pet,#cyber-deck,#astra-phone-chat).astra-phone::backdrop{background:#10150533}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch .badge:empty{display:none}
+#coin-pause{display:none!important}
+:is(#pet-open,#pet-chat,#tower-chat-launcher,button).astra-phone-launch[hidden]{display:none!important}
+.astra-common{background:linear-gradient(180deg,transparent,#f4f8ff 70px);color:#49394f;margin-top:40px;padding:36px 20px 22px;border-radius:24px;display:grid;gap:24px}
+.astra-common>section{max-width:900px;width:100%;margin:auto;text-align:center}
+.astra-common h2{font:600 12px/1.4 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#735773}
+.astra-common button,.astra-common summary{background:#efc8e3;border:1px solid #bb8db0;border-radius:22px;color:#57324e;padding:10px 18px;margin:6px;cursor:pointer;font:14px system-ui}
+.astra-common p{font:13px/1.6 system-ui}.astra-common textarea{box-sizing:border-box;width:100%;min-height:70px;background:#fff;color:#382a3d;border:1px solid #c9b8ce;border-radius:12px;padding:12px}
+.astra-tutorials{border:1px solid #c7a5c4;border-radius:20px;padding:18px;box-sizing:border-box}
+
+</style><script data-astra-phone-baseline>
+/* Owner's original Chip phone baseline, 2026-10-15. No model connection is implied. */
+(() => {
+  const run = () => {
+    if(document.querySelector('[data-astra-phone-ready]')) return;
+    const make=(tag,text,parent,cls)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(cls)e.className=cls;if(parent)parent.append(e);return e;};
+    let launch=document.querySelector('#tower-chat-launcher,#pet-open,#pet-chat');
+    let panel=launch ? document.getElementById(launch.id==='pet-open'?'pet':launch.id==='pet-chat'?'cyber-deck':'tower-chat') : null;
+    const original=launch?.querySelector('canvas,img') || document.querySelector('body>header img,header img')?.cloneNode(true);
+    const name=launch?.getAttribute('aria-label')?.replace(/^Open /,'').replace(/ chat$/i,'') || document.querySelector('h1')?.textContent || 'Pet';
+    if(!launch || !panel){
+      launch=make('button',null,document.body);launch.type='button';launch.setAttribute('aria-label','Open '+name+' chat');
+      panel=make('dialog',null,document.body);panel.id='astra-phone-chat';
+      panel.setAttribute('aria-label',name+' Chat');
+      const head=make('div',null,panel,'pet-head');make('h2',name+' Chat',head);
+      const close=make('button','×',head,'pet-x');close.type='button';close.setAttribute('aria-label','Close chat');close.onclick=()=>panel.close();
+      const display=make('div',null,panel,'lcd phone-display');make('p','Seat: empty. No AI account is connected to this page.',display);
+      make('p','Chat becomes available when a compatible host is connected.',display);
+      const form=make('div',null,panel,'pet-in');const input=make('input',null,form);input.placeholder='Chat is disconnected';input.disabled=true;input.setAttribute('aria-label','Message');const send=make('button','SEND',form);send.disabled=true;
+      launch.onclick=()=>panel.showModal();
+    }
+    launch.className='astra-phone-launch';launch.dataset.astraPhoneReady='true';launch.setAttribute('aria-controls',panel.id);
+    // Keep live canvases and their IDs so existing drawing and host handlers still work.
+    const canvases=[...launch.querySelectorAll('canvas')];
+    const badge=launch.querySelector('.badge');
+    launch.replaceChildren();
+    if(original){launch.append(original);if(original.tagName==='CANVAS')original.hidden=false;}
+    else make('span','▣',launch);
+    for(const canvas of canvases)if(canvas!==original){canvas.hidden=true;launch.append(canvas);}
+    make('span','CHAT',launch,'lbl');if(badge)launch.append(badge);
+    panel.classList.add('astra-phone');
+    if(panel.id==='tower-chat'){
+      panel.querySelector('h2').textContent='Discord Damsel Chat';
+      const head=make('div',null,panel,'pet-head');head.append(panel.querySelector('h2'),panel.querySelector('.tower-close'));panel.prepend(head);
+      panel.querySelector('.tower-close').className='pet-x';
+      const display=make('div',null,panel,'lcd phone-display');for(const p of [...panel.querySelectorAll(':scope > p')])display.append(p);
+      const form=make('div',null,panel,'pet-in');const input=make('input',null,form);input.disabled=true;input.placeholder='Chat is disconnected';input.setAttribute('aria-label','Message');make('button','SEND',form).disabled=true;
+    }
+    for(const edge of document.querySelectorAll('.coin-edge,.tower-edge'))edge.remove();
+    for(const controls of document.querySelectorAll('.tool-controls')){
+      const details=controls.closest('details'),summary=details?.querySelector(':scope>summary');if(!summary)continue;
+      details.classList.add('tower-tool');controls.className='tower-controls tower-light-controls';summary.append(controls);
+      for(const input of controls.querySelectorAll('input[type=checkbox]')){
+        const label=input.closest('label');if(!label)continue;label.hidden=true;
+        const maintenance=/Sick|Not working/i.test(input.getAttribute('aria-label')||'');
+        const light=make('button',null,controls,'tower-light');light.type='button';light.dataset.control=maintenance?'sick':'enabled';
+        const update=()=>{light.dataset.active=String(input.checked);const state=maintenance?(input.checked?'Needs maintenance':'Working'):(input.checked?'On':'Off');light.title=state+' — click to change';light.setAttribute('aria-label',(input.getAttribute('aria-label')||'Tool')+': '+state);light.setAttribute('aria-pressed',String(input.checked));};
+        update();input.addEventListener('change',update);light.onclick=event=>{event.preventDefault();event.stopPropagation();input.click();update();};
+      }
+    }
+    if(!document.querySelector('.tower-shared')){
+      const common=make('section',null,document.body,'astra-common');common.setAttribute('aria-label','Shared Pet Program controls');
+      const section=(title)=>{const s=make('section',null,common);make('h2',title,s);return s;};
+      const notes=section('Your Notes');const area=make('textarea',null,notes);area.setAttribute('aria-label','Pet Program notes');
+      let identity=location.pathname;try{identity=JSON.parse(document.querySelector('script[data-astra-paper-data]')?.textContent||'{}').repo||identity;}catch{}const noteKey='astra-phone-notes:'+identity;try{let value=localStorage.getItem(noteKey);if(value===null){value=localStorage.getItem('astra-phone-notes:'+location.pathname);if(value!==null)localStorage.setItem(noteKey,value);}area.value=value||'';}catch{}
+      const save=make('button','Save notes',notes);const receipt=make('p','Saved on this browser only.',notes);receipt.setAttribute('role','status');save.onclick=()=>{try{localStorage.setItem(noteKey,area.value);receipt.textContent='Notes saved in this browser.';}catch{receipt.textContent='Browser storage unavailable; copy your notes before closing.';}};
+      const exportNotes=make('button','Export notes',notes);exportNotes.onclick=()=>{const blob=new Blob([JSON.stringify({schema:1,program:identity,notes:area.value},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=make('a');a.href=url;a.download='pet-notes-'+new Intl.DateTimeFormat('en-CA',{timeZone:'America/Denver',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).replaceAll('-','')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+      const restoreLabel=make('label','Import notes',notes),restore=make('input',null,restoreLabel);restore.type='file';restore.accept='.json';restore.onchange=async()=>{const file=restore.files?.[0];if(!file)return;try{if(file.size>5_000_000)throw Error('Export is too large.');const data=JSON.parse(await file.text());if(data.schema!==1||data.program!==identity||typeof data.notes!=='string')throw Error('Choose an export from this Pet Program.');const current=area.value;localStorage.setItem(noteKey+':before-import',current);localStorage.setItem(noteKey,data.notes);area.value=data.notes;receipt.textContent='Notes imported. Previous notes kept for Undo import.';}catch(error){receipt.textContent='Import not applied: '+error.message;}finally{restore.value='';}};
+      const undo=make('button','Undo import',notes);undo.onclick=()=>{try{const old=localStorage.getItem(noteKey+':before-import');if(old===null){receipt.textContent='No import backup exists.';return;}localStorage.setItem(noteKey,old);area.value=old;receipt.textContent='Previous notes restored.';}catch{receipt.textContent='Browser storage is unavailable.';}};
+      const tutorials=section('Your Tutorials');tutorials.classList.add('astra-tutorials');
+      const existingTutorials=document.querySelector('#tutorial-grid');
+      if(existingTutorials){for(const box of [...existingTutorials.children]){const summary=box.querySelector('summary');if(summary&&summary.firstChild?.nodeType===3)summary.firstChild.textContent=box.id.includes('play-with')?'Play with '+name:'Care for '+name;tutorials.append(box);}const note=existingTutorials.previousElementSibling,heading=note?.previousElementSibling;if(heading?.tagName==='H2'&&heading.textContent==='Tutorial tools'){heading.remove();note.remove();}existingTutorials.remove();}
+      else for(const label of ['Play with '+name,'Care for '+name]){const button=make('button',label,tutorials);button.onclick=()=>launch.click();}
+      make('p','Open this pet’s chat. Guided tutorials require a connected host; opening chat does not start a tutorial.',tutorials);
+      const split=make('div',null,common,'astra-shared-split');split.append(tutorials,notes);
+      const training=section('Clicker Training');training.classList.add('astra-clicker-training');
+      const bindings=make('dl',null,training);
+      for(const [gesture,action] of [['One click','Show the most important emotion-linked message.'],['Two clicks','Show or hide this Pet Program window. Background work continues.'],['Three clicks','Run the assigned quick tool. No quick tool is assigned by this page.']]){make('dt',gesture,bindings);make('dd',action,bindings);}
+      make('p','Desktop binding status: not verified by this page. The yellow phone opens browser chat.',training);
+      const about=section('About');const collar=make('details',null,about);make('summary','Pet collar',collar);make('p',name+' · by Astra. The collar holds identity, version and provenance information. Release signatures and installed versions have not been verified by this page.',collar);
+      for(const footer of [...document.querySelectorAll('body > footer,body > [data-astra-shared-footer]')])common.append(footer);
+    }
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+})();
+
 </script></body></html>

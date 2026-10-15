@@ -5,7 +5,7 @@ Tool label: `github-aquarium-v1.0-flash-audit-v1.0`.
 By Astra. Compiled with OpenAI Codex (GPT-6), 2026-10-14.
 
 This is a usable manual audit procedure and a specification for a future tool interface.
-It is not an implemented automated auditor, deployed service, or security certification.
+Goldfish now also has a read-only local metadata preflight at `scripts/flash-audit-local-20261015.mjs`. It is not a complete automated auditor, deployed service, or security certification.
 Use it for new pets, existing pets, and the restarted rapid-question review of every pet.
 Goldfish owns the audit; the Farmer owns registry/admission coordination. No new pet is needed.
 
@@ -111,7 +111,7 @@ After **each round**, and after substantial owner corrections within a round:
 | A17 | Git and deployment | Record dirty files, ahead/behind commits, pushed branch, merged state and deployed version separately. Do not reset/stash/discard another agent's work. |
 | A18 | Official tool inventory | Separate implemented, owner-approved planned, and proposed tools. Record purpose, version, owner, permissions, dependencies and add-your-own decisions. |
 | A19 | Tool behavior | Verify inputs, outputs, errors and intended actions for each tool. Use safe fixtures for changing actions; live checks require authorized scope. |
-| A20 | Manual defect checkbox | Every tool has a left-side "Not working" checkbox, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
+| A20 | Manual maintenance light | Every tool has a left-side blue/orange maintenance light, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
 | A21 | Tool OFF enforcement | Verify execution actually stops/prevents new work, state is controlled outside the tool, and security OFF cannot be self-reenabled. Report unsupported enforcement as a gap. |
 | A22 | Chatbot and seat status | Click the exact pet-icon launcher; verify the shared chat panel, header Astra's Cyber Deck — [Pet name] Chat, actual L3 connection/model/task, consent, replies, close/reopen and honest disconnected state. A rendered panel alone is not a functioning chatbot. |
 | A23 | Chat-created tools | Verify request capture, authorized agent dispatch, build progress, independent review, tests, version registration and list entry. No self-granted access. |
@@ -123,11 +123,11 @@ After **each round**, and after substantial owner corrections within a round:
 | A29 | Notes/backlog | Verify notes, screenshots, requests and defect reports persist, retain tool/version association, and reach the actual destination. |
 | A30 | Data continuity | Verify export/import, schema version, backup/migration on update and persistence across versions. Private test data stays private. |
 | A31 | Status and link labels | Check data owner, last entry, update/version, seat, map node, and links grouped by kind with origin/location/visibility labels. |
-| A32 | Passport and release trust | Check provenance, signature claims, install/update history and recovery evidence. Planned signing is not verified signing. |
+| A32 | Pet Collar and release trust | Check provenance, signature claims, install/update history and recovery evidence. Planned signing is not verified signing. |
 | A33 | Registration/admission | Check candidate/pipeline/registered stage, owner admission, pet-app discovery, registration handoff and dated submission. No automatic trust from discovery. |
 | A34 | Generated artifacts/tests | Use canonical sources/builders; check generated registry/docs/art, documented build/check/tests, visual inspection and relevant runtime acceptance. |
 | A35 | Handoff and unresolved work | Record exact evidence, commits, touched files, remaining issues, owners and next steps. Say explicitly what is only on a branch. |
-| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Its page tool box launches the L3 chatbot into that tutorial and retains a left-side Not working checkbox and separate ON/OFF switch. Verify OFF prevents launch/stops the active tour. |
+| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Its page tool box launches the L3 chatbot into that tutorial and retains a left-side maintenance light and separate ON/OFF switch. Verify OFF prevents launch/stops the active tour. |
 | A37 | Play and care SOPs | Every pet has Play with and Care for numbered SOPs delivered in L3 chat. Click each page-listed tutorial tool; verify correct chat context, real steps, prerequisites, expected results, version and stop/help path. No standalone tutorial page or fictional steps for planned features. |
 | A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
 | A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
@@ -200,7 +200,7 @@ Do not claim an unaudited pet, live interaction, security boundary or deployment
 ## 6. Goldfish tool contract and remaining implementation
 
 The manual procedure can be used now. Its future tool box must have the versioned label,
-left-side Not working checkbox, enforced ON/OFF, scope selector, run/progress/cancel,
+left-side maintenance light, enforced ON/OFF, scope selector, run/progress/cancel,
 exception matrix, evidence links, review questions and exportable report. Account access
 must be declared; read-only inspection is the default. Repair is a separate authorized action.
 
@@ -220,19 +220,39 @@ agent-optional tutorial wording. These are requirements, not implemented UI clai
 - **Flash Audit**: the owner's working name; quick rounds backed by thorough checks.
 - **Fin Check**: short and specific to GitHub Goldfish. Recommended pet-themed option.
 - **School Inspection**: a school of fish reviewing the whole pet collection.
-- **Pet Passport Check**: emphasizes identity, provenance and readiness, though the audit
-  also covers behavior and tools beyond the passport.
+- **Pet Collar Check**: emphasizes identity, provenance and readiness, though the audit
+  also covers behavior and tools beyond the collar.
 
 Keep Flash Audit until Astra chooses otherwise; no renaming based on suggestions alone.
 
-## Shared footer check A51 — 2026-10-14
+## Current visual checks A44–A51 — owner corrections, 2026-10-15
 
-Verify footer-template: one unframed line of writing and icons, Made by Astra and valid YYYY-MM-DD date; icon-only GitHub, Pole TikTok (@astra_on_fire), VR TikTok (@findastra), and spinning Farmer coin linking The Farm. Check accessible names, focus, reduced motion, coin fit, narrow-screen scrolling, editor save/reset/export, and no executable link schemes. Record deployment evidence separately for the hub and each individual repo. Latest tool-card correction: collapsed bubbles show the tool name only; all ON/OFF, Sick, description and actions are inside the rounded expansion.
+These replace the October 14 coin, pink-theme, hidden-control and never-wrap footer rules.
 
-Owner correction, 2026-10-14: footer is writing and icons only, without a decorative border or panel. Every 2D pet coin uses a fixed 64px canvas, exact pet silhouette, mirrored back and 5%-width shiny gold sides; it spins continuously (respect reduced motion). On the System Map the pet-shaped coin stays still until clicked, then spins four turns over five seconds with deceleration to rest. No round coin disc. Native artwork resolution still limits close-up detail.
+| ID | Check | Evidence required |
+|---|---|---|
+| A44 | Original yellow phone | Shared original Chip shell; current pet artwork; opens the actual pet chat without coin geometry or spinning animation. Preserve existing host handlers. |
+| A45 | Paper and zoom | Portrait paper width; normal initial view; Ctrl+wheel from full-page fit to 100%, no zoom bar; no horizontal overflow at 390px. Real browser acceptance is separate from handler tests. |
+| A46 | Program launch rows | Third Party Programs then Your Programs: square cloud-framed app icons with accessible names and real bounded launch routes; installer labels distinguish installation from an installed app. |
+| A47 | Shared base | Your Tools followed by Your Tutorials/Your Notes side by side, stacking on narrow screens; exactly two Play/Care tutorials; visible Clicker Training and About. |
+| A48 | Paired lights | Left-side stacked green/red ON/OFF and blue/orange manual maintenance lights; fixed spacing and common positioning; visible closed or open; tooltips, keyboard focus, persisted state and actual gates. |
+| A49 | Emotion key | Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick, Sad in 3/2/1 columns. Label in white rounded bubble border, pet on right; blink is animation, not a state. Describe actual signal/threshold sources and unknown queues. |
+| A50 | Backdrop and text | Each pet has a distinct stationery palette; Damsel blue wrinkles, purple/light-blue controls and restrained neon-pink sparkles. All text has a deliberate surface. No approved pet art regenerated. |
+| A51 | Footer | Centered, spacious, slightly staggered wrapping groups between thin rules; status, Made by Astra/date, social icons and static Farmer home icon. No coin or horizontal scrollbar. Verify all links remain reachable. |
 
-Latest footer layout, 2026-10-14 (supersedes the one-line signature requirement): three centered groups with small decorative sparkles. Date is below Made by Astra; tightly spaced icon links are below Find Out More; the mirrored Farmer silhouette is below Take Me Home! Footer Farmer coin is 32px (half size), retaining 5% depth. Keep the footer unframed. Reduce top padding above contents in the footer editor panels and center labels/actions where readable. Other program chat launchers remain 64px.
+## Mandatory Clicker Training preservation — owner correction, 2026-10-15
 
-Footer alignment correction (2026-10-14): undo the centering request only. Use left-aligned editor content and footer groups; retain stacked date/icons/coin, 32px Farmer, compact icon spacing, decorative sparkles, and reduced panel padding.
+A41 is a required shared Pet Program control, not an optional tutorial or a chat-launcher description. Every page must visibly retain a bordered Clicker Training section with One click, Two clicks, and Three clicks rows. Do not collapse it into a generic Click bindings bubble, remove it during a layout migration, or replace it with phone/chat instructions. Display the actual assigned quick tool and verification state; say unassigned or not verified where appropriate. Audit desktop and 390px mobile layouts, and confirm the section remains after regeneration. Native timing, drag suppression, permissions and OFF checks remain required before claiming the desktop bindings work.
 
-Visual standard correction (2026-10-14): reject the A–J kits. Center the combined mascot-and-text identity block, with mascot always on the left and text on the right. Tool names use bright, content-width bubbles grouped and centered; expanded controls sit underneath. Preserve left-aligned tool names and controls. Use the cute pink/light-blue Aquarium direction with small border accents. Clicking any pet coin triggers a fast decelerating flip while preserving its action and reduced-motion preference. Audit each page visually; this rule is not proof that every independent app has been migrated.
+Recorded by OpenAI Codex (GPT-6).
+
+
+### Owner visual standard — 2026-10-15
+Every visible text item must sit inside a bubble, card, label plate, or other intentional background; never leave raw copy floating on the stationery. Emotion labels use the normal page text color, set into the rounded speech-bubble border, with the pet on the right. Status and emotion settings need their own surfaces. Keep the portrait sheet fixed in width and let footer groups wrap into spacious, slightly staggered rows between its top and bottom rules. No horizontal footer scrollbar, clipping, or hidden footer links. Verify at desktop and mobile widths; preserve Clicker Training.
+
+
+### Base structure and application launchers — owner correction 2026-10-15
+Order: Third Party Programs, Your Programs, Your Tools, then one shared two-column section with Your Tutorials on the left and Your Notes on the right. Stack that pair on narrow screens. Preserve Clicker Training and About below it. Application rows use square cloud-framed tiles containing actual application icons and names, with one-click launch actions; do not hide launchers behind a disclosure or send an installed-app launcher to a marketing website. Clearly distinguish installers from standalone apps (BetterDiscord opens its verified installer; it is a Discord modification). Launch routes must be fixed and bounded, with visible failure feedback. Verify the real application launch separately from rendering. No invented app integrations. Damsel uses slightly deeper blue wrinkled stationery with purple/light-blue controls and small neon-pink accents; no pink base theme or sharp diagonal folds.
+
+
+Tool controls standard (2026-10-15): two compact glossy, lightly sparkling status-light buttons stacked together on the left edge of each tool bubble, vertically centered when possible and aligned at the top for expanded content. Keep a fixed 6px gap between the lights; move the pair as one unit. Top: green on / red off. Bottom: blue working / orange owner-marked maintenance. No visible ON or Not Working text. Keep title tooltips, explicit accessible state labels, keyboard focus and reduced-motion support. Both lamps remain usable when collapsed or disabled; maintenance toggles persist and feed existing health reporting. Blue is the manual health flag, not proof of a successful runtime check.

@@ -42,9 +42,8 @@ test('hover events coalesce and pointer cancellation releases navigation',()=>{
   assert.doesNotMatch(template,/new THREE.TubeGeometry|preserveDrawingBuffer:true/);
 });
 
-test('coin spin starts still, slows down and stops after four turns',()=>{
- const c=vm.createContext({});vm.runInContext(template.match(/function coinSpinAngle[^\n]+/)[0],c);
- const at=t=>vm.runInContext('coinSpinAngle('+t+')',c);
- assert.equal(at(0),0);assert.equal(at(5000),Math.PI*8);assert.equal(at(9000),at(5000));
- let prior=Infinity;for(let t=0;t<5000;t+=500){const step=at(t+500)-at(t);assert.ok(step>=0&&step<prior);prior=step;}
+test('approved map icons remain flat and selecting them does not start a coin animation',()=>{
+ assert.match(template,/new THREE.PlaneGeometry\(1,1\),face/);
+ assert.doesNotMatch(template,/coinSpinAngle|spinStarted|function extrude/);
+ assert.match(template,/icon.quaternion.copy\(camera.quaternion\)/);
 });

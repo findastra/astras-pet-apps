@@ -146,3 +146,5 @@ Astra's PetOS restructuring with Claude Opus 5.5 (`claude-opus-5-5`), head chat,
 Identity-bound authorization reference verifier, impersonation/replay tests, topology/access map separation and complete pet naming catalog by OpenAI Codex (GPT-6), 2026-10-14. See docs/security-boundaries-20261014.md. Reference checks are not deployed OS isolation.
 
 Optional Codex/OpenAI and Claude Code/Anthropic planet rings, separate planned PetOS shell and bounded hover/render work by OpenAI Codex (GPT-6), 2026-10-14. Keep direct model routes distinct from application-assisted routes; neither bypasses authorization.
+
+Shared stationery, original yellow phone, non-coin map icons, paired tool lights, stable note identity, footer wrapping and Flash Audit source repairs by OpenAI Codex (GPT-6), 2026-10-15. Latest owner corrections in PET-PROGRAM-FRAMEWORK.md and docs/flash-audit-20261014.md supersede older visual rules. Branch publication is separate from deployed UI and native runtime acceptance.

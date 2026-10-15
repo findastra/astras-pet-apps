@@ -33,7 +33,7 @@ Astra wants other software developers to read her build without frustration. She
 | Shutdown levels | Incident containment (NIST SP 800-61) | Not a "system crash": it is stopped on purpose. |
 | Recovery, safe startup order | Incident recovery; ordered service startup | Watchers before workers, verify before trust, least power first. |
 | The alarm | Security incident alert | Everywhere at once; past breaches marked "found, not active". |
-| Pet Passport | Provenance record (signatures, lineage, release history, patches, incidents); measured with SLSA levels | Microchip = signature, pedigree = lineage, stamps = installs and updates, vaccinations = patches, vet records = tickets. Decided 2026-10-14. |
+| Pet Collar | Provenance record (signatures, lineage, release history, patches, incidents); measured with SLSA levels | Microchip = signature, pedigree = lineage, stamps = installs and updates, vaccinations = patches, vet records = tickets. Decided 2026-10-14. |
 | Security hats | Ethics (white, grey, black hat) plus teams (red, blue, purple) | Avoid "Red Hat" alone: it is also a Linux company. Decided 2026-10-14. |
 | ON/OFF on a tool or connection | Kill switch / feature flag | Enforced by the core, not just shown on the page. |
 | Sick checkbox | User-reported defect | Feeds the Farmer's `broken-tools-on-the-farm`. |
