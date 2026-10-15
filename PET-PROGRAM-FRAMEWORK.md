@@ -65,7 +65,8 @@ everything about that tool inside it.
    the user can change it any time. It signs in through the user's own accounts; no API key is stored in the page.
 5. **The pet program's own tool boxes**, one per tool. Every tool box has:
    - an **ON/OFF** switch (a kill switch): OFF stops the tool at once, for a suspected security breach;
-   - a **sick** checkbox: "this tool is broken from my point of view" (it goes to the Farmer's
+   - a manual **sick** checkbox on the **left** of each tool, labelled **Not working**:
+     "this tool is broken from my point of view" (it goes to the Farmer's
      `broken-tools-on-the-farm` and to the backlog), with **Take it to the vet-clinic** to ask the community
      (section 10);
    - its version, what it does in one plain line, its links, and how it is used. A Unity Unicorn tool such as

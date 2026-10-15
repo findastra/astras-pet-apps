@@ -33,6 +33,9 @@ export function systemMapData(registry, extra, catalog = JSON.parse(readFileSync
     }
     n.programNumber = p.number; n.programName = p.program; n.nameAssigned = p.assigned;
     n.nameIdea = p.idea; n.catalogStage = p.stage;
+    const registered = [...(registry.pets || []), ...(registry.pipeline || [])].find(x=>x.repo===p.repo);
+    const route = registered?.interface_url;
+    if (typeof route === 'string' && (/^https:\/\//.test(route) || /^apps\/[a-z0-9-]+\.html$/.test(route))) n.programUrl=route;
   }
   for (const n of nodes.values()) {
     const code = extra.code?.repos?.[n.repo || n.id];
