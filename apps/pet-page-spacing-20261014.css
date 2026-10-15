@@ -16,3 +16,8 @@ body {
 /* Desk columns must respond to the centered content width, not just viewport. */
 @media(max-width:1400px){body > .shell .workspace{grid-template-columns:minmax(0,1fr)}body > .shell .toolbar{flex-wrap:wrap}body > .shell .form-panel{order:-1}}
 @media(max-width:1050px){body > .shell{display:block}body > .shell .rail{display:grid;grid-template-columns:70px 1fr;gap:12px 18px;padding:20px}body > .shell .brand{grid-column:1/-1}body > .shell .pet-well{width:70px;grid-row:2/4}body > .shell .main{padding:24px 16px}}
+
+/* Center the identity block, keeping the pet left and its text right. */
+body > header:has(> img){width:fit-content;max-width:100%;grid-template-columns:104px minmax(0,640px);margin-left:auto;margin-right:auto;text-align:left}
+body > header:has(> img) > img{align-self:center}
+@media(max-width:620px){body > header:has(> img){grid-template-columns:72px minmax(0,1fr)}}

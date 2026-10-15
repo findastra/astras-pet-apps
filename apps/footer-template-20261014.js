@@ -34,5 +34,26 @@
       home.append(coin);root.querySelector('.home-group').append(home);
     }
   }
+
+  // Every shared-page coin flips on activation without replacing its existing action.
+  function flipCoin(coin) {
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(coin._flip) coin._flip.cancel();
+    const start=getComputedStyle(coin).transform;
+    coin._flip=coin.animate([{transform:start==='none'?'rotateY(0deg)':start},{transform:'rotateY(1800deg)'}],{duration:1500,easing:'cubic-bezier(.12,.65,.2,1)'});
+  }
+  document.addEventListener('click',event=>{
+    for(const node of event.composedPath()) {
+      if(!(node instanceof Element)) continue;
+      const coin=node.matches('.coin,.goldfish-coin,.chip-coin,[data-pet-coin]')?node:node.matches('button,a')?node.querySelector('.coin,.goldfish-coin,.chip-coin,[data-pet-coin]'):null;
+      if(!coin) continue;
+      flipCoin(coin);
+      const link=coin.closest('a');
+      if(link && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && link.target!=='_blank') {
+        event.preventDefault(); setTimeout(()=>location.assign(link.href),550);
+      }
+      break;
+    }
+  },true);
   customElements.define('astra-footer', AstraFooter);
 })();
