@@ -34,3 +34,7 @@ Owner-reviewed merge and public preview verified; catalog names chosen by Astra;
 ## Return
 
 Update this card with commits, tests, deployment evidence and remaining limitations; do not mark complete while deployment gates remain open.
+
+## Follow-up: provider rings and interaction stability
+
+2026-10-14, OpenAI Codex (GPT-6): owner requested OpenAI and Anthropic labels, independent optional Codex/Claude Code rings and freeze fixes. Removed the shared seat/donut. Added planned direct and application-assisted routes; neither bypasses authorization. Preserved stable node IDs. Replaced invisible connection tubes with polyline picking, coalesced hover events, clear hidden focus, release navigation on pointer cancellation/blur, bounded render rate/pixel ratio. All 124 tests pass, including 500 hide/show cycles and a 1,000-event hover burst. Generated JavaScript parses. Actual browser freeze was not reproduced; live visual/performance acceptance remains open. Same review branch; no main merge.

@@ -144,3 +144,5 @@ ASTRAS_PET_OS name and top-level architecture file (`ASTRAS_PET_OS.md`) by Claud
 Astra's PetOS restructuring with Claude Opus 5.5 (`claude-opus-5-5`), head chat, 2026-10-12: repo renamed to astras-pet-os; the Cage retired from the Farmer's job and the README; names Gone Ghost and Patty; jobs from Astra's descriptions; seeds Photo Dodo and Video Vulture; Journal Jellyfish; INTELLIGENCE-LEVELS.md (program, runtime, updates, agentic harness, errors); the System Map's own-program shell, scroll and scroll-click controls, and pet icons (art/icons, art/seeds drafts).
 
 Identity-bound authorization reference verifier, impersonation/replay tests, topology/access map separation and complete pet naming catalog by OpenAI Codex (GPT-6), 2026-10-14. See docs/security-boundaries-20261014.md. Reference checks are not deployed OS isolation.
+
+Optional Codex/OpenAI and Claude Code/Anthropic planet rings, separate planned PetOS shell and bounded hover/render work by OpenAI Codex (GPT-6), 2026-10-14. Keep direct model routes distinct from application-assisted routes; neither bypasses authorization.

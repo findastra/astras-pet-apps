@@ -19,7 +19,7 @@
     "own-program": "Pet program (made by Astra), ring 3",
     "program": "Third-party (made by others), ring 5",
     "host-machine": "Device, ring 6",
-    "harness": "Agent harness (the glass and the seat)",
+    "harness": "PetOS runtime and access boundary (planned)",
     "assistant": "Harness program or adviser",
     "tool": "Tool: belongs to a pet program, same ring and permissions"
   },
@@ -78,10 +78,10 @@
     },
     {
       "id": "agent-harness",
-      "name": "AI harness",
+      "name": "PetOS runtime and access boundary (planned)",
       "type": "harness",
       "state": "planned",
-      "job": "One layer wrapped around every pet agent, drawn as the glass shell around the pets. It is the standard interface and runtime from the Astra Pet SDK: AI model adapters (Claude, GPT, local), skills and tools, memory, scheduler, inbox, communication, permissions and guardrails. Every pet, the Farmer included, runs its own copy with its own identity, but the design is shared. Pets reach AI models and real programs through it. Planned (ASTRAS_PET_OS sections 7 and 8).",
+      "job": "Planned mediation around managed pets, separate from optional agent applications. Direct and application-assisted calls both require authorization. The drawing does not enforce OS isolation.",
       "layer": 5
     },
     {
@@ -133,10 +133,10 @@
     },
     {
       "id": "claude",
-      "name": "Claude (Anthropic)",
+      "name": "Anthropic",
       "type": "model",
       "state": "now",
-      "job": "A cloud farmhand on the allowlist: may take the seat with a short-lived key. Anthropic's models, as a pet's AI model at runtime: pet agents will call Claude on demand through their harness (planned), and Claude Bot's quick chat talks to it.",
+      "job": "Model provider. Programs may call models directly or use the optional Claude Code application ring. Both routes require their own authorized scope.",
       "layer": 5
     },
     {
@@ -144,7 +144,7 @@
       "name": "OpenAI",
       "type": "model",
       "state": "now",
-      "job": "A cloud farmhand on the allowlist: may take the seat with a short-lived key. OpenAI's models, as a pet's AI model at runtime (planned, through the harness). Today OpenAI image generation is also used by the art pipeline to draw every pet's mood sheet, which is development work, not runtime.",
+      "job": "Model provider. Programs may call models directly or use the optional Codex application ring. Both routes require their own authorized scope.",
       "layer": 5
     },
     {
@@ -596,7 +596,7 @@
       "type": "assistant",
       "state": "now",
       "layer": 5,
-      "job": "Anthropic's coding assistant. Claude accounts pick up handoff cards and build or change pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
+      "job": "A separate agent application with model context and tools. Its optional ring surrounds its provider; it is not the PetOS runtime or a grant of access."
     },
     {
       "id": "codex",
@@ -604,7 +604,7 @@
       "type": "assistant",
       "state": "now",
       "layer": 5,
-      "job": "OpenAI's coding assistant. Picks up handoff cards and builds or changes pets on branches. An agent harness program: the donut at the seat on top of the glass. The model in the seat gets R W X on every animal inside the glass, and core writes go through a pull request Astra merges."
+      "job": "A separate agent application with model context and tools. Its optional ring surrounds its provider; it is not the PetOS runtime or a grant of access."
     },
     {
       "id": "security-key",
@@ -3960,6 +3960,34 @@
       "carries": "reports",
       "state": "planned",
       "why": "Asks for the newest clean backup from before the incident."
+    },
+    {
+      "from": "farm",
+      "to": "openai",
+      "carries": "model",
+      "state": "planned",
+      "why": "Direct model request: skips optional agent application, never PetOS authorization."
+    },
+    {
+      "from": "farm",
+      "to": "claude",
+      "carries": "model",
+      "state": "planned",
+      "why": "Direct model request: skips optional agent application, never PetOS authorization."
+    },
+    {
+      "from": "farm",
+      "to": "codex",
+      "carries": "model",
+      "state": "planned",
+      "why": "Optional application-assisted request: use application context and tools; PetOS authorization still applies."
+    },
+    {
+      "from": "farm",
+      "to": "claude-code",
+      "carries": "model",
+      "state": "planned",
+      "why": "Optional application-assisted request: use application context and tools; PetOS authorization still applies."
     }
   ],
   "layers": {
@@ -3985,7 +4013,7 @@
     },
     "5": {
       "name": "AI harness (per pet)",
-      "detail": "The agent harness: the glass around rings 0 to 3 (the R W X line), the donut at the seat (Claude Code or Codex) and the AI models that take the seat. Everything inside the glass is an animal."
+      "detail": "Model providers, optional agent applications, and the separate planned PetOS runtime/access boundary. Rings grant no permissions."
     },
     "6": {
       "name": "Real programs and integrations",
@@ -4060,7 +4088,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4098,7 +4126,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4139,7 +4167,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4167,7 +4195,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
           }
         ]
@@ -4205,7 +4233,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Type a hex code and the page draws that exact Fuzzboi as a PNG, right in the browser."
           }
         ]
@@ -4214,7 +4242,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "The security checklist and its content pages, saved in your browser."
           }
         ]
@@ -4237,7 +4265,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page that keeps your data in that browser on your PC, so nothing is sent anywhere or committed to the repo."
           }
         ]
@@ -4246,7 +4274,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "A Python practice desk that checks your answers in the browser, so you can practise without installing Python."
           }
         ]
@@ -4255,7 +4283,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4264,7 +4292,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4273,7 +4301,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4282,7 +4310,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4354,7 +4382,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4363,7 +4391,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4372,7 +4400,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4395,7 +4423,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Plans and previews lighting scenes in the browser; sending them to real lights is planned."
           }
         ]
@@ -4404,7 +4432,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4479,7 +4507,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Its app is one HTML page with its script inside, so it opens by double-click in any browser, with nothing to install and no server."
           }
         ]
@@ -4488,7 +4516,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file until the job is decided."
           }
         ]
@@ -4497,7 +4525,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "Placeholder page only: one HTML file. Finding unpaid bills is planned and not built yet."
           }
         ]
@@ -4506,7 +4534,7 @@
         "languages": [
           {
             "language": "HTML",
-            "percent": 100.0,
+            "percent": 100,
             "why": "One page that runs in any browser, so it can preview and check other pages on every device size without installing anything."
           }
         ]
