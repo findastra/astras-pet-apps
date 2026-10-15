@@ -84,7 +84,7 @@ If source rules remain contradictory, report the conflict rather than silently c
 | A19 | Tool behavior | Verify inputs, outputs, errors and intended actions for each tool. Use safe fixtures for changing actions; live checks require authorized scope. |
 | A20 | Manual defect checkbox | Every tool has a left-side "Not working" checkbox, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
 | A21 | Tool OFF enforcement | Verify execution actually stops/prevents new work, state is controlled outside the tool, and security OFF cannot be self-reenabled. Report unsupported enforcement as a gap. |
-| A22 | Chatbot and seat status | Verify own chat, real connection/model/task status, consent and empty-seat behavior. Mock responses must be labeled. |
+| A22 | Chatbot and seat status | Click the exact pet-icon launcher; verify the shared chat panel, header Astra's Cyber Deck — [Pet name] Chat, actual L3 connection/model/task, consent, replies, close/reopen and honest disconnected state. A rendered panel alone is not a functioning chatbot. |
 | A23 | Chat-created tools | Verify request capture, authorized agent dispatch, build progress, independent review, tests, version registration and list entry. No self-granted access. |
 | A24 | Ready indicator | Green plus text refers to a checked version; connection and authorization are separate. Failures or unreviewed code cannot appear ready. |
 | A25 | Integrations/accounts | Check supported services, feature detection, account selection, connection denial, expiry, disconnect and provider-specific limits. No connection from domain guessing alone. |
@@ -98,10 +98,11 @@ If source rules remain contradictory, report the conflict rather than silently c
 | A33 | Registration/admission | Check candidate/pipeline/registered stage, owner admission, pet-app discovery, registration handoff and dated submission. No automatic trust from discovery. |
 | A34 | Generated artifacts/tests | Use canonical sources/builders; check generated registry/docs/art, documented build/check/tests, visual inspection and relevant runtime acceptance. |
 | A35 | Handoff and unresolved work | Record exact evidence, commits, touched files, remaining issues, owners and next steps. Say explicitly what is only on a branch. |
-| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Verify real, version-appropriate numbered steps; optional agent guidance is not required to read it. |
-| A37 | Play and care SOPs | Every pet has Play with and Care for guides: always numbered, prerequisites, expected results, applicable version and stop/help path. Verify steps against the actual app; no fictional instructions for planned features. |
+| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Its page tool box launches the L3 chatbot into that tutorial and retains a left-side Not working checkbox and separate ON/OFF switch. Verify OFF prevents launch/stops the active tour. |
+| A37 | Play and care SOPs | Every pet has Play with and Care for numbered SOPs delivered in L3 chat. Click each page-listed tutorial tool; verify correct chat context, real steps, prerequisites, expected results, version and stop/help path. No standalone tutorial page or fictional steps for planned features. |
 | A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
 | A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
+| A40 | Guided focus and functioning tour | Exercise Next/Back/Pause/Resume/Exit. Only a step number and soft border/background glow appear at the real target; explanations remain in chat. Verify scroll/resize alignment, missing-target handling, keyboard access, reduced motion, and cleanup on completion/OFF. Verify actual user-visible results, not just source/tests. |
 
 ## 4. New-pet onboarding gate
 
@@ -168,7 +169,9 @@ tool, add an MCP endpoint, create a schedule, or modify Goldfish's individual re
 Owner refinement, 2026-10-14: tutorial-tools belongs to The Farm; each pet owns its
 Play with / Care for numbered SOPs, indexed by The Farm. Cross-pet navigation uses
 icon hyperlinks throughout the programs. The shared framework defines these standards;
-checks A36-A39 enforce them. These are requirements, not implemented UI claims.
+checks A36-A40 enforce them. Tutorials run in L3 chat, launched from page tool boxes
+that retain manual health reporting and ON/OFF. This supersedes the earlier standalone,
+agent-optional tutorial wording. These are requirements, not implemented UI claims.
 
 - **Flash Audit**: the owner's working name; quick rounds backed by thorough checks.
 - **Fin Check**: short and specific to GitHub Goldfish. Recommended pet-themed option.

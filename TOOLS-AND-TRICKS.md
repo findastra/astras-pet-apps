@@ -18,7 +18,7 @@ What a pet **has** and what a pet **knows**. Companion to [PET-PROGRAM-FRAMEWORK
 | Pet | Tool (what it has) | Trick (what it knows) |
 |---|---|---|
 | File Master | `repo-catcher`: a PowerShell script that lists repos on the PC that were never pushed | **Weekly stale-repo sweep:** run repo-catcher, read its report, pick the repos that matter, and write a handoff card asking Astra which to push or archive |
-| Friendly Farmer (The Farm) | `astras-pet-os-system-map`: the 3D map page; planned `first-time-here-tutorial` in `tutorial-tools`, readable without an agent | Optional guided walkthrough of **How to Take Care of Your Farm!**, using the tutorial tool; the user-facing SOP itself does not require an agent |
+| Friendly Farmer (The Farm) | `astras-pet-os-system-map`: the 3D map page; planned `first-time-here-tutorial` in the page's `tutorial-tools` box opens L3 chat and controls its focused tour | **How to Take Care of Your Farm!**: numbered SOP delivered by the L3 chatbot; step number and target glow on the program surface |
 | Gone Ghost (Am I a Ghost?) | `name-eraser`: replaces a name with `USER` in files | **Scrub before posting:** before a vet-clinic ticket goes out, run name-eraser as a dry run, run the secret scan, show L4 the exact text, then post |
 | Unity Unicorn | `harness-strapper`: a Unity editor tool that rigs avatars | **Rig a new avatar:** import it, run harness-strapper, check the bones, then record which avatar it is rigged on in the tool box |
 

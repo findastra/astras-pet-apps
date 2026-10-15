@@ -63,6 +63,10 @@ everything about that tool inside it.
 4. **Chat tool box:** a chat bot drawn as the pet program icon. On first visit it asks whether it may use the user's
    own AI subscriptions (Claude, ChatGPT, local models, whatever they have) and remembers the answer on that device;
    the user can change it any time. It signs in through the user's own accounts; no API key is stored in the page.
+   Every program uses its exact current pet icon as the chat launcher. Start with a
+   shared chat panel design, without requiring Chip's phone-shaped container.
+   Header: **Astra's Cyber Deck — [Pet name] Chat**, for example Project Parrot Chat.
+   Show actual L3 connection/seat status; a disconnected chat must not fake responses.
 5. **The pet program's own tool boxes**, one per tool. Every tool box has:
    - an **ON/OFF** switch (a kill switch): OFF stops the tool at once, for a suspected security breach;
    - a manual **sick** checkbox on the **left** of each tool, labelled **Not working**:
@@ -255,8 +259,12 @@ Every agent, ours or **external**, needs a **key** to operate a pet. That is how
 When someone first installs Astra's PetOS, it opens straight to the **System Map**.
 The Farm has a **tutorial-tools** box with **first-time-here-tutorial**, also presented
 as **How to Take Care of Your Farm!**. It can be reopened after the first visit.
-The user-facing tutorial page is a tool and works without an agent; optional agent
-guidance is a trick that uses that tool. Its actual steps remain to be written and tested.
+Tutorials are always delivered in the pet's **L3 chatbot**. The tutorial tool remains
+listed in a tool box on the program page; clicking it opens the pet's chat and starts
+that specific tutorial. It is not replaced by a standalone guide page. Its actual
+steps remain to be written and tested. The numbered SOP is the agent's guide/trick;
+the visible tool is the launcher and tour controls. If L3 is disconnected, open the
+chat with an honest connection/setup state, not a simulated active tutorial.
 
 **Tutorial standard (Astra, 2026-10-14):** every pet program provides two simple,
 always-numbered standard operating procedures (SOPs):
@@ -272,8 +280,19 @@ Suggested stable tool IDs use the canonical pet ID: `play-with-<pet-id>` and
 such as "health-hummingbird" do not rename Health Hummy or its stable ID.
 Each SOP includes its applicable program/tool version, numbered steps, expected
 results and a stop/help path. Unbuilt features stay explicitly planned, not usable steps.
-Tutorial tools have the same left-side Not working report and ON/OFF controls as
-other tools. Marking a tutorial complete does not grant permissions or execute its steps.
+On the program surface show **only the current step number** beside the target and a
+soft glow behind/around its background border to identify the focus. Instructions and
+questions stay in chat. Use the real rendered element as the target; follow scrolling
+and resizing, avoid obscuring controls, and remove the glow when stopped or finished.
+Provide Next, Back, Pause/Resume and Exit in chat. A missing target stops advancement
+with a clear explanation; do not highlight an unrelated element or claim completion.
+Respect reduced motion and provide accessible step/target announcements.
+
+Tutorial tools stay visible in their page tool boxes, with the same **left-side manual
+Not working health checkbox** and **separate ON/OFF switch** as other tools. These
+controls must not be hidden exclusively inside chat. OFF prevents launch and stops
+the active tour/highlight; marking Not working records a defect independently of OFF.
+Marking a tutorial complete does not grant permissions or execute its steps.
 
 The Farm indexes tutorials from their owning pets instead of maintaining divergent
 copies. Organize tools and tutorials by **pet**, **category** (for example health),

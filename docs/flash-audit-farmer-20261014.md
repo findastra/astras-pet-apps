@@ -57,3 +57,9 @@ implemented/planned status rather than infer blanket approval.
 
 A36-A39: Missing in the inspected deployed Farmer desk. Requirements recorded; no
 tutorial interface, hierarchy or icon-navigation retrofit implemented this turn.
+
+Owner clarification: tutorial tools remain in page tool boxes with left-side manual
+Not working and separate ON/OFF. Clicking opens the L3 pet chatbot, which delivers
+the numbered SOP. Shared chat header: Astra's Cyber Deck — [Pet name] Chat; exact
+pet icon opens it. The screen target shows a step number and soft border glow, with
+explanations in chat. A40 adds live tour acceptance; these interfaces remain unbuilt.
