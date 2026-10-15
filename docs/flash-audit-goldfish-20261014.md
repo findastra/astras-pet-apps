@@ -56,3 +56,35 @@ These IDs remain proposed until the owner selects them; do not rename code yet.
 
 Owner chooses tool names/additions. Then save answer, push checkpoint, proceed to Chip.
 Do not silently reconcile dirty Goldfish source or deploy an older copy over main.
+
+## Owner approval and repair checkpoint
+
+Astra approved all seven proposed names and requested fixes plus a real Release the
+goldfish run. Regular tools: github-auditor, naming-corrections, never-say-checker,
+report-exporter, flash-audit. Present play-with-github-goldfish and
+care-for-github-goldfish separately under Tutorial tools from now on.
+
+Live Release run ended at anonymous rate limit; old findings stayed visible. Those
+counts are not this run's result. Repaired source hides stale reports, updates obsolete
+hub/status/home-path rules and distinguishes partial coverage. Added local tool-state
+cards and disconnected chat shell. 47 tests passed, independent source review completed.
+Goldfish source branch: codex/flash-audit-20261014. Preserved existing changes at
+37de7c6 and reconciled main at b0a6a60. The hub copy is updated on its branch only.
+
+Still pending: real L3 connection choice, protected core enforcement, Farmer report
+delivery, complete data migration/passport integration, revised UI live verification,
+merge/deployment. Do not claim all findings fixed or move on as if round 2 is complete.
+
+Owner clarified seats must be model-independent, not a choice of one hard-wired
+provider. Supported adapter implementation is still required. Requested GitHub token
+hover help and Clicker Training standard. Two-click action and "no cyberdeck chatbot"
+meaning are pending clarification; do not alter native click bindings yet.
+
+Latest click correction supersedes single-click opens-program: single click shows
+the most important short emotion-linked message; double-click toggles ON/OFF, with
+visibility vs execution awaiting answer. Global nine-emotion priority is not yet
+fully specified; Farmer's existing sick/alarmed/worried/happy precedence is documented,
+not misrepresented as a complete hierarchy. Flash Audit now includes A43.
+
+Goldfish repair commits pushed: db76d36, whitespace follow-up 529e76e on
+codex/flash-audit-20261014. 47 Goldfish and 124 hub tests pass. Neither branch deployed.

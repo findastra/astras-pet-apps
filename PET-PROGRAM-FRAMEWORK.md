@@ -308,6 +308,38 @@ copies a request for the user's own AI to start a seed like it on their farm.
 
 ## 14. Checklist for a new or updated pet program
 
+Owner refinement, 2026-10-14: harness seats are model-independent. Do not hard-wire a
+pet's chat to one provider; support authorized models through compatible adapters.
+Compatibility is not automatic access: an unconnected model cannot claim a seat.
+
+Every Pet Program needs a bordered **Clicker Training** box showing its actual
+desktop-icon consecutive-click bindings. Current standard from Astra: one click
+shows a short dialog from the pet with its most important message, matching the
+active emotion; two clicks toggle ON/OFF (window visibility versus background
+execution awaits clarification); three clicks performs
+a declared pet-specific quick tool (example: Voicemeeter Bug opens Audio Rescue and
+runs voicemeeter-fix). Show each binding and whether implemented, unavailable or
+pending. Do not advertise unimplemented actions. Resolve a click sequence once so
+triple-click does not accidentally run all three actions; respect system timing and
+do not treat dragging as clicking. Extra click counts are unassigned unless declared.
+Quick actions use the same permissions, OFF state and appropriate approvals as the
+tool's normal launcher. Existing native bindings remain unchanged pending clarification.
+
+**Emotion/message priority:** select the highest-priority unresolved condition,
+then derive both the emotion and short dialog from that same condition. Do not use
+sprite number or animation order as severity. Existing Farmer self-audit precedence
+is owner-needed/sick, then alarmed, then worried, then happy; this is not a complete
+global hierarchy for all nine moods. A global priority policy must explicitly cover
+active security incidents, execution failures/sad, working/curious, no-data/asleep,
+idle and cosmetic blink before runtime rollout. Until resolved, preserve existing
+runtime precedence and flag uncertainty. Messages state the condition and next useful
+action; stale success must not hide an unresolved failure. Blink never replaces the
+underlying status message. Dismissal does not resolve an issue or clear a health report.
+
+Credential inputs have adjacent **(?) What is this** hover/focus help that explains
+purpose, whether optional, access scope, storage and destination in plain language.
+Never display actual credentials in tooltips or ask for them in chat.
+
 - [ ] Names and versions follow section 2 everywhere: repo, files, icons, tool box labels, backlog.
 - [ ] `pet.json` lists `framework`, every tool (name, version, intended use, public or private) and its links by kind.
 - [ ] Page has every block in section 3, in that order. Every tool box has ON/OFF and sick; every connection box

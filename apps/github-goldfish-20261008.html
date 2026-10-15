@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GitHub Goldfish</title>
-<meta name="description" content="A pixel goldfish that swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors.">
+<title>GitHub Aquarium — GitHub Goldfish</title>
+<meta name="description" content="A pixel goldfish that swims through every word in a GitHub account's repos, public and (with a token) private, and flags document-control, blatant, organizational and systemic errors.">
 <style>
+.token-help{position:relative;display:inline-block;margin:6px;cursor:help}.token-help [role="tooltip"]{display:none;position:absolute;z-index:20;top:100%;left:0;width:min(320px,75vw);padding:14px;background:#201a16;color:#fff1d1;border:1px solid #cda450;border-radius:8px}.token-help:hover [role="tooltip"],.token-help:focus [role="tooltip"]{display:block}
 :root {
   --bg: #14110f;
   --panel: #201a16;
@@ -78,6 +79,9 @@ input[type=text], input[type=password], textarea {
 }
 textarea { min-height: 84px; resize: vertical; }
 .hint { font-size: .85rem; color: var(--muted); margin: 4px 0 0; }
+label.check { display: flex; gap: 8px; align-items: center; color: var(--text); margin: 8px 0 0; }
+label.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.tag-private { font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 1px 7px; border-radius: 6px; border: 1.5px solid var(--muted); color: var(--muted); margin-left: 8px; vertical-align: middle; }
 button {
   font: inherit; font-weight: 700; cursor: pointer; border-radius: 10px;
   border: 2px solid #3a1d08; background: var(--accent); color: #2b1305; padding: 10px 18px;
@@ -86,6 +90,13 @@ button.secondary { background: var(--panel-2); color: var(--text); border-color:
 button:disabled { opacity: .55; cursor: progress; }
 button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--note); outline-offset: 2px; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.naming { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.naming h2 { margin-top: 0; }
+.naming-fields { display: grid; gap: 10px; margin: 12px 0; }
+@media (min-width: 720px) { .naming-fields { grid-template-columns: 1fr 1fr 1fr; } }
+.naming-list { padding-left: 20px; overflow-wrap: anywhere; }
+.naming-list li { margin: 8px 0; }
+.naming-list button { margin-left: 10px; padding: 4px 10px; font-size: .85rem; }
 
 /* Summary */
 .tiles { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
@@ -121,8 +132,8 @@ footer { margin-top: 40px; color: var(--muted); font-size: .85rem; border-top: 1
 </head>
 <body>
 <main>
-  <h1>GitHub Goldfish</h1>
-  <p class="sub"><em>A pet app by Astra.</em> A goldfish swims through every public word on a GitHub account and tells you what is wrong, misplaced, or inconsistent.</p>
+  <h1>GitHub Aquarium</h1><nav aria-label="Program navigation"><a href="https://findastra.github.io/astras-pet-os/system-map-20261012.html#node=github-goldfish">System Map</a> · <a href="https://findastra.github.io/astras-pet-os/apps/astras-pet-apps-20261008.html" aria-label="Open Friendly Farmer — The Farm" title="The Farm"><img src="https://findastra.github.io/astras-pet-os/art/icons/astras-pet-os-20261012.png" width="40" height="40" alt="Friendly Farmer"></a></nav>
+  <p class="sub"><em>A pet app by Astra.</em> A goldfish swims through every word in a GitHub account's repos, public and (with a token) private, and tells you what is wrong, misplaced, or inconsistent.</p>
 
   <section class="device" aria-label="The goldfish tank">
     <div class="lcd-wrap"><canvas id="tank" width="160" height="72" role="img" aria-label="A pixel goldfish swimming in a tank"></canvas></div>
@@ -136,12 +147,13 @@ footer { margin-top: 40px; color: var(--muted); font-size: .85rem; border-top: 1
     <div>
       <label for="user">GitHub account to audit</label>
       <input id="user" type="text" value="findastra" autocomplete="off" spellcheck="false">
-      <p class="hint">Public repos only. Goldfish reads what any visitor can read.</p>
+      <p class="hint">Without a token Goldfish reads public repos only. With a token for this account it reads private repos too.</p>
     </div>
     <div>
-      <label for="token">GitHub token (optional)</label>
+      <label for="token">GitHub token (needed for private repos)</label><span class="token-help" tabindex="0" aria-label="What is a GitHub token?" aria-describedby="token-memo">(?) What is this<span id="token-memo" role="tooltip">A GitHub token is a revocable access credential. Public audits work without it, subject to rate limits. Private audits need access to the selected repositories. Use the least access needed. This page keeps it in memory and sends it only to api.github.com. Never paste it into chat.</span></span>
       <input id="token" type="password" autocomplete="off" spellcheck="false">
-      <p class="hint">Only raises the rate limit (60 to 5,000 requests an hour). Held in memory, sent only to api.github.com, never saved. Needs no scopes.</p>
+      <p class="hint">Raises the rate limit (60 to 5,000 requests an hour) and, if it belongs to this account, opens private repos. Classic token: <code>repo</code> scope. Fine-grained: only the repositories you intend to audit, Contents read-only. Held in memory, sent only to api.github.com, never saved.</p>
+      <label class="check"><input id="private" type="checkbox" checked> Include private repos</label>
     </div>
     <div>
       <label for="never">Words Goldfish must never find (one per line)</label>
@@ -152,6 +164,18 @@ footer { margin-top: 40px; color: var(--muted); font-size: .85rem; border-top: 1
       <button id="go" type="button">Release the goldfish</button>
       <button id="copy" type="button" class="secondary" disabled>Copy report</button>
       <button id="download" type="button" class="secondary" disabled>Download report.md</button>
+    </div>
+    <div class="naming" aria-labelledby="naming-title">
+      <h2 id="naming-title">Naming corrections Goldfish remembers</h2>
+      <p class="hint">Teach a correction for one repository. Goldfish checks its description and prose on future audits. Saved only in this browser; nothing is sent to GitHub.</p>
+      <div class="naming-fields">
+        <div><label for="learn-repo">Repository (owner/name)</label><input id="learn-repo" type="text" autocomplete="off" spellcheck="false" placeholder="owner/project"></div>
+        <div><label for="learn-from">Mistaken name</label><input id="learn-from" type="text" autocomplete="off" spellcheck="false"></div>
+        <div><label for="learn-to">Preferred name</label><input id="learn-to" type="text" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <button id="learn-save" type="button" class="secondary">Remember correction</button>
+      <p id="learn-status" class="hint" role="status" aria-live="polite"></p>
+      <ul id="naming-list" class="naming-list"></ul>
     </div>
   </section>
 
@@ -166,9 +190,9 @@ footer { margin-top: 40px; color: var(--muted); font-size: .85rem; border-top: 1
   </section>
 
   <footer>
-    <p><strong>Checks:</strong> Document control (missing or malformed required files, pet files, headings, stray copies and secrets files), Blatant (typos, doubled words, mojibake, placeholders, secrets, broken links and anchors, brand spellings, never-say words), Organizational (names, topics, homepage, stubs, profile list), Systemic (patterns across the whole account: license, apostrophes, dashes, description style, the Cage registry).</p>
-    <p><strong>Not checked:</strong> spelling beyond a short typo list and doubled words, external links (browsers cannot test them), issues, pull requests, wikis, releases, gists, commit messages, text inside images, private repos, the contents of live websites.</p>
-    <p>GitHub Goldfish v0.1.0, built 2026-10-07 by Claude Sonnet 5.5 (<code>claude-sonnet-5-5</code>) for Astra. MIT licensed.</p>
+    <p><strong>Checks:</strong> Document control (missing or malformed required files, pet files, headings, stray copies and secrets files), Blatant (typos, doubled words, mojibake, placeholders, secrets, broken links and anchors, brand spellings, never-say words), Organizational (names, topics, homepage, stubs, profile list, old pet words from the Cage's PET-WORDS.md), Systemic (patterns across the whole account: license, apostrophes, dashes, description style, the PetOS registry).</p>
+    <p><strong>Not checked:</strong> spelling beyond a short typo list and doubled words, external links (browsers cannot test them), issues, pull requests, wikis, releases, gists, commit messages, text inside images, private repos when no token for the account is given, organizations' private repos, the contents of live websites.</p>
+    <p>GitHub Goldfish <a href="https://github.com/findastra/github-goldfish/tree/codex/flash-audit-20261014">v1.0 draft source — Flash Audit update</a>. Built by Claude Sonnet 5.5 (<code>claude-sonnet-5-5</code>), 2026-10-07; naming corrections added by Codex (GPT-6), 2026-10-08; private repos added by Claude Opus 5.5 (<code>claude-opus-5-5</code>), 2026-10-09. Made for Astra. MIT licensed.</p>
   </footer>
 </main>
 
@@ -178,8 +202,8 @@ const Goldfish = (() => {
   const CATS = ['Document control', 'Blatant', 'Organizational', 'Systemic'];
   const SEV_ORDER = { error: 0, warn: 1, note: 2 };
   const PET_KEYS = ['pet', 'kind', 'owner', 'sprite', 'job', 'runs_on', 'entry', 'status', 'cage'];
-  const PET_STATUS = ['hatching', 'growing', 'grown'];
-  const HUB = 'findastra-pet-apps';
+  const PET_STATUS = ['hatching', 'growing', 'grown', 'seed', 'roadmap'];
+  const HUB = 'astras-pet-os'; // the Cage: the Friendly Farmer's repo and pets.json
   const TEXT_FILES = ['README.md', 'AGENTS.md', 'CLAUDE.md', 'SECURITY.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'pet.json'];
   const MAX_MD = 20;
   const MAX_BYTES = 200000;
@@ -200,6 +224,52 @@ const Goldfish = (() => {
     h.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[`*]/g, '').trim().toLowerCase()
      .replace(/[^\p{L}\p{N}\s_-]/gu, '').replace(/\s/g, '-');
   const words = (s) => (s.toLowerCase().match(/[a-z0-9]+/g) || []);
+
+  // Owner-supplied corrections stay outside the public defaults.
+  function normalizeNamingRules(rules = []) {
+    if (!Array.isArray(rules)) throw new Error('Naming corrections must be a JSON array.');
+    const seen = new Map();
+    return rules.map((rule, i) => {
+      const fail = (why) => { throw new Error(`Naming correction ${i + 1}: ${why}`); };
+      if (!rule || typeof rule !== 'object' || Array.isArray(rule)) fail('use repo, from and to fields.');
+      if (['repo', 'from', 'to'].some((key) => typeof rule[key] !== 'string')) fail('repo, from and to must be text.');
+      const clean = { repo: rule.repo.trim().toLowerCase(), from: rule.from.trim(), to: rule.to.trim() };
+      if (!/^[a-z0-9](?:[a-z0-9-]{0,38})\/[a-z0-9_.-]+$/i.test(clean.repo)) fail('repository must be owner/name.');
+      if ([clean.from, clean.to].some((name) => !name || name.length > 200 || /[\u0000-\u001f\u007f]/.test(name))) fail('names must be 1–200 characters on one line.');
+      if (clean.from === clean.to) fail('the mistaken and preferred names must differ.');
+      const key = clean.repo + '\n' + clean.from.toLowerCase();
+      if (seen.has(key) && seen.get(key) !== clean.to) fail('this mistaken name already has a different preferred name in that repository.');
+      seen.set(key, clean.to);
+      return clean;
+    }).filter((rule, i, all) => all.findIndex((other) => other.repo === rule.repo && other.from.toLowerCase() === rule.from.toLowerCase()) === i);
+  }
+
+  // Pet words: one name per part of a pet app. The list lives in the Cage registry
+  // (pets.json "words", explained in astras-pet-apps/PET-WORDS.md); the Goldfish only reads it.
+  const WORDS_PAGE = 'PET-WORDS.md'; // names the retired words on purpose
+  function petWords(registry) {
+    const parts = registry && registry.words && Array.isArray(registry.words.parts) ? registry.words.parts : [];
+    const out = [];
+    for (const p of parts.slice(0, 50)) {
+      if (!p || typeof p.say !== 'string' || !p.say.trim() || !Array.isArray(p.retired)) continue;
+      for (const r of p.retired.slice(0, 20)) if (typeof r === 'string' && r.trim() && r.length <= 60 && !/[\u0000-\u001f]/.test(r)) out.push({ from: r.trim().replace(/’/g, "'"), to: p.say.trim() });
+    }
+    return out.sort((a, b) => b.from.length - a.from.length); // longest first: "pet app icon chat" before "pet app icon"
+  }
+  function petWordChecks(repo, where, text, kind, ctx, sink) {
+    if (!text || !ctx.petWords.length || where === WORDS_PAGE) return;
+    let t = (kind === 'md' ? prose(text) : maskUrls(text)).replace(/’/g, "'"); // same length, so indexes still map to lines
+    for (const { from, to } of ctx.petWords) {
+      const esc = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`(?<![\\p{L}\\p{N}])${esc}(?![\\p{L}\\p{N}])`, 'giu');
+      for (const m of t.matchAll(re)) sink.add('Organizational', 'note', repo, where, `Old pet word: "${m[0]}". Say "${to}".`, {
+        line: kind === 'md' ? lineOf(text, m.index) : undefined,
+        evidence: clip(text.slice(Math.max(0, m.index - 25), m.index + m[0].length + 25).replace(/\n/g, ' ')),
+        fix: `One name per part of a pet app: see ${HUB}/${WORDS_PAGE}.`,
+      });
+      t = t.replace(re, blank); // a shorter phrase must not match inside a longer one already reported
+    }
+  }
 
   function headings(md) {
     const out = [];
@@ -256,6 +326,8 @@ const Goldfish = (() => {
       sink.add(cat, sev, repo, where, msg, { line: kind === 'md' && i != null ? lineOf(text, i) : undefined, ...extra });
     const p = kind === 'md' ? prose(text) : text.replace(/https?:\/\/\S+/g, blank);
     const q = kind === 'md' ? maskCode(text) : text;
+    const priv = !!(ctx.repoMap[repo] && ctx.repoMap[repo].private);
+    const shown = priv ? 'is in this private repo; it becomes public if the repo is published' : 'is public';
     let m;
 
     // mojibake and replacement characters
@@ -284,7 +356,7 @@ const Goldfish = (() => {
     const cs = /\bcoming soon\b/gi;
     while ((m = cs.exec(p))) add('Blatant', 'note', 'Promise of future work ("coming soon") with no date.', m.index);
     const tpl = /\{\{[^}\n]*\}\}|<(?:your|repo|username|name|insert)[-\w ]*>|\[(?:your|insert)[-\w ]*\]/gi;
-    while ((m = tpl.exec(q))) add('Blatant', 'error', 'Template placeholder left in public text.', m.index, { evidence: m[0] });
+    while ((m = tpl.exec(q))) add('Blatant', 'error', `Template placeholder left in ${priv ? 'the' : 'public'} text.`, m.index, { evidence: m[0] });
 
     // present-tense claims with no date
     if (kind === 'md') {
@@ -301,6 +373,22 @@ const Goldfish = (() => {
       while ((m = re.exec(p))) add('Blatant', 'warn', `Brand spelled "${bad}"; the usual spelling is "${good}".`, m.index, { evidence: clip(p.slice(Math.max(0, m.index - 25), m.index + 35).replace(/\n/g, ' ')) });
     }
 
+    // Learned names are repository-scoped prose checks, never URL or code rewrites.
+    const namingText = kind === 'md' ? p : maskUrls(text);
+    for (const rule of ctx.namingRules) {
+      if (rule.repo !== `${ctx.user}/${repo}`.toLowerCase()) continue;
+      const escaped = rule.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const preferred = rule.to.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const learnedProse = namingText.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${preferred}(?![\\p{L}\\p{N}_])`, 'gu'), blank);
+      const re = new RegExp(`(?<![\\p{L}\\p{N}_])${escaped}(?![\\p{L}\\p{N}_])`, 'giu');
+      while ((m = re.exec(learnedProse))) {
+        add('Organizational', 'warn', `Learned naming correction: use "${rule.to}" instead of "${m[0]}".`, m.index, {
+          evidence: clip(text.slice(Math.max(0, m.index - 25), m.index + m[0].length + 25).replace(/\n/g, ' ')),
+          fix: `Replace this project name with "${rule.to}".`,
+        });
+      }
+    }
+
     // secrets (raw text, including code blocks)
     for (const [name, re] of SECRET_PATTERNS) {
       re.lastIndex = 0;
@@ -311,17 +399,17 @@ const Goldfish = (() => {
     const winPath = /\b[A-Za-z]:\\Users\\([^\\\s"'`<>|]+)/g;
     while ((m = winPath.exec(text))) {
       if (/^(%?username%?|you|name|user|public|default|your[-_ ]?name|<.*>)$/i.test(m[1])) continue;
-      add('Blatant', 'warn', 'A personal Windows user folder is public.', m.index, { evidence: m[0], fix: 'Replace with %USERPROFILE% or <you>.' });
+      add('Blatant', 'warn', `A personal Windows user folder ${shown}.`, m.index, { evidence: m[0], fix: 'Replace with %USERPROFILE% or <you>.' });
     }
     const unixPath = /(?<![\w.:/-])\/(?:Users|home)\/([A-Za-z0-9._-]+)\//g;
     while ((m = unixPath.exec(text))) {
       if (/^(user|you|name|username|runner|ubuntu|shared|<.*>)$/i.test(m[1])) continue;
-      add('Blatant', 'warn', 'A personal home folder is public.', m.index, { evidence: m[0] });
+      add('Blatant', 'warn', `A personal home folder ${shown}.`, m.index, { evidence: m[0] });
     }
     const mail = /\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b/g;
     while ((m = mail.exec(text))) {
       if (/noreply|no-reply|@example\.|@users\.noreply\.github\.com|\.(test|invalid|local|example)$/i.test(m[0])) continue;
-      add('Blatant', 'warn', 'An email address is public.', m.index, { evidence: m[0] });
+      add('Blatant', 'warn', `An email address ${shown}.`, m.index, { evidence: m[0] });
     }
 
     // never-say words (built-in plus the user's list)
@@ -381,6 +469,11 @@ const Goldfish = (() => {
           line, evidence: full, fix: guess ? `Did you mean ${guess}? (same words, different order)` : 'Fix the name, publish the repo, or remove the link.' });
         continue;
       }
+      // Public text that links to a private repo sends visitors to a 404. Private-to-private links are fine.
+      if (target.private && !(mine && mine.private)) {
+        sink.add('Blatant', 'error', repo, where, `Link to a private repo: visitors get a 404 for ${user}/${target.name}.`, { line, evidence: full, fix: 'Make that repo public, or remove the link.' });
+        continue;
+      }
       if (target.name !== name) sink.add('Document control', 'warn', repo, where, `Repo name case differs: link says "${name}", repo is "${target.name}".`, { line });
       if (kind && target.tree && branch === target.default_branch && file) {
         const f = decodeURIComponent(file).replace(/\/$/, '');
@@ -416,6 +509,7 @@ const Goldfish = (() => {
     const { add } = sink;
     const user = model.user;
     const neverSay = (model.neverSay || []).map((s) => s.trim()).filter(Boolean);
+    const namingRules = normalizeNamingRules(model.namingRules);
     const repos = model.repos.filter((r) => !r.fork);
     const repoMap = {};
     for (const r of repos) {
@@ -423,7 +517,7 @@ const Goldfish = (() => {
       r.treeSet = r.tree ? new Set(r.tree.flatMap((p) => { const out = [p]; let d = p; while (d.includes('/')) { d = d.slice(0, d.lastIndexOf('/')); out.push(d); } return out; })) : null;
       repoMap[r.name] = r;
     }
-    const ctx = { user, repoMap, neverSay };
+    const ctx = { user, repoMap, neverSay, namingRules, petWords: petWords(model.registry) };
     const has = (r, f) => (r.treeSet ? r.treeSet.has(f) : r.files[f] != null);
     const surfaces = []; // for systemic tallies
     const S = (repo, where, text, kind) => { const s = { repo, where, text, kind }; if (text) { surfaces.push(s); textChecks(s, ctx, sink); } return s; };
@@ -459,6 +553,11 @@ const Goldfish = (() => {
           add('Document control', 'error', name, 'pet.json', `pet.json is not valid JSON (${e.message.split('\n')[0]}).`, { fix: 'Fix the syntax so the Cage can read it.' });
         }
       }
+      if (isPet) {
+        petWordChecks(name, 'repo description', r.description, 'plain', ctx, sink);
+        for (const f of mdFiles) petWordChecks(name, f, r.files[f], 'md', ctx, sink);
+        if (pet) { const strs = []; (function walk(v) { if (typeof v === 'string') strs.push(v); else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(pet); petWordChecks(name, 'pet.json', strs.join('\n'), 'plain', ctx, sink); }
+      }
 
       /* ---- Document control ---- */
       const readme = r.files['README.md'];
@@ -481,12 +580,14 @@ const Goldfish = (() => {
       }
       if (r.license == null || r.license === 'NOASSERTION') {
         const why = r.license === 'NOASSERTION' ? 'GitHub cannot identify the license text (shows "Other").' : 'No LICENSE file.';
-        add('Document control', 'warn', name, 'LICENSE', why, { fix: 'Add a standard license file (house default: MIT, "Copyright (c) <year> findastra").' });
+        const fix = 'Add a standard license file (house default: MIT, "Copyright (c) <year> findastra").';
+        if (r.private) add('Document control', 'note', name, 'LICENSE', `${why} Fine while the repo is private; add one before publishing it.`, { fix });
+        else add('Document control', 'warn', name, 'LICENSE', why, { fix });
       }
       for (const f of ['AGENTS.md', 'CLAUDE.md']) if (isPet && !has(r, f)) add('Document control', 'warn', name, f, `No ${f}, so an assistant picking this up has no rules to follow.`);
       if (!r.description) add('Document control', 'error', name, 'repo description', 'The repo has no description.', { fix: 'Add one plain sentence.' });
       else if (r.description.length > 300) add('Document control', 'note', name, 'repo description', `The description is ${r.description.length} characters; GitHub cards cut it short.`);
-      if (r.default_branch !== 'main') add('Organizational', 'warn', name, 'default branch', `Default branch is "${r.default_branch}", not "main". Visitors land on a working branch.`, { fix: 'Merge to main and make main the default in repo Settings.' });
+      if (!r.default_branch) add('Organizational', 'warn', name, 'default branch', 'The default branch could not be determined.', { fix: 'Verify the configured default branch before checking its files.' });
       if (r.tree) {
         for (const p of r.tree) {
           if (/(^|\/)(\.env(\.(?!example|sample|template).*)?|id_rsa|id_ed25519|[^/]*\.pem|[^/]*\.p12|credentials\.json|secrets?\.(json|ya?ml))$/i.test(p)) add('Document control', 'error', name, p, 'A secrets-type file is committed.', { fix: 'Remove it, rotate anything inside it, and purge it from history.' });
@@ -498,17 +599,18 @@ const Goldfish = (() => {
 
       /* ---- Pet files ---- */
       if (isPet) {
-        if (!topics.includes('pet-app')) add('Document control', 'error', name, 'topics', 'Has pet.json but not the GitHub topic "pet-app", so the Cage cannot find it.', { fix: 'Repo page, gear next to About, add topic pet-app.' });
-        if (!hasPetJson) add('Document control', 'error', name, 'pet.json', 'Tagged pet-app but has no pet.json.', { fix: 'Add pet.json (see findastra-pet-apps/PET-FILES.md).' });
+        if (!topics.includes('pet-app')) add('Document control', 'error', name, 'topics', 'Has pet.json but not the GitHub topic "pet-app", so discovery by topic cannot find it.', { fix: 'Repo page, gear next to About, add topic pet-app.' });
+        if (!hasPetJson) add('Document control', 'error', name, 'pet.json', 'Tagged pet-app but has no pet.json.', { fix: `Add pet.json (see ${HUB}/PET-FILES.md).` });
         if (pet) {
-          for (const k of PET_KEYS) if (pet[k] == null || pet[k] === '') add('Document control', 'error', name, 'pet.json', `pet.json is missing "${k}".`);
+          const planned = ['seed', 'roadmap'].includes(pet.status);
+          for (const k of PET_KEYS.filter(k => !planned || !['sprite','runs_on','entry'].includes(k))) if (pet[k] == null || pet[k] === '') add('Document control', 'error', name, 'pet.json', `pet.json is missing "${k}".`);
           if (pet.kind != null && pet.kind !== 'pet-app') add('Document control', 'error', name, 'pet.json', `"kind" should be "pet-app", not "${pet.kind}".`);
           if (pet.owner != null && pet.owner !== 'Astra') add('Document control', 'error', name, 'pet.json', `"owner" should be "Astra" (public credit), not "${pet.owner}".`);
-          if (pet.status && !PET_STATUS.includes(pet.status)) add('Document control', 'error', name, 'pet.json', `"status" should be hatching, growing or grown, not "${pet.status}".`);
+          if (pet.status && !PET_STATUS.includes(pet.status)) add('Document control', 'error', name, 'pet.json', `"status" should be seed, roadmap, hatching, growing or grown, not "${pet.status}".`);
           if (pet.cage && (pet.cage.topic !== 'pet-app' || !pet.cage.home)) add('Document control', 'error', name, 'pet.json', '"cage" should be {"topic":"pet-app","home":"README.md"}.');
           if (r.treeSet) {
             for (const k of ['sprite', 'entry']) if (typeof pet[k] === 'string' && /^[\w./-]+\.\w+$/.test(pet[k]) && !r.treeSet.has(pet[k])) add('Document control', 'error', name, 'pet.json', `"${k}" points at ${pet[k]}, which is not in the repo.`);
-            if (pet.cage && pet.cage.home && !r.treeSet.has(pet.cage.home)) add('Document control', 'error', name, 'pet.json', `"cage.home" points at ${pet.cage.home}, which is not in the repo.`);
+            if (pet.cage && pet.cage.home && !/^https?:\/\//i.test(pet.cage.home) && !r.treeSet.has(pet.cage.home)) add('Document control', 'error', name, 'pet.json', `"cage.home" points at ${pet.cage.home}, which is not in the repo.`);
           }
           if (!pet.built_with) add('Document control', 'note', name, 'pet.json', 'No "built_with": record the model name and version that built this.');
         }
@@ -521,12 +623,12 @@ const Goldfish = (() => {
         }
         const modelRe = /\b(Claude|Opus|Sonnet|Haiku|Fable|GPT|Codex|Gemini)[\s-]*[\w.]*\d[\w.]*/i;
         if (![r.files['AGENTS.md'], r.files['CLAUDE.md'], r.files['README.md'], r.files['pet.json']].some((t) => t && modelRe.test(t))) add('Document control', 'warn', name, 'AGENTS.md', 'No model name and version recorded anywhere in the repo.', { fix: 'Add e.g. "Built with Claude Sonnet 5.5 (claude-sonnet-5-5), 2026-10-07".' });
-        if (registry && !(registry.pets || []).some((p) => p.repo === name)) add('Systemic', 'warn', name, 'findastra-pet-apps/pets.json', 'This pet is not listed in the Cage registry.', { fix: 'Add it to pets.json and the README table in findastra-pet-apps.' });
+        if (registry && ![...(registry.pets || []), ...(registry.pipeline || []), ...(registry.candidates || []), ...(registry.seeds || [])].some((p) => p.repo === name)) add('Systemic', 'warn', name, `${HUB}/pets.json`, 'This pet has no entry in the inspected PetOS registry sections; check admission status.', { fix: r.private ? 'Add it to pets.json with "published": false until the repo is public.' : `Add it to pets.json in ${HUB} and run its build.` });
       }
 
       /* ---- Organizational ---- */
       if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(name)) add('Organizational', 'warn', name, 'repo name', `Repo name "${name}" breaks the house rule: lowercase words joined by hyphens.`);
-      if (!topics.length) add('Organizational', 'warn', name, 'topics', 'No topics, so the repo is invisible to topic search.', { fix: 'Add 3 to 5 topics.' });
+      if (!topics.length && !r.private) add('Organizational', 'warn', name, 'topics', 'No topics, so the repo is invisible to topic search.', { fix: 'Add 3 to 5 topics.' });
       if (/^moved\b/i.test(r.description || '') && !r.archived) add('Organizational', 'warn', name, 'repo status', 'This repo is a "Moved:" stub but is not archived.', { fix: 'Archive it (Settings, Danger Zone) once the new home has the content.' });
       if (readme && !r.homepage && new RegExp(`${user}\\.github\\.io/${name}`, 'i').test(readme)) add('Organizational', 'note', name, 'homepage', 'README links a live site but the repo Website field is empty.', { fix: 'Put the live URL in About, Website.' });
       if (r.homepage) {
@@ -542,11 +644,11 @@ const Goldfish = (() => {
     else if (profRepo.files['README.md']) {
       const txt = profRepo.files['README.md'];
       const listed = new Set();
-      const bullet = /^[-*]\s+\[`?([^\]`]+?)`?\]\(([^)]+)\)\s*(?:--|—|–|:|-)\s*(.+)$/gm;
+      const bullet = /^(?:[-*]|\d+\.)\s+\[`?([^\]`]+?)`?\]\(([^)]+)\)\s*(?:--|—|–|:|-)\s*(.+)$/gm;
       let m;
       while ((m = bullet.exec(txt))) {
         const target = repoMap[m[1]];
-        if (!target) continue; // linkChecks already reports the dead link
+        if (!target || target.private) continue; // linkChecks already reports the dead or private link
         listed.add(target.name);
         const a = new Set(words(m[3])), b = new Set(words(target.description || ''));
         const stop = new Set(['a', 'an', 'the', 'for', 'of', 'to', 'and', 'in', 'on', 'is', 'that', 'what']);
@@ -555,26 +657,33 @@ const Goldfish = (() => {
         const jac = inter / (new Set([...A, ...B]).size || 1);
         if (B.length && jac < 0.3) add('Organizational', 'warn', user, 'README.md', `Profile blurb for ${target.name} and the repo's own description say different things.`, { line: lineOf(txt, m.index), evidence: `profile: "${clip(m[3], 70)}" | repo: "${clip(target.description || '', 70)}"`, fix: 'Make them the same sentence.' });
       }
-      for (const r of repos) if (r.name !== user && !listed.has(r.name) && !/^moved\b/i.test(r.description || '')) add('Organizational', 'note', user, 'README.md', `The profile README does not list ${r.name}.`);
+      for (const r of repos) if (r.name !== user && !r.private && !listed.has(r.name) && !/^moved\b/i.test(r.description || '')) add('Organizational', 'note', user, 'README.md', `The profile README does not list ${r.name}.`);
     }
 
     /* ---- Cage registry cross-check ---- */
     if (registry) {
-      for (const p of registry.pets || []) if (p.published !== false && !repoMap[p.repo]) add('Systemic', 'error', HUB, 'pets.json', `The Cage lists "${p.repo}", which does not exist publicly.`, { fix: 'Publish the repo or remove the entry.' });
+      for (const p of registry.pets || []) {
+        if (p.published === false) continue;
+        const t = repoMap[p.repo];
+        if (!t) add('Systemic', 'error', HUB, 'pets.json', `The Cage lists "${p.repo}", which does not exist publicly.`, { fix: 'Publish the repo or remove the entry.' });
+        else if (t.private) add('Systemic', 'error', HUB, 'pets.json', `The Cage lists "${p.repo}" as published, but that repo is private, so visitors get a 404.`, { fix: 'Make the repo public, or mark the entry "published": false.' });
+      }
     }
 
     /* ---- Systemic: patterns across the account ---- */
     const real = repos.filter((r) => r.name !== user);
+    const pub = real.filter((r) => !r.private); // licenses and topics only matter where visitors can see them
+    const pubWord = pub.length < real.length ? 'public ' : '';
     const share = (pred) => real.filter(pred).length;
-    const named = (pred) => real.filter(pred).map((r) => r.name);
-    const noLicense = named((r) => r.license == null || r.license === 'NOASSERTION');
-    if (noLicense.length) add('Systemic', 'warn', '(whole account)', 'licenses', `${noLicense.length} of ${real.length} repos have no recognizable license: ${noLicense.join(', ')}.`, { fix: 'Pick one house license and add it everywhere.' });
+    const named = (pred, list = real) => list.filter(pred).map((r) => r.name);
+    const noLicense = named((r) => r.license == null || r.license === 'NOASSERTION', pub);
+    if (noLicense.length) add('Systemic', 'warn', '(whole account)', 'licenses', `${noLicense.length} of ${pub.length} ${pubWord}repos have no recognizable license: ${noLicense.join(', ')}.`, { fix: 'Pick one house license and add it everywhere.' });
     for (const f of ['AGENTS.md', 'CLAUDE.md']) {
       const n = share((r) => has(r, f));
       if (n < real.length) add('Systemic', n ? 'warn' : 'note', '(whole account)', f, `${f} exists in ${n} of ${real.length} repos.`);
     }
-    const noTopic = named((r) => !(r.topics || []).length);
-    if (noTopic.length && noTopic.length < real.length) add('Systemic', 'note', '(whole account)', 'topics', `${real.length - noTopic.length} repos use topics and ${noTopic.length} do not: ${noTopic.join(', ')}.`);
+    const noTopic = named((r) => !(r.topics || []).length, pub);
+    if (noTopic.length && noTopic.length < pub.length) add('Systemic', 'note', '(whole account)', 'topics', `${pub.length - noTopic.length} ${pubWord}repos use topics and ${noTopic.length} do not: ${noTopic.join(', ')}.`);
     const dupes = {};
     for (const r of real) if (r.description) (dupes[r.description.toLowerCase()] ||= []).push(r.name);
     for (const names of Object.values(dupes)) if (names.length > 1) add('Systemic', 'warn', '(whole account)', 'descriptions', `Repos share one description: ${names.join(', ')}.`);
@@ -620,15 +729,24 @@ const Goldfish = (() => {
     return { by, cat, mood, total: findings.length };
   }
 
+  // "12 public repos" or "15 repos (3 private)", from the meta the CLI and the page both build.
+  function describeScope(meta) {
+    if (meta.scope !== 'all') return `${meta.repoCount} public repos`;
+    const priv = (meta.repos || []).filter((r) => r.private && !r.fork).length;
+    return `${meta.repoCount} repos (${priv} private)`;
+  }
+
   function toMarkdown(findings, meta) {
     const s = summarize(findings);
-    const out = [`# GitHub Goldfish report for ${meta.user}`, '', `*A pet app by Astra.* Audited ${meta.when}. ${meta.repoCount} public repos.`, '',
+    const priv = new Set((meta.repos || []).filter((r) => r.private).map((r) => r.name));
+    const out = [`# GitHub Goldfish report for ${meta.user}`, '', `*A pet app by Astra.* Audited ${meta.when}. ${describeScope(meta)}.`, '',
+      ...(priv.size ? ['This report names private repos. Keep it private.', ''] : []),
       `**${s.by.error} errors, ${s.by.warn} warnings, ${s.by.note} notes.**`, '',
       ...CATS.map((c) => `- ${c}: ${s.cat[c]}`), ''];
     const groups = {};
     for (const f of findings) (groups[f.repo] ||= []).push(f);
     for (const repo of Object.keys(groups)) {
-      out.push(`## ${repo}`, '');
+      out.push(`## ${repo}${priv.has(repo) ? ' (private)' : ''}`, '');
       for (const f of groups[repo]) {
         out.push(`- **${f.sev.toUpperCase()}** · ${f.cat} · \`${f.where}${f.line ? ':' + f.line : ''}\` — ${f.msg}${f.evidence ? ` Evidence: \`${f.evidence.replace(/`/g, "'")}\`.` : ''}${f.fix ? ` Fix: ${f.fix}` : ''}`);
       }
@@ -639,31 +757,70 @@ const Goldfish = (() => {
   }
 
   /* ---------- fetcher ---------- */
+  // Public repos come from /users/{user}/repos. Private repos need a token that belongs to the
+  // account being audited: then the list comes from /user/repos and private files are read through
+  // the contents API, so the token is only ever sent to api.github.com (never to raw.githubusercontent.com).
   async function collect(user, opts = {}) {
-    const { token, onProgress = () => {}, fetchFn = (typeof fetch !== 'undefined' ? fetch : null) } = opts;
+    const { signal, token, publicOnly = false, onProgress = () => {}, fetchFn = (typeof fetch !== 'undefined' ? fetch : null) } = opts;
     const notes = [];
     const headers = { Accept: 'application/vnd.github+json', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+    const header = (r, k) => (r.headers && typeof r.headers.get === 'function' ? r.headers.get(k) : null);
     let limited = false;
+    let unreadable = 0;
     const api = async (path) => {
       if (limited) return null;
-      const r = await fetchFn('https://api.github.com' + path, { headers });
+      const r = await fetchFn('https://api.github.com' + path, { headers, signal });
+      if (r.status === 401) throw new Error('GitHub rejected the token (401). Check it, or leave the box empty to read public repos only.');
       if (r.status === 403 || r.status === 429) { limited = true; return null; }
       if (r.status === 404) return { __404: true };
       if (r.status === 409) return { __empty: true };
       if (!r.ok) throw new Error(`GitHub said ${r.status} for ${path}`);
       return r.json();
     };
-    const raw = async (repo, branch, path) => {
-      const r = await fetchFn(`https://raw.githubusercontent.com/${user}/${repo}/${encodeURIComponent(branch)}/${path.split('/').map(encodeURIComponent).join('/')}`);
+    const apiText = async (path) => {
+      if (limited) return null;
+      const r = await fetchFn('https://api.github.com' + path, { headers: { ...headers, Accept: 'application/vnd.github.raw' }, signal });
+      if (r.status === 429 || (r.status === 403 && header(r, 'x-ratelimit-remaining') === '0')) { limited = true; return null; }
+      if (r.status === 403) { unreadable++; return null; }
       return r.ok ? r.text() : null;
     };
+    const enc = (path) => path.split('/').map(encodeURIComponent).join('/');
+    const raw = async (repo, branch, path) => {
+      const r = await fetchFn(`https://raw.githubusercontent.com/${user}/${repo}/${encodeURIComponent(branch)}/${enc(path)}`, { signal });
+      return r.ok ? r.text() : null;
+    };
+    const readFile = (repo, path) => repo.private
+      ? apiText(`/repos/${user}/${encodeURIComponent(repo.name)}/contents/${enc(path)}?ref=${encodeURIComponent(repo.default_branch)}`)
+      : raw(repo.name, repo.default_branch, path);
     if (!/^[A-Za-z0-9-]{1,39}$/.test(user)) throw new Error('That does not look like a GitHub username.');
     const profile = await api(`/users/${user}`);
     if (!profile) throw new Error('GitHub is rate-limiting this browser. Wait an hour or paste a token (no scopes needed).');
     if (profile.__404) throw new Error(`No GitHub account called "${user}".`);
+
+    // Decide whether private repos can be listed: only with a token that belongs to this account.
+    let scope = 'public';
+    if (publicOnly) notes.push('Private repos were left out on request (public repos only).');
+    else if (!token) notes.push(`Private repos were not read. To include them, give a token for ${user} that can read private repos.`);
+    else {
+      const r = await fetchFn('https://api.github.com/user', { headers, signal });
+      if (r.status === 401) throw new Error('GitHub rejected the token (401). Check it, or leave the box empty to read public repos only.');
+      if (r.status === 403 || r.status === 429) throw new Error('GitHub is rate-limiting this token. Wait an hour and try again.');
+      if (!r.ok) throw new Error(`GitHub said ${r.status} for /user`);
+      const me = await r.json();
+      if (String(me.login || '').toLowerCase() !== user.toLowerCase()) {
+        notes.push(`The token belongs to ${me.login || 'another account'}, not ${user}, so only ${user}'s public repos were read.`);
+      } else {
+        scope = 'all';
+        const scopes = header(r, 'x-oauth-scopes');
+        if (scopes != null && !/(^|[\s,])repo([\s,]|$)/.test(scopes)) notes.push('This classic token has no "repo" scope, so GitHub hides private repos from it. Add the repo scope, or use a fine-grained token with Contents: Read-only.');
+      }
+    }
+    const listPath = scope === 'all'
+      ? (page) => `/user/repos?per_page=100&affiliation=owner&visibility=all&sort=pushed&page=${page}`
+      : (page) => `/users/${user}/repos?per_page=100&type=owner&sort=pushed&page=${page}`;
     let list = [];
     for (let page = 1; page < 6; page++) {
-      const chunk = await api(`/users/${user}/repos?per_page=100&type=owner&sort=pushed&page=${page}`);
+      const chunk = await api(listPath(page));
       if (!chunk) throw new Error('GitHub is rate-limiting this browser. Wait an hour or paste a token (no scopes needed).');
       list = list.concat(chunk);
       if (chunk.length < 100) break;
@@ -671,11 +828,16 @@ const Goldfish = (() => {
     const repos = list.map((r) => ({
       name: r.name, description: r.description, homepage: r.homepage, topics: r.topics || [],
       license: r.license ? r.license.spdx_id : null, archived: r.archived, fork: r.fork,
+      private: r.private === true || r.visibility === 'private' || r.visibility === 'internal',
       default_branch: r.default_branch, pushed_at: r.pushed_at, html_url: r.html_url, files: {}, tree: null,
     }));
+    if (scope === 'all' && !repos.some((r) => r.private) && !notes.some((n) => /repo" scope/.test(n))) {
+      notes.push('The token showed no private repos. If you have some, give the token access to them (classic: repo scope; fine-grained: All repositories, Contents: Read-only).');
+    }
     const todo = repos.filter((r) => !r.fork);
     let done = 0;
     const work = async (r) => {
+      signal?.throwIfAborted();
       onProgress({ phase: 'start', repo: r.name, done, total: todo.length });
       const tr = await api(`/repos/${user}/${r.name}/git/trees/${encodeURIComponent(r.default_branch)}?recursive=1`);
       if (tr && tr.tree) { r.tree = tr.tree.filter((e) => e.type === 'blob').map((e) => e.path); r.treeSizes = Object.fromEntries(tr.tree.filter((e) => e.type === 'blob').map((e) => [e.path, e.size])); r.treeTruncated = !!tr.truncated; }
@@ -688,22 +850,24 @@ const Goldfish = (() => {
         names = names.concat(extra.slice(0, MAX_MD));
         names = names.filter((n) => TEXT_FILES.includes(n) ? r.tree.includes(n) : true);
       }
-      await Promise.all(names.map(async (n) => { r.files[n] = await raw(r.name, r.default_branch, n); }));
+      await Promise.all(names.map(async (n) => { r.files[n] = await readFile(r, n); }));
       done++;
       onProgress({ phase: 'done', repo: r.name, done, total: todo.length });
     };
     const queue = [...todo];
     await Promise.all(Array.from({ length: 4 }, async () => { for (let r; (r = queue.shift()); ) await work(r); }));
     if (limited) notes.push('GitHub rate-limited this browser part-way: file lists for some repos are missing, so link and file checks there are partial. Paste a token to avoid this.');
+    if (unreadable) notes.push(`GitHub refused ${unreadable} private file read(s). Give the token Contents: Read-only on every repo.`);
     let registry = null;
     const hub = repos.find((r) => r.name === HUB);
-    if (hub) { const t = await raw(HUB, hub.default_branch, 'pets.json'); try { registry = t ? JSON.parse(t) : null; } catch { notes.push('findastra-pet-apps/pets.json could not be parsed.'); } }
-    else notes.push(`No ${HUB} repo yet, so the Cage registry check was skipped.`);
+    if (hub) { const t = await readFile(hub, 'pets.json'); try { registry = t ? JSON.parse(t) : null; } catch { notes.push(`${HUB}/pets.json could not be parsed.`); } }
+    else notes.push(`No ${HUB} repo in the accessible results, so the PetOS registry check was skipped.`);
     if (repos.some((r) => r.fork)) notes.push(`Skipped ${repos.filter((r) => r.fork).length} fork(s): their text is not yours.`);
-    return { user, profile: { name: profile.name, bio: profile.bio, company: profile.company, location: profile.location, blog: profile.blog }, repos, registry, notes };
+    signal?.throwIfAborted();
+    return { user, scope, profile: { name: profile.name, bio: profile.bio, company: profile.company, location: profile.location, blog: profile.blog }, repos, registry, notes };
   }
 
-  return { audit, collect, summarize, toMarkdown, CATS, headings, slugSet, resolvePath };
+  return { audit, collect, summarize, toMarkdown, describeScope, normalizeNamingRules, petWords, CATS, headings, slugSet, resolvePath };
 })();
 if (typeof module !== 'undefined') module.exports = Goldfish;
 </script>
@@ -715,11 +879,11 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch { /* private window: fine */ } },
+    set(k, v) { try { localStorage.setItem(k, v); return true; } catch { return false; } },
   };
 
   /* ===== The pixel twin: 32x32, nine moods, drawn in the Cage's shared style ===== */
-  const SPRITE = /*sprite:start*/{"name":"goldfish","source":"findastra-pet-apps art/sprites.json (generated by scripts/pets-art.mjs there). Edit the art in the Cage repo, then copy this file.","size":[32,32],"moods":["idle","blink","happy","curious","worried","sad","sick","alarmed","sleep"],"frames":{"idle":{"pal":{"a":"#714425","b":"#713913","c":"#ffb15c","d":"#ff8a1c","e":"#c76c16","f":"#714928","g":"#ffc266","h":"#ff9a2e","i":"#713e18","j":"#e8760f","k":"#e0660f","l":"#714e32","m":"#71451f","n":"#ffffff","o":"#3a1a10","p":"#ffd58a","q":"#ffb347","r":"#ff8fb0","s":"#c78c37","t":"#613a1b","u":"#ffd9a3","v":"#682f10","w":"#6b3410","x":"#71513b","y":"#ffe0a8","z":"#e89a30","A":"#6b3e19"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghhhjhhhhjhhhhhi.......","......fgghhhhhhhhhhhhhhhhi......","......fgghhhhhhhhhhhhhhkhi......","....lmgghhnohhhhhhhhonhhkhlm....","...lpqgghhoohhhhhhhhoohhkhpqm...","..lpqqgghhoohhhhhhhhoohhkkqqqm..",".lpqqqggrrhhhhhhhhhhhhrrkkqqqqm.",".lpqqqgghhhhhhhhhhhhhhhhkkqqqst.",".lpqqqgghhhhuuouuouuhhhhkkqqqst.",".lpqqqhghhhuuuuoouuuuhhhkkqqqst.",".mqqqqhghhuuuuuuuuuuuuhhkkqqqst.","..mqqqshjhuuuuuuuuuuuujkkqqqst..","...mqsthhhuuuuuuuuuuuuhkkvqst...","....mt.ihjhuuuuuuuuuuhkjw.mt....","........ihhkuuuuuuuukkkv........",".........ihhkkkkkkkkkkv.........",".........xygghhkkkkgggf.........","........xygggggggggggggf........",".......xyggggggzzgggggggf.......","......xyggggggzAfggggggggf......",".....fygggggzzA..fgzggggggf.....","....fgzzzzzzAA....ffgzzzzzgf...."]},"blink":{"pal":{"a":"#714425","b":"#713913","c":"#ffb15c","d":"#ff8a1c","e":"#c76c16","f":"#714928","g":"#ffc266","h":"#ff9a2e","i":"#713e18","j":"#e8760f","k":"#e0660f","l":"#714e32","m":"#71451f","n":"#ffd58a","o":"#ffb347","p":"#3a1a10","q":"#ff8fb0","r":"#c78c37","s":"#613a1b","t":"#ffd9a3","u":"#682f10","v":"#6b3410","w":"#71513b","x":"#ffe0a8","y":"#e89a30","z":"#6b3e19"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghhhjhhhhjhhhhhi.......","......fgghhhhhhhhhhhhhhhhi......","......fgghhhhhhhhhhhhhhkhi......","....lmgghhhhhhhhhhhhhhhhkhlm....","...lnogghppphhhhhhhhppphkhnom...","..lnoogghhhhhhhhhhhhhhhhkkooom..",".lnoooggqqhhhhhhhhhhhhqqkkoooom.",".lnooogghhhhhhhhhhhhhhhhkkooors.",".lnooogghhhhttpttptthhhhkkooors.",".lnooohghhhttttpptttthhhkkooors.",".moooohghhtttttttttttthhkkooors.","..mooorhjhttttttttttttjkkooors..","...morshhhtttttttttttthkkuors...","....ms.ihjhtttttttttthkjv.ms....","........ihhkttttttttkkku........",".........ihhkkkkkkkkkku.........",".........wxgghhkkkkgggf.........","........wxgggggggggggggf........",".......wxggggggyygggggggf.......","......wxggggggyzfggggggggf......",".....fxgggggyyz..fgyggggggf.....","....fgyyyyyyzz....ffgyyyyygf...."]},"happy":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#fff0a0","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#e0660f","n":"#714e32","o":"#71451f","p":"#ffd58a","q":"#ffb347","r":"#3a1a10","s":"#ff8fb0","t":"#c78c37","u":"#613a1b","v":"#ffd9a3","w":"#ff7d9c","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["..........................a.....","...............bc........ada....","..............befc......addda...","..............begc.......ada....",".............befffc.......a.....",".............beffgc.............","............befffffc............","..........hheiiiijjfkk..........",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......","....noiijjjjjjjjjjjjjjjjmjno....","...npqiijjrjjjjjjjjjjrjjmjpqo...","..npqqiijrjrjjjjjjjjrjrjmmqqqo..",".npqqqiissjjjjjjjjjjjjssmmqqqqo.",".npqqqiijjjjjjjjjjjjjjjjmmqqqtu.",".npqqqiijjjjvvrrrrvvjjjjmmqqqtu.",".npqqqjijjjvvvvwwvvvvjjjmmqqqtu.",".oqqqqjijjvvvvvvvvvvvvjjmmqqqtu.","..oqqqtjljvvvvvvvvvvvvlmmqqqtu..","...oqtujjjvvvvvvvvvvvvjmmxqtu...","....ou.kjljvvvvvvvvvvjmly.ou....","........kjjmvvvvvvvvmmmx........",".........kjjmmmmmmmmmmx.........",".........zAiijjmmmmiiih.........","........zAiiiiiiiiiiiiih........",".......zAiiiiiiBBiiiiiiih.......","......zAiiiiiiBChiiiiiiiih......",".....hAiiiiiBBC..hiBiiiiiih.....","....hiBBBBBBCC....hhiBBBBBih...."]},"curious":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#ffd166","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#e0660f","n":"#714e32","o":"#71451f","p":"#ffffff","q":"#3a1a10","r":"#ffd58a","s":"#ffb347","t":"#ff8fb0","u":"#c78c37","v":"#613a1b","w":"#ffd9a3","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["..........................aa....","...............bc........adda...","..............befc......adaada..","..............begc.......aada...",".............befffc......ada....",".............beffgc.......a.....","............befffffc.....ada....","..........hheiiiijjfkk....a.....",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......","....noiijjpqjjjjjjjjqpjjmjno....","...nrsiijjqqjjjjjjjjqqjjmjrso...","..nrssiijjqqjjjjjjjjqqjjmmssso..",".nrsssiittjjjjjjjjjjjjttmmsssso.",".nrsssiijjjjjjjjjjjjjjjjmmsssuv.",".nrsssiijjjjwwwqqwwwjjjjmmsssuv.",".nrsssjijjjwwwwwwwwwwjjjmmsssuv.",".ossssjijjwwwwwwwwwwwwjjmmsssuv.","..osssujljwwwwwwwwwwwwlmmsssuv..","...osuvjjjwwwwwwwwwwwwjmmxsuv...","....ov.kjljwwwwwwwwwwjmly.ov....","........kjjmwwwwwwwwmmmx........",".........kjjmmmmmmmmmmx.........",".........zAiijjmmmmiiih.........","........zAiiiiiiiiiiiiih........",".......zAiiiiiiBBiiiiiiih.......","......zAiiiiiiBChiiiiiiiih......",".....hAiiiiiBBC..hiBiiiiiih.....","....hiBBBBBBCC....hhiBBBBBih...."]},"worried":{"pal":{"a":"#714425","b":"#713913","c":"#362e40","d":"#ffb15c","e":"#ff8a1c","f":"#4fa3ea","g":"#c76c16","h":"#d9f1ff","i":"#714928","j":"#ffc266","k":"#ff9a2e","l":"#713e18","m":"#e8760f","n":"#3a1a10","o":"#e0660f","p":"#714e32","q":"#71451f","r":"#ffd58a","s":"#ffb347","t":"#ffffff","u":"#c78c37","v":"#613a1b","w":"#ffd9a3","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["................................","...............ab...............","...c..........adeb..............","..cfc.........adgb..............",".cfhfc.......adeeeb.............",".cfhfc.......adeegb.............","..cfc.......adeeeeeb............","...c......iidjjjjkkell..........",".........ijjjjjjjjjjkkl.........","........ijjjjkkkkkkjjkkl........",".......ijjkkkmkkkkmkkkkkl.......","......ijjkknkkkkkkkknkkkkl......","......ijjnnkkkkkkkkkknnokl......","....pqjjkknnkkkkkkkknnkkokpq....","...prsjjkktnkkkkkkkkntkkokrsq...","..prssjjkknnkkkkkkkknnkkoosssq..",".prsssjjkkkkkkkkkkkkkkkkoossssq.",".prsssjjkkkkkkkkkkkkkkkkoosssuv.",".prsssjjkkkkwwwnwnwwkkkkoosssuv.",".prssskjkkkwwwnwnwwwwkkkoosssuv.",".qsssskjkkwwwwwwwwwwwwkkoosssuv.","..qsssukmkwwwwwwwwwwwwmoosssuv..","...qsuvkkkwwwwwwwwwwwwkooxsuv...","....qv.lkmkwwwwwwwwwwkomy.qv....","........lkkowwwwwwwwooox........",".........lkkoooooooooox.........",".........zAjjkkoooojjji.........","........zAjjjjjjjjjjjjji........",".......zAjjjjjjBBjjjjjjji.......","......zAjjjjjjBCijjjjjjjji......",".....iAjjjjjBBC..ijBjjjjjji.....","....ijBBBBBBCC....iijBBBBBji...."]},"sad":{"pal":{"a":"#735141","b":"#734732","c":"#eaac70","d":"#ea8b3a","e":"#bb7235","f":"#735544","g":"#eaba78","h":"#ea9949","i":"#734c36","j":"#3a1a10","k":"#d77b2f","l":"#d06d2f","m":"#ffffff","n":"#6b3f30","o":"#4fa3ea","p":"#73594c","q":"#d9f1ff","r":"#73513c","s":"#eaca96","t":"#eaceab","u":"#eaae5e","v":"#bb8d50","w":"#654839","x":"#6e4330","y":"#735c54","z":"#ead4af","A":"#d7994b","B":"#6e4c37"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghjhkhhhhkhjhhhi.......","......fgghjhhhhhhhhhhjhhhi......","......fggjhhhhhhhhhhhhjlhi......",".....fgghhjjhhhhhhhhjjhhlhi.....",".....fgghhmjhhhhhhhhjmhhlhi.....",".....fgghhjjhhhhhhhhjjhhlln.....",".....fgghhohhhhhhhhhhohhlln.....","...pppgghhqhhhhhhhhhhqhhllppr...","..psssgghhhhtttjjttthhhhllssur..","..psuuhghhhtttjttjttthhhlluuvr..",".psuuuhghhtttttttttttthhlluuuur.",".psuuuuhkhttttttttttttklluuuuvw.",".ruuuuuhhhtttttttttttthlluuuuvw.","..psuuvwhkhtttttttttthlkxsuuvw..","..ruvvvwihhlttttttttlllnruvvvw..","...rwww..ihhlllllllllln..rwww...",".........yzgghhllllgggf.........","........yzgggggggggggggf........",".......yzggggggAAgggggggf.......","......yzggggggABfggggggggf......",".....fzgggggAAB..fgAggggggf.....","....fgAAAAAABB....ffgAAAAAgf...."]},"sick":{"pal":{"a":"#81743e","b":"#816d33","c":"#362e40","d":"#d9b760","e":"#d99f39","f":"#4fa3ea","g":"#b78d35","h":"#d9f1ff","i":"#817740","j":"#d9c266","k":"#d9a944","l":"#817036","m":"#f3d3a2","n":"#cb9330","o":"#c68930","p":"#3a1a10","q":"#7c6731","r":"#817a46","s":"#81753a","t":"#d9ce7d","u":"#d9d08c","v":"#d9b953","w":"#b7a149","x":"#776e38","y":"#7e6a31","z":"#817c4c","A":"#d9d58f","B":"#cba945","C":"#7e7037"},"rows":["................................","...............ab...............","...c..........adeb..............","..cfc.........adgb..............",".cfhfc.......adeeeb.............",".cfhfc.......adeegb.............","..cfc.......adeeeeeb............","...c......iidjjjjkkell..........",".........ijjjjjjjjjjkml.........","........ijjjjkkkkkkjmmml........",".......ijjkkknkkkknkkmkkl.......","......ijjkkkkkkkkkkkkkkkkl......","......ijjkkkkkkkkkkkkkkokl......",".....ijjkpkpkkkkkkkkpkpkokl.....",".....ijjkkpkkkkkkkkkkpkkokl.....",".....ijjkpkpkkkkkkkkpkpkooq.....",".....ijjkkkkkkkkkkkkkkkkooq.....","...rrrjjkkkkkkkkkkkkkkkkoorrs...","..rtttjjkkkkuuupupuukkkkoottvs..","..rtvvkjkkkuuupupuuuukkkoovvws..",".rtvvvkjkkuuuuuuuuuuuukkoovvvvs.",".rtvvvvknkuuuuuuuuuuuunoovvvvwx.",".svvvvvkkkuuuuuuuuuuuukoovvvvwx.","..rtvvwxknkuuuuuuuuuukonytvvwx..","..svwwwxlkkouuuuuuuuoooqsvwwwx..","...sxxx..lkkooooooooooq..sxxx...",".........zAjjkkoooojjji.........","........zAjjjjjjjjjjjjji........",".......zAjjjjjjBBjjjjjjji.......","......zAjjjjjjBCijjjjjjjji......",".....iAjjjjjBBC..ijBjjjjjji.....","....ijBBBBBBCC....iijBBBBBji...."]},"alarmed":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#ff5a5f","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#3a1a10","n":"#e0660f","o":"#714e32","p":"#71451f","q":"#ffd58a","r":"#ffb347","s":"#ffffff","t":"#c78c37","u":"#613a1b","v":"#ffd9a3","w":"#682f10","x":"#6b3410","y":"#71513b","z":"#ffe0a8","A":"#e89a30","B":"#6b3e19"},"rows":[".........................aa.....","...............bc.......adda....","..............befc......adda....","..............begc......adda....",".............befffc.....adda....",".............beffgc......aa.....","............befffffc....adda....","..........hheiiiijjfkk...aa.....",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiimjmjjjjjjjjmjmnjk......","....opiijmmmjjjjjjjjmmmjnjop....","...oqriijmsmjjjjjjjjmsmjnjqrp...","..oqrriijmmmjjjjjjjjmmmjnnrrrp..",".oqrrriijjjjjjjjjjjjjjjjnnrrrrp.",".oqrrriijjjjjjjjjjjjjjjjnnrrrtu.",".oqrrriijjjjvvvmmvvvjjjjnnrrrtu.",".oqrrrjijjjvvvvmmvvvvjjjnnrrrtu.",".prrrrjijjvvvvvvvvvvvvjjnnrrrtu.","..prrrtjljvvvvvvvvvvvvlnnrrrtu..","...prtujjjvvvvvvvvvvvvjnnwrtu...","....pu.kjljvvvvvvvvvvjnlx.pu....","........kjjnvvvvvvvvnnnw........",".........kjjnnnnnnnnnnw.........",".........yziijjnnnniiih.........","........yziiiiiiiiiiiiih........",".......yziiiiiiAAiiiiiiih.......","......yziiiiiiABhiiiiiiiih......",".....hziiiiiAAB..hiAiiiiiih.....","....hiAAAAAABB....hhiAAAAAih...."]},"sleep":{"pal":{"a":"#362e40","b":"#744d39","c":"#74432a","d":"#9fb4ff","e":"#f1ad6a","f":"#f18b31","g":"#c0702c","h":"#74523c","i":"#f1bc73","j":"#f19941","k":"#74482e","l":"#dd7926","m":"#d66b26","n":"#3a1a10","o":"#6c3b27","p":"#ff8fb0","q":"#745645","r":"#744e34","s":"#f1cd92","t":"#f1d0a8","u":"#f1af57","v":"#c08c49","w":"#664431","x":"#6f3f27","y":"#74594d","z":"#f1d6ad","A":"#dd9943","B":"#6f482f"},"rows":[".........................aaaa...","...............bc.......adddda..","..............befc.......aada...","..............begc.......adaa...",".............befffc.....adddda..",".............beffgc......aaaa...","............befffffc............","..........hheiiiijjfkk..........",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......",".....hiijjjjjjjjjjjjjjjjmjk.....",".....hiijnjnjjjjjjjjnjnjmjk.....",".....hiijjnjjjjjjjjjjnjjmmo.....",".....hiippjjjjjjjjjjjjppmmo.....","...qqqiijjjjjjjjjjjjjjjjmmqqr...","..qsssiijjjjtttnntttjjjjmmssur..","..qsuujijjjttttttttttjjjmmuuvr..",".qsuuujijjttttttttttttjjmmuuuur.",".qsuuuujljttttttttttttlmmuuuuvw.",".ruuuuujjjttttttttttttjmmuuuuvw.","..qsuuvwjljttttttttttjmlxsuuvw..","..ruvvvwkjjmttttttttmmmoruvvvw..","...rwww..kjjmmmmmmmmmmo..rwww...",".........yziijjmmmmiiih.........","........yziiiiiiiiiiiiih........",".......yziiiiiiAAiiiiiiih.......","......yziiiiiiABhiiiiiiiih......",".....hziiiiiAAB..hiAiiiiiih.....","....hiAAAAAABB....hhiAAAAAih...."]}}}/*sprite:end*/;
+  const SPRITE = /*sprite:start*/{"name":"goldfish","source":"astras-pet-apps art/sprites.json (generated by scripts/pets-art.mjs there). Edit the art in the Cage repo, then copy this file.","size":[32,32],"moods":["idle","blink","happy","curious","worried","sad","sick","alarmed","sleep"],"frames":{"idle":{"pal":{"a":"#714425","b":"#713913","c":"#ffb15c","d":"#ff8a1c","e":"#c76c16","f":"#714928","g":"#ffc266","h":"#ff9a2e","i":"#713e18","j":"#e8760f","k":"#e0660f","l":"#714e32","m":"#71451f","n":"#ffffff","o":"#3a1a10","p":"#ffd58a","q":"#ffb347","r":"#ff8fb0","s":"#c78c37","t":"#613a1b","u":"#ffd9a3","v":"#682f10","w":"#6b3410","x":"#71513b","y":"#ffe0a8","z":"#e89a30","A":"#6b3e19"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghhhjhhhhjhhhhhi.......","......fgghhhhhhhhhhhhhhhhi......","......fgghhhhhhhhhhhhhhkhi......","....lmgghhnohhhhhhhhonhhkhlm....","...lpqgghhoohhhhhhhhoohhkhpqm...","..lpqqgghhoohhhhhhhhoohhkkqqqm..",".lpqqqggrrhhhhhhhhhhhhrrkkqqqqm.",".lpqqqgghhhhhhhhhhhhhhhhkkqqqst.",".lpqqqgghhhhuuouuouuhhhhkkqqqst.",".lpqqqhghhhuuuuoouuuuhhhkkqqqst.",".mqqqqhghhuuuuuuuuuuuuhhkkqqqst.","..mqqqshjhuuuuuuuuuuuujkkqqqst..","...mqsthhhuuuuuuuuuuuuhkkvqst...","....mt.ihjhuuuuuuuuuuhkjw.mt....","........ihhkuuuuuuuukkkv........",".........ihhkkkkkkkkkkv.........",".........xygghhkkkkgggf.........","........xygggggggggggggf........",".......xyggggggzzgggggggf.......","......xyggggggzAfggggggggf......",".....fygggggzzA..fgzggggggf.....","....fgzzzzzzAA....ffgzzzzzgf...."]},"blink":{"pal":{"a":"#714425","b":"#713913","c":"#ffb15c","d":"#ff8a1c","e":"#c76c16","f":"#714928","g":"#ffc266","h":"#ff9a2e","i":"#713e18","j":"#e8760f","k":"#e0660f","l":"#714e32","m":"#71451f","n":"#ffd58a","o":"#ffb347","p":"#3a1a10","q":"#ff8fb0","r":"#c78c37","s":"#613a1b","t":"#ffd9a3","u":"#682f10","v":"#6b3410","w":"#71513b","x":"#ffe0a8","y":"#e89a30","z":"#6b3e19"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghhhjhhhhjhhhhhi.......","......fgghhhhhhhhhhhhhhhhi......","......fgghhhhhhhhhhhhhhkhi......","....lmgghhhhhhhhhhhhhhhhkhlm....","...lnogghppphhhhhhhhppphkhnom...","..lnoogghhhhhhhhhhhhhhhhkkooom..",".lnoooggqqhhhhhhhhhhhhqqkkoooom.",".lnooogghhhhhhhhhhhhhhhhkkooors.",".lnooogghhhhttpttptthhhhkkooors.",".lnooohghhhttttpptttthhhkkooors.",".moooohghhtttttttttttthhkkooors.","..mooorhjhttttttttttttjkkooors..","...morshhhtttttttttttthkkuors...","....ms.ihjhtttttttttthkjv.ms....","........ihhkttttttttkkku........",".........ihhkkkkkkkkkku.........",".........wxgghhkkkkgggf.........","........wxgggggggggggggf........",".......wxggggggyygggggggf.......","......wxggggggyzfggggggggf......",".....fxgggggyyz..fgyggggggf.....","....fgyyyyyyzz....ffgyyyyygf...."]},"happy":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#fff0a0","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#e0660f","n":"#714e32","o":"#71451f","p":"#ffd58a","q":"#ffb347","r":"#3a1a10","s":"#ff8fb0","t":"#c78c37","u":"#613a1b","v":"#ffd9a3","w":"#ff7d9c","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["..........................a.....","...............bc........ada....","..............befc......addda...","..............begc.......ada....",".............befffc.......a.....",".............beffgc.............","............befffffc............","..........hheiiiijjfkk..........",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......","....noiijjjjjjjjjjjjjjjjmjno....","...npqiijjrjjjjjjjjjjrjjmjpqo...","..npqqiijrjrjjjjjjjjrjrjmmqqqo..",".npqqqiissjjjjjjjjjjjjssmmqqqqo.",".npqqqiijjjjjjjjjjjjjjjjmmqqqtu.",".npqqqiijjjjvvrrrrvvjjjjmmqqqtu.",".npqqqjijjjvvvvwwvvvvjjjmmqqqtu.",".oqqqqjijjvvvvvvvvvvvvjjmmqqqtu.","..oqqqtjljvvvvvvvvvvvvlmmqqqtu..","...oqtujjjvvvvvvvvvvvvjmmxqtu...","....ou.kjljvvvvvvvvvvjmly.ou....","........kjjmvvvvvvvvmmmx........",".........kjjmmmmmmmmmmx.........",".........zAiijjmmmmiiih.........","........zAiiiiiiiiiiiiih........",".......zAiiiiiiBBiiiiiiih.......","......zAiiiiiiBChiiiiiiiih......",".....hAiiiiiBBC..hiBiiiiiih.....","....hiBBBBBBCC....hhiBBBBBih...."]},"curious":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#ffd166","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#e0660f","n":"#714e32","o":"#71451f","p":"#ffffff","q":"#3a1a10","r":"#ffd58a","s":"#ffb347","t":"#ff8fb0","u":"#c78c37","v":"#613a1b","w":"#ffd9a3","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["..........................aa....","...............bc........adda...","..............befc......adaada..","..............begc.......aada...",".............befffc......ada....",".............beffgc.......a.....","............befffffc.....ada....","..........hheiiiijjfkk....a.....",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......","....noiijjpqjjjjjjjjqpjjmjno....","...nrsiijjqqjjjjjjjjqqjjmjrso...","..nrssiijjqqjjjjjjjjqqjjmmssso..",".nrsssiittjjjjjjjjjjjjttmmsssso.",".nrsssiijjjjjjjjjjjjjjjjmmsssuv.",".nrsssiijjjjwwwqqwwwjjjjmmsssuv.",".nrsssjijjjwwwwwwwwwwjjjmmsssuv.",".ossssjijjwwwwwwwwwwwwjjmmsssuv.","..osssujljwwwwwwwwwwwwlmmsssuv..","...osuvjjjwwwwwwwwwwwwjmmxsuv...","....ov.kjljwwwwwwwwwwjmly.ov....","........kjjmwwwwwwwwmmmx........",".........kjjmmmmmmmmmmx.........",".........zAiijjmmmmiiih.........","........zAiiiiiiiiiiiiih........",".......zAiiiiiiBBiiiiiiih.......","......zAiiiiiiBChiiiiiiiih......",".....hAiiiiiBBC..hiBiiiiiih.....","....hiBBBBBBCC....hhiBBBBBih...."]},"worried":{"pal":{"a":"#714425","b":"#713913","c":"#362e40","d":"#ffb15c","e":"#ff8a1c","f":"#4fa3ea","g":"#c76c16","h":"#d9f1ff","i":"#714928","j":"#ffc266","k":"#ff9a2e","l":"#713e18","m":"#e8760f","n":"#3a1a10","o":"#e0660f","p":"#714e32","q":"#71451f","r":"#ffd58a","s":"#ffb347","t":"#ffffff","u":"#c78c37","v":"#613a1b","w":"#ffd9a3","x":"#682f10","y":"#6b3410","z":"#71513b","A":"#ffe0a8","B":"#e89a30","C":"#6b3e19"},"rows":["................................","...............ab...............","...c..........adeb..............","..cfc.........adgb..............",".cfhfc.......adeeeb.............",".cfhfc.......adeegb.............","..cfc.......adeeeeeb............","...c......iidjjjjkkell..........",".........ijjjjjjjjjjkkl.........","........ijjjjkkkkkkjjkkl........",".......ijjkkkmkkkkmkkkkkl.......","......ijjkknkkkkkkkknkkkkl......","......ijjnnkkkkkkkkkknnokl......","....pqjjkknnkkkkkkkknnkkokpq....","...prsjjkktnkkkkkkkkntkkokrsq...","..prssjjkknnkkkkkkkknnkkoosssq..",".prsssjjkkkkkkkkkkkkkkkkoossssq.",".prsssjjkkkkkkkkkkkkkkkkoosssuv.",".prsssjjkkkkwwwnwnwwkkkkoosssuv.",".prssskjkkkwwwnwnwwwwkkkoosssuv.",".qsssskjkkwwwwwwwwwwwwkkoosssuv.","..qsssukmkwwwwwwwwwwwwmoosssuv..","...qsuvkkkwwwwwwwwwwwwkooxsuv...","....qv.lkmkwwwwwwwwwwkomy.qv....","........lkkowwwwwwwwooox........",".........lkkoooooooooox.........",".........zAjjkkoooojjji.........","........zAjjjjjjjjjjjjji........",".......zAjjjjjjBBjjjjjjji.......","......zAjjjjjjBCijjjjjjjji......",".....iAjjjjjBBC..ijBjjjjjji.....","....ijBBBBBBCC....iijBBBBBji...."]},"sad":{"pal":{"a":"#735141","b":"#734732","c":"#eaac70","d":"#ea8b3a","e":"#bb7235","f":"#735544","g":"#eaba78","h":"#ea9949","i":"#734c36","j":"#3a1a10","k":"#d77b2f","l":"#d06d2f","m":"#ffffff","n":"#6b3f30","o":"#4fa3ea","p":"#73594c","q":"#d9f1ff","r":"#73513c","s":"#eaca96","t":"#eaceab","u":"#eaae5e","v":"#bb8d50","w":"#654839","x":"#6e4330","y":"#735c54","z":"#ead4af","A":"#d7994b","B":"#6e4c37"},"rows":["................................","...............ab...............","..............acdb..............","..............aceb..............",".............acdddb.............",".............acddeb.............","............acdddddb............","..........ffcgggghhdii..........",".........fgggggggggghhi.........","........fgggghhhhhhgghhi........",".......fgghjhkhhhhkhjhhhi.......","......fgghjhhhhhhhhhhjhhhi......","......fggjhhhhhhhhhhhhjlhi......",".....fgghhjjhhhhhhhhjjhhlhi.....",".....fgghhmjhhhhhhhhjmhhlhi.....",".....fgghhjjhhhhhhhhjjhhlln.....",".....fgghhohhhhhhhhhhohhlln.....","...pppgghhqhhhhhhhhhhqhhllppr...","..psssgghhhhtttjjttthhhhllssur..","..psuuhghhhtttjttjttthhhlluuvr..",".psuuuhghhtttttttttttthhlluuuur.",".psuuuuhkhttttttttttttklluuuuvw.",".ruuuuuhhhtttttttttttthlluuuuvw.","..psuuvwhkhtttttttttthlkxsuuvw..","..ruvvvwihhlttttttttlllnruvvvw..","...rwww..ihhlllllllllln..rwww...",".........yzgghhllllgggf.........","........yzgggggggggggggf........",".......yzggggggAAgggggggf.......","......yzggggggABfggggggggf......",".....fzgggggAAB..fgAggggggf.....","....fgAAAAAABB....ffgAAAAAgf...."]},"sick":{"pal":{"a":"#81743e","b":"#816d33","c":"#362e40","d":"#d9b760","e":"#d99f39","f":"#4fa3ea","g":"#b78d35","h":"#d9f1ff","i":"#817740","j":"#d9c266","k":"#d9a944","l":"#817036","m":"#f3d3a2","n":"#cb9330","o":"#c68930","p":"#3a1a10","q":"#7c6731","r":"#817a46","s":"#81753a","t":"#d9ce7d","u":"#d9d08c","v":"#d9b953","w":"#b7a149","x":"#776e38","y":"#7e6a31","z":"#817c4c","A":"#d9d58f","B":"#cba945","C":"#7e7037"},"rows":["................................","...............ab...............","...c..........adeb..............","..cfc.........adgb..............",".cfhfc.......adeeeb.............",".cfhfc.......adeegb.............","..cfc.......adeeeeeb............","...c......iidjjjjkkell..........",".........ijjjjjjjjjjkml.........","........ijjjjkkkkkkjmmml........",".......ijjkkknkkkknkkmkkl.......","......ijjkkkkkkkkkkkkkkkkl......","......ijjkkkkkkkkkkkkkkokl......",".....ijjkpkpkkkkkkkkpkpkokl.....",".....ijjkkpkkkkkkkkkkpkkokl.....",".....ijjkpkpkkkkkkkkpkpkooq.....",".....ijjkkkkkkkkkkkkkkkkooq.....","...rrrjjkkkkkkkkkkkkkkkkoorrs...","..rtttjjkkkkuuupupuukkkkoottvs..","..rtvvkjkkkuuupupuuuukkkoovvws..",".rtvvvkjkkuuuuuuuuuuuukkoovvvvs.",".rtvvvvknkuuuuuuuuuuuunoovvvvwx.",".svvvvvkkkuuuuuuuuuuuukoovvvvwx.","..rtvvwxknkuuuuuuuuuukonytvvwx..","..svwwwxlkkouuuuuuuuoooqsvwwwx..","...sxxx..lkkooooooooooq..sxxx...",".........zAjjkkoooojjji.........","........zAjjjjjjjjjjjjji........",".......zAjjjjjjBBjjjjjjji.......","......zAjjjjjjBCijjjjjjjji......",".....iAjjjjjBBC..ijBjjjjjji.....","....ijBBBBBBCC....iijBBBBBji...."]},"alarmed":{"pal":{"a":"#362e40","b":"#714425","c":"#713913","d":"#ff5a5f","e":"#ffb15c","f":"#ff8a1c","g":"#c76c16","h":"#714928","i":"#ffc266","j":"#ff9a2e","k":"#713e18","l":"#e8760f","m":"#3a1a10","n":"#e0660f","o":"#714e32","p":"#71451f","q":"#ffd58a","r":"#ffb347","s":"#ffffff","t":"#c78c37","u":"#613a1b","v":"#ffd9a3","w":"#682f10","x":"#6b3410","y":"#71513b","z":"#ffe0a8","A":"#e89a30","B":"#6b3e19"},"rows":[".........................aa.....","...............bc.......adda....","..............befc......adda....","..............begc......adda....",".............befffc.....adda....",".............beffgc......aa.....","............befffffc....adda....","..........hheiiiijjfkk...aa.....",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiimjmjjjjjjjjmjmnjk......","....opiijmmmjjjjjjjjmmmjnjop....","...oqriijmsmjjjjjjjjmsmjnjqrp...","..oqrriijmmmjjjjjjjjmmmjnnrrrp..",".oqrrriijjjjjjjjjjjjjjjjnnrrrrp.",".oqrrriijjjjjjjjjjjjjjjjnnrrrtu.",".oqrrriijjjjvvvmmvvvjjjjnnrrrtu.",".oqrrrjijjjvvvvmmvvvvjjjnnrrrtu.",".prrrrjijjvvvvvvvvvvvvjjnnrrrtu.","..prrrtjljvvvvvvvvvvvvlnnrrrtu..","...prtujjjvvvvvvvvvvvvjnnwrtu...","....pu.kjljvvvvvvvvvvjnlx.pu....","........kjjnvvvvvvvvnnnw........",".........kjjnnnnnnnnnnw.........",".........yziijjnnnniiih.........","........yziiiiiiiiiiiiih........",".......yziiiiiiAAiiiiiiih.......","......yziiiiiiABhiiiiiiiih......",".....hziiiiiAAB..hiAiiiiiih.....","....hiAAAAAABB....hhiAAAAAih...."]},"sleep":{"pal":{"a":"#362e40","b":"#744d39","c":"#74432a","d":"#9fb4ff","e":"#f1ad6a","f":"#f18b31","g":"#c0702c","h":"#74523c","i":"#f1bc73","j":"#f19941","k":"#74482e","l":"#dd7926","m":"#d66b26","n":"#3a1a10","o":"#6c3b27","p":"#ff8fb0","q":"#745645","r":"#744e34","s":"#f1cd92","t":"#f1d0a8","u":"#f1af57","v":"#c08c49","w":"#664431","x":"#6f3f27","y":"#74594d","z":"#f1d6ad","A":"#dd9943","B":"#6f482f"},"rows":[".........................aaaa...","...............bc.......adddda..","..............befc.......aada...","..............begc.......adaa...",".............befffc.....adddda..",".............beffgc......aaaa...","............befffffc............","..........hheiiiijjfkk..........",".........hiiiiiiiiiijjk.........","........hiiiijjjjjjiijjk........",".......hiijjjljjjjljjjjjk.......","......hiijjjjjjjjjjjjjjjjk......","......hiijjjjjjjjjjjjjjmjk......",".....hiijjjjjjjjjjjjjjjjmjk.....",".....hiijnjnjjjjjjjjnjnjmjk.....",".....hiijjnjjjjjjjjjjnjjmmo.....",".....hiippjjjjjjjjjjjjppmmo.....","...qqqiijjjjjjjjjjjjjjjjmmqqr...","..qsssiijjjjtttnntttjjjjmmssur..","..qsuujijjjttttttttttjjjmmuuvr..",".qsuuujijjttttttttttttjjmmuuuur.",".qsuuuujljttttttttttttlmmuuuuvw.",".ruuuuujjjttttttttttttjmmuuuuvw.","..qsuuvwjljttttttttttjmlxsuuvw..","..ruvvvwkjjmttttttttmmmoruvvvw..","...rwww..kjjmmmmmmmmmmo..rwww...",".........yziijjmmmmiiih.........","........yziiiiiiiiiiiiih........",".......yziiiiiiAAiiiiiiih.......","......yziiiiiiABhiiiiiiiih......",".....hziiiiiAAB..hiAiiiiiih.....","....hiAAAAAABB....hhiAAAAAih...."]}}}/*sprite:end*/;
   const W = 160, H = 72, cv = $('tank'), cx = cv.getContext('2d');
   const INK = '#1f3a1a', SAND = '#8fa866', LCD = '#b7cf8a';
   const frameCache = {};
@@ -779,6 +943,29 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
   $('user').value = store.get('goldfish.user') || 'findastra';
   $('never').value = store.get('goldfish.never') || '';
   $('never').addEventListener('change', () => store.set('goldfish.never', $('never').value));
+  let namingRules = [];
+  try { namingRules = Goldfish.normalizeNamingRules(JSON.parse(store.get('goldfish.namingRules') || '[]')); }
+  catch (e) { $('learn-status').textContent = 'Saved corrections could not be loaded: ' + e.message; }
+  const saveNamingRules = () => {
+    const saved = store.set('goldfish.namingRules', JSON.stringify(namingRules));
+    $('learn-status').textContent = saved ? 'Corrections saved in this browser. They apply to the next audit.' : 'Browser storage is unavailable. These corrections apply only until this page closes.';
+  };
+  function renderNamingRules() {
+    $('naming-list').replaceChildren(...namingRules.map((rule, i) => {
+      const remove = E('button', { type: 'button', className: 'secondary', textContent: 'Forget', ariaLabel: `Forget correction for ${rule.from} in ${rule.repo}` });
+      remove.onclick = () => { namingRules.splice(i, 1); saveNamingRules(); renderNamingRules(); };
+      return E('li', {}, E('span', { textContent: `${rule.repo}: ${rule.from} → ${rule.to}` }), remove);
+    }));
+  }
+  $('learn-save').onclick = () => {
+    try {
+      const [rule] = Goldfish.normalizeNamingRules([{ repo: $('learn-repo').value, from: $('learn-from').value, to: $('learn-to').value }]);
+      namingRules = namingRules.filter((old) => old.repo !== rule.repo || old.from.toLowerCase() !== rule.from.toLowerCase());
+      namingRules.push(rule); saveNamingRules(); renderNamingRules();
+      $('learn-from').value = ''; $('learn-to').value = '';
+    } catch (e) { $('learn-status').textContent = e.message; }
+  };
+  renderNamingRules();
 
   function ghUrl(f) {
     const r = meta.repos.find((x) => x.name === f.repo);
@@ -792,7 +979,7 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
     const s = Goldfish.summarize(findings);
     $('results').hidden = false;
     const tiles = $('tiles'); tiles.replaceChildren(...Goldfish.CATS.map((c) => E('div', { className: 'tile' }, E('b', { textContent: s.cat[c] }), E('span', { textContent: c }))));
-    $('sevline').replaceChildren(E('strong', { textContent: `${s.by.error} errors` }), `, ${s.by.warn} warnings, ${s.by.note} notes across ${meta.repoCount} public repos.`);
+    $('sevline').replaceChildren(E('strong', { textContent: `${s.by.error} errors` }), `, ${s.by.warn} warnings, ${s.by.note} notes across ${Goldfish.describeScope(meta)}.`);
     const f = $('filters'); f.replaceChildren();
     const chip = (label, pressed, on) => { const b = E('button', { type: 'button', className: 'chip', textContent: label }); b.setAttribute('aria-pressed', pressed); b.onclick = on; return b; };
     ['All', ...Goldfish.CATS].forEach((c) => f.append(chip(c, c === catFilter, () => { catFilter = c; render(); })));
@@ -814,7 +1001,10 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
         ul.append(li);
       }
       const errs = items.filter((x) => x.sev === 'error').length;
-      host.append(E('section', { className: 'repo' }, E('header', {}, E('h3', { textContent: repo }), E('span', { className: 'cat', textContent: `${items.length} finding${items.length === 1 ? '' : 's'}${errs ? `, ${errs} error${errs === 1 ? '' : 's'}` : ''}` })), ul));
+      const isPrivate = meta.repos.some((x) => x.name === repo && x.private);
+      const title = E('h3', { textContent: repo });
+      if (isPrivate) title.append(E('span', { className: 'tag-private', textContent: 'private' }));
+      host.append(E('section', { className: 'repo' }, E('header', {}, title, E('span', { className: 'cat', textContent: `${items.length} finding${items.length === 1 ? '' : 's'}${errs ? `, ${errs} error${errs === 1 ? '' : 's'}` : ''}` })), ul));
     }
     $('coverage').replaceChildren(...(meta.notes.length ? meta.notes : ['Everything in the checklist ran.']).map((n) => E('li', { textContent: n })));
   }
@@ -823,11 +1013,14 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
     const user = $('user').value.trim();
     store.set('goldfish.user', user);
     $('go').disabled = true; $('copy').disabled = true; $('download').disabled = true;
+    findings = []; meta = null; $('results').hidden = true;
     setMood('busy'); setStatus('Goldfish is warming up…');
     running = true;
     try {
       const data = await Goldfish.collect(user, {
+        signal: window.goldfishRunController?.signal,
         token: $('token').value.trim() || undefined,
+        publicOnly: !$('private').checked,
         onProgress: (p) => {
           if (p.phase === 'start') {
             if (stations.length !== p.total) layoutStations(p.total);
@@ -837,16 +1030,17 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
           }
         },
       });
-      const never = $('never').value.split('\n');
-      findings = Goldfish.audit({ ...data, neverSay: never });
-      meta = { user, repoCount: data.repos.filter((r) => !r.fork).length, repos: data.repos, notes: data.notes, when: new Date().toISOString().slice(0, 10) };
+      window.goldfishRunController?.signal.throwIfAborted();
+      const never = window.goldfishToolEnabled?.('never-say-checker') === false ? [] : $('never').value.split('\n');
+      findings = Goldfish.audit({ ...data, neverSay: never, namingRules: window.goldfishToolEnabled?.('naming-corrections') === false ? [] : namingRules });
+      meta = { user, scope: data.scope, repoCount: data.repos.filter((r) => !r.fork).length, repos: data.repos, notes: data.notes, when: new Date().toISOString().slice(0, 10) };
       const s = Goldfish.summarize(findings);
       setMood(s.mood); fish.tx = W / 2 - 16; fish.ty = 14; redraw();
-      setStatus(`Done: ${s.by.error} errors, ${s.by.warn} warnings, ${s.by.note} notes.`);
+      setStatus(`${data.notes.length ? "Partial coverage — review Not covered this run. " : ""}Done: ${s.by.error} errors, ${s.by.warn} warnings, ${s.by.note} notes.`);
       render();
       $('copy').disabled = false; $('download').disabled = false;
     } catch (e) {
-      setMood('failed'); setStatus('Goldfish could not finish: ' + e.message);
+      setMood('failed'); setStatus(e.name === 'AbortError' ? 'Audit stopped. No completed report was produced.' : 'Goldfish could not finish: ' + e.message);
     } finally { running = false; $('go').disabled = false; }
   };
   $('copy').onclick = async () => {
@@ -857,6 +1051,36 @@ if (typeof module !== 'undefined') module.exports = Goldfish;
     const a = E('a', { href: URL.createObjectURL(new Blob([Goldfish.toMarkdown(findings, meta)], { type: 'text/markdown' })), download: `goldfish-report-${meta.user}-${meta.when}.md` });
     document.body.append(a); a.click(); a.remove();
   };
+})();
+</script>
+
+<style>
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:16px 0}.tool-box{border:1px solid #8b7758;border-radius:12px;padding:14px}.tool-box legend{font-weight:bold}.tool-controls{display:flex;justify-content:space-between;gap:12px}.tool-controls input{width:auto}dialog{max-width:560px;width:85%;background:#201a16;color:#fff1d1;border:2px solid #cda450;border-radius:16px}dialog::backdrop{background:#0009}.chat-pet{width:64px;height:64px;object-fit:contain}.tool-note{font-size:.9rem}.tool-box button{margin-top:10px}
+</style>
+<section id="official-tools" aria-label="Official tools"><h2>Tools</h2><div id="tool-grid" class="tool-grid"></div><h2>Tutorial tools</h2><p>These open L3 chat. A real agent connection is still required to deliver the tutorials.</p><div id="tutorial-grid" class="tool-grid"></div><p id="tool-feedback" role="status"></p></section>
+<button id="pet-chat" type="button" aria-label="Open GitHub Goldfish chat"><img class="chat-pet" src="../art/frames/goldfish/idle.png" alt="GitHub Goldfish"></button>
+<dialog id="cyber-deck" aria-labelledby="chat-title"><h2 id="chat-title">Astra's Cyber Deck — GitHub Goldfish Chat</h2><p id="chat-context"></p><p>Seat: empty. No L3 agent is connected. This panel cannot send messages, build tools or run a tutorial yet.</p><button id="close-chat" type="button">Close chat</button></dialog>
+<script id="tool-controls">
+(()=>{
+ const $=id=>document.getElementById(id), key='github-aquarium:tool-state:v1';
+ let saved={schema:1,tools:{},backlog:[]};try{const x=JSON.parse(localStorage.getItem(key));if(x?.schema===1&&x.tools&&Array.isArray(x.backlog))saved=x;}catch{}
+ const specs=[['github-auditor','Read authorized GitHub repositories.','go'],['naming-corrections','Remember explicit naming corrections.','learn-save'],['never-say-checker','Include your prohibited-word rules.','never'],['report-exporter','Copy or download the current report.','download'],['flash-audit','Manual procedure available; automation not built.',null],['play-with-github-goldfish','Learn to use this program in L3 chat.','tutorial'],['care-for-github-goldfish','Learn to maintain this program in L3 chat.','tutorial']];
+ const persist=()=>{try{localStorage.setItem(key,JSON.stringify(saved));$('tool-feedback').textContent='Saved on this device. Farmer report delivery is not connected.';}catch{$('tool-feedback').textContent='Storage unavailable: this change will not survive closing the page.';}};
+ const enabled=id=>saved.tools[id]?.on!==false;
+ const openChat=name=>{$('chat-context').textContent=name?'Requested tutorial: '+name:'GitHub Goldfish chat';$('cyber-deck').showModal();};
+ for(const [id,description,target] of specs){
+  const state=saved.tools[id]||={on:true,sick:false}; const box=document.createElement('fieldset');box.className='tool-box';box.id='tool-'+id;
+  const legend=document.createElement('legend');legend.textContent=id;box.append(legend);
+  const controls=document.createElement('div');controls.className='tool-controls';
+  for(const [prop,label] of [['sick','Not working'],['on','ON']]){const wrap=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=state[prop];input.setAttribute('aria-label',id+' '+label);wrap.append(input,document.createTextNode(' '+label));controls.append(wrap);input.onchange=()=>{state[prop]=input.checked;if(prop==='sick')saved.backlog.push({tool:id,version:'1.0',kind:'manual-health',notWorking:input.checked,created:new Date().toISOString()});if(prop==='on'&&!input.checked){if(['github-auditor','never-say-checker','naming-corrections'].includes(id))window.goldfishRunController?.abort();if(target==='tutorial'&&$('cyber-deck').open)$('cyber-deck').close();}persist();};}
+  box.append(controls);const p=document.createElement('p');p.textContent=description;box.append(p);const v=document.createElement('small');v.textContent='github-aquarium-v1.0-'+id+'-v1.0';box.append(v);
+  const b=document.createElement('button');b.type='button';b.textContent=target==='tutorial'?'Open tutorial chat':id==='flash-audit'?'Open Flash Audit instructions':'Open tool';b.onclick=()=>{if(!enabled(id)){$('tool-feedback').textContent=id+' is OFF.';return;}if(target==='tutorial')openChat(id);else if(id==='flash-audit')window.open('https://github.com/findastra/astras-pet-os/blob/codex/identity-bound-access-20261014/docs/flash-audit-20261014.md','_blank','noopener');else{const t=$(target);t?.scrollIntoView({block:'center',behavior:'auto'});t?.focus();}};box.append(document.createElement('br'),b);$(target==='tutorial'?'tutorial-grid':'tool-grid').append(box);
+ }
+ $('pet-chat').onclick=()=>openChat();$('close-chat').onclick=()=>$('cyber-deck').close();
+ const gate=(button,ids)=>$(button)?.addEventListener('click',e=>{const off=ids.find(id=>!enabled(id));if(off){e.preventDefault();e.stopImmediatePropagation();$('tool-feedback').textContent=off+' is OFF.';return;}if(button==='go'){window.goldfishRunController?.abort();window.goldfishRunController=new AbortController();}},true);
+ gate('go',['github-auditor']);gate('learn-save',['naming-corrections']);gate('copy',['report-exporter']);gate('download',['report-exporter']);
+ window.goldfishToolEnabled=enabled;
+ const main=document.querySelector('main');main.insertBefore($('official-tools'),main.children[1]);
 })();
 </script>
 </body>

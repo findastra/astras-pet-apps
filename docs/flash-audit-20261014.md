@@ -123,6 +123,12 @@ After **each round**, and after substantial owner corrections within a round:
 | A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
 | A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
 | A40 | Guided focus and functioning tour | Exercise Next/Back/Pause/Resume/Exit. Only a step number and soft border/background glow appear at the real target; explanations remain in chat. Verify scroll/resize alignment, missing-target handling, keyboard access, reduced motion, and cleanup on completion/OFF. Verify actual user-visible results, not just source/tests. |
+| A41 | Clicker Training | Every program has a bordered list of real desktop click bindings. One click shows the most important emotion-linked message; two clicks toggle ON/OFF (visibility vs background execution pending clarification); three clicks runs an explicitly assigned quick tool. Verify sequence disambiguation, drag suppression, OFF/permissions and honest unavailable states before claiming native support. |
+| A42 | Credential help | Adjacent (?) What is this hover/focus memo explains optionality, purpose, scope, storage and destination without exposing secrets. |
+| A43 | Emotion/message hierarchy | Verify simultaneous conditions select one highest-priority unresolved message and matching emotion using explicit policy, not frame order. Test stale success, failure, owner-needed state, dismissal and cosmetic blink. Missing global hierarchy is Not verified, not an invented priority order. |
+
+Harness seats are model-independent through supported authorized adapters. Do not
+force a single provider choice or claim every model already connects automatically.
 
 ## 4. New-pet onboarding gate
 
@@ -162,6 +168,8 @@ Do not publish personal paths, addresses, mailbox contents or credentials with e
 Owner-facing round:
 
 Use a strict **Tools:** list with one exact tool name per line and its status.
+List **Tutorial tools:** separately, currently Play with and Care for, rather than
+mixing them into the regular tool inventory.
 Where source has only a feature/button and no official tool ID, label the suggested
 ID **proposed name for existing feature**. Keep implemented source, live deployment,
 approved plans and new proposals distinct. Follow with exceptions keyed to tool name
