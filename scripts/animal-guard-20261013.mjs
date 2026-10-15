@@ -20,6 +20,7 @@ export function animalRepos(registry) {
 /** True when `repo` (a name like "file-master", or "findastra/file-master") is an animal. */
 export function isAnimal(registry, repo) {
   if (typeof repo !== 'string' || !repo) return false;
+  if (!/^(?:[A-Za-z0-9_.-]+\/)?[A-Za-z0-9_.-]+$/.test(repo)) return false;
   const [owner, name] = repo.includes('/') ? repo.split('/') : [GITHUB_OWNER, repo];
   if (owner !== GITHUB_OWNER) return false; // other people's repos are never animals on this farm
   return animalRepos(registry).has(name);

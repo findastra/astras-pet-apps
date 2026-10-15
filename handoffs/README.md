@@ -8,6 +8,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
+| [012: Identity-bound security and complete pet catalog](012-security-enforcement-and-pet-catalog-20261014.md) | any | open: reference implementation ready for owner review; deployment gates remain |
 | [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |
 | [001: Register Claude Bot in the Cage](001-farmer-register-claude-bot.md) | Farmer | open |

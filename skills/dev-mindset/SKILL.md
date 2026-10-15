@@ -24,7 +24,7 @@ Astra wants other software developers to read her build without frustration. She
 | Tool box | Card or panel with a title (HTML `fieldset` with a `legend`) | Border with the versioned label on top, everything about the tool inside. |
 | Connection box | Integration panel (what flows between two services) | Its own border colour; titled with the other pet's icon name. |
 | Trick | Skill (`SKILL.md`), prompt, workflow | What a pet's agent knows; uses only the tools the pet has. Kept by Skill Scout. See TOOLS-AND-TRICKS.md. Decided 2026-10-14. |
-| Grant | Scope / permission grant (least privilege, capability-based access) | Folders + R W X + limits for one pet on a shared tool. Not a copy of the tool. Decided 2026-10-14. |
+| Grant | Scope / permission grant (least privilege, capability-based access) | Exact resource, typed action and conditions for one pet on a shared tool. Not a copy of the tool. Decided 2026-10-14. |
 | The Shed | Plugin / extension registry | Third-party tools and tricks, like the Kennel for pets. |
 | Agent key | Short-lived session token with an audit trail | Issued per agent session by Iron Gates; records agent, model, person, device, place. |
 | The Police Station | Security monitoring (a SOC with intrusion detection) | Detects and contains (switches OFF); never authorizes. |
@@ -41,7 +41,7 @@ Astra wants other software developers to read her build without frustration. She
 | Weekly backlog run | Scheduled job | Weekly by default; more often needs L4. |
 | Data survives updates | Schema version, migration, export and import | |
 | Ring (the 3D map's spheres) | Protection ring | Was "shell"; developers hear "command shell". Decided 2026-10-13. |
-| R W X tags | rwx permissions (read, write, execute) | Not "RWE". Decided 2026-10-13. |
+| Access | Subject, action, resource and conditions | Ring-wide RWX superseded 2026-10-14: topology does not grant permissions. |
 | Pet program | Program (an app, site, world, service or script) Astra made | Umbrella term; see "app vs program". |
 | Pet program icon | Mascot / character | The image files are icons; the character name is the mascot. |
 | Tool | A program, page, script or utility that belongs to a pet program | Same ring and permissions as its pet program, never more. In AI, "tool" also means a function an agent can call; keep them the same thing: a pet's tools are what its connector offers. Drawn as a hammer. Decided 2026-10-13. |

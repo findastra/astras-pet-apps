@@ -13,6 +13,7 @@
 // Generating new art is separate and costs money: see generate-pets.mjs.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { buildPetProgramsPage } from './pet-programs-20261014.mjs';
+import { buildPetCatalog } from './pet-catalog-20261014.mjs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { buildFrames } from './build-frames.mjs';
@@ -70,6 +71,9 @@ writeFileSync('PET-PROGRAMS.md', buildPetProgramsPage(JSON.parse(readFileSync('p
 { const { extra, template, icons } = readSystemMapSources();
   const map = buildSystemMap(redactData(registry, 'pets.json', []), redactData(extra, 'system-map.json', redacted), template, icons);
   writeFileSync(SYSTEM_MAP.output, assertPublic(map, SYSTEM_MAP.output)); }
+{ const map=JSON.parse(readFileSync(SYSTEM_MAP.output,'utf8').match(/const DATA = (.*);/)[1]);
+  const catalog=redactData(JSON.parse(readFileSync('pet-programs.json','utf8')),'pet-programs.json',redacted);
+  writeFileSync('pet-catalog-20261014.html',assertPublic(buildPetCatalog(catalog,map),'pet-catalog-20261014.html')); }
 for (const { path, kind } of redacted) console.log(`Public safety: left out a ${kind} at ${path}; keep it on this PC (docs/local-services-20261014.md).`);
 
 const readme = readFileSync('README.md', 'utf8');

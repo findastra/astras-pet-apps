@@ -1200,6 +1200,21 @@
         "text": "After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order.",
         "reviewed": false
       }
+    },
+    {
+      "number": 81,
+      "program": "pet-program-81",
+      "assigned": false,
+      "icon": "Intel Owl",
+      "idea": "Threat Observatory",
+      "stage": "seed",
+      "repo": "pet-program-81",
+      "repo_exists": false,
+      "mini_descriptor": {
+        "label": "pet-program-81-v1.0-mini-descriptor-v1.0",
+        "text": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "reviewed": false
+      }
     }
   ]
 }

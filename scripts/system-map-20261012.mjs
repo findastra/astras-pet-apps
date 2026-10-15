@@ -8,7 +8,7 @@ import { allPets } from './farmer-rounds-20261009.mjs';
 const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 /** Every node and link, checked: a link to an unknown node throws instead of vanishing. */
-export function systemMapData(registry, extra) {
+export function systemMapData(registry, extra, catalog = JSON.parse(readFileSync(new URL('../pet-programs.json', import.meta.url), 'utf8'))) {
   const nodes = new Map();
   const add = (n) => { if (nodes.has(n.id)) throw new Error(`duplicate node ${n.id}`); nodes.set(n.id, n); };
   for (const p of allPets(registry)) {
@@ -21,6 +21,19 @@ export function systemMapData(registry, extra) {
   }
   add({ id: 'astra', name: 'Astra (you)', type: 'you', state: 'now', job: 'Every pet reports to you, and you approve anything that matters.' });
   for (const n of extra.nodes) add({ ...n });
+  // The numbered catalog includes approved plans that have no runtime registry entry.
+  // Showing a plan never enrolls it as an animal or grants it any access.
+  const catalogOnly = [];
+  for (const p of catalog.programs) {
+    let n = [...nodes.values()].find(n => n.id === p.repo || n.name === p.icon || n.id === slug(p.icon));
+    if (!n) {
+      const id = slug(p.icon);
+      n = { id, name:p.icon, type:p.stage === 'roadmap' ? 'roadmap' : 'seed', state:'planned', job:p.mini_descriptor.text, repo:null };
+      add(n); catalogOnly.push(id);
+    }
+    n.programNumber = p.number; n.programName = p.program; n.nameAssigned = p.assigned;
+    n.nameIdea = p.idea; n.catalogStage = p.stage;
+  }
   for (const n of nodes.values()) {
     const code = extra.code?.repos?.[n.repo || n.id];
     if (code) n.code = code;
@@ -43,6 +56,8 @@ export function systemMapData(registry, extra) {
   for (const l of registry.relations.links) push(l.from, l.to, l.carries, l.state, l.why);
   for (const s of registry.seeds?.pets || []) for (const w of s.works_with || []) push(slug(s.pet), w.pet, 'findings', 'planned', w.why);
   for (const l of extra.links) push(l.from, l.to, l.carries, l.state, l.why, [l.from, l.to].includes('@pets'), l.medium); // medium: how a network link physically travels (2026-10-14)
+  const host = [...nodes.values()].find(n => n.type === 'host');
+  for (const id of catalogOnly) push(host.id, id, 'findings', 'planned', 'Catalog plan: Farmer coordinates registration; no access is granted by this link.');
 
   // Which architecture layer a link belongs to, so its colour matches Astra's chart:
   // 0 development (assistants building pets, the art pipeline): outside the running system;

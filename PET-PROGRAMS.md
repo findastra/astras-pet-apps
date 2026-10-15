@@ -3,7 +3,7 @@
 Every pet program in Astra's PetOS, numbered for good. Each **mini-descriptor** is one or two sentences on what the pet
 program actually does; it is shown in the pet's own repo, the findastra profile and the System Map. Its label follows
 the naming rules: `<pet-program>-v1.0-mini-descriptor-v1.0`. **Bold** program names are assigned; `pet-program-#`
-means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 80 reviewed.
+means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 81 reviewed.
 
 Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not edit this page; edit the JSON.
 
@@ -89,3 +89,4 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 78 | Pet Police Officer | **The Police Station** | [the-police-station](https://github.com/findastra/the-police-station) | Seed | Runs The Police Station: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach. *(draft)* |
 | 79 | AI Dashund | **AI Doghouse** | [ai-doghouse](https://github.com/findastra/ai-doghouse) | Seed | Keeps vetted research on AI agents, agentic harnesses, security and provenance, applies it to Astra’s PetOS, and writes the research paper. *(draft)* |
 | 80 | Rescue Retriever | **The Recovery Room** | [the-recovery-room](https://github.com/findastra/the-recovery-room) | Seed | After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order. *(draft)* |
+| 81 | Intel Owl | pet-program-81 | [pet-program-81](https://github.com/findastra/pet-program-81) | Seed | Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout. *(draft)* |

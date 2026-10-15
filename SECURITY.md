@@ -6,6 +6,11 @@ Companion to [INTELLIGENCE-LEVELS.md](INTELLIGENCE-LEVELS.md), [PROVENANCE.md](P
 
 ## Report a security problem
 
+**2026-10-14 implementation update:** the map separates topology from authority. A signed-request reference
+verifier and adversarial tests are built on the review branch; no protected broker, production enrollment or
+OS isolation has been deployed by that work. See [security boundaries](docs/security-boundaries-20261014.md).
+The response and recovery steps below are target behaviour, not evidence they run today.
+
 **Never post a break-in, a leaked key or a way to bypass a check in a public issue.** Report it privately:
 [Report a vulnerability](https://github.com/findastra/astras-pet-os/security/advisories/new) (GitHub private vulnerability reporting).
 
@@ -111,8 +116,8 @@ The standard incident steps, with the pets that do them.
 6. **Learn.** White Hat Weasel turns the attack into a sandbox drill; Test Tortoise adds a test so it can never pass
    again; the vet-clinic warns other farms if they are affected.
 
-**Why several agents auditing one is safer, and when it is not.** Four checkers beat one only if they are
-*independent*: a different model or provider, their own context, read-only, and never shown the untrusted text that
+**Why several agents auditing one is safer, and when it is not.** Four checkers may help when they are
+*independent*: a different model or provider, their own context, read-only, and given only the minimum relevant untrusted evidence that
 started the change. Four copies of the same model share the same blind spots. And anything the pets "learn" about
 attackers becomes a rule only after L4 approves it, so an intruder cannot teach the guards to look away.
 
@@ -132,7 +137,7 @@ only when L4 presses it. Only L4 turns anything back on.
 account, with **no farmhand in its seat**, so a compromised agent cannot steer the cleanup.
 
 1. **Find what changed.** Compare the installed farm, fingerprint by fingerprint, with the signed release on GitHub.
-   Every difference is something the breach touched. Forensic Ferret's timeline says when it started.
+   Differences are evidence to investigate; they may be legitimate changes and do not prove a breach. Forensic Ferret's timeline says when it started.
 2. **Clean code.** Reinstall from the verified release.
 3. **Clean data.** Restore the newest backup from **before** the incident (Backup Beaver keeps versioned copies).
 4. **Fresh keys.** Every old key stays dead; API Fairy lists every key to rotate outside the farm too.

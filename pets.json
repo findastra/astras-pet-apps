@@ -1226,6 +1226,18 @@
         "repo": null,
         "job": "Runs The Recovery Room: after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order, isolated and with no farmhand in its seat.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Recovery Room (repo findastra/the-recovery-room)."
+      },
+      {
+        "pet": "Intel Owl",
+        "repo": null,
+        "job": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "note": "Selected in the October 14 phone handoff supplied by Astra. Replaces Scout Fox / Intel Ibis; planned seed only, no repo or runtime yet.",
+        "works_with": [
+          {
+            "pet": "file-master",
+            "why": "Shares defensive findings; File Master retains file management ownership."
+          }
+        ]
       }
     ],
     "already_in_pipeline": [

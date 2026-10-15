@@ -1,5 +1,9 @@
 # Intelligence levels: what each intelligent app has built
 
+2026-10-14, OpenAI Codex (GPT-6): shared authorization reference verifier and attack tests added
+(`scripts/access-policy-20261014.mjs`, `test/access-policy-test-20261014.mjs`). This does not make any pet's
+L3 harness operational. Intel Owl is planned seed #81; the complete catalog is [PET-PROGRAMS.md](PET-PROGRAMS.md).
+
 Every intelligent app (a pet) grows through **three levels of intelligence**, as decided for
 ASTRAS_PET_OS ([ASTRAS_PET_OS.md](ASTRAS_PET_OS.md), section 2) and drawn on the [System Map](system-map-20261012.html),
 and answers to a fourth: **L4, the verified human who owns the entire secure ecosystem**.

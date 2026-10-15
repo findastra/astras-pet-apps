@@ -7,26 +7,17 @@ description: The security model of Astra's PetOS — protection rings, R W X, an
 
 Full explanation and diagrams: [PROTECTION-RINGS.md](../../PROTECTION-RINGS.md). This skill is the short rule list.
 
-## 1. Rings and R W X
-Inside out. **R**ead, **W**rite, e**X**ecute is what the agent in the seat may do. 🔒W = only through a pull request Astra merges.
+## 1. Topology is not authority
+The map's shells describe architecture. They grant no permissions and are not CPU protection rings or OS isolation.
+Use authenticated subject, typed action, exact resource and conditions. Separate code, data, settings, model calls,
+shell execution and device operation. Owner authority is approve, grant, revoke and recover. Claimed roles are untrusted.
+See [security boundaries](../../docs/security-boundaries-20261014.md) for the reference verifier and deployment gaps.
 
-| Ring | What | Agent in the seat |
-|---|---|---|
-| 0 Core | Pet Directory (`pets.json`), Program Manager, rules (`AGENTS.md`, `skills/`), tests, the Farm, Startup Star | R 🔒W X |
-| 1 Friendly Farmer | orchestrator and package manager | R 🔒W X |
-| 2 Pets | every intelligent app | R W X (on a branch) |
-| 3 Pet programs | programs, sites and worlds Astra made | R W X (on a branch) |
-| **Harness** | the glass: the R W X line. Claude Code or Codex is the seat | |
-| 4 AI models | Claude, OpenAI, local models | X only |
-| 5 Third-party programs | apps, drivers, cloud services made by others | R X |
-| 6 Devices | PCs, phones, headsets, peripherals | R X |
-| 7 Advisers | ChatGPT | none: ideas reach the Farm only through Astra |
-| 8 You | Astra | grants every permission |
-
-The whole `astras-pet-os` repo is the core: every change to it merges only with Astra's approval.
+The whole repo is core: changes merge only with Astra's approval. This is procedural until protected identities and
+branch settings are verified. Agent proposals go on a branch. Four AI reviews cannot replace owner authorization.
 
 ## 2. Animal code
-- **Everything inside the harness is an animal. Agents can only control animals.** Say it this way in docs and code.
+- An animal is a registry classification, not a permission grant. The diagram is not proof of an enforced boundary.
 - An animal is a pet in the registry (`pets.json` `pets` or `pipeline`) plus the core. Check with
   `scripts/animal-guard-20261013.mjs` (`assertAnimal`, `assertInside`) before a script pushes, tags, releases or writes for a repo.
 - **Nobody becomes an animal by saying so.** A new repo, a `pet.json` or a `pet-app` topic only puts it at the gate
@@ -45,7 +36,7 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 ## 4. Models
 - Local models are self-hosted on Astra's local network. They can take the seat and work alongside Claude, but
   **no agent writes to them directly**: every change to them goes through Astra.
-- Models are called (X), never rewritten.
+- Model invocation requires its own scope and is not shell execution; model updates need separate owner authorization.
 
 ## 5. Privacy
 - Public credit is always **Astra**. Never write a legal name, personal email or `C:\Users\<name>` path into a repo,
@@ -65,7 +56,7 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 - **L4 is the verified human who owns the entire secure ecosystem.** Every security change, permission and exception
   to a default goes to L4, who sees the request and authorizes it or not.
 - Every tool and every connection between pets has an ON/OFF kill switch. Its state lives in the core, so nothing can
-  turn itself back on. Anyone may turn one off; turning it back on after a security OFF needs L4.
+  turn itself back on. Only an authenticated, explicitly scoped containment identity may turn one off; turning it back on after a security OFF needs L4. These controls are planned, not established by this skill.
 - Changes follow the maker-checker rule: a **maker agent** proposes on a branch, a separate **read-only checker
   agent** verifies intent, permissions and the diff (ideally another model, in its own context, without the
   untrusted input), and L4 approves. Two agents that disagree go to L4 after two rounds.
