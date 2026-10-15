@@ -8,7 +8,8 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
-| [013: Goldfish Flash Audit](013-goldfish-flash-audit-20261014.md) | Goldfish | open: instruction sheet complete; tool interface integration planned |
+| [015: Flash Audit checkpoint and remaining acceptance](015-flash-audit-checkpoint-20261015.md) | any | open: 17 branches pushed; runtime, inventory and deployment checks remain |
+| [013: Goldfish Flash Audit](013-goldfish-flash-audit-20261014.md) | Goldfish | open: instructions and local metadata preflight implemented; complete tool flow pending |
 | [012: Identity-bound security and complete pet catalog](012-security-enforcement-and-pet-catalog-20261014.md) | any | open: reference implementation ready for owner review; deployment gates remain |
 | [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |

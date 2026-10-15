@@ -28,7 +28,7 @@ The sheet combines Astra's approved audit matrix and latest instructions with:
   must never be reported as deployed protection.
 
 GitHub main source snapshot inspected: `04cb6416015f02478f716c0869f31066ff8133cd`.
-The left-side manual checkbox refinement and selected names are on the Codex working
+The earlier left-side maintenance-control refinement and selected names are on the Codex working
 branch, checkpoint `6ecb54b`, not necessarily main. Re-read current sources each run.
 
 Resolve conflicts explicitly: direct owner instructions take precedence; the canonical
@@ -79,22 +79,15 @@ After **each round**, and after substantial owner corrections within a round:
 5. Hand off the next round with exact progress and open decisions. Never count a
    Not verified check as passed merely to finish a round.
 
-| A44 | Coin identity and geometry | Current exact pet artwork on both faces; gold side depth 5% of diameter. Verify side profile, front/back orientation, consistent program/map identity and no added sparkles. |
-| A45 | Coin launcher and chat | Spinning bottom-right coin opens that pet's Cyber Deck chat; usable fixed hit area even edge-on, keyboard support, focus restoration, mobile safe-area and no obstruction of tools. Chip uses his original face artwork and standard Cyber Deck panel. |
-| A46 | Coin hosting and provenance | Verify deployed dated asset URLs, canonical pet/asset mapping, approved source master and individual-repo copy/version. Animation is shared code, not a separate per-pet video. Public assets contain no private chat data. |
-| A47 | Deep zoom and image quality | Inspect selected coin close-up; test source resolution, no forced 128px downsample, suitable filtering for pixel art, camera near-plane/minimum distance and no clipping and the explicitly requested mirrored back. A larger bitmap alone does not add detail. |
-| A48 | Motion and performance | Gold edge is shiny without sparkle particles; verify visible spin, reduced-motion static fallback, pause control, hidden-tab/offscreen suspension and hide/unhide cleanup without extra animation loops. |
-| A49 | Coin consistency and runtime truth | Compare page/map assets and proportions; test real navigation and connected/disconnected chat honestly. Coin appearance does not establish an L3 backend or permissions. |
-
-| A50 | Expandable tool bubbles | All new-program tools use compact rounded cards; only exact approved IDs remain visible collapsed; left ON/Sick controls appear inside the expansion. Verify keyboard expansion, independent toggles, persisted state, parent/child gates, visible status/version/actions when expanded, and settings revealed by Open tool. Keep child checks under approved parents and tutorials separate. Collapse must not cancel or run work. |
+Current visual checks A44-A51 appear below and are part of this matrix.
 
 ## 3. Complete audit matrix
 
 | ID | Check | Evidence required / exception to report |
 |---|---|---|
 | A01 | Current icon | Show the actual image; identify desktop and page sources. Report absent, stale or inconsistent art. |
-| A02 | Nine emotions | Show calm, blink, happy, curious, worried, sad, sick, shocked, asleep; inspect all frames for missing, duplicate, mislabeled or inconsistent expressions. |
-| A03 | Emotion behavior | Verify each state is reachable and means the correct runtime condition, not just that its PNG exists. File names idle/alarmed/sleep map to calm/shocked/asleep. |
+| A02 | Nine emotions | Show Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick and Sad; inspect all frames for missing, duplicate, mislabeled or inconsistent expressions. |
+| A03 | Emotion behavior | Verify each state is reachable and means the correct runtime condition, not just that its PNG exists. Legacy filenames may remain stable; labels use the current nine states. Blink is an animation only. |
 | A04 | Art publication | Compare local active assets with individual-repo blobs, including sheet, frames and sprite metadata. Report unpushed or stale art and invalid paths. |
 | A05 | Art format and provenance | Check transparent 256px source frames, approved style/body/size, black outline, no unwanted sparkles, source/license, and owner exceptions. Separate source resolution from desktop display size. |
 | A06 | Pet name | Compare mascot name across page, registry, map and metadata. Report conflicts, typos and placeholders. |
@@ -113,7 +106,7 @@ After **each round**, and after substantial owner corrections within a round:
 | A19 | Tool behavior | Verify inputs, outputs, errors and intended actions for each tool. Use safe fixtures for changing actions; live checks require authorized scope. |
 | A20 | Manual maintenance light | Every tool has a left-side blue/orange maintenance light, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
 | A21 | Tool OFF enforcement | Verify execution actually stops/prevents new work, state is controlled outside the tool, and security OFF cannot be self-reenabled. Report unsupported enforcement as a gap. |
-| A22 | Chatbot and seat status | Click the exact pet-icon launcher; verify the shared chat panel, header Astra's Cyber Deck — [Pet name] Chat, actual L3 connection/model/task, consent, replies, close/reopen and honest disconnected state. A rendered panel alone is not a functioning chatbot. |
+| A22 | Chatbot and seat status | Click the exact pet-icon launcher; verify the shared chat panel, header [Pet name] Chat in the original yellow phone, actual L3 connection/model/task, consent, replies, close/reopen and honest disconnected state. A rendered panel alone is not a functioning chatbot. |
 | A23 | Chat-created tools | Verify request capture, authorized agent dispatch, build progress, independent review, tests, version registration and list entry. No self-granted access. |
 | A24 | Ready indicator | Green plus text refers to a checked version; connection and authorization are separate. Failures or unreviewed code cannot appear ready. |
 | A25 | Integrations/accounts | Check supported services, feature detection, account selection, connection denial, expiry, disconnect and provider-specific limits. No connection from domain guessing alone. |
@@ -204,9 +197,9 @@ left-side maintenance light, enforced ON/OFF, scope selector, run/progress/cance
 exception matrix, evidence links, review questions and exportable report. Account access
 must be declared; read-only inspection is the default. Repair is a separate authorized action.
 
-Record a planned tool entry in Goldfish's own pet.json and README when its repository
-rules are read and integration work is performed. This sheet alone does not install that
-tool, add an MCP endpoint, create a schedule, or modify Goldfish's individual repository.
+Goldfish's pet.json and README record partial implementation: manual instructions plus
+the read-only local preflight. The complete interactive audit flow is still pending.
+No MCP endpoint or schedule is created by this sheet or the local CLI.
 
 ## 7. Name suggestions (unselected alternatives)
 
