@@ -79,6 +79,13 @@ After **each round**, and after substantial owner corrections within a round:
 5. Hand off the next round with exact progress and open decisions. Never count a
    Not verified check as passed merely to finish a round.
 
+| A44 | Coin identity and geometry | Current exact pet artwork on both faces; gold side depth 5% of diameter. Verify side profile, front/back orientation, consistent program/map identity and no added sparkles. |
+| A45 | Coin launcher and chat | Spinning bottom-right coin opens that pet's Cyber Deck chat; usable fixed hit area even edge-on, keyboard support, focus restoration, mobile safe-area and no obstruction of tools. Chip uses his original face artwork and standard Cyber Deck panel. |
+| A46 | Coin hosting and provenance | Verify deployed dated asset URLs, canonical pet/asset mapping, approved source master and individual-repo copy/version. Animation is shared code, not a separate per-pet video. Public assets contain no private chat data. |
+| A47 | Deep zoom and image quality | Inspect selected coin close-up; test source resolution, no forced 128px downsample, suitable filtering for pixel art, camera near-plane/minimum distance and no clipping or reversed faces. A larger bitmap alone does not add detail. |
+| A48 | Motion and performance | Gold edge is shiny without sparkle particles; verify visible spin, reduced-motion static fallback, pause control, hidden-tab/offscreen suspension and hide/unhide cleanup without extra animation loops. |
+| A49 | Coin consistency and runtime truth | Compare page/map assets and proportions; test real navigation and connected/disconnected chat honestly. Coin appearance does not establish an L3 backend or permissions. |
+
 ## 3. Complete audit matrix
 
 | ID | Check | Evidence required / exception to report |
@@ -123,7 +130,7 @@ After **each round**, and after substantial owner corrections within a round:
 | A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
 | A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
 | A40 | Guided focus and functioning tour | Exercise Next/Back/Pause/Resume/Exit. Only a step number and soft border/background glow appear at the real target; explanations remain in chat. Verify scroll/resize alignment, missing-target handling, keyboard access, reduced motion, and cleanup on completion/OFF. Verify actual user-visible results, not just source/tests. |
-| A41 | Clicker Training | Every program has a bordered list of real desktop click bindings. One click shows the most important emotion-linked message; two clicks toggle ON/OFF (visibility vs background execution pending clarification); three clicks runs an explicitly assigned quick tool. Verify sequence disambiguation, drag suppression, OFF/permissions and honest unavailable states before claiming native support. |
+| A41 | Clicker Training | Every program has a bordered list of real desktop click bindings. One click shows the most important emotion-linked message; two clicks show/hide the Pet Program window (background work is controlled separately); three clicks runs an explicitly assigned quick tool. Verify sequence disambiguation, drag suppression, OFF/permissions and honest unavailable states before claiming native support. |
 | A42 | Credential help | Adjacent (?) What is this hover/focus memo explains optionality, purpose, scope, storage and destination without exposing secrets. |
 | A43 | Emotion/message hierarchy | Verify simultaneous conditions select one highest-priority unresolved message and matching emotion using explicit policy, not frame order. Test stale success, failure, owner-needed state, dismissal and cosmetic blink. Missing global hierarchy is Not verified, not an invented priority order. |
 

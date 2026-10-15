@@ -88,3 +88,9 @@ not misrepresented as a complete hierarchy. Flash Audit now includes A43.
 
 Goldfish repair commits pushed: db76d36, whitespace follow-up 529e76e on
 codex/flash-audit-20261014. 47 Goldfish and 124 hub tests pass. Neither branch deployed.
+
+Owner clarified double-click shows/hides the program window; the chatbot is missing and wanted. Error search expansion now includes ten overlapping tools and proposed additional checks; see Goldfish docs/error-searches-20261014.md. Coin standard added as A44-A49 and docs/pet-coins-20261014.md; map implementation pending.
+
+Error-search source pushed at 579e39f (53 tests; focused checker READY_FOR_REVIEW). Compact controls remain visually unverified. Chip coin source is a separate Data Dealer change; local browser verification is recorded in its docs/chip-coin-20261014.md.
+
+Local browser follow-up: compact cards visually inspected and separate ON/Sick persistence verified through reload; no full account scan performed. Chip source pushed at a6aef81; local coin/chat open-close and pause verified. Hub keeps its previous embedded Data Dealer repo payload while adopting the revised UI.

@@ -351,3 +351,7 @@ Never display actual credentials in tooltips or ask for them in chat.
 - [ ] Every agent that operates it uses a short-lived key from Iron Gates; it reports every W to the Police Station.
 - [ ] Plain developer language throughout; no marketing.
 - [ ] Follows [PROTECTION-RINGS.md](PROTECTION-RINGS.md): it is an animal only once L4 lets it in.
+
+## Coin launcher clarification — 2026-10-14
+
+Pet Program chat launchers use each approved pet icon as a spinning coin, bottom-right, with shiny gold sides at 5% diameter depth. See docs/pet-coins-20261014.md and Flash Audit A44-A49. Chip is the initial source implementation; System Map coins remain planned. Existing art and accessibility must be preserved. The chatbot is wanted, and each pet has a separate conversation/permission scope on shared infrastructure. Backend enforcement remains independently required. Desktop double-click shows/hides the program window; it does not stop background work.

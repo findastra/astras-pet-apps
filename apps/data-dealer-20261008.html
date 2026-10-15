@@ -325,6 +325,27 @@ td.num{text-align:right}
 @media (max-width:1180px){.flow{grid-template-columns:minmax(0,1fr)}.rail{position:static;max-height:none}.strip{grid-template-columns:minmax(0,1fr)}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}.files{grid-template-columns:minmax(0,1fr)}.flist{position:static}.status{margin-left:0}}
 @media (prefers-reduced-motion:reduce){.edge .run{animation:none}.dot.live{animation:none}}
+
+/* Chip coin / Cyber Deck — OpenAI Codex (GPT-6), 2026-10-14. */
+.pet-launch{width:88px;height:88px;background:transparent;border:0;box-shadow:none;border-radius:50%;perspective:500px;right:24px;bottom:40px}
+.pet-launch::before,.pet::before{display:none}.pet-launch:hover{transform:none}.pet-launch:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.chip-coin{position:relative;width:80px;height:80px;transform-style:preserve-3d;animation:chip-coin-spin 4s linear infinite;pointer-events:none}
+.chip-coin .coin-edge,.chip-coin .coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden}
+.chip-coin .coin-edge{backface-visibility:visible;background:conic-gradient(from 20deg,#885000,#fff7ad,#b77d0b,#fff4a0,#704000,#ffd760,#885000);border:1px solid #9a650d}
+.chip-coin .coin-face{display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ffffa4,#d9e25a 65%,#acb936);border:2px solid #050700;box-shadow:inset 0 0 0 2px #eac54b;transform:translateZ(2px)}
+.chip-coin .coin-back{transform:rotateY(180deg) translateZ(2px)}
+.pet-launch .coin-face canvas{width:64px;height:48px;background:transparent;border:0;border-radius:0;image-rendering:pixelated}
+.coin-pause{position:fixed;right:20px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:40;background:#18222b;color:#fff;border:1px solid #75818e;border-radius:7px;padding:4px 8px;font-size:11px;cursor:pointer}
+.pet-launch{bottom:calc(40px + env(safe-area-inset-bottom,0px))}.coin-paused .chip-coin{animation:none;transform:rotateY(0deg)}
+@keyframes chip-coin-spin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.chip-coin{animation:none}}
+.pet{--lcd:#101b25;--lcd-ink:#edf4fb;--lcd-mid:#9eb5c9;background:#0d151e;color:#edf4fb;border:1px solid #61768d;border-radius:16px;box-shadow:0 16px 60px #0009;padding:16px;width:min(460px,calc(100vw - 32px));height:min(680px,calc(100dvh - 48px));overflow:auto}
+.pet-head b{font:600 16px/1.4 var(--f-body);letter-spacing:0}.pet-head{align-items:flex-start}.pet-head span{display:none}
+.pet-screen canvas{width:64px;height:48px}.pet .lcd{border:1px solid #36495d;border-radius:10px;box-shadow:none}.pet-x{flex-shrink:0;background:#26384b;color:#fff}
+.pet-tabs button,.pet-quick button,.pet-in button{font:600 12px/1.3 var(--f-body);background:#203348;color:#edf4fb;border:1px solid #58718c;border-radius:7px}
+.pet-tabs button[aria-pressed="true"]{background:#345373;color:#fff}.pet-in input{font:16px/1.4 var(--f-body);border:1px solid #58718c;border-radius:7px;background:#101b25;color:#fff}.pet button:focus-visible,.pet input:focus-visible{outline:2px solid #8bcbff}
+.pet-log,.pg .t{font:15px/1.5 var(--f-body)}.pet-connection{margin:0;font:12px/1.4 var(--f-body);color:#b9cddd}
+
 </style>
 
 <header class="top">
@@ -385,9 +406,11 @@ td.num{text-align:right}
   <section id="v-plan" class="view page" hidden></section>
 </main>
 
-<button type="button" class="pet-launch" id="pet-open" aria-label="Open Chip, your pocket assistant"><canvas id="pet-mini" width="32" height="24"></canvas><span class="lbl">CHIP</span><span class="badge" id="pet-badge" hidden>0</span></button>
-<section class="pet" id="pet" hidden aria-label="Chip, your pocket assistant">
-  <div class="pet-head"><b>CHIP</b><span>data dealer<br>pocket assistant</span><button type="button" class="pet-x" id="pet-close" aria-label="Close Chip">×</button></div>
+<button type="button" class="pet-launch" id="pet-open" aria-label="Open Chip chat" aria-controls="pet" aria-expanded="false"><span class="chip-coin" aria-hidden="true"><i class="coin-edge" style="transform:translateZ(-2px)"></i><i class="coin-edge" style="transform:translateZ(-1.75px)"></i><i class="coin-edge" style="transform:translateZ(-1.5px)"></i><i class="coin-edge" style="transform:translateZ(-1.25px)"></i><i class="coin-edge" style="transform:translateZ(-1px)"></i><i class="coin-edge" style="transform:translateZ(-0.75px)"></i><i class="coin-edge" style="transform:translateZ(-0.5px)"></i><i class="coin-edge" style="transform:translateZ(-0.25px)"></i><i class="coin-edge" style="transform:translateZ(0px)"></i><i class="coin-edge" style="transform:translateZ(0.25px)"></i><i class="coin-edge" style="transform:translateZ(0.5px)"></i><i class="coin-edge" style="transform:translateZ(0.75px)"></i><i class="coin-edge" style="transform:translateZ(1px)"></i><i class="coin-edge" style="transform:translateZ(1.25px)"></i><i class="coin-edge" style="transform:translateZ(1.5px)"></i><i class="coin-edge" style="transform:translateZ(1.75px)"></i><i class="coin-edge" style="transform:translateZ(2px)"></i><span class="coin-face"><canvas id="pet-mini" width="32" height="24"></canvas></span><span class="coin-face coin-back"><canvas id="pet-back" width="32" height="24"></canvas></span></span><span class="badge" id="pet-badge" hidden>0</span></button>
+<button type="button" class="coin-pause" id="coin-pause" aria-pressed="false">Pause spin</button>
+<section class="pet" id="pet" hidden role="region" aria-labelledby="chip-chat-title">
+  <div class="pet-head"><b id="chip-chat-title">Astra’s Cyber Deck — Chip Chat</b><button type="button" class="pet-x" id="pet-close" aria-label="Close Chip">×</button></div>
+  <p class="pet-connection">Local goals and audits are available when loaded. AI replies require an authorized host connection; this page does not supply an independent L3 backend.</p>
   <div class="lcd pet-screen"><canvas id="pet-big" width="32" height="24"></canvas><div class="pet-stats"><div>AUDITS<span id="st-mood"></span></div><div>DONE&nbsp;&nbsp;&nbsp;<span id="st-fed"></span></div><div id="st-state">ready</div></div></div>
   <div class="pet-tabs" role="group" aria-label="Chip views"><button type="button" data-v="goals" aria-pressed="true">GOALS <span id="pet-goal-n"></span></button><button type="button" data-v="chat" aria-pressed="false">ASK CHIP</button></div>
   <div class="lcd pet-goals" id="pet-goals"></div>
@@ -1067,11 +1090,18 @@ function drawPet(cv,face,bob,blink){
   else if(face==="hungry"){[[14,12],[15,12],[16,12],[17,12],[14,13],[17,13],[14,14],[15,14],[16,14],[17,14]].forEach(([x,y])=>p(x,y))}
   else if(face==="worried"){p(13,14);p(14,13);p(15,13);p(16,13);p(17,13);p(18,14);p(26,5,MID);p(26,6,MID)}
 }
+function drawCoinFace(cv,face,blink){
+  const source=document.createElement('canvas');source.width=32;source.height=24;
+  drawPet(source,face,0,blink);const src=source.getContext('2d').getImageData(11,7,10,9);
+  for(let i=0;i<src.data.length;i+=4)if(src.data[i]===195&&src.data[i+1]===211&&src.data[i+2]===155)src.data[i+3]=0;
+  const c=cv.getContext('2d');c.clearRect(0,0,32,24);c.putImageData(src,11,7);
+}
 function petTick(){
+  if(document.hidden)return;
   if(!reduceMotion){PET.bob=PET.bob?0:-1}
   PET.blinkIn--; const blink=PET.blinkIn<=0; if(PET.blinkIn<=-1) PET.blinkIn=6+Math.floor(Math.random()*8);
   const f=petFace();
-  drawPet($("#pet-mini"),f,PET.bob,blink);
+  drawCoinFace($("#pet-mini"),f,blink);drawCoinFace($("#pet-back"),f,blink);
   if(!$("#pet").hidden) drawPet($("#pet-big"),f,PET.bob,blink);
 }
 function pips(n){return Array.from({length:4},(_,i)=>`<i class="${i<n?"on":""}"></i>`).join("")}
@@ -1086,13 +1116,13 @@ function petStats(){
 }
 function petMsg(kind,text){const d=document.createElement("div");d.className="pm "+kind;d.textContent=text;$("#pet-log").appendChild(d);$("#pet-log").scrollTop=1e9;return d}
 function openPet(){
-  $("#pet").hidden=false;$("#pet-open").hidden=true;petStats();petTick();
+  $("#pet").hidden=false;$("#pet-open").hidden=true;$("#pet-open").setAttribute("aria-expanded","true");$("#coin-pause").hidden=true;petStats();petTick();
   if(!PET.greeted){PET.greeted=true;const n=ASSIGN.filter(a=>a.priority==="now"&&a.status!=="done").length;
     petMsg("bot",`Hi, I'm Chip, your pocket assistant. I keep your goals, take you to the part of the dashboard each one is about, and explain anything in plain words.${assignState==="ready"?` ${n} goal${n===1?"":"s"} need you now.`:""}`)}
   setPetView(petView);
   $("#pet-text").focus();
 }
-function closePet(){$("#pet").hidden=true;$("#pet-open").hidden=false;$("#pet-open").focus()}
+function closePet(){$("#pet").hidden=true;$("#pet-open").hidden=false;$("#pet-open").setAttribute("aria-expanded","false");$("#coin-pause").hidden=false;$("#pet-open").focus()}
 function localTasks(){
   if(assignState!=="ready") return "Your assignments show up once this dashboard is open inside Claude.";
   const now=sortedAssign().filter(a=>a.priority==="now"&&a.status!=="done");
@@ -1174,6 +1204,10 @@ async function petAsk(text){
 }
 function setSend(busy){const b=$("#pet-send");b.textContent=busy?"STOP":"SEND";b.type=busy?"button":"submit"}
 function bindPet(){
+  let coinPaused=false;
+  const updateCoin=()=>document.body.classList.toggle('coin-paused',coinPaused||document.hidden);
+  $('#coin-pause').addEventListener('click',()=>{coinPaused=!coinPaused;$('#coin-pause').setAttribute('aria-pressed',String(coinPaused));$('#coin-pause').textContent=coinPaused?'Resume spin':'Pause spin';updateCoin();});
+  document.addEventListener('visibilitychange',updateCoin);updateCoin();
   $("#pet-open").addEventListener("click",openPet);
   $("#pet-close").addEventListener("click",closePet);
   $("#pet").addEventListener("keydown",e=>{if(e.key==="Escape"){e.stopPropagation();closePet()}});
@@ -1256,7 +1290,7 @@ function goArea(area,assignId){
 }
 
 /* ===== Chip: goals view ===== */
-let petView="goals";
+let petView="chat";
 function setPetView(v){
   petView=v;
   document.querySelectorAll(".pet-tabs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));
