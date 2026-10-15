@@ -18,7 +18,7 @@ needs: scripts/desktop-pets-20261011.cs, build-desktop-pets-20261011.ps1, findas
 
 ## Task
 Merge the branch, quit the desktop pets, run `build-desktop-pets-20261011.ps1`, start them again, double-click Discord
-Damsel: both control panels report Automatic (`http://127.0.0.1:38761/api/status`, `:38762`).
+Damsel: both control panels show Automatic.
 
 ## Done when
 Double-clicking Discord Damsel starts both presence apps in Automatic and opens her page.
