@@ -45,3 +45,15 @@ System Map, Startup Star, daily rounds/status, broken-tools-on-the-farm, notes/b
 pet adoption/installation and seed suggestions. Allow custom additions and removals.
 Names are existing tools or documented plans, not a claim of complete implementation.
 Then collect priorities and proceed to Goldfish after recording the answer.
+
+## Owner response, 2026-10-14
+
+Astra requested tutorial-tools with first-time-here-tutorial, plus Play with / Care
+for numbered SOPs for every pet. Tools must be organized by pet, category and deeper
+groups. Cross-pet links throughout every program must be pet-icon hyperlinks.
+Recorded in the shared framework and Flash Audit A36-A39. This reply did not explicitly
+resolve each of the eight original tool choices individually; retain their prior
+implemented/planned status rather than infer blanket approval.
+
+A36-A39: Missing in the inspected deployed Farmer desk. Requirements recorded; no
+tutorial interface, hierarchy or icon-navigation retrofit implemented this turn.

@@ -98,6 +98,10 @@ If source rules remain contradictory, report the conflict rather than silently c
 | A33 | Registration/admission | Check candidate/pipeline/registered stage, owner admission, pet-app discovery, registration handoff and dated submission. No automatic trust from discovery. |
 | A34 | Generated artifacts/tests | Use canonical sources/builders; check generated registry/docs/art, documented build/check/tests, visual inspection and relevant runtime acceptance. |
 | A35 | Handoff and unresolved work | Record exact evidence, commits, touched files, remaining issues, owners and next steps. Say explicitly what is only on a branch. |
+| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Verify real, version-appropriate numbered steps; optional agent guidance is not required to read it. |
+| A37 | Play and care SOPs | Every pet has Play with and Care for guides: always numbered, prerequisites, expected results, applicable version and stop/help path. Verify steps against the actual app; no fictional instructions for planned features. |
+| A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
+| A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
 
 ## 4. New-pet onboarding gate
 
@@ -160,6 +164,11 @@ rules are read and integration work is performed. This sheet alone does not inst
 tool, add an MCP endpoint, create a schedule, or modify Goldfish's individual repository.
 
 ## 7. Name suggestions (unselected alternatives)
+
+Owner refinement, 2026-10-14: tutorial-tools belongs to The Farm; each pet owns its
+Play with / Care for numbered SOPs, indexed by The Farm. Cross-pet navigation uses
+icon hyperlinks throughout the programs. The shared framework defines these standards;
+checks A36-A39 enforce them. These are requirements, not implemented UI claims.
 
 - **Flash Audit**: the owner's working name; quick rounds backed by thorough checks.
 - **Fin Check**: short and specific to GitHub Goldfish. Recommended pet-themed option.

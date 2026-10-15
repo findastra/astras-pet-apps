@@ -103,6 +103,22 @@ everything about that tool inside it.
 
 ## 5. Link kinds
 
+**Cross-pet link standard (Astra, 2026-10-14):** everywhere a link goes to another
+pet program, its visible hyperlink is that pet's current approved icon, not a text
+link or a repository URL. Keep surrounding explanatory text and connection-box
+titles where useful; only the clickable navigation element is the icon. Give it an
+accessible name (for example, "Open Health Hummy — The Nectar Nest"), a tooltip,
+keyboard focus styling and a usable hit area without enlarging the pet artwork.
+Use the canonical program route and versioned icon asset. Repository/source links
+remain explicitly identified as source links; they are not substitutes for programs.
+If no program route exists, show a non-clickable icon with "Program not available"
+and record the missing route. Do not create a misleading link.
+
+Public icons can be served with existing static app hosting; no separate image host
+is required. Keep a packaged local asset for local/offline interfaces. Use a shared
+registry mapping stable pet ID to icon and program route rather than copied URLs
+throughout the UI. Never expose private/local-only programs through a public URL.
+
 Every link sits in one group and carries three badges, so nobody has to guess what it is.
 
 | Group | What goes there |
@@ -236,9 +252,35 @@ Every agent, ours or **external**, needs a **key** to operate a pet. That is how
 
 ## 13. The first run: How to Take Care of Your Farm!
 
-When someone first installs Astra's PetOS, it opens straight to the **System Map**. The Friendly Farmer appears in a
-chat, the way he does at The Farm, and walks them through **How to Take Care of Your Farm!**, a tutorial (a trick of
-The Farm). Its steps are still to be written with Astra.
+When someone first installs Astra's PetOS, it opens straight to the **System Map**.
+The Farm has a **tutorial-tools** box with **first-time-here-tutorial**, also presented
+as **How to Take Care of Your Farm!**. It can be reopened after the first visit.
+The user-facing tutorial page is a tool and works without an agent; optional agent
+guidance is a trick that uses that tool. Its actual steps remain to be written and tested.
+
+**Tutorial standard (Astra, 2026-10-14):** every pet program provides two simple,
+always-numbered standard operating procedures (SOPs):
+
+- **Play with [pet]:** how to use the program for its intended job, from prerequisites
+  through one successful result, including what the user should see after each action.
+- **Care for [pet]:** setup/connections, updates, routine checks, data backup where
+  applicable, and what to do when the program or a tool is not working. This is care
+  of the software, not health advice about the user.
+
+Suggested stable tool IDs use the canonical pet ID: `play-with-<pet-id>` and
+`care-for-<pet-id>`; friendly display labels can use the pet's full name. Examples
+such as "health-hummingbird" do not rename Health Hummy or its stable ID.
+Each SOP includes its applicable program/tool version, numbered steps, expected
+results and a stop/help path. Unbuilt features stay explicitly planned, not usable steps.
+Tutorial tools have the same left-side Not working report and ON/OFF controls as
+other tools. Marking a tutorial complete does not grant permissions or execute its steps.
+
+The Farm indexes tutorials from their owning pets instead of maintaining divergent
+copies. Organize tools and tutorials by **pet**, **category** (for example health),
+and **nested groups**, with search and multi-category tags. Every tool keeps one
+stable identity and owner regardless of how many groups show it. Grouping never
+changes permissions or health status. "Health" as a subject category must be distinct
+from software-health status such as broken or ready.
 
 **Seeds for you.** With the user's OK, the Friendly Farmer's seed-suggester (a tool of The Farm) reads the names of
 the programs installed on the PC, read only and never leaving it, and suggests seeds: pets he can hatch for them, and
