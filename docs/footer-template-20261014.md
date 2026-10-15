@@ -14,7 +14,7 @@ Narrow screens scroll the footer horizontally; the line never wraps.
 Defaults approved by Astra: GitHub `https://github.com/findastra`, Pole
 `https://www.tiktok.com/@astra_on_fire`, VR `https://www.tiktok.com/@findastra`.
 The Farmer links to The Farm. It uses the existing approved Farmer image, a
-64px pet-shaped coin with 5% diameter depth, and respects reduced motion.
+64px pet-shaped coin with 5% width depth, and respects reduced motion.
 
 The editor changes the date, links and text color. Pet coins stay fixed at 64 CSS pixels on 2D pages.
 Save persists only in this browser; it does not silently modify every site.
@@ -40,7 +40,7 @@ does not prove those independent deployments have changed.
 - One shared unframed signature, one visual line at narrow and wide widths.
 - Exact credit and valid YYYY-MM-DD date; no duplicate legacy signature.
 - All four icon links have correct destinations, accessible names and focus styling.
-- Farmer coin fits the border, spins, pauses on hover/focus and respects reduced motion.
+- Farmer coin fits the signature line, spins, pauses on hover/focus and respects reduced motion.
 - Editor previews, persists, resets and exports; edited URLs cannot execute script.
 - Record hub deployment and individual-repository adoption separately.
 
