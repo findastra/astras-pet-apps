@@ -161,6 +161,13 @@ Do not publish personal paths, addresses, mailbox contents or credentials with e
 
 Owner-facing round:
 
+Use a strict **Tools:** list with one exact tool name per line and its status.
+Where source has only a feature/button and no official tool ID, label the suggested
+ID **proposed name for existing feature**. Keep implemented source, live deployment,
+approved plans and new proposals distinct. Follow with exceptions keyed to tool name
+or Program-wide, then a short keep/add/remove/rename question. Never substitute a
+vague grouped description for the individual tool list.
+
 > **Round N: icon name — program name**
 >
 > Current icon and labeled nine-emotion sheet (or Missing).
