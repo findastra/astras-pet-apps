@@ -249,3 +249,6 @@ Order: Third Party Programs, Your Programs, Your Tools, then one shared two-colu
 
 
 Tool controls standard (2026-10-15): two compact glossy, lightly sparkling status-light buttons stacked together on the left edge of each tool bubble, vertically centered when possible and aligned at the top for expanded content. Keep a fixed 6px gap between the lights; move the pair as one unit. Top: green on / red off. Bottom: blue working / orange owner-marked maintenance. No visible ON or Not Working text. Keep title tooltips, explicit accessible state labels, keyboard focus and reduced-motion support. Both lamps remain usable when collapsed or disabled; maintenance toggles persist and feed existing health reporting. Blue is the manual health flag, not proof of a successful runtime check.
+
+
+Owner correction, 2026-10-15: cloud-shaped square tiles are for Third Party Programs only. OpenAI and Anthropic presence controllers belong under Your Tools in the regular rounded tool bubbles, with their paired left lights and Discord-style profile-card previews inside. Other owner-created programs use regular program/tool bubbles rather than third-party cloud tiles. Hide an empty Your Programs row.
