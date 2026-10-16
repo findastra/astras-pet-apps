@@ -129,6 +129,8 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
 
+Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16.
+
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
 
 Desktop roster/art publication and floor lineup: OpenAI Codex (GPT-6), 2026-10-11. Star double-click lines up ground pets below flyers; right-click resumes roaming. All sparkle code removed. Generated sprite alpha is thresholded for Windows color-key transparency. Desktop/private draft roster is local-only. See docs/pet-release-20261011.md.
