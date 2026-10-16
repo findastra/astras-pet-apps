@@ -788,7 +788,7 @@ function renderAgents(){
   const v=$("#v-agents");
   if(!REPO_FILES.length){v.innerHTML=`<h1>Agents &amp; skills</h1><p class="lede">Files are embedded when the panel is built from the repo.</p>`;return}
   v.innerHTML=`<span class="eyebrow">findastra/data-dealer</span><h1>Agents &amp; skills</h1><p class="lede">Every agent definition and skill file in the repo, exactly as committed. Pipeline agents run the data plane; the six role agents run the company and work from your answers.</p>
-  <div class="files"><div class="flist" role="group" aria-label="Files">${groups.map(([g,fn])=>{const fs=REPO_FILES.filter(fn);return fs.length?`<h4>${g}</h4>${fs.map(f=>`<button type="button" data-p="${esc(f.path)}" aria-pressed="false">${esc(f.path.replace(/^\.claude\/agents\//,"").replace(/^skills\//,"skills/"))}</button>`).join("")}`:""}).join("")}
+  <div class="files"><div class="flist" role="group" aria-label="Files">${groups.map(([g,fn])=>{const fs=REPO_FILES.filter(fn);return fs.length?`<h4>${g}</h4>${fs.map(f=>`<button type="button" data-p="${esc(f.path)}" aria-pressed="false">${esc(f.path.replace(/^\.claude\/agents\//,""))}</button>`).join("")}`:""}).join("")}
   <h4>Claude session skills (not in repo)</h4>${SESSION_SKILLS.map(([n,d])=>`<div style="padding:5px 8px;font-size:.78rem"><span class="mono">${esc(n)}</span><br><span style="color:var(--muted)">${esc(d)}</span></div>`).join("")}</div>
   <article class="doc" id="doc"></article></div>`;
   const show=showFile=p=>{const f=REPO_FILES.find(f=>f.path===p);if(!f)return;v.querySelectorAll(".flist button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===p));$("#doc").innerHTML=`<div class="path">${esc(f.path)}</div>${md(f.content)}`};
