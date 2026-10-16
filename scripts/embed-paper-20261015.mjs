@@ -1,5 +1,6 @@
 // Offline stationery and original mood artwork. OpenAI Codex GPT-6, 2026-10-15.
 import {readFileSync,existsSync} from 'node:fs';
+import {embedActivity} from './embed-l3-activity-20261016.mjs';
 export function embedPaper(source,repo,root='.'){
   const registry=JSON.parse(readFileSync(root+'/pets.json','utf8'));
   const pet=[...registry.pets,...registry.pipeline].find(p=>p.repo===repo);
@@ -13,5 +14,5 @@ export function embedPaper(source,repo,root='.'){
   const block='<!--astra-paper-start-->'+payload+'<style>'+readFileSync(root+'/apps/pet-paper-20261015.css','utf8')+'</style><script>'+readFileSync(root+'/apps/pet-paper-20261015.js','utf8')+'</script><!--astra-paper-end-->';
   source=source.replace(/<!--astra-paper-start-->[\s\S]*?<!--astra-paper-end-->/g,'');
   if(!/<meta[^>]*charset/i.test(source))source='<meta charset="utf-8">\n'+source;
-  const end=source.lastIndexOf('</body>');return end<0?source+block:source.slice(0,end)+block+source.slice(end);
+  const end=source.lastIndexOf('</body>');return embedActivity(end<0?source+block:source.slice(0,end)+block+source.slice(end),repo,root);
 }

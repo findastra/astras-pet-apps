@@ -618,16 +618,16 @@
     },
     {
       "number": 42,
-      "program": "pet-program-42",
-      "assigned": false,
+      "program": "Nessi's Ocean",
+      "assigned": true,
       "icon": "Piranesi Nessi",
-      "idea": "Piranesi House (the world she looks after), or Tide Tables",
+      "idea": null,
       "stage": "seed",
       "repo": "pet-program-42",
       "repo_exists": false,
       "mini_descriptor": {
-        "label": "pet-program-42-v1.0-mini-descriptor-v1.0",
-        "text": "Manages Piranesi House.",
+        "label": "nessis-ocean-v1.0-mini-descriptor-v1.0",
+        "text": "Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools. Runtime is planned.",
         "reviewed": false
       }
     },
@@ -1213,6 +1213,23 @@
       "mini_descriptor": {
         "label": "pet-program-81-v1.0-mini-descriptor-v1.0",
         "text": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "reviewed": false
+      }
+    },
+    {
+      "number": 82,
+      "program": "The Threshold",
+      "assigned": true,
+      "icon": "Door Dormouse",
+      "idea": null,
+      "stage": "seed",
+      "repo": "the-threshold",
+      "repo_exists": false,
+      "interface_local_url": "apps/the-threshold-20261016.html",
+      "implementation_status": "Core-hosted browser prototype: floor planning, local notes, exports and connected concept website. Native pet, L3 harness and Unity execution bridge are pending.",
+      "mini_descriptor": {
+        "label": "the-threshold-v1.0-mini-descriptor-v1.0",
+        "text": "Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected.",
         "reviewed": false
       }
     }

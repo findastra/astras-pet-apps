@@ -1158,14 +1158,15 @@
         "repo": null,
         "job": "Manages Piranesi House.",
         "for": "piranesi-house",
-        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house).",
+        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house). Program named Nessi's Ocean by Astra on 2026-10-16; it manages the world, preview website and Unity project.",
         "works_with": [
           {
             "pet": "unity-unicorn",
             "why": "Piranesi House is a Unity world built with Unity Unicorn's world tools (marble-carver, vine-bloomer): Nessi's world needs become Unity Unicorn build work, and the tools ship the changes. Astra, 2026-10-12.",
             "becomes": "relations links (findings to unity-unicorn, shipped back) once this seed has a repo"
           }
-        ]
+        ],
+        "program": "Nessi's Ocean"
       },
       {
         "pet": "Photo Dodo",
@@ -1236,6 +1237,20 @@
           {
             "pet": "file-master",
             "why": "Shares defensive findings; File Master retains file management ownership."
+          }
+        ]
+      },
+      {
+        "pet": "Door Dormouse",
+        "program": "The Threshold",
+        "repo": null,
+        "for": "liminal-doors",
+        "job": "Manages Liminal Doors: floor planning, tools, Unity project metadata and the preview website.",
+        "note": "Named and requested by Astra on 2026-10-16. Browser prototype is hosted in the core; no independent repo, native desktop pet, automatic schedule, L3 connection or Unity execution grant.",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "The Threshold prepares world build requests; Unity Unicorn owns reusable editor tools. Exchanges are manual exports until an authorized bridge exists."
           }
         ]
       }

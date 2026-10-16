@@ -232,6 +232,7 @@ These replace the October 14 coin, pink-theme, hidden-control and never-wrap foo
 | A49 | Emotion key | Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick, Sad in 3/2/1 columns. Label in white rounded bubble border, pet on right; blink is animation, not a state. Describe actual signal/threshold sources and unknown queues. |
 | A50 | Backdrop and text | Each pet has a distinct stationery palette; Damsel blue wrinkles, purple/light-blue controls and restrained neon-pink sparkles. All text has a deliberate surface. No approved pet art regenerated. |
 | A51 | Footer | Centered, spacious, slightly staggered wrapping groups between thin rules; status, Made by Astra/date, social icons and static Farmer home icon. No coin or horizontal scrollbar. Verify all links remain reachable. |
+| A52 | L3 activity bubble | Every Pet Program has a visible yellow **[Pet name] · L3 activity** bubble, green LCD and black outline near the top. Show actual provider/task/session, timestamps and concise bounded events. Verify disconnected, idle, working, awaiting review, complete, error, OFF and stale states against a real authorized host. No invented activity, secrets, raw prompts or automatic job launch. The source preflight reports Missing or Not verified, never runtime Pass from an embed marker. Check desktop/mobile layout and persistence after regeneration. |
 
 ## Mandatory Clicker Training preservation — owner correction, 2026-10-15
 

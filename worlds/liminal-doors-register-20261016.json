@@ -1,0 +1,470 @@
+{
+  "status": "draft design; not built",
+  "platform": "PC",
+  "date": "2026-10-16",
+  "scenes": [
+    {
+      "number": 1,
+      "animal": "Fox",
+      "environment": "Pink Booth",
+      "palette": "hot pink / apricot / butter yellow",
+      "atmosphere": "The exact booth from Astra's Infinite Pole, alone above a sea of pink clouds.",
+      "door": "Enter the booth through a fine drift of gold light.",
+      "feature": "Soft cloud movement and a quiet telephone interaction. Reuse the original project asset; the image is a concept.",
+      "hide": "A small fox curled behind the booth base.",
+      "tags": []
+    },
+    {
+      "number": 2,
+      "animal": "Hare",
+      "environment": "Faraway Field",
+      "palette": "silver green / rose / lavender",
+      "atmosphere": "Long grass and a distant horizon, guided by the supplied grass-and-sky world.",
+      "door": "A rose door just beyond the rise, with rising motes.",
+      "feature": "Wind moves in broad bands across the field. Exact reference matching is pending.",
+      "hide": "A hare tucked into the grass beside a flat stone.",
+      "tags": []
+    },
+    {
+      "number": 3,
+      "animal": "Axolotl",
+      "environment": "Pool After Closing",
+      "palette": "aqua / peach / ultraviolet",
+      "atmosphere": "An empty tiled pool hall with generous quiet space.",
+      "door": "A pink door waits in a dry recess beyond the water.",
+      "feature": "Slow caustics and sparse bubbles; a shallow walkable pool edge.",
+      "hide": "An axolotl on a submerged tile ledge.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 4,
+      "animal": "Raccoon",
+      "environment": "Last Laundrette",
+      "palette": "mint / ivory / midnight blue",
+      "atmosphere": "A few enamel washers in a small, vacant laundrette.",
+      "door": "A hot-pink service door sheds glowing lint.",
+      "feature": "One washer contains a slowly turning sky.",
+      "hide": "A raccoon behind the last laundry basket.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 5,
+      "animal": "Gecko",
+      "environment": "Apricot Underpass",
+      "palette": "apricot / lilac / electric cyan",
+      "atmosphere": "A plain concrete passage bends out of sight.",
+      "door": "A cyan threshold forms a crisp reflection in the puddles.",
+      "feature": "Thin light strips and damp, textured concrete.",
+      "hide": "A tiny gecko on the shaded side of a column.",
+      "tags": []
+    },
+    {
+      "number": 6,
+      "animal": "Crane",
+      "environment": "Platform Between Trains",
+      "palette": "midnight blue / coral / silver",
+      "atmosphere": "An empty platform suspended above clouds.",
+      "door": "A lone train door opens without a train; ticket fragments hover nearby.",
+      "feature": "A distant arrival tone, then silence.",
+      "hide": "A crane behind the far platform sign.",
+      "tags": []
+    },
+    {
+      "number": 7,
+      "animal": "Moth",
+      "environment": "Velvet Waiting Room",
+      "palette": "wine / dusty rose / acid yellow",
+      "atmosphere": "Low seats and an oversized expanse of soft carpet.",
+      "door": "A yellow door surrounded by nearly still luminous dust.",
+      "feature": "Fabric pile catches the light as you move.",
+      "hide": "A moth on the back of the smallest chair.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 8,
+      "animal": "Frog",
+      "environment": "Rain That Misses You",
+      "palette": "charcoal / cyan / magenta",
+      "atmosphere": "Rain falls into an open stone courtyard.",
+      "door": "The rain bends around a magenta frame, leaving a dry rectangular gap.",
+      "feature": "A small dry route crosses wet reflective paving.",
+      "hide": "A frog under the lip of a low stone bench.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 9,
+      "animal": "Hummingbird",
+      "environment": "Upside-Down Conservatory",
+      "palette": "seafoam / violet / pearl",
+      "atmosphere": "Planters and vines hang overhead in an empty glass room.",
+      "door": "A violet door hides behind frosted glazing and upward pollen.",
+      "feature": "Optional gentle low gravity in one marked area.",
+      "hide": "A hummingbird among the overhead leaves.",
+      "tags": []
+    },
+    {
+      "number": 10,
+      "animal": "Ibex",
+      "environment": "Salt Moon",
+      "palette": "chalk white / petrol blue / neon pink",
+      "atmosphere": "A cracked salt plain beneath an enormous moon.",
+      "door": "A small pink door, with salt grains circling its handle.",
+      "feature": "Distance comes from haze and a simple horizon.",
+      "hide": "An ibex behind a knee-high salt ridge.",
+      "tags": []
+    },
+    {
+      "number": 11,
+      "animal": "Cat",
+      "environment": "Motel Without Rooms",
+      "palette": "peach / turquoise / cherry red",
+      "atmosphere": "A weathered motel balcony overlooking empty sky.",
+      "door": "One cherry-red room door releases a few red sparks.",
+      "feature": "A flickering vacancy light and warm stucco texture.",
+      "hide": "A sleeping cat under a balcony chair.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 12,
+      "animal": "Manta Ray",
+      "environment": "Tidal Carpet",
+      "palette": "lavender / peach / deep teal",
+      "atmosphere": "A sunken lounge whose carpet appears to roll like the sea.",
+      "door": "A peach door peeks above a low wall; droplets hang in place.",
+      "feature": "Only the surface pattern moves; the floor stays stable.",
+      "hide": "A manta ray beneath a glass-topped side table.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 13,
+      "animal": "Hedgehog",
+      "environment": "Vending Machine Clearing",
+      "palette": "cobalt / pale green / watermelon",
+      "atmosphere": "One vending machine in a small twilight clearing.",
+      "door": "Its rear panel is a walk-through door with rising bubbles.",
+      "feature": "A single illuminated selection changes the machine's hum.",
+      "hide": "A hedgehog beside the machine's rear foot.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 14,
+      "animal": "Lynx",
+      "environment": "Lavender Quarry",
+      "palette": "lilac / chalk / acid lime",
+      "atmosphere": "Broad terraces of pale chalk and clean-cut stone.",
+      "door": "A lime door is set into one smooth rock face.",
+      "feature": "Fine dust rises instead of falling.",
+      "hide": "A lynx in a shallow terrace recess.",
+      "tags": []
+    },
+    {
+      "number": 15,
+      "animal": "Seahorse",
+      "environment": "Empty Aquarium",
+      "palette": "deep teal / violet / gold",
+      "atmosphere": "A quiet aquarium corridor with dark, seemingly vacant tanks.",
+      "door": "A gold door stands in an accessible drained exhibit.",
+      "feature": "A few fish-shaped lights appear, then dissolve.",
+      "hide": "A seahorse behind a small exhibit plaque.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 16,
+      "animal": "Heron",
+      "environment": "Blackwater Footbridge",
+      "palette": "black plum / weathered gray / icy blue",
+      "atmosphere": "A narrow boardwalk crosses perfectly still dark water.",
+      "door": "A pink door draws blue lights upward from the surface.",
+      "feature": "Subtle timber creaks and one restrained reflection.",
+      "hide": "A heron on a low pile beside the bridge.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 17,
+      "animal": "Dragonfly",
+      "environment": "Soft Staircase",
+      "palette": "cream / tangerine / fuchsia",
+      "atmosphere": "A soft, broad staircase rises into a cloud sky.",
+      "door": "A door waits at the upper landing, traced by luminous dust.",
+      "feature": "Next render: a spiral staircase based on Astra's Infinite Pole.",
+      "hide": "A dragonfly resting beneath the handrail curve.",
+      "tags": []
+    },
+    {
+      "number": 18,
+      "animal": "Snow Leopard",
+      "environment": "Snow in the Lobby",
+      "palette": "glacier blue / pale pink / amber",
+      "atmosphere": "An empty hotel lobby with a curved reception desk.",
+      "door": "An amber door creates a halo where the snow stops.",
+      "feature": "Very fine indoor snowfall with a low particle count.",
+      "hide": "A snow leopard behind the reception return.",
+      "tags": []
+    },
+    {
+      "number": 19,
+      "animal": "Raven",
+      "environment": "Pearl Car Park",
+      "palette": "pearl / petrol green / magenta",
+      "atmosphere": "A vacant parking level with numbered pillars and oily puddles.",
+      "door": "A magenta stairwell door is hidden behind the final pillar.",
+      "feature": "An occasional fluorescent buzz punctuates the stillness.",
+      "hide": "A raven on the back edge of a low barrier.",
+      "tags": []
+    },
+    {
+      "number": 20,
+      "animal": "Octopus",
+      "environment": "Room Beneath the Ocean",
+      "palette": "ultramarine / coral / pale plaster",
+      "atmosphere": "A dry room beneath a transparent water ceiling.",
+      "door": "A coral door gathers droplets that drift upward.",
+      "feature": "Slow overhead ripples and restrained light shafts.",
+      "hide": "An octopus clinging beneath a corner shelf.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 21,
+      "animal": "Deer",
+      "environment": "Wind Telephone",
+      "palette": "silver green / violet / orange",
+      "atmosphere": "A disconnected telephone rests on a small grassy hill.",
+      "door": "An orange door catches thin luminous filaments in the wind.",
+      "feature": "A soft listening interaction with no required conversation.",
+      "hide": "A deer behind the hill's lone stone marker.",
+      "tags": []
+    },
+    {
+      "number": 22,
+      "animal": "Firefly",
+      "environment": "Sleeping Arcade",
+      "palette": "indigo / raspberry / cyan",
+      "atmosphere": "Four silent arcade cabinets in an otherwise empty room.",
+      "door": "A raspberry maintenance door changes square pixels into round motes.",
+      "feature": "Cabinet screens show slow abstract landscapes.",
+      "hide": "A tiny firefly on a joystick housing.",
+      "tags": []
+    },
+    {
+      "number": 23,
+      "animal": "Kangaroo",
+      "environment": "Low-Gravity Court",
+      "palette": "lavender / navy / tennis yellow",
+      "atmosphere": "An empty sports court where one ball pauses mid-bounce.",
+      "door": "A pale door replaces part of the fence; chalk dust orbits it.",
+      "feature": "An optional low-gravity zone with an obvious exit.",
+      "hide": "A kangaroo behind the low equipment bench.",
+      "tags": []
+    },
+    {
+      "number": 24,
+      "animal": "Scarab",
+      "environment": "Ribbon Dunes",
+      "palette": "coral / pale gold / electric blue",
+      "atmosphere": "Combed sand ridges and a simple winding path.",
+      "door": "A blue door sits in a sheltered hollow with a fine sand spiral.",
+      "feature": "A faint moving ribbon of light follows the route.",
+      "hide": "A scarab beside a ripple at the dune's shaded base.",
+      "tags": []
+    },
+    {
+      "number": 25,
+      "animal": "Praying Mantis",
+      "environment": "Frosted Office",
+      "palette": "smoke gray / mint / violet",
+      "atmosphere": "Nearly empty office partitions and one abandoned chair.",
+      "door": "A violet silhouette appears through frosted glass.",
+      "feature": "Particles trace the door edge as you approach.",
+      "hide": "A mantis on the reverse of a partition bracket.",
+      "tags": []
+    },
+    {
+      "number": 26,
+      "animal": "Flamingo",
+      "environment": "Red Sun Reservoir",
+      "palette": "terracotta / dark teal / red",
+      "atmosphere": "A dry causeway crosses a shallow concrete reservoir.",
+      "door": "A pink maintenance door is reflected beneath a low red sun.",
+      "feature": "Slow luminous rings travel across the water.",
+      "hide": "A flamingo behind the low overflow wall.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 27,
+      "animal": "Jellyfish",
+      "environment": "Room of Curtains",
+      "palette": "dusty pink / cobalt / warm white",
+      "atmosphere": "Tall woven curtains divide a vast, sparse room.",
+      "door": "One gently lifted curtain reveals the door and glowing loose threads.",
+      "feature": "Quiet fabric movement leaves the route readable.",
+      "hide": "A jellyfish nested inside a fold near the floor.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 28,
+      "animal": "Butterfly",
+      "environment": "Glass Orchard",
+      "palette": "smoky lilac / rose gold / chartreuse",
+      "atmosphere": "A few metallic trees carry translucent leaves.",
+      "door": "A rose glass door rests between the trunks.",
+      "feature": "Nearby leaves briefly brighten when the door wakes.",
+      "hide": "A butterfly on the underside of a low leaf.",
+      "tags": []
+    },
+    {
+      "number": 29,
+      "animal": "Red Panda",
+      "environment": "Midnight Food Court",
+      "palette": "aubergine / peach / neon mint",
+      "atmosphere": "Three closed counters and a handful of empty tables.",
+      "door": "A mint staff door is partly hidden, with tiny sugar-like motes.",
+      "feature": "Rippled metal shutters and a soft refrigerator hum.",
+      "hide": "A red panda behind a stack of trays.",
+      "tags": [
+        "cozy"
+      ]
+    },
+    {
+      "number": 30,
+      "animal": "Swan",
+      "environment": "Door at Sunrise",
+      "palette": "lavender / pale peach / hot pink",
+      "atmosphere": "A long promenade opens into a quiet sunrise.",
+      "door": "A pink door carries faint particles in colors from the collection.",
+      "feature": "A calm pause in the random route; it is not a mandatory ending.",
+      "hide": "A swan behind the promenade's last low wall.",
+      "tags": []
+    },
+    {
+      "number": 31,
+      "animal": "Otter",
+      "environment": "Steam Between Stars",
+      "palette": "porcelain / pale aqua / violet",
+      "atmosphere": "A warm bathtub in an open, star-filled bathing pavilion.",
+      "door": "Steam curls around a distant frosted pink door.",
+      "feature": "Pick up, wet, squeeze and rinse a sponge; foam responds locally. Reference interaction still needs testing.",
+      "hide": "A small otter under the folded towel on a dry ledge.",
+      "tags": [
+        "water",
+        "cozy"
+      ]
+    },
+    {
+      "number": 32,
+      "animal": "Sandpiper",
+      "environment": "Sunset Sandbar",
+      "palette": "tangerine / peach / lavender",
+      "atmosphere": "A narrow sandbar takes an uncanny zigzag and S-curve through shallow water.",
+      "door": "A faraway sparkle door sits at the end of the sand itself.",
+      "feature": "Wet sand, tide ripples and champagne sparkles; no boardwalk.",
+      "hide": "A sandpiper beside a shallow tidal groove.",
+      "tags": [
+        "water"
+      ]
+    },
+    {
+      "number": 33,
+      "animal": "Dolphin",
+      "environment": "Aquaglass Concourse",
+      "palette": "white / turquoise / lime",
+      "atmosphere": "An optimistic Aero hall with glass, sky and a shallow water channel.",
+      "door": "A turquoise door emits small glossy bubbles.",
+      "feature": "A water-play station can host splash and squirt tools after reference inspection.",
+      "hide": "A dolphin inside the low channel's quiet end.",
+      "tags": [
+        "aero",
+        "water"
+      ]
+    },
+    {
+      "number": 34,
+      "animal": "Chipmunk",
+      "environment": "Bubble Chair Cloud Lounge",
+      "palette": "azure / mint / soft pink",
+      "atmosphere": "A sparse outdoor lounge with an interactive bubble chair that molds around the seated avatar.",
+      "door": "A pearl door sits beyond a few iridescent bubbles.",
+      "feature": "Avatar-responsive deformation is required; exact behavior and asset source need inspection. Selected floating fairy lights.",
+      "hide": "A tiny chipmunk tucked against the arm of a park bench.",
+      "tags": [
+        "aero",
+        "cozy"
+      ]
+    },
+    {
+      "number": 35,
+      "animal": "Wolf",
+      "environment": "Midnight Glass Garden",
+      "palette": "midnight blue / violet / cyan",
+      "atmosphere": "Dark reflecting water, curved translucent panels and sparse groundcover.",
+      "door": "A pearl door gathers a few cool blue lights.",
+      "feature": "Later render must use the actual prismatic material reference. The current hero wolf is provisional.",
+      "hide": "A smaller wolf partly hidden behind a curved garden panel.",
+      "tags": [
+        "aero",
+        "water"
+      ]
+    },
+    {
+      "number": 36,
+      "animal": "Kingfisher",
+      "environment": "Blue-Sky Terminal",
+      "palette": "orange / mint / chrome / cobalt",
+      "atmosphere": "An empty organic 2000s terminal with oval sky windows and no grass.",
+      "door": "An azure glass door carries a few watery bubbles.",
+      "feature": "Glossy molded walls, pale terrazzo and a single rounded bench.",
+      "hide": "A kingfisher behind the bench's chrome support.",
+      "tags": [
+        "aero"
+      ]
+    },
+    {
+      "number": 37,
+      "animal": "Nautilus",
+      "environment": "Secret Undersea Galaxy",
+      "palette": "deep blue / violet / cyan / pearl",
+      "atmosphere": "A hidden dry viewing chamber reveals a spiral galaxy suspended beneath the sea.",
+      "door": "A small pearl door provides an unmistakable return route.",
+      "feature": "Use layered star geometry and restrained particles; the distant galaxy does not require full fluid simulation.",
+      "hide": "A nautilus on the underside of the curved observation rail.",
+      "tags": [
+        "water"
+      ]
+    }
+  ],
+  "program": "The Threshold",
+  "pet": "Door Dormouse",
+  "constraints": [
+    "PC only. Keep broad empty space, neon accents and restrained door particles.",
+    "The first destination uses the original pink booth from Astra's Infinite Pole.",
+    "Forward doors choose random destinations; arrival doors retain the actual return location.",
+    "Every floor has its own unique hidden prismatic glass animal, scaled to its environment.",
+    "The bubble chair must deform around the seated avatar; the static prototype is incomplete.",
+    "The staircase door must use the spiral staircase reference from Astra's Infinite Pole.",
+    "The exact difficult Backrooms replica and complete ASMR inventory require reference inspection.",
+    "Profile a small playable batch before expanding. 333 destinations is an aspiration, not a tested capacity."
+  ]
+}
