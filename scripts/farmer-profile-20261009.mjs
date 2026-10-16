@@ -22,6 +22,8 @@ const lowerFirst = (s) => {
 
 /** @returns {{ text: string, changes: string[] }} */
 export function syncProfile(readme, registry, repos, programs = null) {
+  // Explicit opt-in to owner-reviewed Goldfish revisions. Never overwrite them during a daily round.
+  if (readme.includes('<!-- findastra-readme-auditor: managed -->')) return { text: readme, changes: [] };
   const lines = readme.split('\n');
   const changes = [];
   const online = new Map(repos.filter((r) => !r.fork && !r.archived && r.name !== OWNER).map((r) => [r.name, r]));
