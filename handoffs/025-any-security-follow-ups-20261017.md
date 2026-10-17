@@ -1,4 +1,4 @@
-status: open (Farmer's round and findings 3 to 5 left; waiting on Astra: the security model in PR #26)
+status: open (findings 3 to 5 left; waiting on Astra: merging the Farmer's round fix, and the security model in PR #26)
 for: any
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-17
 needs: docs/security-assessment-20261016.md, SECURITY.md, PROTECTION-RINGS.md, skills/farm-security/SKILL.md, PR #26
@@ -35,15 +35,36 @@ chat took 019 at the same time, so it is 025 (handoffs/README.md, "Card numbers 
   (`conversation-import-20261016.md`, source `claude-code-cloud`, id `astras-pet-os:session_01TguXHjbrVeHscuKMCGzJCp`)
   was built with Chat Rat's own parser and sent to Astra in the chat. It is not in any repo (Chat Rat's rule).
 
+- **2026-10-17, later, branch `claude/tender-gauss-m2nbhp` (Claude Opus 5.5): item 1 below, the Farmer's round and
+  finding 2 (known gap 11).** Pull request #46; not on `main` until Astra merges it. Test runs 8 and 9 (workflow_dispatch): run 9 pushed `farmer/rounds-20261017` and GitHub refused to open its pull request until Astra allows Actions to create pull requests (Settings > Actions > General).
+  - `scripts/build-interfaces-20261008.mjs`: the Farmer's desk finds the host by role (`petFor`), not by the old repo
+    name; the desk file name and its browser-storage key keep `astras-pet-apps` so saved notes survive. This was the
+    crash behind every failed run since the rename (runs 3 to 7).
+  - `scripts/farmer-rounds-20261009.mjs`: `adoptSubmission` no longer takes `pet` (a name); it becomes a note in the
+    round's report and pull request.
+  - `.github/workflows/farmer-daily-rounds.yml`: pushes to `farmer/rounds-YYYYMMDD` and opens a pull request into the
+    branch it ran on (`main` on the schedule), closing an older open round as replaced; never pushes to `main`;
+    `permissions: contents: write, pull-requests: write`; checkout and setup-node pinned by commit SHA.
+  - `test/farmer-rounds-pr-test-20261017.mjs` (6 tests, which fail on the old code): no push to main, minimal
+    permissions and SHA pins, a submission cannot rename a pet (and the one-list test still passes), a whole round
+    with renaming submissions, a visibility change is reported, the desk builder finds the host.
+  - The first test run of the repaired round (run 8) found `data-dealer` and `voicemeeter-bug` **public on GitHub**
+    though pets.json says private (PLAN.md decision 2). The round writes what GitHub says, and three old tests that used
+    Chip as the private example failed. Those tests now set up their own private pet, and the round names every
+    visibility change in its pull request. **Waiting on Astra:** should those two repos be private again?
+  - Docs: the pet-written-data line and the rounds line in `AGENTS.md`; `PET-FILES.md` (rounds step 5, submissions);
+    `skills/handoff/SKILL.md` (names change only in pet-programs.json); gap 11's status in `PROTECTION-RINGS.md` (only
+    that cell: PR #26 removes the whole table, so whichever merges second resolves it); finding 2 and its update in the
+    assessment; the Farmer's row in `INTELLIGENCE-LEVELS.md`.
+
 ## Decisions
 - **Branch protection on `main`: no** (Astra, 2026-10-17). Finding 1 stays open as an accepted risk: core changes merge
   with her approval by agreement, not by a GitHub setting.
 
 ## What is not done
-1. **The Farmer's daily round has failed every day since the 2026-10-12 rename.** `scripts/build-interfaces-20261008.mjs`
-   still looks for the host as `astras-pet-apps`. Fix the crash **together with** finding 2 (the round opens a pull
-   request instead of pushing to `main`, and a pet's `cage.submit` can no longer rename it, per the one-list rule).
-   Fixing only the crash turns unreviewed writes to `main` back on.
+1. ~~The Farmer's daily round has failed every day since the 2026-10-12 rename.~~ Fixed together with finding 2 on
+   `claude/tender-gauss-m2nbhp` (above). **Waiting on Astra:** merge it. If GitHub refuses to let the round open its
+   pull request, tick Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
 2. **Merge `findastra/ghost-protocol` PR #1** (Astra), so the live site has finding 6's fix.
 3. **PR #26 (Codex)** replaces the rings and R W X model with "topology is not authority" and removes the Known gaps
    table, including gaps 11 and 12. Astra decides; then gaps 11 and 12 either stay or move to the new page.

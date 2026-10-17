@@ -167,10 +167,9 @@
     }
   },
   "rounds": {
-    "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild. Each pet audits itself on its cadence and day.",
+    "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild, and open a pull request for Astra (never a push to main). A submitted name is only a note: names live in pet-programs.json. Each pet audits itself on its cadence and day.",
     "status_file": "status/pets-status.json",
     "submit_keys": [
-      "pet",
       "job",
       "status",
       "says",

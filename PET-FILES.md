@@ -169,7 +169,7 @@ Every pet checks itself on a schedule and reports in the same nine moods, so Ast
 2. Takes each pet's **submission** (below).
 3. Runs the **self-audits** that are due. Each pet runs on its `audit.cadence`: `weekly` pets on their own day of the week (spread across the week, listed in [MOOD-KEY.md](MOOD-KEY.md)); the Farmer every day.
 4. Writes `status/pets-status.json`: each pet's mood, a one-line bubble, and what it needs from Astra. The Cage page rests each pet in that mood and shows the bubble when clicked; the Farmer's desk lists everyone who **Needs you**.
-5. Rebuilds, and commits as the Friendly Farmer.
+5. Rebuilds, runs `npm test`, and opens a **pull request** as the Friendly Farmer, from the branch `farmer/rounds-YYYYMMDD`. It never pushes to `main`: Astra reads the changes and merges them (known gap 11, closed 2026-10-17). A newer round's pull request replaces an older one that is still open.
 
 **What a self-audit checks:** the pet files above (pet.json, README credit line, "how to run it" and "Limits", AGENTS.md pointing at the Cage, CLAUDE.md, LICENSE and the `pet-app` topic for public repos), plus anything only Astra can answer.
 
@@ -202,7 +202,7 @@ In pets.json, and copied into the pet's own pet.json:
 
 ### Submitting a change to the Farmer
 
-A pet owns its own name, job, status, bubble lines, mood lines and audit. When it changes any of them, it **submits** the change in its own pet.json, with the date:
+A pet owns its own job, status, bubble lines, mood lines and audit. When it changes any of them, it **submits** the change in its own pet.json, with the date. Its **name** is not submitted this way: names live only in `pet-programs.json` (AGENTS.md, "One list of names"), so a `pet` in `cage.submit` becomes a note for Astra in the round's pull request, never a change:
 
 ```json
 "cage": {
@@ -219,7 +219,7 @@ A pet owns its own name, job, status, bubble lines, mood lines and audit. When i
 }
 ```
 
-Include only what changed. The next daily round takes it (once per date), updates pets.json, and the Cage, the desk, MOOD-KEY.md and the profile follow. Art, `kind`, friends and relations belong to the Farmer: ask for those with a card in this repo's `handoffs/`, because new art costs money and needs Astra's OK.
+Include only what changed. The next daily round takes it (once per date) and updates pets.json in its pull request; once Astra merges it, the Cage, the desk, MOOD-KEY.md and the profile follow. Art, `kind`, friends and relations belong to the Farmer: ask for those with a card in this repo's `handoffs/`, because new art costs money and needs Astra's OK.
 
 A pet that changes its job in pet.json **without** submitting gets a note in its self-audit, so the two never drift apart unnoticed.
 

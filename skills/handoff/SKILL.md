@@ -53,8 +53,9 @@ Add a row for the card to `handoffs/README.md`. Numbers never repeat.
 - A new pet repo needs `pet.json` with an `audit` block, the `pet-app` topic, and an AGENTS.md that links
   `findastra/astras-pet-os` and its PET-FILES.md. The Farmer's daily round finds it and adds it to the
   pipeline; leave a `farmer-register-<repo>` card in `astras-pet-os/handoffs/` too.
-- Changing a pet's name, job, status, bubble lines (`says`), mood lines (`moods`) or audit: also put the change in
-  `cage.submit` in its pet.json with today's date, so the Farmer picks it up. See PET-FILES.md, "Submitting a
+- Changing a pet's job, status, bubble lines (`says`), mood lines (`moods`) or audit: also put the change in
+  `cage.submit` in its pet.json with today's date, so the Farmer picks it up (his round opens a pull request).
+  A pet's **name** changes only in `findastra/astras-pet-os/pet-programs.json`, by Astra; a name in `cage.submit` is only a note. See PET-FILES.md, "Submitting a
   change to the Farmer".
 - To ask Astra for something, leave a card with `status: open (waiting on Astra: <what you need>)`. The pet
   turns sick and that text becomes its bubble on the Cage and the Farmer's desk.

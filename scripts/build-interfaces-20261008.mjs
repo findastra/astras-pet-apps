@@ -6,8 +6,10 @@ import { allPets, moodKey, ORDER } from './farmer-rounds-20261009.mjs';
 process.chdir(fileURLToPath(new URL('..', import.meta.url)));
 const registry = JSON.parse(readFileSync('pets.json', 'utf8'));
 const art = JSON.parse(readFileSync('art/frames/index.json', 'utf8'));
-const configs = [
-  { repo: 'astras-pet-apps', type: 'manager', title: "Astra's Pet Apps", subtitle: 'The Farmer’s desk', lead: 'Open your apps, review what needs attention, and keep a small follow-up list.', accent: '#dbe870', limit: 'App availability comes from the registry. Follow-up flags are your personal notes.' },
+// The manager is the Farmer's desk. Its file name and browser-storage key keep the old repo name (astras-pet-apps) so saved
+// notes survive the 2026-10-12 rename; the pet is found by role, never by repo name. Claude Opus 5.5, 2026-10-17.
+export const configs = [
+  { repo: 'astras-pet-apps', host: true, type: 'manager', title: "Astra's Pet Apps", subtitle: 'The Farmer’s desk', lead: 'Open your apps, review what needs attention, and keep a small follow-up list.', accent: '#dbe870', limit: 'App availability comes from the registry. Follow-up flags are your personal notes.' },
   { repo: 'api-fairy', type: 'keys', title: 'API Fairy', subtitle: 'Key metadata notebook', lead: 'Remember where a key lives, what uses it, and when you want to review it.', accent: '#c8a1f4', limit: 'Store names and locations only. This browser notebook does not read or watch your keys. The existing Windows app provides that separate functionality.' },
   { repo: 'learn-python', type: 'python', title: 'Python Panther', subtitle: 'A small practice desk', lead: 'Read a tiny Python example, predict its output, then check your answer.', accent: '#c7df66', limit: 'These exercises check expected answers locally. This page does not execute Python code.' },
   { repo: 'vrchat-ai-astra', type: 'vrchat', title: 'Astra Wisp', subtitle: 'VRChat AI Astra · readiness desk', lead: 'Prepare an embodiment session and keep track of the steps you have actually checked.', accent: '#acb2ff', limit: 'The existing AI Astra app runs through Electron and Python. This browser companion does not connect to the backend, change learned memory, or send VRChat messages.' },
@@ -146,7 +148,14 @@ function clientMain() {
 }
 
 const css = `.need{margin:6px 0}.need .inline{margin-left:6px;font-size:.85em}.key-pick{display:block;margin-top:4px;min-width:240px}.key-now{margin:12px 0}.key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.key-cell{border:1px solid #3a3646;border-radius:12px;padding:10px;display:grid;gap:4px;justify-items:start;font-size:.9em}.key-cell img{image-rendering:pixelated}.key-cell.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}.key-noart{width:64px;height:64px;display:grid;place-items:center;color:#6f6880;border:1px dashed #3a3646;border-radius:8px}:root{color-scheme:dark;font:16px/1.6 system-ui,sans-serif;background:#17161d;color:#f3f0f7;--accent:#d8b4da;--panel:#23212c;--muted:#b6b0c3}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1180px;margin:auto;padding:24px}header{padding-top:40px;display:grid;grid-template-columns:104px 1fr;column-gap:24px}header img{width:104px;height:104px;image-rendering:pixelated;grid-row:1/5;object-fit:contain}header .eyebrow{margin:0;color:var(--accent);text-transform:uppercase;letter-spacing:.13em;font-size:.75rem}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12;margin:7px 0 14px}h2{font-size:1.35rem;margin:0 0 6px}h3{font-size:1.05rem;margin:0 0 8px}p{margin:10px 0}a{color:var(--accent)}button,.button{font:inherit;border:1px solid var(--accent);color:#19161c;background:var(--accent);padding:9px 16px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;line-height:1.35;margin:4px 6px 4px 0}.secondary{background:transparent;color:var(--accent)}.quiet{border-color:transparent;background:transparent;color:var(--muted)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid white;outline-offset:3px}main{display:grid;gap:20px;padding-top:0}.card{background:var(--panel);border:1px solid #45404f;border-radius:18px;padding:24px}.muted,footer{color:var(--muted)}.toolbar{grid-column:1/-1;margin-top:18px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}label{display:grid;gap:6px;font-size:.85rem;color:var(--muted);margin:12px 0}input,select,textarea{background:#17161e;border:1px solid #62586c;border-radius:9px;padding:11px;color:#f8f4fa;font:inherit;min-width:0;width:100%}textarea{min-height:120px;resize:vertical}input[type=checkbox]{width:19px;height:19px;flex:0 0 auto;accent-color:var(--accent)}.check{display:flex;align-items:center;gap:12px;font-size:1rem}.app-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}.app-tile,.record{border:1px solid #494251;border-radius:12px;padding:18px;margin-top:12px}.badge{font-size:.78rem;color:var(--accent)}.empty{padding:24px;border:1px dashed #62586c;border-radius:10px;color:var(--muted)}pre,code{font-family:ui-monospace,monospace;background:#15131a;border:1px solid #433c4b;border-radius:9px;padding:14px;display:block;white-space:pre-wrap}table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:12px;border-bottom:1px solid #494251;vertical-align:top;overflow-wrap:anywhere}td{max-width:330px}.table-wrap{overflow-x:auto}#feedback{min-height:1.6em;color:var(--accent);grid-column:1/-1}.result{white-space:pre-wrap}.original-app{width:100%;height:75vh;border:1px solid #494251;border-radius:12px;margin-top:20px}footer{padding-top:0;font-size:.82rem}.limit{border-left:3px solid var(--accent);padding-left:12px;margin-top:22px}@media(max-width:620px){header{grid-template-columns:72px 1fr;gap:14px}header img{width:72px;height:72px}.form-grid{grid-template-columns:1fr}.card{padding:18px}header,main,footer{padding-left:16px;padding-right:16px}}`;
+/** The pet whose picture heads a companion: the host (by role) for the Farmer's desk, otherwise the pet with that repo. */
+export function petFor(registry, config) {
+  const pet = config.host ? registry.pets.find((p) => p.role === 'host') : registry.pets.find((p) => p.repo === config.repo);
+  if (!pet) throw new Error(`No registered pet for the ${config.repo} companion in pets.json.`);
+  return pet;
+}
 const esc = (text) => text.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+if (process.argv[1] && import.meta.url === new URL('file://' + process.argv[1]).href) {
 const args = process.argv.slice(2);
 const refreshExisting = args.includes('--refresh-existing');
 const requested = new Set(args.filter((arg) => arg !== '--refresh-existing'));
@@ -160,7 +169,7 @@ for (const config of configs) {
   // Published companions retain their exact source bytes and version footer.
   // The Farmer's manager is generated from the current Cage registry.
   if (config.type !== 'manager' && existsSync(output) && !refreshExisting) { preserved++; continue; }
-  const pet = registry.pets.find((p) => p.repo === config.repo);
+  const pet = petFor(registry, config);
   const image = 'data:image/png;base64,' + readFileSync(art.pets[pet.art].frames.idle).toString('base64');
   const statusFile = registry.rounds && registry.rounds.status_file;
   const status = statusFile && existsSync(statusFile) ? JSON.parse(readFileSync(statusFile, 'utf8')) : null;
@@ -173,3 +182,4 @@ for (const config of configs) {
   built++;
 }
 console.log(`Built ${built} dated browser companion interfaces; preserved ${preserved} existing copies.`);
+}
