@@ -20,8 +20,8 @@
 |---|---|
 | Numbered pets (`pet-programs.json`, #1 to #82) | 82: 19 registered, 17 pipeline, 15 seed, 31 roadmap |
 | Have their own repo on GitHub | 80 (#81 Intel Owl and #82 Door Dormouse have none) |
-| Pet program (home) decided | **38** |
-| Pet program not decided yet | **44** (next: **#31 Wifi Butterfly**; #31–#33 had no preference in round 19) |
+| Pet program (home) decided | **41** |
+| Pet program not decided yet | **41** (next: **#39 Procreate Panda**; #31–#33 had no preference in round 19) |
 | Pet name not decided | 1 (#77, `pet-program-77-icon-77`) |
 | Not numbered yet | 3: **Workflow Whale** (Workflow Whirlpool, only on the PC), **Index Mole** (named by Astra on 2026-10-12, never recorded), **Role Fairy** (pet #13 on the 2026-10-07 roster, now only a Discord repo) |
 
@@ -94,7 +94,16 @@
 | 30 | Fuzzboi Friend | Fuzzboi Factory |
 | 31–33 | Wifi Butterfly, Deck Duck, Mesh Moth | no preference yet |
 
-## Rapid-question queue (44 undecided)
+## Round 20, 2026-10-16
+
+| # | Pet | Pet program |
+|---|---|---|
+| 5 | Unity Unicorn | Unity Stable (kept; the sketch's "The Unity Den" was not adopted) |
+| 35 | Chat Rat | Chat Stack |
+| 36 | Platform Platypus | Mirror Pool |
+| 38 | Pole Puff | Infinite Studio |
+
+## Rapid-question queue (41 undecided)
 
 Ask in order, with four explained suggestions plus free text, and save each answer to `pet-programs.json` straight away. **Idea** is the suggestion already on file.
 
@@ -103,9 +112,6 @@ Ask in order, with four explained suggestions plus free text, and save each answ
 | 31 | Wifi Butterfly | pipeline | Signal Garden |
 | 32 | Deck Duck | pipeline | Deck Pond |
 | 33 | Mesh Moth | pipeline | Mesh Lantern |
-| 35 | Chat Rat | pipeline | Chat Nest |
-| 36 | Platform Platypus | pipeline | Mirror Pool |
-| 38 | Pole Puff | seed | Astra's Infinite Pole (the world she looks after), or Pole Lookout |
 | 39 | Procreate Panda | seed | Bamboo Studio |
 | 40 | Skill Scout | seed | Skill Logbook |
 | 41 | OSC Sealion | seed | OSC Sonar |

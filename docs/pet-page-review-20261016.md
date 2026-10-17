@@ -104,5 +104,5 @@ honest: missing programs are not errors.
 
 ## Questions for Astra
 
-- The sketch titles Unity Unicorn's home **The Unity Den**, but the one list says **Unity Stable** (chosen 2026-10-15). Which one?
+- ~~The Unity Den or Unity Stable?~~ Astra kept **Unity Stable** (2026-10-16).
 - The sketch lists "Unity Unicorn Icon" as a native program. Is the icon a program, or should it be a tool?
