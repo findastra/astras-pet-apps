@@ -1,0 +1,759 @@
+{
+ "31": [
+  [
+   "Signal Garden",
+   "the catalog idea: radios as flowers the butterfly visits"
+  ],
+  [
+   "Airwave Meadow",
+   "an open field where every nearby signal shows up"
+  ],
+  [
+   "The Radio Garden",
+   "plain about the job: Wi-Fi and Bluetooth"
+  ],
+  [
+   "Butterfly Watch",
+   "a lookout for unknown devices, its confirmed security role"
+  ]
+ ],
+ "32": [
+  [
+   "Deck Pond",
+   "the catalog idea: the duck's pond of buttons"
+  ],
+  [
+   "Button Pond",
+   "says what it keeps: what every button does"
+  ],
+  [
+   "The Control Deck",
+   "a ship's deck of profiles and keys"
+  ],
+  [
+   "Duck Dock",
+   "where every profile is moored and labelled"
+  ]
+ ],
+ "33": [
+  [
+   "Mesh Lantern",
+   "the catalog idea: a lantern on the radio mesh"
+  ],
+  [
+   "Moonlight Mesh",
+   "moths fly at night, when the mesh carries messages"
+  ],
+  [
+   "The Relay Tower",
+   "the node's place and health in the mesh"
+  ],
+  [
+   "Mesh Porchlight",
+   "a small light other nodes find"
+  ]
+ ],
+ "39": [
+  [
+   "Bamboo Studio",
+   "the catalog idea: the panda's studio"
+  ],
+  [
+   "Redline Studio",
+   "named for the redlines it handles"
+  ],
+  [
+   "The Sketch Grove",
+   "a grove of drawings and brushes"
+  ],
+  [
+   "Panda Canvas",
+   "plain: her Procreate drawings and tools"
+  ]
+ ],
+ "40": [
+  [
+   "Skill Logbook",
+   "the catalog idea: a log of what changed and why"
+  ],
+  [
+   "Scout Camp",
+   "where the scout reports on every agent file"
+  ],
+  [
+   "The Trail Journal",
+   "who changed which skill, and when"
+  ],
+  [
+   "Skill Watchtower",
+   "keeps an eye on AGENTS.md, CLAUDE.md and SKILL.md"
+  ]
+ ],
+ "41": [
+  [
+   "OSC Sonar",
+   "the catalog idea: listening for packets"
+  ],
+  [
+   "Packet Reef",
+   "a sealion's reef where the OSC traffic swims"
+  ],
+  [
+   "The Channel Lighthouse",
+   "spots apps colliding on shared channels"
+  ],
+  [
+   "Sealion Signal Rock",
+   "the rock it watches VRChat traffic from"
+  ]
+ ],
+ "43": [
+  [
+   "Photo Roost",
+   "the catalog idea: where pictures roost"
+  ],
+  [
+   "Picture Nest",
+   "every saved picture, found and backed up"
+  ],
+  [
+   "The Photo Archive",
+   "plain about the job"
+  ],
+  [
+   "Dodo Album",
+   "a friendly album that never goes extinct"
+  ]
+ ],
+ "44": [
+  [
+   "Video Vault",
+   "the catalog idea: a vault of saved videos"
+  ],
+  [
+   "Film Perch",
+   "the vulture's perch over every video"
+  ],
+  [
+   "The Video Archive",
+   "plain, and a pair with a Photo Archive"
+  ],
+  [
+   "Reel Canyon",
+   "a canyon of reels, each one found and backed up"
+  ]
+ ],
+ "45": [
+  [
+   "Catwalk",
+   "the catalog idea: outfits and what goes together"
+  ],
+  [
+   "The Wardrobe Den",
+   "what you own, in one place"
+  ],
+  [
+   "Closet Kingdom",
+   "a pair with File Kingdom, for clothes"
+  ],
+  [
+   "Style Scratchpad",
+   "outfits plus favourite places to shop"
+  ]
+ ],
+ "47": [
+  [
+   "Task Island",
+   "the catalog idea"
+  ],
+  [
+   "Queue Burrow",
+   "where stalled jobs and retries wait"
+  ],
+  [
+   "The Handoff Station",
+   "agent handoffs and retries in one place"
+  ],
+  [
+   "Quokka Line",
+   "a cheerful queue that never gets stuck"
+  ]
+ ],
+ "48": [
+  [
+   "Log Den",
+   "the catalog idea"
+  ],
+  [
+   "Trace Forest",
+   "following logs and traces through the trees"
+  ],
+  [
+   "The Watch Tower",
+   "health and failures seen from above"
+  ],
+  [
+   "Lynx Lookout",
+   "sharp eyes on every log"
+  ]
+ ],
+ "49": [
+  [
+   "Server Hearth",
+   "the catalog idea: home servers kept warm"
+  ],
+  [
+   "Uptime Cave",
+   "a salamander's cave of services"
+  ],
+  [
+   "The Server Room",
+   "plain about the job"
+  ],
+  [
+   "Ember Rack",
+   "servers as embers it keeps alive"
+  ]
+ ],
+ "50": [
+  [
+   "Container Hoard",
+   "the catalog idea: a dragon's hoard"
+  ],
+  [
+   "Dragon Harbor",
+   "where containers dock"
+  ],
+  [
+   "The Container Yard",
+   "plain about the job"
+  ],
+  [
+   "Docker Lair",
+   "the dragon's lair of images and containers"
+  ]
+ ],
+ "51": [
+  [
+   "Test Track",
+   "the catalog idea"
+  ],
+  [
+   "The Proving Grounds",
+   "where releases prove themselves"
+  ],
+  [
+   "Shell Check",
+   "the tortoise checks before anything ships"
+  ],
+  [
+   "Slow and Sure",
+   "careful release verification"
+  ]
+ ],
+ "52": [
+  [
+   "Token Canopy",
+   "the catalog idea"
+  ],
+  [
+   "The Token Bank",
+   "budgets and spend, plainly"
+  ],
+  [
+   "Budget Branch",
+   "the toucan's branch for AI costs"
+  ],
+  [
+   "Toucan Tally",
+   "counts every model token"
+  ]
+ ],
+ "53": [
+  [
+   "Packet River",
+   "the catalog idea"
+  ],
+  [
+   "The Network Rapids",
+   "loss, latency and routing in the current"
+  ],
+  [
+   "Piranha Pipes",
+   "it bites on dropped packets"
+  ],
+  [
+   "DNS Delta",
+   "where the routes fan out"
+  ]
+ ],
+ "54": [
+  [
+   "Crow's Nest",
+   "the catalog idea: a lookout over the calendar"
+  ],
+  [
+   "The Schedule Roost",
+   "conflicts and reminders"
+  ],
+  [
+   "Calendar Rookery",
+   "a busy rookery of events"
+  ],
+  [
+   "Crow Clock",
+   "on time, every time"
+  ]
+ ],
+ "55": [
+  [
+   "Browser Belfry",
+   "the catalog idea"
+  ],
+  [
+   "The Web Cave",
+   "authorized browser work and site checks"
+  ],
+  [
+   "Bat Signal",
+   "website QA that calls out problems"
+  ],
+  [
+   "Night Crawl",
+   "a careful crawl of every page"
+  ]
+ ],
+ "56": [
+  [
+   "Data Marsh",
+   "the catalog idea"
+  ],
+  [
+   "The Data Pond",
+   "schemas and pipelines kept clean"
+  ],
+  [
+   "Pipeline Reeds",
+   "where the data flows through"
+  ],
+  [
+   "Dragonfly Ledger",
+   "data integrity, recorded"
+  ]
+ ],
+ "57": [
+  [
+   "Update Tidepool",
+   "the catalog idea"
+  ],
+  [
+   "The Patch Reef",
+   "packages and compatibility"
+  ],
+  [
+   "Urchin Upgrades",
+   "plain and pet-named"
+  ],
+  [
+   "Rollback Rock",
+   "updates with a way back"
+  ]
+ ],
+ "58": [
+  [
+   "Linux Iceberg",
+   "the catalog idea"
+  ],
+  [
+   "Penguin Shell",
+   "SSH and the terminal"
+  ],
+  [
+   "The Ice Station",
+   "Linux administration headquarters"
+  ],
+  [
+   "Tux Colony",
+   "a colony of Linux machines"
+  ]
+ ],
+ "59": [
+  [
+   "Market Meadow",
+   "the catalog idea; Stock Fox's job is still yours to choose"
+  ],
+  [
+   "The Fox Exchange",
+   "if the job is markets"
+  ],
+  [
+   "Den of Tickers",
+   "a fox's den of stock tickers"
+  ],
+  [
+   "Wait for the job",
+   "name it after you choose what Stock Fox does"
+  ]
+ ],
+ "60": [
+  [
+   "Passport Harbor",
+   "the catalog idea"
+  ],
+  [
+   "The Travel Desk",
+   "IDs, visas and deadlines, kept private"
+  ],
+  [
+   "Pelican Pouch",
+   "a pelican carries documents safely"
+  ],
+  [
+   "Border Beacon",
+   "warns before a passport or visa expires"
+  ]
+ ],
+ "61": [
+  [
+   "Journal Lagoon",
+   "the catalog idea"
+  ],
+  [
+   "Tide Diary",
+   "a private travel diary"
+  ],
+  [
+   "The Travel Log",
+   "plain about the job"
+  ],
+  [
+   "Jellyfish Drift",
+   "itineraries that drift from place to place"
+  ]
+ ],
+ "62": [
+  [
+   "Shell Trench",
+   "the catalog idea"
+  ],
+  [
+   "Ink Terminal",
+   "a squid's ink for scripts"
+  ],
+  [
+   "The Script Reef",
+   "guarded automation"
+  ],
+  [
+   "Squid Shell",
+   "plain and pet-named"
+  ]
+ ],
+ "63": [
+  [
+   "Kernel Grove",
+   "the catalog idea"
+  ],
+  [
+   "The Core Tree",
+   "processes and memory at the root"
+  ],
+  [
+   "Eucalyptus Engine",
+   "the koala's tree of drivers"
+  ],
+  [
+   "Koala Core",
+   "plain and pet-named"
+  ]
+ ],
+ "64": [
+  [
+   "Proxy Lake",
+   "the catalog idea"
+  ],
+  [
+   "The Gatehouse Pond",
+   "secure private remote access"
+  ],
+  [
+   "Axolotl Tunnel",
+   "TLS tunnels and proxies"
+  ],
+  [
+   "Safe Passage",
+   "private access, done safely"
+  ]
+ ],
+ "65": [
+  [
+   "Cluster Shore",
+   "the catalog idea"
+  ],
+  [
+   "The Tide Pools",
+   "many services, one shoreline"
+  ],
+  [
+   "Crab Colony",
+   "distributed services that move together"
+  ],
+  [
+   "Orchestra Reef",
+   "orchestration as a reef"
+  ]
+ ],
+ "66": [
+  [
+   "Storage Warren",
+   "the catalog idea"
+  ],
+  [
+   "Snapshot Burrow",
+   "snapshots and capacity"
+  ],
+  [
+   "The Vault Den",
+   "NAS and ZFS health"
+  ],
+  [
+   "Stoat Stash",
+   "plain and pet-named"
+  ]
+ ],
+ "67": [
+  [
+   "White Hat Lab",
+   "the catalog idea"
+  ],
+  [
+   "The Practice Range",
+   "authorized security tests only"
+  ],
+  [
+   "Weasel Watch",
+   "finds weak spots so they get fixed"
+  ],
+  [
+   "Patch Hollow",
+   "assessment and remediation"
+  ]
+ ],
+ "68": [
+  [
+   "Port Web",
+   "the catalog idea"
+  ],
+  [
+   "The Harbor Map",
+   "which ports are open"
+  ],
+  [
+   "Spider Silk Scan",
+   "a careful web of exposure checks"
+  ],
+  [
+   "Open Door Patrol",
+   "services that should not be reachable"
+  ]
+ ],
+ "69": [
+  [
+   "Cipher Hollow",
+   "the catalog idea"
+  ],
+  [
+   "The Key Tree",
+   "keys and certificates"
+  ],
+  [
+   "Owl Lockbox",
+   "encryption, kept wise"
+  ],
+  [
+   "Night Cipher",
+   "crypto education by an owl"
+  ]
+ ],
+ "70": [
+  [
+   "Evidence Locker",
+   "the catalog idea"
+  ],
+  [
+   "The Timeline Den",
+   "incident timelines"
+  ],
+  [
+   "Ferret Files",
+   "log analysis, plainly"
+  ],
+  [
+   "Trace Tunnel",
+   "following an incident back"
+  ]
+ ],
+ "71": [
+  [
+   "Model Library",
+   "the catalog idea"
+  ],
+  [
+   "The Llama Stacks",
+   "local models on shelves"
+  ],
+  [
+   "Weights Reading Room",
+   "downloads and compatibility"
+  ],
+  [
+   "Llama Ledger",
+   "an inventory of every local model"
+  ]
+ ],
+ "72": [
+  [
+   "Benchmark Rock",
+   "the catalog idea: an iguana's sunning rock"
+  ],
+  [
+   "The Heat Lamp",
+   "GPU and VRAM under load"
+  ],
+  [
+   "Latency Lagoon",
+   "inference speed, measured"
+  ],
+  [
+   "Iguana Speedway",
+   "benchmarks, plainly"
+  ]
+ ],
+ "73": [
+  [
+   "Agent Colony",
+   "the catalog idea"
+  ],
+  [
+   "The Ant Farm",
+   "agent experiments under glass"
+  ],
+  [
+   "Tool Tunnels",
+   "tool-use evaluation"
+  ],
+  [
+   "Hive Lab",
+   "many agents, one lab"
+  ]
+ ],
+ "74": [
+  [
+   "Roam Map",
+   "the catalog idea"
+  ],
+  [
+   "The Travel Nest",
+   "connectivity on the road"
+  ],
+  [
+   "Raven Relay",
+   "VPN and tailnet for remote access"
+  ],
+  [
+   "Far Perch",
+   "stays connected anywhere"
+  ]
+ ],
+ "75": [
+  [
+   "Cache Canyon",
+   "the catalog idea"
+  ],
+  [
+   "The Offline Den",
+   "works without the internet"
+  ],
+  [
+   "Coyote Cache",
+   "plain and pet-named"
+  ],
+  [
+   "Queue Mesa",
+   "queued actions wait here"
+  ]
+ ],
+ "76": [
+  [
+   "Sync Stream",
+   "the catalog idea"
+  ],
+  [
+   "The Mirror Pond",
+   "every device sees the same thing"
+  ],
+  [
+   "Mink Merge",
+   "conflict resolution"
+  ],
+  [
+   "River Sync",
+   "changes flow between devices"
+  ]
+ ],
+ "77": [
+  [
+   "Vet Clinic",
+   "the catalog idea: triage for the community vet-clinic"
+  ],
+  [
+   "Vetted Vet",
+   "the catalog's second idea: it vets offered cures"
+  ],
+  [
+   "The Triage Desk",
+   "labels tickets and checks for leaked secrets"
+  ],
+  [
+   "Waiting Room",
+   "where tickets wait to be checked, never merged"
+  ]
+ ],
+ "81": [
+  [
+   "Threat Observatory",
+   "the catalog idea"
+  ],
+  [
+   "Owl Watchtower",
+   "sees threats coming at night"
+  ],
+  [
+   "The Advisory Nest",
+   "CVEs and public advisories"
+  ],
+  [
+   "Intel Roost",
+   "plain and pet-named"
+  ]
+ ],
+ "about": "Four name options per unnamed pet program for the Flash Audit round cards (format: section 5). Option 1 is the catalog's own idea; options 2-4 are suggestions by Claude Opus 5.5, 2026-10-17, in the style of the chosen names (a place in the pet's world named for its job: Fairy Ring, File Kingdom, Crypto Burrow, Iron Gates). Suggestions only: nothing is renamed until Astra picks.",
+ "77-pet": [
+  [
+   "Nurse Newt",
+   "a calm nurse for sick-pet tickets"
+  ],
+  [
+   "Triage Toad",
+   "sorts tickets by how urgent they are"
+  ],
+  [
+   "Vet Vole",
+   "small, careful, and it never merges anything"
+  ],
+  [
+   "Medic Marmot",
+   "stands watch at the clinic door"
+  ]
+ ]
+}

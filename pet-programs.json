@@ -549,7 +549,7 @@
       "idea": null,
       "stage": "seed",
       "repo": "pet-program-37",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "dubstep-armory-v1.0-mini-descriptor-v1.0",
         "text": "Catalogs avatar gun effects and loadouts for Astra’s avatars. Its source is still only on the PC, not on GitHub.",
@@ -564,7 +564,7 @@
       "idea": "Astra's Infinite Pole (the world she looks after), or Pole Lookout",
       "stage": "seed",
       "repo": "pet-program-38",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "infinite-studio-v1.0-mini-descriptor-v1.0",
         "text": "Manages Astra's Infinite Pole.",
@@ -579,7 +579,7 @@
       "idea": "Bamboo Studio",
       "stage": "seed",
       "repo": "pet-program-39",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-39-v1.0-mini-descriptor-v1.0",
         "text": "Handles the redlines Astra makes in Procreate and manages her Procreate tools and drawings.",
@@ -594,7 +594,7 @@
       "idea": "Skill Logbook",
       "stage": "seed",
       "repo": "pet-program-40",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-40-v1.0-mini-descriptor-v1.0",
         "text": "Watches the agent and skill files (AGENTS.md, CLAUDE.md, SKILL.md) for every AI assistant and model, and tracks what changed, who changed it and why.",
@@ -609,7 +609,7 @@
       "idea": "OSC Sonar",
       "stage": "seed",
       "repo": "pet-program-41",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-41-v1.0-mini-descriptor-v1.0",
         "text": "Monitors OSC packets and finds problems when several apps share channels to VRChat, OSCGoesBrrr and VRCFaceTracking.",
@@ -624,7 +624,7 @@
       "idea": "Piranesi House (the world she looks after), or Tide Tables",
       "stage": "seed",
       "repo": "pet-program-42",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "nessis-ocean-v1.0-mini-descriptor-v1.0",
         "text": "Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools. Runtime is planned.",
@@ -639,7 +639,7 @@
       "idea": "Photo Roost",
       "stage": "seed",
       "repo": "pet-program-43",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-43-v1.0-mini-descriptor-v1.0",
         "text": "Keeps track of all your saved pictures: where each one is, what it shows, and whether it is backed up.",
@@ -654,7 +654,7 @@
       "idea": "Video Vault",
       "stage": "seed",
       "repo": "pet-program-44",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-44-v1.0-mini-descriptor-v1.0",
         "text": "Keeps track of all your saved videos, the same way Photo Dodo does for pictures: where each one is, what it shows, and whether it is backed up.",
@@ -684,7 +684,7 @@
       "idea": null,
       "stage": "roadmap",
       "repo": "iron-gates",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "iron-gates-v1.0-mini-descriptor-v1.0",
         "text": "Security and approvals: human-facing approvals and security monitoring. Issues the grants and the short-lived agent keys; never approves her own.",
@@ -699,7 +699,7 @@
       "idea": "Task Island",
       "stage": "roadmap",
       "repo": "pet-program-47",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-47-v1.0-mini-descriptor-v1.0",
         "text": "Tasks: watches retries, stalled jobs and agent handoffs.",
@@ -714,7 +714,7 @@
       "idea": "Log Den",
       "stage": "roadmap",
       "repo": "pet-program-48",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-48-v1.0-mini-descriptor-v1.0",
         "text": "Observability: correlates logs, traces, health and failures.",
@@ -729,7 +729,7 @@
       "idea": "Server Hearth",
       "stage": "roadmap",
       "repo": "pet-program-49",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-49-v1.0-mini-descriptor-v1.0",
         "text": "Hosts: home servers, uptime, service health.",
@@ -744,7 +744,7 @@
       "idea": "Container Hoard",
       "stage": "roadmap",
       "repo": "pet-program-50",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-50-v1.0-mini-descriptor-v1.0",
         "text": "Containers: Docker health and authorized management.",
@@ -759,7 +759,7 @@
       "idea": "Test Track",
       "stage": "roadmap",
       "repo": "pet-program-51",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-51-v1.0-mini-descriptor-v1.0",
         "text": "Quality: tests and release verification.",
@@ -774,7 +774,7 @@
       "idea": "Token Canopy",
       "stage": "roadmap",
       "repo": "pet-program-52",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-52-v1.0-mini-descriptor-v1.0",
         "text": "AI cost: model tokens, budgets and inference usage.",
@@ -789,7 +789,7 @@
       "idea": "Packet River",
       "stage": "roadmap",
       "repo": "pet-program-53",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-53-v1.0-mini-descriptor-v1.0",
         "text": "Network: packet loss, DNS, latency, routing.",
@@ -804,7 +804,7 @@
       "idea": "Crow's Nest",
       "stage": "roadmap",
       "repo": "pet-program-54",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-54-v1.0-mini-descriptor-v1.0",
         "text": "Calendar: scheduling, conflicts and reminders.",
@@ -819,7 +819,7 @@
       "idea": "Browser Belfry",
       "stage": "roadmap",
       "repo": "pet-program-55",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-55-v1.0-mini-descriptor-v1.0",
         "text": "Web and marketing operations: website QA and authorized browser work.",
@@ -834,7 +834,7 @@
       "idea": "Data Marsh",
       "stage": "roadmap",
       "repo": "pet-program-56",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-56-v1.0-mini-descriptor-v1.0",
         "text": "Data engineering: data integrity, schemas, pipelines.",
@@ -849,7 +849,7 @@
       "idea": "Update Tidepool",
       "stage": "roadmap",
       "repo": "pet-program-57",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-57-v1.0-mini-descriptor-v1.0",
         "text": "Dependency updates: packages, compatibility, rollback prep.",
@@ -864,7 +864,7 @@
       "idea": "Linux Iceberg",
       "stage": "roadmap",
       "repo": "pet-program-58",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-58-v1.0-mini-descriptor-v1.0",
         "text": "Linux administration, SSH, systemd, packages.",
@@ -879,7 +879,7 @@
       "idea": "Market Meadow",
       "stage": "roadmap",
       "repo": "pet-program-59",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-59-v1.0-mini-descriptor-v1.0",
         "text": "Not decided yet: Stock Fox’s job is Astra’s to choose.",
@@ -894,7 +894,7 @@
       "idea": "Passport Harbor",
       "stage": "roadmap",
       "repo": "pet-program-60",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-60-v1.0-mini-descriptor-v1.0",
         "text": "Passport/ID metadata, visa research and deadlines, encrypted.",
@@ -909,7 +909,7 @@
       "idea": "Journal Lagoon",
       "stage": "roadmap",
       "repo": "pet-program-61",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-61-v1.0-mini-descriptor-v1.0",
         "text": "Private travel diary and itineraries.",
@@ -924,7 +924,7 @@
       "idea": "Shell Trench",
       "stage": "roadmap",
       "repo": "pet-program-62",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-62-v1.0-mini-descriptor-v1.0",
         "text": "Bash, terminal scripting and guarded automation.",
@@ -939,7 +939,7 @@
       "idea": "Kernel Grove",
       "stage": "roadmap",
       "repo": "pet-program-63",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-63-v1.0-mini-descriptor-v1.0",
         "text": "Processes, memory, drivers and OS internals.",
@@ -954,7 +954,7 @@
       "idea": "Proxy Lake",
       "stage": "roadmap",
       "repo": "pet-program-64",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-64-v1.0-mini-descriptor-v1.0",
         "text": "Reverse proxies, TLS and secure private remote access.",
@@ -969,7 +969,7 @@
       "idea": "Cluster Shore",
       "stage": "roadmap",
       "repo": "pet-program-65",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-65-v1.0-mini-descriptor-v1.0",
         "text": "Distributed services and orchestration.",
@@ -984,7 +984,7 @@
       "idea": "Storage Warren",
       "stage": "roadmap",
       "repo": "pet-program-66",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-66-v1.0-mini-descriptor-v1.0",
         "text": "NAS, ZFS, snapshots and capacity health.",
@@ -999,7 +999,7 @@
       "idea": "White Hat Lab",
       "stage": "roadmap",
       "repo": "pet-program-67",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-67-v1.0-mini-descriptor-v1.0",
         "text": "Authorized security assessment and remediation.",
@@ -1014,7 +1014,7 @@
       "idea": "Port Web",
       "stage": "roadmap",
       "repo": "pet-program-68",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-68-v1.0-mini-descriptor-v1.0",
         "text": "Authorized port and service exposure checks.",
@@ -1029,7 +1029,7 @@
       "idea": "Cipher Hollow",
       "stage": "roadmap",
       "repo": "pet-program-69",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-69-v1.0-mini-descriptor-v1.0",
         "text": "Encryption, keys, certificates and crypto education.",
@@ -1044,7 +1044,7 @@
       "idea": "Evidence Locker",
       "stage": "roadmap",
       "repo": "pet-program-70",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-70-v1.0-mini-descriptor-v1.0",
         "text": "Incident timelines and log analysis.",
@@ -1059,7 +1059,7 @@
       "idea": "Model Library",
       "stage": "roadmap",
       "repo": "pet-program-71",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-71-v1.0-mini-descriptor-v1.0",
         "text": "Local model inventory, downloads and compatibility.",
@@ -1074,7 +1074,7 @@
       "idea": "Benchmark Rock",
       "stage": "roadmap",
       "repo": "pet-program-72",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-72-v1.0-mini-descriptor-v1.0",
         "text": "Inference benchmarks, GPU/VRAM, latency.",
@@ -1089,7 +1089,7 @@
       "idea": "Agent Colony",
       "stage": "roadmap",
       "repo": "pet-program-73",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-73-v1.0-mini-descriptor-v1.0",
         "text": "Agent experiments and tool-use evaluation.",
@@ -1104,7 +1104,7 @@
       "idea": "Roam Map",
       "stage": "roadmap",
       "repo": "pet-program-74",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-74-v1.0-mini-descriptor-v1.0",
         "text": "Travel connectivity, VPN/tailnet and remote access.",
@@ -1119,7 +1119,7 @@
       "idea": "Cache Canyon",
       "stage": "roadmap",
       "repo": "pet-program-75",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-75-v1.0-mini-descriptor-v1.0",
         "text": "Offline-first documents, caches and queued actions.",
@@ -1134,7 +1134,7 @@
       "idea": "Sync Stream",
       "stage": "roadmap",
       "repo": "pet-program-76",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-76-v1.0-mini-descriptor-v1.0",
         "text": "Cross-device sync and conflict resolution.",
@@ -1149,7 +1149,7 @@
       "idea": "Vet Clinic / Vetted Vet: triage for the community vet-clinic (labels tickets, checks for leaked secrets, tests offered cures in isolation; never merges)",
       "stage": "seed",
       "repo": "pet-program-77",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-77-v1.0-mini-descriptor-v1.0",
         "text": "Triages the vet-clinic: labels tickets, checks them for leaked secrets, and tests offered cures in isolation. Never merges anything.",
@@ -1194,7 +1194,7 @@
       "idea": null,
       "stage": "seed",
       "repo": "the-recovery-room",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "the-recovery-room-v1.0-mini-descriptor-v1.0",
         "text": "After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order.",
@@ -1209,7 +1209,7 @@
       "idea": "Threat Observatory",
       "stage": "seed",
       "repo": "pet-program-81",
-      "repo_exists": false,
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-81-v1.0-mini-descriptor-v1.0",
         "text": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
@@ -1224,7 +1224,7 @@
       "idea": null,
       "stage": "seed",
       "repo": "the-threshold",
-      "repo_exists": false,
+      "repo_exists": true,
       "implementation_status": "Core-hosted browser prototype: floor planning, local notes, exports and connected concept website. Native pet, L3 harness and Unity execution bridge are pending.",
       "mini_descriptor": {
         "label": "the-threshold-v1.0-mini-descriptor-v1.0",
