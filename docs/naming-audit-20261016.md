@@ -20,8 +20,8 @@
 |---|---|
 | Numbered pets (`pet-programs.json`, #1 to #82) | 82: 19 registered, 17 pipeline, 15 seed, 31 roadmap |
 | Have their own repo on GitHub | 80 (#81 Intel Owl and #82 Door Dormouse have none) |
-| Pet program (home) decided | **36** |
-| Pet program not decided yet | **46** (the next rapid round starts at **#30 Fuzzboi Friend**) |
+| Pet program (home) decided | **37** |
+| Pet program not decided yet | **45** (the next rapid round starts at **#30 Fuzzboi Friend**) |
 | Pet name not decided | 1 (#77, `pet-program-77-icon-77`) |
 | Not numbered yet | 3: **Workflow Whale** (Workflow Whirlpool, only on the PC), **Index Mole** (named by Astra on 2026-10-12, never recorded), **Role Fairy** (pet #13 on the 2026-10-07 roster, now only a Discord repo) |
 
@@ -32,7 +32,7 @@
 | A07 | 19 pets (#2, 5, 6, 8, 9, 10, 12, 13, 14, 15, 16, 18, 19, 21, 22, 23, 24, 42, 82) | **Fixed** | Astra named these on 2026-10-15 and 2026-10-16 in Codex. The names were only on unmerged Codex branches, so `main`, the profile and the System Map still said `pet-program-#` | Brought over to `main` in this change |
 | A07 | #9 Finance Finch | Pass, but worth knowing | She picked *The Counting House*, then changed it to **Nest Egg** ("no wait i wanyed nest egg") | Nest Egg kept |
 | A06 | #77 | Missing | `pet-program-77-icon-77` is a placeholder. Codex suggested **Vet Vole**, with the program **The Triage Desk** | Astra picks |
-| A06/A07 | #37 Dubstep Gunsmith | Incorrect | A home sits in the pet slot. On 2026-10-12 Astra said "the Dubstep Gunsmith **Guy** (icon) represents the Dubstep Gunsmith (program)". On 2026-10-14 she asked for "Dubstep Gunsmith Shop, or something more clever" | Astra confirms which |
+| A06/A07 | #37 Dubstep Gunsmith | **Fixed** | A home sits in the pet slot. On 2026-10-12 Astra said "the Dubstep Gunsmith **Guy** (icon) represents the Dubstep Gunsmith (program)". On 2026-10-14 she asked for "Dubstep Gunsmith Shop, or something more clever" | Astra: Dubstep Gunsmith represents the **Dubstep Armory** (2026-10-16) |
 | A06 | #11 Patty, #17 Gone Ghost | Incorrect | The pet's own `pet.json` still says Paper Girl and Ghost Protocol (the 2026-10-12 renames) | Each pet's chat updates its repo |
 | A07 | 25 repos | Missing | The pet's own `pet.json` has no `program`. #12 and #42 still say `pet-program-#`. Codex's `yellow-phone` branches may fix some of them; they are not merged | Next Flash Audit round on each repo |
 | A06 | #35 Chat Rat | Missing | Not in the `pets.json` registry. Registering a pet moves it through the gate | Astra decides |
@@ -85,8 +85,9 @@
 | 26 | Meme Fiend | Cursed Archive |
 | 28 | Backup Beaver | Backup Dam |
 | 29 | Rift Rabbit | Wonderland Launchpad |
+| 37 | Dubstep Gunsmith | Dubstep Armory |
 
-## Rapid-question queue (46 undecided)
+## Rapid-question queue (45 undecided)
 
 Ask in order, with four explained suggestions plus free text, and save each answer to `pet-programs.json` straight away. **Idea** is the suggestion already on file.
 
@@ -98,7 +99,6 @@ Ask in order, with four explained suggestions plus free text, and save each answ
 | 33 | Mesh Moth | pipeline | Mesh Lantern |
 | 35 | Chat Rat | pipeline | Chat Nest |
 | 36 | Platform Platypus | pipeline | Mirror Pool |
-| 37 | Dubstep Gunsmith | seed | Dubstep Gunsmith Shop, or something more clever (Astra, 2026-10-14) |
 | 38 | Pole Puff | seed | Astra's Infinite Pole (the world she looks after), or Pole Lookout |
 | 39 | Procreate Panda | seed | Bamboo Studio |
 | 40 | Skill Scout | seed | Skill Logbook |

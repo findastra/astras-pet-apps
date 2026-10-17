@@ -159,11 +159,11 @@
     "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
   },
   "profile": {
-    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line, its home first (its cyberhome), then its tools.",
-    "hidden": ["startup-star"],
+    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm, Astra 2026-10-16), its home first (its cyberhome), then its tools.",
+    "hidden": [],
     "also_listed": ["findastra-discord-presence"],
     "tools": {
-      "astras-pet-os": { "home_note": "moving to its own repo, the-farm", "tools": ["the-kennel", "the-shed", "vet-clinic"] }
+      "astras-pet-os": { "home_note": "moving to its own repo, the-farm", "tools": ["startup-star", "the-kennel", "the-shed", "vet-clinic"] }
     }
   },
   "rounds": {
@@ -1220,6 +1220,7 @@
       },
       {
         "pet": "Pet Police Officer",
+        "program": "The Police Station",
         "repo": null,
         "job": "Runs The Police Station: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Police Station (repo findastra/the-police-station, created 2026-10-14). Moves to the pipeline when Astra lets it in at the gate."
@@ -1232,6 +1233,7 @@
       },
       {
         "pet": "Rescue Retriever",
+        "program": "The Recovery Room",
         "repo": null,
         "job": "Runs The Recovery Room: after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order, isolated and with no farmhand in its seat.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Recovery Room (repo findastra/the-recovery-room)."

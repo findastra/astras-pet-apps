@@ -21,6 +21,9 @@ no "I'll read it if I need it". This applies to small tasks too.
    before doing anything else.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
+## One list of names (Astra, 2026-10-16)
+Every pet name (icon) and pet program (home) name is decided in **`pet-programs.json` only**, in the same chat that decides it, on a branch merged that day. Never write a new name into pets.json, the System Map, INTELLIGENCE-LEVELS.md, a doc or a repo first: `npm test` (test/name-list-test-20261016.mjs) fails when another list disagrees, and the Farmer's profile round writes the README from the list. Tools vs tricks: a **tool** is code a pet program owns and runs without AI (ON/OFF, sick light, can be bound to a click: one, two, three or more); a **trick** is a skill its seated AI follows, using only that pet's tools.
+
 ## Protection rings and animal code (Astra, 2026-10-13)
 **🐾 Everything inside the harness is an animal. Agents can only control animals.** Read
 [PROTECTION-RINGS.md](PROTECTION-RINGS.md) and `skills/farm-security`, `skills/dev-mindset` and

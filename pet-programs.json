@@ -543,16 +543,16 @@
     },
     {
       "number": 37,
-      "program": "pet-program-37",
-      "assigned": false,
+      "program": "Dubstep Armory",
+      "assigned": true,
       "icon": "Dubstep Gunsmith",
-      "idea": "Dubstep Gunsmith Shop, or something more clever (Astra, 2026-10-14)",
+      "idea": null,
       "stage": "seed",
       "repo": "pet-program-37",
       "repo_exists": false,
       "mini_descriptor": {
-        "label": "pet-program-37-v1.0-mini-descriptor-v1.0",
-        "text": "Astra’s catalog site for avatar gun effects and loadouts, made with Codex on 2026-10-12. Its source is only in Codex’s workspace on the PC, not on GitHub yet.",
+        "label": "dubstep-armory-v1.0-mini-descriptor-v1.0",
+        "text": "Catalogs avatar gun effects and loadouts for Astra’s avatars. Its source is still only on the PC, not on GitHub.",
         "reviewed": false
       }
     },
