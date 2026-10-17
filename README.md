@@ -54,6 +54,18 @@ This is the development home of **Astra's PetOS** (`ASTRAS_PET_OS`). The pets ar
 
 Every pet has the same nine moods (idle, blink, happy, curious, worried, sad, sick, alarmed, sleep). What each part of a pet app is called is in [PET-WORDS.md](PET-WORDS.md). Drawings are **drafts** unless their roster notes record Astra's approval.
 
+## Pictures
+
+![Astra's PetOS System Map in 3D: every pet, program, device and AI model in its protection ring, with the ring key on the left](docs/images/astras-pet-os-system-map-3d-20261017.png)
+
+The [System Map](https://findastra.github.io/astras-pet-os/system-map-20261012.html) (3D PFD): every pet, program, device and AI model in its protection ring.
+
+![The Farmer's Desk program page: the Needs you list from the Friendly Farmer's round, and the mood key](docs/images/astras-pet-os-farmers-desk-20261017.png)
+
+The Farmer's Desk ([program page](https://findastra.github.io/astras-pet-os/apps/astras-pet-apps-20261008.html)): what needs Astra after the Friendly Farmer's round, and the mood key.
+
+Screenshots taken 2026-10-17 with GitHub Goldfish's [project-image-generator](https://github.com/findastra/github-goldfish#project-image-generator); added with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17.
+
 ## Who lives here
 
 <!-- pets:start (generated from pets.json by scripts/update-readme.mjs; do not edit by hand) -->
