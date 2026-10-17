@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101418">
+<meta name="color-scheme" content="dark">
+<title>Platform Platypus</title>
+<!--
+  Platform Platypus: a pet app by Astra.
+  Shows a page on several phones, tablets and a desktop at once and checks that it looks
+  right and the same on each of them. Compares screenshots from two platforms.
+  Built with Claude Opus 5.5 (claude-opus-5-5), 2026-10-11.
+  One file, no dependencies, works by double-click.
+-->
+<style>
+:root {
+  --bg: #101418; --panel: #182027; --panel2: #1f2a33; --line: #2c3a45;
+  --ink: #e9f3f1; --dim: #9fb3b0; --teal: #2ee8c8; --pink: #ff6fae; --amber: #ffc94a; --red: #ff5d5d;
+  --lcd: #c3d39b; --lcd-ink: #1f2b0e; --lcd-mid: #7d8f55;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+main { max-width: 1400px; margin: 0 auto; }
+h1 { font-size: 1.5rem; margin: 0; letter-spacing: .02em; }
+h2 { font-size: 1.1rem; margin: 0 0 10px; }
+a { color: var(--teal); }
+.muted { color: var(--dim); font-size: .9rem; }
+
+/* header + pixel twin */
+header { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.shell {
+  background: var(--teal); border: 4px solid #04110e; border-radius: 18px 18px 26px 18px;
+  padding: 10px 10px 14px; box-shadow: 4px 4px 0 #04110e; flex: none;
+}
+.screen { background: var(--lcd); border: 3px solid #04110e; border-radius: 6px; padding: 4px; line-height: 0; }
+#pet { width: 192px; height: 144px; image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+.shell .tag { font: 700 11px/1 ui-monospace, Consolas, monospace; color: #04110e; margin-top: 8px; text-align: center; letter-spacing: .12em; }
+.bubble {
+  position: relative; background: var(--panel); border: 2px solid var(--line); border-radius: 14px;
+  padding: 12px 14px; max-width: 520px; flex: 1 1 260px;
+}
+.bubble::before { content: ""; position: absolute; left: -9px; top: 22px; border: 8px solid transparent; border-right-color: var(--line); border-left: 0; }
+#say { font-weight: 600; }
+#mood { font: 12px ui-monospace, Consolas, monospace; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+
+/* panels */
+section.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+button, .btn {
+  font: inherit; color: var(--ink); background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 10px; min-height: 44px; padding: 8px 14px; cursor: pointer;
+}
+button:hover { border-color: var(--teal); }
+button.on { background: var(--teal); color: #04110e; border-color: var(--teal); font-weight: 700; }
+button.go { background: var(--pink); color: #2a0216; border-color: var(--pink); font-weight: 700; }
+textarea, input[type=url], input[type=text] {
+  width: 100%; font: 16px ui-monospace, Consolas, monospace; color: var(--ink); background: #0c1013;
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px;
+}
+textarea { min-height: 160px; resize: vertical; }
+label.chk { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-right: 14px; cursor: pointer; }
+label.chk input { width: 20px; height: 20px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.devices-pick { display: flex; gap: 6px; flex-wrap: wrap; }
+[hidden] { display: none !important; }
+
+/* device frames */
+#stage { display: flex; gap: 18px; overflow-x: auto; padding: 6px 2px 14px; align-items: flex-start; }
+.dev { flex: none; text-align: center; }
+.dev .name { font-weight: 700; margin-bottom: 2px; }
+.dev .spec { font-size: .8rem; color: var(--dim); margin-bottom: 8px; }
+.dev .holder { position: relative; margin: 0 auto; }
+.device { position: absolute; left: 0; top: 0; transform-origin: 0 0; background: #000; border: 10px solid #05080a; box-shadow: 0 0 0 2px #2f3d47; overflow: hidden; }
+.device iframe { position: absolute; left: 0; border: 0; background: #fff; }
+.statusbar { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; color: #fff; font: 600 15px system-ui, sans-serif; z-index: 3; pointer-events: none; }
+.statusbar.over { color: #000; mix-blend-mode: difference; filter: invert(1); }
+.chrome { position: absolute; left: 0; right: 0; background: #e9ecef; color: #333; display: flex; align-items: center; justify-content: center; font: 14px system-ui, sans-serif; z-index: 2; }
+.chrome .pill { background: #fff; border-radius: 10px; padding: 6px 14px; width: 80%; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #555; }
+.island { position: absolute; top: 11px; left: 50%; width: 124px; height: 36px; margin-left: -62px; background: #000; border-radius: 20px; z-index: 4; }
+.hole { position: absolute; top: 12px; left: 50%; width: 22px; height: 22px; margin-left: -11px; background: #000; border-radius: 50%; z-index: 4; box-shadow: 0 0 0 3px #111; }
+.homebar { position: absolute; bottom: 8px; left: 50%; width: 140px; height: 5px; margin-left: -70px; border-radius: 3px; background: #111; z-index: 4; mix-blend-mode: difference; filter: invert(1); pointer-events: none; }
+.navbar { position: absolute; left: 0; right: 0; bottom: 0; background: #000; z-index: 2; }
+.unsafe { position: absolute; left: 0; right: 0; background: repeating-linear-gradient(45deg, rgba(255,93,93,.28) 0 6px, rgba(255,93,93,.08) 6px 12px); z-index: 3; pointer-events: none; }
+.dev .badge { display: inline-block; margin-top: 8px; padding: 2px 10px; border-radius: 999px; font-size: .85rem; font-weight: 700; }
+.ok { background: rgba(46,232,200,.18); color: var(--teal); }
+.warn { background: rgba(255,201,74,.18); color: var(--amber); }
+.bad { background: rgba(255,93,93,.18); color: var(--red); }
+
+/* report */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top; }
+th { color: var(--dim); font-weight: 600; white-space: nowrap; }
+td.c { text-align: center; white-space: nowrap; }
+.pill-s { display: inline-block; border-radius: 6px; padding: 0 6px; font-weight: 700; }
+details { margin: 6px 0; }
+summary { cursor: pointer; min-height: 32px; }
+ul.off { margin: 4px 0 8px; padding-left: 20px; }
+ul.off li button { min-height: 32px; padding: 2px 8px; font-size: .85rem; margin-left: 6px; }
+.why { color: var(--dim); font-size: .88rem; }
+
+/* compare */
+.cmpgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.cmpgrid canvas { width: 100%; height: auto; background: #0c1013; border: 1px solid var(--line); border-radius: 8px; }
+.cmpgrid .lbl { font-weight: 700; margin-bottom: 4px; }
+#overlayWrap { position: relative; max-width: 420px; margin-top: 12px; }
+#overlayWrap canvas { width: 100%; height: auto; display: block; border-radius: 8px; }
+#overlayWrap canvas + canvas { position: absolute; left: 0; top: 0; }
+input[type=range] { width: 220px; min-height: 44px; }
+footer { color: var(--dim); font-size: .85rem; margin-top: 24px; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="shell" title="Platform Platypus">
+    <div class="screen"><canvas id="pet" width="32" height="24" aria-label="Platform Platypus, the pet"></canvas></div>
+    <div class="tag">PLATYPUS</div>
+  </div>
+  <div class="bubble" aria-live="polite">
+    <div id="mood">sleep</div>
+    <div id="say">Give me a page and I'll look at it on every phone at once.</div>
+    <div class="muted" style="margin-top:6px"><strong>Platform Platypus.</strong> <em>A pet app by Astra.</em> Is it presentable, and is it the same on iPhone, Android, iPad and desktop?</div>
+  </div>
+</header>
+
+<section class="card">
+  <div class="tabs" role="tablist">
+    <button class="on" data-mode="check">Check a page</button>
+    <button data-mode="compare">Compare screenshots</button>
+  </div>
+
+  <div id="checkPane">
+    <div class="tabs" id="srcTabs">
+      <button class="on" data-src="paste">Paste HTML</button>
+      <button data-src="file">Open files</button>
+      <button data-src="url">Web address</button>
+      <button data-src="sample">Try the sample</button>
+      <button data-src="watch">Sites I watch</button>
+    </div>
+    <div data-panel="paste"><textarea id="html" spellcheck="false" placeholder="Paste a whole page here: <!doctype html> ..."></textarea></div>
+    <div data-panel="file" hidden>
+      <p class="muted">Pick the page's HTML file together with its CSS and images (hold Ctrl). Matching file names are wired in so the page looks right.</p>
+      <input type="file" id="files" multiple accept=".html,.htm,.css,.png,.jpg,.jpeg,.gif,.svg,.webp" class="btn">
+      <div id="fileNote" class="muted"></div>
+    </div>
+    <div data-panel="url" hidden>
+      <input type="url" id="url" placeholder="https://example.com" inputmode="url">
+      <p class="muted">Web addresses get a preview only. Browsers do not let one site look inside another, and many sites refuse to be shown in a frame at all. For the checks, paste the HTML or open the files.</p>
+    </div>
+    <div data-panel="watch" hidden>
+      <p class="muted">Astra's pages I keep working on every platform. Load one and I check it on every device, then compare with what it needs below.</p>
+      <div id="watchList"></div>
+    </div>
+    <div data-panel="sample" hidden><p class="muted">A small page with the usual cross-platform mistakes, so you can see what I catch.</p></div>
+
+    <div class="row">
+      <div class="devices-pick" id="devPick"></div>
+    </div>
+    <div class="row">
+      <label class="chk"><input type="checkbox" id="standalone"> Show as a home-screen app</label>
+      <label class="chk"><input type="checkbox" id="scripts"> Run the page's scripts</label>
+      <button class="go" id="run">Check it</button>
+    </div>
+  </div>
+
+  <div id="comparePane" hidden>
+    <p class="muted">Take a screenshot of the same screen on two platforms (say iPhone and Android) and drop them in. I scale them to the same width and show where they differ.</p>
+    <div class="row">
+      <label class="btn">First: <input type="text" id="nameA" value="iPhone" style="width:110px;display:inline-block;padding:4px 6px"> <input type="file" id="imgA" accept="image/*"></label>
+      <label class="btn">Second: <input type="text" id="nameB" value="Android" style="width:110px;display:inline-block;padding:4px 6px"> <input type="file" id="imgB" accept="image/*"></label>
+    </div>
+    <div class="row">
+      <label class="chk"><input type="checkbox" id="skipBars" checked> Skip the status bar and the bottom bar</label>
+      <label>Tolerance <input type="range" id="tol" min="10" max="200" value="60"></label>
+    </div>
+    <div id="cmpOut"></div>
+  </div>
+</section>
+
+<section class="card" id="previewCard" hidden>
+  <h2>How it looks</h2>
+  <p class="muted" id="previewNote"></p>
+  <div id="stage"></div>
+</section>
+
+<section class="card" id="reportCard" hidden>
+  <h2>What I found</h2>
+  <div id="report"></div>
+</section>
+
+<footer>
+  Previews run in this computer's browser engine and fonts, at each device's screen size with its bars drawn on.
+  They are close, not exact: Safari on a real iPhone and Chrome on a real Android can still differ. Device sizes are approximate.
+  Built with Claude Opus 5.5 (claude-opus-5-5), 2026-10-11.
+</footer>
+</main>
+
+<script>
+'use strict';
+// ---------------------------------------------------------------- the pixel twin
+// 32x24 LCD pet in Chip's palette: ink, mid and screen green. Bobs, blinks, nine moods.
+const PET = { mood: 'sleep', tick: 0 };
+const LCD = { 0: '#c3d39b', 1: '#1f2b0e', 2: '#7d8f55', 3: '#c3d39b' };
+const GLYPHS = {
+  '?': ['.111.', '1...1', '...1.', '..1..', '.....', '..1..'],
+  '!': ['..1..', '..1..', '..1..', '..1..', '.....', '..1..'],
+  'Z': ['1111', '..1.', '.1..', '1111', '....', '..11', '...1', '..11'],
+};
+function drawPet() {
+  const W = 32, H = 24, g = Array.from({ length: H }, () => Array(W).fill(0));
+  const set = (x, y, v) => { if (x >= 0 && y >= 0 && x < W && y < H) g[y][x] = v; };
+  const ell = (cx, cy, rx, ry, v) => { for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (((x + .5 - cx) / rx) ** 2 + ((y + .5 - cy) / ry) ** 2 <= 1) g[y][x] = v; };
+  const glyph = (name, ox, oy) => GLYPHS[name].forEach((r, y) => [...r].forEach((c, x) => { if (c === '1') set(ox + x, oy + y, 1); }));
+  const m = PET.mood, t = PET.tick;
+  // body, tail, feet, bill
+  ell(26.5, 16.5, 4.6, 2.3, 2);
+  ell(15, 13, 9.2, 8, 2);
+  for (let x = 9; x <= 11; x++) for (let y = 20; y <= 21; y++) { set(x, y, 1); set(x + 9, y, 1); }
+  // highlight on the head, like a lit LCD segment
+  [[10, 7], [11, 7], [12, 7], [9, 8], [10, 8]].forEach(([x, y]) => set(x, y, 3));
+  if (m === 'sick') for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (g[y][x] === 2 && (x + y) % 2 === 0) g[y][x] = 3;
+  ell(15, 17, 6.6, 2.5, 1); // the bill
+  // heavy outline: any empty pixel touching the creature
+  const out = [];
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (!g[y][x]) {
+    if ([[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => (g[y + dy] || [])[x + dx])) out.push([x, y]);
+  }
+  out.forEach(([x, y]) => set(x, y, 1));
+  // eyes
+  const L = 10, R = 18, E = 11, blink = m === 'blink' || m === 'sleep';
+  const eye = (x, big) => {
+    if (m === 'happy') { set(x, E + 1, 1); set(x + 1, E, 1); set(x + 2, E + 1, 1); return; }
+    if (m === 'sick') { set(x, E, 1); set(x + 2, E, 1); set(x + 1, E + 1, 1); set(x, E + 2, 1); set(x + 2, E + 2, 1); return; }
+    if (blink) { set(x, E + 1, 1); set(x + 1, E + 1, 1); set(x + 2, E + 1, 1); return; }
+    const h = big ? 3 : 2, top = m === 'sad' ? E + 1 : E;
+    for (let dy = 0; dy < h; dy++) { set(x, top + dy, 1); set(x + 1, top + dy, 1); }
+    set(x, top, 3);
+  };
+  eye(L, m === 'alarmed'); eye(R, m === 'alarmed' || m === 'curious');
+  if (m === 'worried') { set(L, 9, 1); set(L + 1, 8, 1); set(R + 1, 8, 1); set(R + 2, 9, 1); }
+  if (m === 'happy') for (let x = 12; x <= 18; x++) set(x, 17, 3);
+  if (m === 'alarmed') { set(14, 17, 3); set(15, 17, 3); set(16, 17, 3); }
+  // shared mood stickers, top right
+  if (m === 'curious') glyph('?', 26, 1);
+  if (m === 'alarmed') glyph('!', 26, 1);
+  if (m === 'sleep') glyph('Z', 26 + (t % 4 < 2 ? 0 : 1), 0);
+  if (m === 'worried') { set(26, 6, 1); [[25, 7], [27, 7], [25, 8], [27, 8]].forEach(([x, y]) => set(x, y, 1)); set(26, 7, 3); set(26, 8, 3); set(26, 9, 1); }
+  if (m === 'sad') { set(L, 14, 3); set(L, 15, 3); set(L - 1, 14, 1); set(L - 1, 15, 1); set(L, 16, 1); }
+  if (m === 'sick') { for (let x = 19; x <= 23; x++) { set(x, 5, 1); set(x, 7, 1); } for (let x = 20; x <= 22; x++) set(x, 6, 3); set(19, 6, 1); set(23, 6, 1); }
+  // paint, with a one-pixel bob
+  const bob = m === 'sleep' ? 0 : (t % 2);
+  const c = document.getElementById('pet').getContext('2d');
+  c.fillStyle = LCD[0]; c.fillRect(0, 0, W, H);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const v = g[y][x]; if (!v || y + bob >= H) continue;
+    c.fillStyle = LCD[v]; c.fillRect(x, y + bob, 1, 1);
+  }
+}
+let blinkUntil = 0;
+function petLoop() {
+  PET.tick++;
+  const now = Date.now();
+  const shown = PET.mood;
+  if ((shown === 'idle' || shown === 'happy') && now > blinkUntil + 3500 && Math.random() < .25) blinkUntil = now + 180;
+  if (now < blinkUntil && shown === 'idle') { PET.mood = 'blink'; drawPet(); PET.mood = shown; } else drawPet();
+}
+function mood(name, words) {
+  PET.mood = name;
+  document.getElementById('mood').textContent = name;
+  document.getElementById('say').textContent = words;
+  drawPet();
+}
+setInterval(petLoop, 500); drawPet();
+
+// ---------------------------------------------------------------- devices
+// CSS-pixel screen sizes and bar heights are approximate and drawn for preview.
+const DEVICES = [
+  { id: 'iphone-se', name: 'iPhone SE', os: 'ios', w: 375, h: 667, safeTop: 20, safeBottom: 0, cut: 'none', top: 0, bottom: 75, r: 6, browser: 'Safari' },
+  { id: 'iphone-pro', name: 'iPhone 16 Pro', os: 'ios', w: 402, h: 874, safeTop: 62, safeBottom: 34, cut: 'island', top: 0, bottom: 83, r: 50, browser: 'Safari' },
+  { id: 'pixel', name: 'Pixel 9', os: 'android', w: 412, h: 923, safeTop: 48, safeBottom: 24, cut: 'hole', top: 56, bottom: 0, r: 40, browser: 'Chrome' },
+  { id: 'galaxy', name: 'Galaxy S24', os: 'android', w: 360, h: 780, safeTop: 40, safeBottom: 24, cut: 'hole', top: 56, bottom: 0, r: 36, browser: 'Chrome' },
+  { id: 'ipad', name: 'iPad mini', os: 'ipados', w: 744, h: 1133, safeTop: 24, safeBottom: 20, cut: 'none', top: 50, bottom: 0, r: 22, browser: 'Safari' },
+  { id: 'desktop', name: 'Desktop', os: 'desktop', w: 1280, h: 800, safeTop: 0, safeBottom: 0, cut: 'none', top: 0, bottom: 0, r: 4, browser: 'any' },
+];
+const picked = new Set(['iphone-se', 'iphone-pro', 'pixel', 'galaxy', 'desktop']);
+const devPick = document.getElementById('devPick');
+DEVICES.forEach(d => {
+  const b = document.createElement('button');
+  b.textContent = d.name; b.className = picked.has(d.id) ? 'on' : '';
+  b.onclick = () => { picked.has(d.id) ? picked.delete(d.id) : picked.add(d.id); b.className = picked.has(d.id) ? 'on' : ''; };
+  devPick.appendChild(b);
+});
+
+// ---------------------------------------------------------------- tabs
+let src = 'paste';
+document.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-mode]').forEach(x => x.classList.toggle('on', x === b));
+  const cmp = b.dataset.mode === 'compare';
+  document.getElementById('checkPane').hidden = cmp;
+  document.getElementById('comparePane').hidden = !cmp;
+  document.getElementById('previewCard').hidden = true;
+  document.getElementById('reportCard').hidden = true;
+  mood('sleep', cmp ? 'Drop in two screenshots and I will spot the differences.' : "Give me a page and I'll look at it on every phone at once.");
+});
+document.querySelectorAll('[data-src]').forEach(b => b.onclick = () => {
+  src = b.dataset.src;
+  document.querySelectorAll('[data-src]').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('[data-panel]').forEach(p => p.hidden = p.dataset.panel !== src);
+});
+
+// ---------------------------------------------------------------- sources
+const SAMPLE = `<!doctype html>
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Taco Night</title>
+<style>
+  body { margin: 0; font-family: "Helvetica Neue"; background: #fff8ee; color: #222; }
+  .hero { height: 100vh; background: linear-gradient(#ff9a3c, #ff5e7e); color: #fff; padding: 0 16px; }
+  .hero h1 { margin: 0; padding-top: 4px; font-size: 32px; }
+  .bar { position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; display: flex; gap: 4px; padding: 6px; }
+  .bar a { color: #fff; font-size: 11px; padding: 4px; }
+  .menu img { width: 480px; display: block; }
+  input { font-size: 14px; }
+  .fine { font-size: 10px; color: #999; }
+  .card:hover .price { display: block; }
+  .price { display: none; }
+</style></head>
+<body>
+  <div class="hero"><h1>Taco Night 🌮🔥</h1><p>Every Tuesday.</p></div>
+  <div class="menu card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='120'%3E%3Crect width='480' height='120' fill='%23ffd166'/%3E%3C/svg%3E" alt="menu banner"><span class="price">$3 each</span></div>
+  <form><input placeholder="Your email"> <button>Go</button></form>
+  <p class="fine">Terms apply. Not valid with other offers.</p>
+  <div class="bar"><a href="#">Home</a><a href="#">Menu</a><a href="#">Book</a></div>
+</body></html>`;
+
+let fileMap = null; // name -> {text|url}
+document.getElementById('files').onchange = async e => {
+  const files = [...e.target.files];
+  fileMap = new Map();
+  for (const f of files) {
+    const name = f.name.toLowerCase();
+    if (/\.(html?|css|svg)$/.test(name) && !/\.svg$/.test(name)) fileMap.set(name, { text: await f.text(), html: /\.html?$/.test(name) });
+    else fileMap.set(name, { url: URL.createObjectURL(f) });
+  }
+  const html = [...fileMap.entries()].find(([, v]) => v.html);
+  document.getElementById('fileNote').textContent = html
+    ? `Page: ${html[0]}. Also wired in: ${[...fileMap.keys()].filter(k => k !== html[0]).join(', ') || 'nothing else'}.`
+    : 'No .html file in that pick.';
+};
+function fromFiles() {
+  if (!fileMap) return null;
+  const entry = [...fileMap.entries()].find(([, v]) => v.html);
+  if (!entry) return null;
+  let html = entry[1].text;
+  const base = s => s.split(/[\\/]/).pop().split(/[?#]/)[0].toLowerCase();
+  html = html.replace(/<link\b[^>]*href=["']([^"']+\.css)[^"']*["'][^>]*>/gi, (all, href) => {
+    const f = fileMap.get(base(href)); return f && f.text != null ? `<style>${f.text}</style>` : all;
+  });
+  html = html.replace(/\b(src|href)=["']([^"']+)["']/gi, (all, attr, val) => {
+    const f = fileMap.get(base(val)); return f && f.url ? `${attr}="${f.url}"` : all;
+  });
+  return html;
+}
+function getSource() {
+  if (src === 'sample') return { html: SAMPLE };
+  if (src === 'paste') { const h = document.getElementById('html').value.trim(); return h ? { html: h } : null; }
+  if (src === 'file') { const h = fromFiles(); return h ? { html: h } : null; }
+  const u = document.getElementById('url').value.trim();
+  return /^https?:\/\//i.test(u) ? { url: u } : null;
+}
+
+// ---------------------------------------------------------------- static checks (read the source)
+function viewportOf(html) {
+  const m = html.match(/<meta[^>]+name=["']viewport["'][^>]*>/i);
+  if (!m) return null;
+  const c = (m[0].match(/content=["']([^"']*)["']/i) || [])[1] || '';
+  return c.toLowerCase();
+}
+function staticChecks(html) {
+  const r = [], add = (id, level, title, why, fix) => r.push({ id, level, title, why, fix });
+  const vp = viewportOf(html);
+  const cover = !!vp && /viewport-fit\s*=\s*cover/.test(vp);
+  const css = (html.match(/<style[^>]*>[\s\S]*?<\/style>/gi) || []).join('\n') + '\n' + (html.match(/style=["'][^"']*["']/gi) || []).join('\n');
+  if (!vp) add('viewport', 'fix', 'No viewport tag', 'Without it phones draw the page as a 980px desktop page and shrink it to fit, so everything is tiny.', 'Add <meta name="viewport" content="width=device-width, initial-scale=1">');
+  else if (!/width\s*=\s*device-width/.test(vp)) add('viewport', 'fix', 'Viewport is not device-width', 'A fixed width looks different on every phone size.', 'Use width=device-width.');
+  if (vp && (/user-scalable\s*=\s*(no|0)/.test(vp) || /maximum-scale\s*=\s*1(\.0)?\b/.test(vp))) add('zoom', 'fix', 'Pinch-zoom is turned off', 'People who need bigger text cannot zoom. iOS Safari ignores this anyway, Android Chrome obeys it, so the two behave differently.', 'Remove user-scalable=no and maximum-scale=1.');
+  const usesSafe = /env\(\s*safe-area-inset/i.test(css);
+  if (cover && !usesSafe) add('safe', 'fix', 'Edge to edge, but no safe areas', 'viewport-fit=cover lets the page draw under the notch, the camera hole and the home bar, but nothing moves the content out of the way.', 'Pad with env(safe-area-inset-top) and friends, e.g. padding-top: max(16px, env(safe-area-inset-top)).');
+  if (usesSafe && !cover) add('safe', 'note', 'Safe areas without viewport-fit=cover', 'env(safe-area-inset-*) stays 0 on iPhone unless the viewport tag has viewport-fit=cover.', 'Add viewport-fit=cover to the viewport tag.');
+  if (/\b100vh\b/i.test(css)) add('vh', 'fix', '100vh is taller than the screen on phones', 'On iOS Safari and Android Chrome 100vh ignores the address bar, so the bottom gets cut off and differs between browsers.', 'Use 100dvh (or 100svh) with 100vh as a fallback before it.');
+  if (!/<meta[^>]+name=["']theme-color["']/i.test(html)) add('theme', 'note', 'No theme-color', 'Android Chrome and Safari tint their bars with it. Without it the bar colour differs per browser.', 'Add <meta name="theme-color" content="#yourcolour">.');
+  if (!/rel=["'][^"']*apple-touch-icon/i.test(html)) add('touchicon', 'note', 'No apple-touch-icon', 'Added to an iPhone home screen it gets a screenshot instead of your icon.', 'Add <link rel="apple-touch-icon" href="icon-180.png"> (180×180).');
+  if (!/rel=["']manifest["']/i.test(html)) add('manifest', 'note', 'No web app manifest', 'Android uses it for the home-screen name, icon and splash colour.', 'Add <link rel="manifest" href="manifest.webmanifest">.');
+  // fonts with no generic fallback look different everywhere
+  const generic = /\b(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-sans-serif|ui-serif|ui-monospace|ui-rounded|inherit|initial|unset|var\()/i;
+  const bad = [...css.matchAll(/font(?:-family)?\s*:\s*([^;}"']*(?:"[^"]*"|'[^']*')?[^;}]*)/gi)].map(m => m[1].trim()).filter(v => v && !generic.test(v) && /[a-z]/i.test(v) && !/^\d/.test(v));
+  if (bad.length) add('fonts', 'fix', 'Fonts without a fallback', `"${bad[0].slice(0, 60)}" is not on every platform (Helvetica is not on Android, Segoe UI is not on iPhone), and there is no generic family after it, so each platform picks its own default.`, 'End every font list with a generic family, e.g. font-family: "Helvetica Neue", Arial, sans-serif; or use system-ui.');
+  if (/:hover\b/.test(css) && !/\(\s*hover\s*:\s*hover\s*\)/.test(css)) add('hover', 'note', 'Things that need hover', 'Phones have no hover. Anything shown only on :hover is hidden on touch screens or appears on the first tap.', 'Make sure nothing important is hover-only, or wrap hover styles in @media (hover: hover).');
+  if (!/text-size-adjust/i.test(css)) add('textadjust', 'note', 'Text may grow when the phone turns sideways', 'iOS Safari enlarges text in landscape unless told not to.', 'Add html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }');
+  const emoji = (html.replace(/[<>]/g, '').match(/\p{Extended_Pictographic}/gu) || []);
+  if (emoji.length) add('emoji', 'note', `Emoji look different on each platform (${[...new Set(emoji)].slice(0, 6).join(' ')})`, 'Apple, Google, Samsung and Microsoft each draw their own emoji. Fine for chat, risky in a logo or a heading.', 'If it matters, use an image or SVG instead.');
+  if (/<input[^>]+type=["'](date|time|datetime-local|month|week|color)["']/i.test(html)) add('nativeinputs', 'note', 'Native pickers differ', 'Date, time and colour inputs open a completely different picker on iOS, Android and desktop.', 'Expected; just check each one is usable.');
+  if (/<select\b/i.test(html) && !/appearance\s*:\s*none/i.test(css)) add('select', 'note', 'Drop-downs look native', 'Select boxes are drawn by each platform and look different everywhere.', 'Fine if you accept it; otherwise style with appearance: none.');
+  return { list: r, cover };
+}
+
+// ---------------------------------------------------------------- rendered checks (measure inside each frame)
+function describe(el) {
+  let s = el.tagName.toLowerCase();
+  if (el.id) s += '#' + el.id; else if (el.classList && el.classList.length) s += '.' + [...el.classList].slice(0, 2).join('.');
+  const t = (el.getAttribute('aria-label') || el.getAttribute('alt') || el.value || el.textContent || el.getAttribute('placeholder') || '').trim().replace(/\s+/g, ' ').slice(0, 32);
+  return t ? `${s} "${t}"` : s;
+}
+function measure(frame, d, standaloneCover) {
+  const doc = frame.contentDocument, win = frame.contentWindow;
+  if (!doc || !doc.body) throw new Error('cannot see inside');
+  const vw = win.innerWidth, vh = win.innerHeight;
+  const visible = el => { const r = el.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return null; const cs = win.getComputedStyle(el); return cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0 ? null : r; };
+  const out = {};
+  // 1. sideways scrolling
+  const sw = doc.documentElement.scrollWidth;
+  const wide = [];
+  if (sw > vw + 1) {
+    doc.body.querySelectorAll('*').forEach(el => {
+      const r = visible(el); if (!r || r.right <= vw + 1) return;
+      if (el.parentElement && el.parentElement !== doc.body) { const pr = el.parentElement.getBoundingClientRect(); if (pr.right > vw + 1) return; }
+      if (wide.length < 6) wide.push({ el, text: `${describe(el)} is ${Math.round(r.right - r.left)}px wide, ends at ${Math.round(r.right)}px` });
+    });
+  }
+  out.overflow = { count: sw > vw + 1 ? 1 : 0, items: sw > vw + 1 ? (wide.length ? wide : [{ el: null, text: `page is ${sw}px wide on a ${vw}px screen` }]) : [] };
+  // 2. tap targets (Apple asks for 44pt, Android for 48dp, WCAG 2.2 AA for 24px)
+  const min = d.os === 'android' ? 48 : d.os === 'desktop' ? 24 : 44;
+  const small = [];
+  doc.querySelectorAll('a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button],[onclick]').forEach(el => {
+    const r = visible(el); if (!r) return;
+    if (el.tagName === 'A' && el.closest('p,li,td') && (el.closest('p,li,td').textContent.trim().length > el.textContent.trim().length + 3)) return; // links inside a sentence are exempt
+    if (r.width < min || r.height < min) small.push({ el, text: `${describe(el)} is ${Math.round(r.width)}×${Math.round(r.height)}` });
+  });
+  out.tap = { count: small.length, items: small, min };
+  // 3. tiny text
+  const tiny = [], seen = new Set();
+  const tw = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  let n, scanned = 0;
+  while ((n = tw.nextNode()) && scanned++ < 4000) {
+    if (!n.textContent.trim()) continue;
+    const el = n.parentElement; if (!el || seen.has(el)) continue; seen.add(el);
+    if (/^(SCRIPT|STYLE|NOSCRIPT)$/.test(el.tagName) || !visible(el)) continue;
+    const fs = parseFloat(win.getComputedStyle(el).fontSize);
+    if (fs < 12) tiny.push({ el, text: `${describe(el)} at ${fs}px` });
+  }
+  out.text = { count: tiny.length, items: tiny };
+  // 4. iOS zooms into inputs under 16px
+  const zoom = [];
+  if (d.os === 'ios' || d.os === 'ipados') doc.querySelectorAll('input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=button]):not([type=submit]),select,textarea').forEach(el => {
+    if (!visible(el)) return;
+    const fs = parseFloat(win.getComputedStyle(el).fontSize);
+    if (fs < 16) zoom.push({ el, text: `${describe(el)} at ${fs}px` });
+  });
+  out.zoom = { count: zoom.length, items: zoom, na: !(d.os === 'ios' || d.os === 'ipados') };
+  // 5. content under the notch, camera hole or home bar
+  const under = [];
+  if (standaloneCover && (d.safeTop || d.safeBottom)) {
+    doc.body.querySelectorAll('*').forEach(el => {
+      const r = visible(el); if (!r) return;
+      const direct = [...el.childNodes].some(c => c.nodeType === 3 && c.textContent.trim()) || /^(A|BUTTON|INPUT|IMG|SELECT|TEXTAREA)$/.test(el.tagName);
+      if (!direct) return;
+      if ((r.top < d.safeTop && r.bottom > 0) || (r.bottom > vh - d.safeBottom && r.top < vh)) if (under.length < 8) under.push({ el, text: `${describe(el)} at ${Math.round(r.top)}–${Math.round(r.bottom)}px` });
+    });
+  }
+  out.unsafe = { count: under.length, items: under, na: !(standaloneCover && (d.safeTop || d.safeBottom)) };
+  out.pageHeight = doc.documentElement.scrollHeight;
+  return out;
+}
+const RENDER_CHECKS = [
+  ['overflow', 'Scrolls sideways', 'Something is wider than the screen, so the whole page wobbles left and right.', 'Find the wide element below; use max-width: 100% on images and avoid fixed pixel widths.'],
+  ['tap', 'Buttons and links too small to tap', 'Apple asks for 44×44 points, Android for 48×48 dp, WCAG 2.2 for at least 24×24 px.', 'Add padding or min-height so each target is big enough.'],
+  ['text', 'Text smaller than 12px', 'Hard to read on a phone, and each platform renders tiny text a little differently.', 'Use at least 12px, ideally 14 to 16px for body text.'],
+  ['zoom', 'iPhone zooms in when you tap a field', 'iOS Safari zooms the page when an input with text under 16px gets focus. Android does not, so the two feel different.', 'Give inputs font-size: 16px or more.'],
+  ['unsafe', 'Content under the notch or home bar', 'On a home-screen app drawn edge to edge, these sit behind the Dynamic Island, the camera hole or the home bar.', 'Pad with env(safe-area-inset-top/bottom).'],
+];
+
+// ---------------------------------------------------------------- build the frames
+function emulateSafeArea(html, d, standalone, cover) {
+  const val = { top: 0, bottom: 0, left: 0, right: 0 };
+  if (standalone && cover) { val.top = d.safeTop; val.bottom = d.safeBottom; }
+  else if (d.os === 'ios' && cover) val.bottom = d.safeBottom; // Safari keeps the bottom inset in the browser too
+  return html.replace(/env\(\s*safe-area-inset-(top|bottom|left|right)\s*(?:,[^()]*(?:\([^()]*\)[^()]*)*)?\)/gi, (_, side) => val[side.toLowerCase()] + 'px');
+}
+function layout(d, standalone, cover) {
+  // returns where the page's viewport sits inside the screen
+  if (d.os === 'desktop') return { top: 0, height: d.h, bars: [] };
+  if (standalone) {
+    if (cover) return { top: 0, height: d.h, over: true };
+    return { top: d.safeTop, height: d.h - d.safeTop - d.safeBottom };
+  }
+  const top = d.safeTop + d.top, bottom = d.bottom || d.safeBottom;
+  return { top, height: d.h - top - bottom, chromeTop: d.top, chromeBottom: d.bottom };
+}
+function buildDevice(d, source, opts) {
+  const SCALE_H = 470;
+  const s = Math.min(SCALE_H / (d.h + 20), 560 / (d.w + 20));
+  const box = document.createElement('div'); box.className = 'dev';
+  const name = document.createElement('div'); name.className = 'name'; name.textContent = d.name;
+  const lay = layout(d, opts.standalone, opts.cover);
+  const spec = document.createElement('div'); spec.className = 'spec';
+  spec.textContent = `${d.w}×${lay.height} page area · ${d.os === 'desktop' ? 'desktop browser' : opts.standalone ? 'home-screen app' : d.browser}`;
+  const holder = document.createElement('div'); holder.className = 'holder';
+  holder.style.width = (d.w + 20) * s + 'px'; holder.style.height = (d.h + 20) * s + 'px';
+  const dev = document.createElement('div'); dev.className = 'device';
+  dev.style.width = d.w + 20 + 'px'; dev.style.height = d.h + 20 + 'px'; dev.style.transform = `scale(${s})`; dev.style.borderRadius = d.r + 'px';
+  const scr = document.createElement('div'); scr.style.cssText = `position:absolute;inset:0;overflow:hidden;border-radius:${Math.max(0, d.r - 10)}px;background:#000`;
+  dev.appendChild(scr);
+  const frame = document.createElement('iframe');
+  frame.title = `${d.name} preview`;
+  frame.style.top = lay.top + 'px'; frame.style.width = d.w + 'px'; frame.style.height = lay.height + 'px';
+  if (source.url) { frame.src = source.url; frame.setAttribute('sandbox', 'allow-scripts allow-forms allow-popups'); }
+  else {
+    frame.setAttribute('sandbox', opts.scripts ? 'allow-same-origin allow-scripts allow-forms' : 'allow-same-origin');
+    let html = emulateSafeArea(source.html, d, opts.standalone, opts.cover);
+    if (d.os !== 'desktop') { // phones draw overlay scrollbars that take no width
+      const hide = '<style data-platypus-preview>html{scrollbar-width:none}html::-webkit-scrollbar{display:none}</style>';
+      html = /<\/head>/i.test(html) ? html.replace(/<\/head>/i, hide + '</head>') : html + hide;
+    }
+    frame.srcdoc = html;
+  }
+  scr.appendChild(frame);
+  if (d.os !== 'desktop') {
+    if (lay.chromeTop) { const c = document.createElement('div'); c.className = 'chrome'; c.style.top = d.safeTop + 'px'; c.style.height = d.top + 'px'; const p = document.createElement('span'); p.className = 'pill'; p.textContent = source.url ? source.url.replace(/^https?:\/\//, '') : 'your-page.html'; c.appendChild(p); scr.appendChild(c); }
+    if (lay.chromeBottom) { const c = document.createElement('div'); c.className = 'chrome'; c.style.bottom = '0'; c.style.height = d.bottom + 'px'; c.style.alignItems = 'flex-start'; c.style.paddingTop = '8px'; const p = document.createElement('span'); p.className = 'pill'; p.textContent = source.url ? source.url.replace(/^https?:\/\//, '') : 'your-page.html'; c.appendChild(p); scr.appendChild(c); }
+    if (!lay.chromeBottom && d.safeBottom && !lay.over) { const nb = document.createElement('div'); nb.className = 'navbar'; nb.style.height = d.safeBottom + 'px'; scr.appendChild(nb); }
+    const sb = document.createElement('div'); sb.className = 'statusbar' + (lay.over ? ' over' : ''); sb.style.height = d.safeTop + 'px';
+    const t = document.createElement('span'); t.textContent = d.os === 'android' ? '12:30' : '9:41';
+    const ic = document.createElement('span'); ic.textContent = d.os === 'android' ? '▾ ▮' : '▂▄▆ ▭';
+    sb.append(t, ic); scr.appendChild(sb);
+    if (d.cut === 'island') { const i = document.createElement('div'); i.className = 'island'; scr.appendChild(i); }
+    if (d.cut === 'hole') { const i = document.createElement('div'); i.className = 'hole'; scr.appendChild(i); }
+    if (d.os === 'ios' && d.safeBottom) { const hb = document.createElement('div'); hb.className = 'homebar'; scr.appendChild(hb); }
+    if (lay.over) {
+      const u1 = document.createElement('div'); u1.className = 'unsafe'; u1.style.top = '0'; u1.style.height = d.safeTop + 'px'; scr.appendChild(u1);
+      if (d.safeBottom) { const u2 = document.createElement('div'); u2.className = 'unsafe'; u2.style.bottom = '0'; u2.style.height = d.safeBottom + 'px'; scr.appendChild(u2); }
+    }
+  }
+  holder.appendChild(dev);
+  const badge = document.createElement('div'); badge.className = 'badge warn'; badge.textContent = source.url ? 'preview only' : 'checking…';
+  box.append(name, spec, holder, badge);
+  return { box, frame, badge, d };
+}
+
+// ---------------------------------------------------------------- run
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const loaded = f => new Promise(res => { let done = false; const fin = () => { if (!done) { done = true; res(); } }; f.addEventListener('load', fin, { once: true }); setTimeout(fin, 6000); });
+let lastFrames = [];
+document.getElementById('run').onclick = async () => {
+  const source = getSource();
+  const devs = DEVICES.filter(d => picked.has(d.id));
+  if (!devs.length) return mood('sick', 'Need: pick at least one device above.');
+  if (!source) {
+    const need = { paste: 'paste the page HTML into the box', file: 'open the page .html file (and its CSS)', url: 'type a web address starting with https://', sample: '' }[src];
+    return mood('sick', `Need: ${need}.`);
+  }
+  const standalone = document.getElementById('standalone').checked;
+  const scripts = document.getElementById('scripts').checked;
+  const st = source.html ? staticChecks(source.html) : { list: [], cover: false };
+  const opts = { standalone, scripts, cover: st.cover };
+  mood('curious', `Looking at it on ${devs.length} screens…`);
+  const stage = document.getElementById('stage'); stage.replaceChildren();
+  document.getElementById('previewCard').hidden = false;
+  document.getElementById('previewNote').textContent = source.url
+    ? 'Preview of a live address. If a frame stays blank, that site refuses to be framed; paste its HTML instead. Checks need the HTML.'
+    : (standalone ? (st.cover ? 'Home-screen app, drawn edge to edge (viewport-fit=cover). Red stripes are where the notch, camera or home bar sit.' : 'Home-screen app. The page has no viewport-fit=cover, so it stays inside the safe area.')
+      : 'In the browser, with the address bar and status bar drawn on.') + (scripts ? ' The page\'s scripts are running.' : ' Scripts are off (turn them on for pages that build themselves with JavaScript).');
+  lastFrames = devs.map(d => buildDevice(d, source, opts));
+  lastFrames.forEach(f => stage.appendChild(f.box));
+  document.getElementById('reportCard').hidden = false;
+  const report = document.getElementById('report'); report.replaceChildren();
+  if (source.url) {
+    const p = document.createElement('p'); p.textContent = 'I can show a web address but I cannot look inside it from here. Paste the page HTML (View Source, select all, copy) or open the saved files to get the checks.';
+    report.appendChild(p);
+    return mood('sick', 'Need: the page HTML, pasted or opened as files, so I can look inside it.');
+  }
+  await Promise.all(lastFrames.map(f => loaded(f.frame)));
+  await wait(scripts ? 900 : 300);
+  const results = [];
+  for (const f of lastFrames) {
+    try { f.res = measure(f.frame, f.d, standalone && st.cover); }
+    catch (e) { f.err = e.message; }
+    results.push(f);
+  }
+  if (results.every(f => f.err)) { renderReport(st, results); return mood('sad', 'I could not see inside the frames, so I could not finish. That one is on me.'); }
+  const fixes = renderReport(st, results);
+  if (!fixes) mood('happy', 'Looks presentable, and the same everywhere I looked.');
+  else if (fixes <= 5) mood('worried', `${fixes} to fix. Details below.`);
+  else mood('alarmed', `${fixes} things to fix. Details below.`);
+};
+
+function cellFor(r, key) {
+  if (!r) return { txt: '?', cls: 'warn' };
+  const c = r[key]; if (c.na) return { txt: '—', cls: '' };
+  return c.count ? { txt: String(c.count), cls: 'bad' } : { txt: '✓', cls: 'ok' };
+}
+function highlight(f, el) {
+  lastFrames.forEach(x => { try { x.frame.contentDocument.querySelectorAll('[data-platypus]').forEach(e => { e.style.outline = e.dataset.platypus; e.removeAttribute('data-platypus'); }); } catch (_) {} });
+  if (!el) return;
+  el.dataset.platypus = el.style.outline || '';
+  el.style.outline = '3px solid #ff2d8a';
+  el.scrollIntoView({ block: 'center', inline: 'center' });
+  f.box.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+function renderReport(st, frames) {
+  const report = document.getElementById('report'); report.replaceChildren();
+  let fixes = 0;
+  // matrix
+  const wrap = document.createElement('div'); wrap.className = 'tablewrap';
+  const tbl = document.createElement('table');
+  const head = tbl.insertRow(); const th0 = document.createElement('th'); th0.textContent = 'Check'; head.appendChild(th0);
+  frames.forEach(f => { const th = document.createElement('th'); th.textContent = f.d.name; th.className = 'c'; head.appendChild(th); });
+  const thS = document.createElement('th'); thS.textContent = 'Same everywhere?'; thS.className = 'c'; head.appendChild(thS);
+  RENDER_CHECKS.forEach(([key, title]) => {
+    const tr = tbl.insertRow(); const td = tr.insertCell(); td.textContent = title;
+    const vals = [];
+    frames.forEach(f => {
+      const c = cellFor(f.res, key); const cell = tr.insertCell(); cell.className = 'c';
+      const sp = document.createElement('span'); sp.className = 'pill-s ' + c.cls; sp.textContent = f.err ? 'error' : c.txt; cell.appendChild(sp);
+      if (c.txt !== '—') vals.push(c.cls);
+    });
+    const same = tr.insertCell(); same.className = 'c';
+    const allOk = vals.every(v => v === 'ok'), mixed = new Set(vals).size > 1;
+    if (vals.includes('bad')) fixes++; // one problem, however many screens show it
+    const only = key === 'zoom' ? ' (iPhone and iPad only)' : '';
+    same.textContent = !vals.length ? '—' : allOk ? 'yes' : mixed ? 'no, differs' : 'same problem everywhere' + only;
+    same.style.color = allOk ? 'var(--teal)' : mixed ? 'var(--amber)' : 'var(--red)';
+  });
+  // page height consistency
+  const hs = frames.filter(f => f.res).map(f => ({ n: f.d.name, h: f.res.pageHeight }));
+  wrap.appendChild(tbl); report.appendChild(wrap);
+  if (hs.length > 1) {
+    const p = document.createElement('p'); p.className = 'muted';
+    p.textContent = 'Page length: ' + hs.map(x => `${x.n} ${x.h}px`).join(' · ') + '. Very different lengths usually mean text wraps or things stack differently.';
+    report.appendChild(p);
+  }
+  // details per rendered check
+  RENDER_CHECKS.forEach(([key, title, why, fix]) => {
+    const hit = frames.filter(f => f.res && f.res[key].count);
+    if (!hit.length) return;
+    const det = document.createElement('details');
+    const sm = document.createElement('summary'); sm.textContent = `${title}: ${hit.map(f => `${f.d.name} ${f.res[key].count}`).join(', ')}`; det.appendChild(sm);
+    const w = document.createElement('div'); w.className = 'why'; w.textContent = `${why} Fix: ${fix}`; det.appendChild(w);
+    hit.forEach(f => {
+      const h = document.createElement('div'); h.textContent = f.d.name + (key === 'tap' ? ` (needs ${f.res.tap.min}px)` : ''); h.style.fontWeight = '700'; h.style.marginTop = '6px'; det.appendChild(h);
+      const ul = document.createElement('ul'); ul.className = 'off';
+      f.res[key].items.slice(0, 12).forEach(it => {
+        const li = document.createElement('li'); li.textContent = it.text;
+        if (it.el) { const b = document.createElement('button'); b.textContent = 'show'; b.onclick = () => highlight(f, it.el); li.appendChild(b); }
+        ul.appendChild(li);
+      });
+      if (f.res[key].items.length > 12) { const li = document.createElement('li'); li.textContent = `…and ${f.res[key].items.length - 12} more`; ul.appendChild(li); }
+      det.appendChild(ul);
+    });
+    report.appendChild(det);
+  });
+  // source checks
+  if (st.list.length) {
+    const h = document.createElement('h2'); h.textContent = 'From reading the code'; h.style.marginTop = '16px'; report.appendChild(h);
+    st.list.forEach(c => {
+      if (c.level === 'fix') fixes++;
+      const det = document.createElement('details');
+      const sm = document.createElement('summary');
+      const tag = document.createElement('span'); tag.className = 'pill-s ' + (c.level === 'fix' ? 'bad' : 'warn'); tag.textContent = c.level === 'fix' ? 'fix' : 'note';
+      sm.append(tag, ' ' + c.title); det.appendChild(sm);
+      const w = document.createElement('div'); w.className = 'why'; w.textContent = `${c.why} Fix: ${c.fix}`; det.appendChild(w);
+      report.appendChild(det);
+    });
+  }
+  frames.forEach(f => {
+    if (f.err) { f.badge.className = 'badge warn'; f.badge.textContent = 'could not look inside'; return; }
+    const n = RENDER_CHECKS.reduce((a, [k]) => a + (f.res[k].na ? 0 : f.res[k].count ? 1 : 0), 0);
+    f.badge.className = 'badge ' + (n ? (n > 2 ? 'bad' : 'warn') : 'ok');
+    f.badge.textContent = n ? `${n} problem${n > 1 ? 's' : ''}` : 'looks good';
+  });
+  return fixes;
+}
+
+// ---------------------------------------------------------------- compare screenshots
+const imgs = { A: null, B: null };
+function loadImg(file) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(file); }); }
+['A', 'B'].forEach(k => document.getElementById('img' + k).onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { imgs[k] = await loadImg(f); compare(); } catch { mood('sad', 'I could not read that image. Is it a PNG or JPEG?'); }
+});
+document.getElementById('tol').oninput = () => compare();
+document.getElementById('skipBars').onchange = () => compare();
+function compare() {
+  const out = document.getElementById('cmpOut');
+  if (!imgs.A || !imgs.B) { if (imgs.A || imgs.B) mood('sick', 'Need: the second screenshot too.'); return; }
+  mood('curious', 'Lining them up…');
+  const skip = document.getElementById('skipBars').checked;
+  const tol = +document.getElementById('tol').value;
+  const W = Math.min(imgs.A.naturalWidth, imgs.B.naturalWidth, 600);
+  const prep = img => {
+    const t = skip ? Math.round(img.naturalHeight * .07) : 0, b = skip ? Math.round(img.naturalHeight * .05) : 0;
+    const sh = img.naturalHeight - t - b, h = Math.round(sh * W / img.naturalWidth);
+    const c = document.createElement('canvas'); c.width = W; c.height = h;
+    c.getContext('2d').drawImage(img, 0, t, img.naturalWidth, sh, 0, 0, W, h);
+    return c;
+  };
+  const a = prep(imgs.A), b = prep(imgs.B), H = Math.min(a.height, b.height);
+  const da = a.getContext('2d').getImageData(0, 0, W, H).data, db = b.getContext('2d').getImageData(0, 0, W, H).data;
+  const diff = document.createElement('canvas'); diff.width = W; diff.height = H;
+  const dc = diff.getContext('2d'), od = dc.createImageData(W, H);
+  let n = 0;
+  for (let i = 0; i < da.length; i += 4) {
+    const d = Math.abs(da[i] - db[i]) + Math.abs(da[i + 1] - db[i + 1]) + Math.abs(da[i + 2] - db[i + 2]);
+    if (d > tol) { n++; od.data[i] = 255; od.data[i + 1] = 45; od.data[i + 2] = 138; od.data[i + 3] = 255; }
+    else { const g = (da[i] + da[i + 1] + da[i + 2]) / 3 * .35 + 20; od.data[i] = od.data[i + 1] = od.data[i + 2] = g; od.data[i + 3] = 255; }
+  }
+  dc.putImageData(od, 0, 0);
+  const pct = n / (W * H) * 100;
+  const ra = imgs.A.naturalHeight / imgs.A.naturalWidth, rb = imgs.B.naturalHeight / imgs.B.naturalWidth;
+  const nA = document.getElementById('nameA').value || 'First', nB = document.getElementById('nameB').value || 'Second';
+  out.replaceChildren();
+  const sum = document.createElement('p');
+  sum.textContent = `${pct.toFixed(1)}% of the picture differs. Screen shapes: ${nA} ${ra.toFixed(2)}, ${nB} ${rb.toFixed(2)} (height ÷ width).` +
+    (Math.abs(a.height - b.height) > 4 ? ` At the same width, ${a.height > b.height ? nA : nB} shows ${Math.abs(a.height - b.height)}px more; only the overlap is compared.` : '');
+  out.appendChild(sum);
+  const grid = document.createElement('div'); grid.className = 'cmpgrid';
+  [[nA, a], [nB, b], ['Differences (pink)', diff]].forEach(([l, c]) => { const d = document.createElement('div'); const t = document.createElement('div'); t.className = 'lbl'; t.textContent = l; d.append(t, c); grid.appendChild(d); });
+  out.appendChild(grid);
+  // fade between the two
+  const lbl = document.createElement('label'); lbl.className = 'row'; lbl.textContent = `Fade ${nA} → ${nB} `;
+  const rng = document.createElement('input'); rng.type = 'range'; rng.min = 0; rng.max = 100; rng.value = 50; lbl.appendChild(rng);
+  const ow = document.createElement('div'); ow.id = 'overlayWrap';
+  const ca = document.createElement('canvas'), cb = document.createElement('canvas');
+  ca.width = cb.width = W; ca.height = cb.height = H;
+  ca.getContext('2d').drawImage(a, 0, 0); cb.getContext('2d').drawImage(b, 0, 0); cb.style.opacity = .5;
+  rng.oninput = () => cb.style.opacity = rng.value / 100;
+  ow.append(ca, cb); out.append(lbl, ow);
+  if (pct < 2) mood('happy', `They match: only ${pct.toFixed(1)}% differs.`);
+  else if (pct < 12) mood('worried', `Close, but ${pct.toFixed(1)}% differs. The pink shows where.`);
+  else mood('alarmed', `These look quite different: ${pct.toFixed(1)}% differs.`);
+}
+</script>
+
+<script>
+// Sites I watch (Astra, 2026-10-13): Astra's pages that must work on iPhone, iPad, Android and desktop.
+// Each one lists what it needs to stay cross-platform; "open" items are known problems still to fix.
+const WATCH = [
+  { name: "Astra's PetOS System Map (3D PFD)", url: 'https://findastra.github.io/astras-pet-os/system-map-20261012.html',
+    needs: [
+      ['done', 'Opens in Safari, Chrome and Edge, with no sideways scrolling (checked at iPad size, 2026-10-13).'],
+      ['done', 'Touch works without a mouse or keyboard: one finger turns the sphere, two fingers zoom and pan.'],
+      ['done', 'On-screen buttons for zoom, reset and spin, because a tablet has no scroll wheel.'],
+      ['done', '3D runs on the phone or tablet itself (WebGL), with no install.'],
+      ['open', 'On an iPad held upright, the key panel covers about half the map. It needs a hide button or to fold away on tablets.'],
+      ['open', 'Labels crowd together on small screens. A phone needs fewer labels until you zoom in.'],
+      ['open', 'Mouse-only extras (scroll-click drag, right-drag with W A S D) have no touch version; fine as extras, but nothing important may rely on them.'],
+      ['check', 'Weight: about 1 MB of page plus three.js from a CDN. Check it loads on phone data.'],
+    ] },
+];
+(function () {
+  const box = document.getElementById('watchList');
+  if (!box) return;
+  for (const site of WATCH) {
+    const card = document.createElement('div');
+    card.style.cssText = 'border:1px solid currentColor;border-radius:8px;padding:8px 10px;margin:8px 0';
+    const title = document.createElement('strong'); title.textContent = site.name;
+    const link = document.createElement('a'); link.href = site.url; link.textContent = site.url; link.target = '_blank'; link.rel = 'noopener';
+    link.style.cssText = 'display:block;font-size:12px;word-break:break-all;margin:2px 0 6px';
+    const list = document.createElement('ul'); list.style.cssText = 'margin:0;padding-left:18px';
+    for (const [state, text] of site.needs) {
+      const li = document.createElement('li');
+      li.textContent = (state === 'done' ? '\u2705 ' : state === 'open' ? '\u274C ' : '\u{1F50E} ') + text;
+      list.appendChild(li);
+    }
+    const go = document.createElement('button'); go.className = 'go'; go.type = 'button'; go.textContent = 'Load and check it';
+    const note = document.createElement('div'); note.className = 'muted';
+    go.onclick = async () => {
+      note.textContent = 'Loading…';
+      try {
+        const r = await fetch(site.url, { cache: 'no-store' });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        document.getElementById('html').value = await r.text();
+        document.querySelector('[data-src="paste"]').click();
+        note.textContent = '';
+        document.getElementById('run').click();
+      } catch (e) { note.textContent = 'Could not load it (' + e.message + '). Open the link and paste its source instead.'; }
+    };
+    card.append(title, link, list, go, note);
+    box.appendChild(card);
+  }
+  if (location.hash === '#watch') document.querySelector('[data-src="watch"]').click();
+})();
+</script>
+</body>
+</html>
