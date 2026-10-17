@@ -36,7 +36,7 @@ chat took 019 at the same time, so it is 025 (handoffs/README.md, "Card numbers 
   was built with Chat Rat's own parser and sent to Astra in the chat. It is not in any repo (Chat Rat's rule).
 
 - **2026-10-17, later, branch `claude/tender-gauss-m2nbhp` (Claude Opus 5.5): item 1 below, the Farmer's round and
-  finding 2 (known gap 11).** Not on `main` until Astra merges its pull request.
+  finding 2 (known gap 11).** Pull request #46; not on `main` until Astra merges it. Test runs 8 and 9 (workflow_dispatch): run 9 pushed `farmer/rounds-20261017` and GitHub refused to open its pull request until Astra allows Actions to create pull requests (Settings > Actions > General).
   - `scripts/build-interfaces-20261008.mjs`: the Farmer's desk finds the host by role (`petFor`), not by the old repo
     name; the desk file name and its browser-storage key keep `astras-pet-apps` so saved notes survive. This was the
     crash behind every failed run since the rename (runs 3 to 7).
