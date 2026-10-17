@@ -8,10 +8,12 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
-| [026: Pictures only Astra can take (Flash Audit A55), and 25 picture PRs](026-any-pictures-astra-takes-20261017.md) | any | open, waits on Astra: in-world and desktop pictures; merging the PRs |
+| [026: Pictures only Astra can take (Flash Audit A55), and 25 picture PRs](026-any-pictures-astra-takes-20261017.md) | any | open, waits on Astra: in-world and desktop pictures; chat-rat#4 after chat-rat#1 |
 | [025: Security follow-ups from the 2026-10-16 assessment](025-any-security-follow-ups-20261017.md) | any | open: the Farmer's round; findings 3 to 5; PR #26's security model; merge the ghost-protocol link fix |
 | [021: Startup Star shows API Fairy's bubbles](021-codex-startup-star-api-fairy-bubbles-20261017.md) | Codex | open |
 | [020: Chat sync, folder rename plan row, Role Fairy (Fairy Ring #83), Nullbot dropped](020-any-chat-sync-and-folder-rename-20261017.md) | any | open, waits on Astra: File Master rename row |
+| [019: Portfolio Puffer and the portfolio](019-any-portfolio-puffer-and-the-portfolio-20261017.md) | any | open, waits on Astra: read every employer page (site merged 2026-10-17) |
+| [018: Curious faces and Health Hummy's beak](018-any-curious-faces-and-hummy-beak-20261017.md) | any | open, waits on Astra: OpenAI credits |
 | [017: API Fairy's desktop app has never run; verify it](017-any-api-fairy-desktop-verify-20261017.md) | any | done 2026-10-17 |
 | [012: Pet-first profile list and missing pets](012-farmer-pet-first-list-and-missing-pets-20261016.md) | Farmer | open, waits on Astra: #77's name, homes, Chat Rat, Workflow Whale |
 | [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | done 2026-10-17: registered with the existing seed sheet |
@@ -52,7 +54,7 @@ card that reached `main` first kept its number, then the oldest card on a branch
 | 023 | `023-halo-list-vscode-angel-program-20261017.md` | `claude/halo-list-program-20261017`, still named `013-…`: rename it to 023 when it is merged |
 | 024 | `024-any-pole-puff-repo-20261012.md` | `claude/pole-puff-draft-20261012` (PR #8; was 010) |
 | 025 | `025-any-security-follow-ups-20261017.md` | `main` |
-| 026 | `026-any-pictures-astra-takes-20261017.md` | `claude/pictures-20261017` (PR #45) |
+| 026 | `026-any-pictures-astra-takes-20261017.md` | `main` |
 
 Old drafts on dropped branches have no number: `001`–`005` on `pets-roam-life-20261009` (the "claude mini pet"
 before it was named Claude Bot, and a new-pet lineup) and `008-farmer-register-new-placeholders.md` on
