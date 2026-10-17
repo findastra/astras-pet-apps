@@ -45,6 +45,10 @@ export function syncProfile(readme, registry, repos, programs = null) {
   // Every pet program (pet-programs.json, 2026-10-14): when given, the list shows all of them, seeds and roadmap pets
   // too, each with its mini-descriptor, and their repos never land in the other sections.
   const petRepos = new Set([...pets.map((p) => p.repo), ...(programs || []).map((p) => p.repo)]);
+  // Astra, 2026-10-16 (registry.profile in pets.json): `hidden` repos are never listed (Startup Star is a tool, not a
+  // page entry); `places` (the Kennel, the Shed) are listed as bullets under the pet list, in Astra's PetOS.
+  const hidden = new Set(registry.profile?.hidden || []);
+  const places = (registry.profile?.places || []).filter((r) => !petRepos.has(r));
 
   // Section boundaries and the blurbs Astra already wrote.
   const sections = [];
@@ -85,7 +89,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
   const out = [];
   const additions = new Map(); // section start -> new lines
   for (const r of online.values()) {
-    if (petRepos.has(r.name) || mentioned.has(r.name)) continue;
+    if (petRepos.has(r.name) || mentioned.has(r.name) || hidden.has(r.name) || places.includes(r.name)) continue;
     const text = `${r.name} ${r.description}`;
     const pickSection = (re) => sections.find((s) => s !== petSection && re.test(s.title));
     const target = (/\bvr\b|vrchat|unity/i.test(text) && pickSection(/vr/i)) || (/discord/i.test(text) && pickSection(/discord/i)) || pickSection(/web|more/i) || sections.filter((s) => s !== petSection).at(-1);
@@ -103,8 +107,10 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (sec === petSection) {
       const first = body.findIndex(isList);
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
-      if (first < 0) out.push('', ...petLines, ...body);
-      else out.push(...body.slice(0, first), ...petLines, ...body.slice(last + 1));
+      const placeLines = places.filter((r) => online.has(r)).map((r) => `- ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
+      const listed = placeLines.length ? [...petLines, '', ...placeLines] : petLines;
+      if (first < 0) out.push('', ...listed, ...body);
+      else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
       continue;
     }
     const kept = [];
@@ -114,6 +120,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
       if (m) {
         const repo = m[1] || m[2];
         if (petRepos.has(repo)) { changes.push(`moved ${repo} to the pet apps list`); continue; }
+        if (hidden.has(repo)) { changes.push(`took ${repo} off the profile`); continue; }
+        if (places.includes(repo)) { changes.push(`moved ${repo} to Astra's PetOS`); continue; }
         if (!online.has(repo) && m[1]) { changes.push(`removed ${repo} (not on GitHub)`); continue; }
       }
       kept.push(ln);

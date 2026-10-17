@@ -158,6 +158,11 @@
     "sick": "I need you: {needs}.",
     "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
   },
+  "profile": {
+    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile; places = bullets under the pet list in Astra's PetOS.",
+    "hidden": ["startup-star"],
+    "places": ["the-kennel", "the-shed"]
+  },
   "rounds": {
     "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild. Each pet audits itself on its cadence and day.",
     "status_file": "status/pets-status.json",
