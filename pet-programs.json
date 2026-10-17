@@ -522,7 +522,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-35-v1.0-mini-descriptor-v1.0",
-        "text": "Not decided yet: Chat Rat’s job is Astra’s to choose.",
+        "text": "Saves local AI conversations and imported exports, filed by model and YYYYMMDD date, with a button that opens each folder.",
         "reviewed": false
       }
     },
@@ -582,7 +582,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-39-v1.0-mini-descriptor-v1.0",
-        "text": "Not decided yet: Procreate Panda’s job is Astra’s to choose.",
+        "text": "Handles the redlines Astra makes in Procreate and manages her Procreate tools and drawings.",
         "reviewed": false
       }
     },
@@ -668,8 +668,8 @@
       "icon": "Closet Cat",
       "idea": "Catwalk",
       "stage": "seed",
-      "repo": "pet-program-45",
-      "repo_exists": false,
+      "repo": "the-cats-closet",
+      "repo_exists": true,
       "mini_descriptor": {
         "label": "pet-program-45-v1.0-mini-descriptor-v1.0",
         "text": "Organizes your closet (what you own and what goes together) and keeps your favourite places to shop.",

@@ -5,6 +5,7 @@
 // It only touches the repo lists. The header, tagline, socials, headings and Astra's own blurbs stay as
 // she wrote them (layout rules: github-goldfish/docs/profile-style-20261009.md). It:
 //   - rewrites the pet apps list as a numbered running list, in Cage order (registered pets, then the pipeline);
+//     each line is pet first (Astra, 2026-10-16): N. **Pet** · *Home* · [`repo`](link) -- what the pet does [status];
 //   - drops lines for repos that are gone, and moves pets out of the other sections;
 //   - adds new non-pet repos to a section (VR, Discord, else Web & More) with their GitHub description.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -12,13 +13,28 @@ import { dirname, join } from 'node:path';
 
 const OWNER = 'findastra';
 const BULLET = /^- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/;
+// The old repo-first pet line, still read so a profile written before 2026-10-16 converts cleanly.
 const NUMBERED = /^\d+\. (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- \*\*([^*]+)\*\* · (.*)$/;
+// Pet first (Astra, 2026-10-16): N. **Pet** · *Home* · [`repo`](link) -- what the pet does [status]. Home is optional.
+const PET_FIRST = /^\d+\. \*\*([^*]+)\*\*(?: · \*([^*]+)\*)? · (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/;
 const link = (repo, isPrivate) => (isPrivate ? `\`${repo}\` *(private)*` : `[\`${repo}\`](https://github.com/${OWNER}/${repo})`);
 // Astra's blurbs start lowercase and end without a full stop; names keep their capitals.
+// A two-word name that opens the line ("Startup Star: …", "Closet Cat's …") keeps its capitals too.
 const lowerFirst = (s) => {
   s = s.trim().replace(/\.$/, '');
-  return /^[A-Z](?:[a-z]|\s)/.test(s) && !/^(AI|VR|VRChat|Discord|Unity|Python|GitHub|Windows|Claude|Mommy's|Data Dealer|Astra)\b/.test(s) ? s[0].toLowerCase() + s.slice(1) : s;
+  return /^[A-Z](?:[a-z]|\s)/.test(s) && !/^[A-Z][a-z]+ (?!Astra\b)[A-Z][a-z]+(?::|['’]s\b)/.test(s) && !/^(AI|VR|VRChat|Discord|Unity|Python|GitHub|Windows|Claude|Mommy's|Data Dealer|Astra)\b/.test(s) ? s[0].toLowerCase() + s.slice(1) : s;
 };
+// Status is not a job (Astra, 2026-10-16): "Planned: …" and "Not decided yet: …" move to [brackets] at the end.
+export function splitStatus(text) {
+  let job = String(text || '').trim();
+  if (/^not decided yet\b/i.test(job)) return { job: '', status: 'job not chosen yet' };
+  const m = /^(planned|not built yet)\s*:\s*/i.exec(job);
+  if (!m) return { job, status: null };
+  job = job.slice(m[0].length);
+  return { job: job[0].toUpperCase() + job.slice(1), status: m[1].toLowerCase() };
+}
+const petLine = (number, pet, home, repoLink, job, status) =>
+  `${number}. **${pet}** · ${home ? `*${home}* · ` : ''}${repoLink} -- ${[job, status ? `[${status}]` : ''].filter(Boolean).join(' ')}`;
 
 /** @returns {{ text: string, changes: string[] }} */
 export function syncProfile(readme, registry, repos, programs = null) {
@@ -36,7 +52,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
   lines.forEach((ln, i) => {
     if (/^#{2,4} /.test(ln) && !/align=/.test(ln)) sections.push({ title: ln.replace(/^#+ /, ''), start: i });
     let m;
-    if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
+    if ((m = PET_FIRST.exec(ln))) blurbs.set(m[3] || m[4], m[5]);
+    else if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
     else if ((m = BULLET.exec(ln))) blurbs.set(m[1] || m[2], m[3]);
   });
   sections.forEach((s, k) => { s.end = k + 1 < sections.length ? sections[k + 1].start : lines.length; });
@@ -51,8 +68,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     const r = online.get(p.repo); const reg = pets.find((x) => x.repo === p.repo);
     const isPrivate = r ? r.private : reg?.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
-    const what = p.assigned ? `*${p.program}*: ` : '';
-    petLines.push(`${p.number}. ${link(p.repo, isPrivate)} -- **${p.icon}** · ${what}${lowerFirst(p.mini_descriptor.text)}`);
+    const { job, status } = splitStatus(p.mini_descriptor.text);
+    petLines.push(petLine(p.number, p.icon, p.assigned ? p.program : null, link(p.repo, isPrivate), job && lowerFirst(job), status));
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.icon} (${p.repo})`);
   }
   else for (const p of pets) {
@@ -60,7 +77,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     const isPrivate = r ? r.private : p.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
     const blurb = blurbs.get(p.repo) || lowerFirst(p.job);
-    petLines.push(`${petLines.length + 1}. ${link(p.repo, isPrivate)} -- **${p.pet}** · ${blurb}`);
+    petLines.push(petLine(petLines.length + 1, p.pet, null, link(p.repo, isPrivate), blurb, null));
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.pet} (${p.repo})`);
   }
 
@@ -78,7 +95,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     changes.push(`added ${r.name} to ${target.title}`);
   }
 
-  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln);
+  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln);
   out.push(...lines.slice(0, sections.length ? sections[0].start : lines.length));
   for (const sec of sections) {
     const body = lines.slice(sec.start + 1, sec.end);
@@ -92,7 +109,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     }
     const kept = [];
     for (const ln of body) {
-      const m = BULLET.exec(ln) || NUMBERED.exec(ln);
+      const pf = PET_FIRST.exec(ln);
+      const m = pf ? [ln, pf[3], pf[4]] : BULLET.exec(ln) || NUMBERED.exec(ln);
       if (m) {
         const repo = m[1] || m[2];
         if (petRepos.has(repo)) { changes.push(`moved ${repo} to the pet apps list`); continue; }
@@ -109,7 +127,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     out.push(...kept);
   }
   let text = out.join('\n');
-  const old = lines.filter((l) => NUMBERED.test(l)).join('\n');
+  const old = lines.filter((l) => NUMBERED.test(l) || PET_FIRST.test(l)).join('\n');
   if (old !== petLines.join('\n') && !changes.some((c) => c.startsWith('added pet'))) changes.push('reordered or refreshed the pet apps list');
   if (text === readme) return { text, changes: [] };
   return { text, changes };
