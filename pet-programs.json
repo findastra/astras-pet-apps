@@ -1,5 +1,5 @@
 {
-  "about": "Every pet program in Astra’s PetOS, numbered for good (docs/naming-20261013.md). Each mini-descriptor is one or two sentences on what the pet program actually does, shown in its repo, the profile README and the System Map. Astra marks each one reviewed. Compiled 2026-10-14.",
+  "about": "Every pet program in Astra’s PetOS, numbered for good (docs/naming-20261013.md). Each mini-descriptor is one or two sentences on what the pet program actually does, shown in its repo, the profile README and the System Map. Astra marks each one reviewed. Compiled 2026-10-14. Naming decisions from Astra's Flash Audit rounds (OpenAI Codex, 2026-10-15/16) were brought over from codex/world-caretakers-20261016 on 2026-10-16; see docs/naming-audit-20261016.md.",
   "programs": [
     {
       "number": 1,
@@ -18,15 +18,15 @@
     },
     {
       "number": 2,
-      "program": "pet-program-2",
-      "assigned": false,
+      "program": "GitHub Aquarium",
+      "assigned": true,
       "icon": "GitHub Goldfish",
       "idea": "GitHub Aquarium",
       "stage": "registered",
       "repo": "github-goldfish",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-2-v1.0-mini-descriptor-v1.0",
+        "label": "github-aquarium-v1.0-mini-descriptor-v1.0",
         "text": "Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors.",
         "reviewed": false
       }
@@ -63,30 +63,30 @@
     },
     {
       "number": 5,
-      "program": "pet-program-5",
-      "assigned": false,
+      "program": "Unity Stable",
+      "assigned": true,
       "icon": "Unity Unicorn",
       "idea": "Unity Stable",
       "stage": "registered",
       "repo": "unity-unicorn",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-5-v1.0-mini-descriptor-v1.0",
+        "label": "unity-stable-v1.0-mini-descriptor-v1.0",
         "text": "A local Unity and VRChat desk with avatar plans, 26 dated tools, open-arch audits, concise summaries and evidenced execution history.",
         "reviewed": false
       }
     },
     {
       "number": 6,
-      "program": "pet-program-6",
-      "assigned": false,
+      "program": "Python Jungle",
+      "assigned": true,
       "icon": "Python Panther",
       "idea": "Python Jungle",
       "stage": "registered",
       "repo": "learn-python",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-6-v1.0-mini-descriptor-v1.0",
+        "label": "python-jungle-v1.0-mini-descriptor-v1.0",
         "text": "A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons.",
         "reviewed": false
       }
@@ -108,45 +108,45 @@
     },
     {
       "number": 8,
-      "program": "pet-program-8",
-      "assigned": false,
+      "program": "The Nectar Nest",
+      "assigned": true,
       "icon": "Health Hummy",
       "idea": "Flight Log",
       "stage": "registered",
       "repo": "health-hummy",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-8-v1.0-mini-descriptor-v1.0",
+        "label": "the-nectar-nest-v1.0-mini-descriptor-v1.0",
         "text": "Personal health tracker: weight lifting by body group and sets, cardio, and pole plans. Your data stays on your PC and is never committed.",
         "reviewed": false
       }
     },
     {
       "number": 9,
-      "program": "pet-program-9",
-      "assigned": false,
+      "program": "Nest Egg",
+      "assigned": true,
       "icon": "Finance Finch",
       "idea": "Nest Egg",
       "stage": "registered",
       "repo": "finance-finch",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-9-v1.0-mini-descriptor-v1.0",
+        "label": "nest-egg-v1.0-mini-descriptor-v1.0",
         "text": "Personal finance tracker across your bank, savings and investment accounts. It reads balances and never moves money.",
         "reviewed": false
       }
     },
     {
       "number": 10,
-      "program": "pet-program-10",
-      "assigned": false,
+      "program": "Mommy’s Green Room",
+      "assigned": true,
       "icon": "Mommy's Mommies",
       "idea": "Mommy's Academy",
       "stage": "registered",
       "repo": "mommys",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-10-v1.0-mini-descriptor-v1.0",
+        "label": "mommys-green-room-v1.0-mini-descriptor-v1.0",
         "text": "A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned.",
         "reviewed": false
       }
@@ -168,75 +168,75 @@
     },
     {
       "number": 12,
-      "program": "pet-program-12",
-      "assigned": false,
+      "program": "File Kingdom",
+      "assigned": true,
       "icon": "File Master",
       "idea": "File Kingdom",
       "stage": "registered",
       "repo": "file-master",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-12-v1.0-mini-descriptor-v1.0",
+        "label": "file-kingdom-v1.0-mini-descriptor-v1.0",
         "text": "Organizes your files and finds systemic errors. Shows every mass change before making it, with undo.",
         "reviewed": false
       }
     },
     {
       "number": 13,
-      "program": "pet-program-13",
-      "assigned": false,
+      "program": "Discord Tower",
+      "assigned": true,
       "icon": "Discord Damsel",
       "idea": "Presence Tower (she runs the OpenAI and Anthropic Discord Presence apps)",
       "stage": "registered",
       "repo": "findastra-discord-presence",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-13-v1.0-mini-descriptor-v1.0",
+        "label": "discord-tower-v1.0-mini-descriptor-v1.0",
         "text": "Opens the installed OpenAI and Anthropic Discord presence controls, with a manual setup checklist.",
         "reviewed": false
       }
     },
     {
       "number": 14,
-      "program": "pet-program-14",
-      "assigned": false,
+      "program": "Iced Out Iceberg",
+      "assigned": true,
       "icon": "Portfolio Puffer",
       "idea": "Portfolio Reef",
       "stage": "registered",
       "repo": "portfolio-puffer",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-14-v1.0-mini-descriptor-v1.0",
+        "label": "iced-out-iceberg-v1.0-mini-descriptor-v1.0",
         "text": "Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual.",
         "reviewed": false
       }
     },
     {
       "number": 15,
-      "program": "pet-program-15",
-      "assigned": false,
+      "program": "Bass & Biscuits",
+      "assigned": true,
       "icon": "Drum Dog",
       "idea": "Doghouse Studio",
       "stage": "registered",
       "repo": "drum-dog",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-15-v1.0-mini-descriptor-v1.0",
+        "label": "bass-and-biscuits-v1.0-mini-descriptor-v1.0",
         "text": "Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted. Ableton Live connections are planned.",
         "reviewed": false
       }
     },
     {
       "number": 16,
-      "program": "pet-program-16",
-      "assigned": false,
+      "program": "Halo List",
+      "assigned": true,
       "icon": "VSCode Angel",
       "idea": "Halo List",
       "stage": "registered",
       "repo": "vscode-angel",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-16-v1.0-mini-descriptor-v1.0",
+        "label": "halo-list-v1.0-mini-descriptor-v1.0",
         "text": "Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned.",
         "reviewed": false
       }
@@ -258,30 +258,30 @@
     },
     {
       "number": 18,
-      "program": "pet-program-18",
-      "assigned": false,
+      "program": "Idea Perch",
+      "assigned": true,
       "icon": "Project Parrot",
       "idea": "Idea Perch",
       "stage": "registered",
       "repo": "project-parrot",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-18-v1.0-mini-descriptor-v1.0",
+        "label": "idea-perch-v1.0-mini-descriptor-v1.0",
         "text": "Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them.",
         "reviewed": false
       }
     },
     {
       "number": 19,
-      "program": "pet-program-19",
-      "assigned": false,
+      "program": "Audio Rescue",
+      "assigned": true,
       "icon": "Voicemeeter Bug",
       "idea": "Audio Rescue",
       "stage": "registered",
       "repo": "voicemeeter-bug",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-19-v1.0-mini-descriptor-v1.0",
+        "label": "audio-rescue-v1.0-mini-descriptor-v1.0",
         "text": "A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app.",
         "reviewed": false
       }
@@ -303,60 +303,60 @@
     },
     {
       "number": 21,
-      "program": "pet-program-21",
-      "assigned": false,
+      "program": "Claude Dock",
+      "assigned": true,
       "icon": "Claude Bot",
       "idea": "Claude Dock",
       "stage": "pipeline",
       "repo": "claude-bot",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-21-v1.0-mini-descriptor-v1.0",
+        "label": "claude-dock-v1.0-mini-descriptor-v1.0",
         "text": "Claude’s twin of ChatGPT’s BSOD desktop pet, in looks and in function: an orange face on the Windows desktop that shows Claude’s live status in a bubble and opens quick chat.",
         "reviewed": false
       }
     },
     {
       "number": 22,
-      "program": "pet-program-22",
-      "assigned": false,
+      "program": "Light Hive",
+      "assigned": true,
       "icon": "RGBee",
       "idea": "Light Hive",
       "stage": "pipeline",
       "repo": "rgbee",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-22-v1.0-mini-descriptor-v1.0",
+        "label": "light-hive-v1.0-mini-descriptor-v1.0",
         "text": "Plans and previews lighting scenes for every RGB light in the room: room lights, mouse pad, mouse, PC and keyboard. Sending scenes to the real lights is planned.",
         "reviewed": false
       }
     },
     {
       "number": 23,
-      "program": "pet-program-23",
-      "assigned": false,
+      "program": "Crypto Burrow",
+      "assigned": true,
       "icon": "Mine Mole",
       "idea": "Crypto Burrow",
       "stage": "pipeline",
       "repo": "mine-mole",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-23-v1.0-mini-descriptor-v1.0",
+        "label": "crypto-burrow-v1.0-mini-descriptor-v1.0",
         "text": "Manages the cryptocurrency mining program on Astra’s PC and checks whether mining is worth the power.",
         "reviewed": false
       }
     },
     {
       "number": 24,
-      "program": "pet-program-24",
-      "assigned": false,
+      "program": "Mail Shell",
+      "assigned": true,
       "icon": "Mail Snail",
       "idea": "Mail Shell",
       "stage": "pipeline",
       "repo": "mail-snail",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-24-v1.0-mini-descriptor-v1.0",
+        "label": "mail-shell-v1.0-mini-descriptor-v1.0",
         "text": "Organizes your mail: sorts it, cleans it up and deletes what you no longer need, always with your OK first. Connects to no mail account yet.",
         "reviewed": false
       }
@@ -618,16 +618,16 @@
     },
     {
       "number": 42,
-      "program": "pet-program-42",
-      "assigned": false,
+      "program": "Nessi's Ocean",
+      "assigned": true,
       "icon": "Piranesi Nessi",
       "idea": "Piranesi House (the world she looks after), or Tide Tables",
       "stage": "seed",
       "repo": "pet-program-42",
       "repo_exists": false,
       "mini_descriptor": {
-        "label": "pet-program-42-v1.0-mini-descriptor-v1.0",
-        "text": "Manages Piranesi House.",
+        "label": "nessis-ocean-v1.0-mini-descriptor-v1.0",
+        "text": "Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools. Runtime is planned.",
         "reviewed": false
       }
     },
@@ -1198,6 +1198,37 @@
       "mini_descriptor": {
         "label": "the-recovery-room-v1.0-mini-descriptor-v1.0",
         "text": "After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order.",
+        "reviewed": false
+      }
+    },
+    {
+      "number": 81,
+      "program": "pet-program-81",
+      "assigned": false,
+      "icon": "Intel Owl",
+      "idea": "Threat Observatory",
+      "stage": "seed",
+      "repo": "pet-program-81",
+      "repo_exists": false,
+      "mini_descriptor": {
+        "label": "pet-program-81-v1.0-mini-descriptor-v1.0",
+        "text": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "reviewed": false
+      }
+    },
+    {
+      "number": 82,
+      "program": "The Threshold",
+      "assigned": true,
+      "icon": "Door Dormouse",
+      "idea": null,
+      "stage": "seed",
+      "repo": "the-threshold",
+      "repo_exists": false,
+      "implementation_status": "Core-hosted browser prototype: floor planning, local notes, exports and connected concept website. Native pet, L3 harness and Unity execution bridge are pending.",
+      "mini_descriptor": {
+        "label": "the-threshold-v1.0-mini-descriptor-v1.0",
+        "text": "Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected.",
         "reviewed": false
       }
     }

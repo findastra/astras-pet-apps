@@ -1158,7 +1158,8 @@
         "repo": null,
         "job": "Manages Piranesi House.",
         "for": "piranesi-house",
-        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house).",
+        "program": "Nessi's Ocean",
+        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house). Program named Nessi's Ocean by Astra on 2026-10-16.",
         "works_with": [
           {
             "pet": "unity-unicorn",
@@ -1226,6 +1227,32 @@
         "repo": null,
         "job": "Runs The Recovery Room: after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order, isolated and with no farmhand in its seat.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Recovery Room (repo findastra/the-recovery-room)."
+      },
+      {
+        "pet": "Intel Owl",
+        "repo": null,
+        "job": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "note": "Selected in the October 14 phone handoff supplied by Astra. Replaces Scout Fox / Intel Ibis; planned seed only, no repo or runtime yet.",
+        "works_with": [
+          {
+            "pet": "file-master",
+            "why": "Shares defensive findings; File Master retains file management ownership."
+          }
+        ]
+      },
+      {
+        "pet": "Door Dormouse",
+        "program": "The Threshold",
+        "repo": null,
+        "for": "liminal-doors",
+        "job": "Manages Liminal Doors: floor planning, tools, Unity project metadata and the preview website.",
+        "note": "Named and requested by Astra on 2026-10-16. Browser prototype is on Codex's branch; no independent repo, native desktop pet, automatic schedule, L3 connection or Unity execution grant.",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "The Threshold prepares world build requests; Unity Unicorn owns reusable editor tools. Exchanges are manual exports until an authorized bridge exists."
+          }
+        ]
       }
     ],
     "already_in_pipeline": [
