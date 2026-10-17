@@ -30,15 +30,19 @@ test('status is not a job: it moves to [brackets] at the end', () => {
   assert.deepEqual(splitStatus('Keeps notes.'), { job: 'Keeps notes.', status: null });
 });
 
-test('every pet line starts with the pet, then its home, then its repo', () => {
+test('every pet line is the pet and what it does; home, repo and tools are sub-bullets beneath (Astra, 2026-10-16)', () => {
   const { text } = syncProfile(readme, registry, repos, programs);
   const lines = text.split('\n').filter((l) => /^\d+\. /.test(l));
   assert.equal(lines.length, 4);
-  for (const l of lines) assert.match(l, /^\d+\. \*\*[^*]+\*\* · /, `pet first: ${l}`);
-  assert.ok(lines.includes('1. **Friendly Farmer** · *The Farm* · [`astras-pet-os`](https://github.com/findastra/astras-pet-os) -- organizes the pets'));
-  assert.ok(lines.includes('18. **Project Parrot** · [`project-parrot`](https://github.com/findastra/project-parrot) -- periodically reviews OneNote for new project ideas [planned]'));
-  assert.ok(lines.includes('35. **Chat Rat** · [`chat-rat`](https://github.com/findastra/chat-rat) -- [job not chosen yet]'));
-  assert.match(text, /^45\. \*\*Closet Cat\*\* · \[`the-cats-closet`\]/m, 'a pet program repo moves into the numbered list');
+  for (const l of lines) assert.match(l, /^\d+\. \*\*[^*]+\*\* -- /, `pet and job only: ${l}`);
+  assert.ok(lines.includes('1. **Friendly Farmer** -- organizes the pets'));
+  assert.ok(lines.includes('18. **Project Parrot** -- periodically reviews OneNote for new project ideas [planned]'));
+  assert.ok(lines.includes('35. **Chat Rat** -- [job not chosen yet]'));
+  assert.match(text, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - `the-farm` -- \*The Farm\*, the pet program\n   - \[`astras-pet-os`\]\([^)]*\) -- Friendly Farmer's repo\n18\. /m, 'home first, then the repo');
+  assert.match(text, /^18\. [^\n]*\n   - `pet-program-18` -- pet program, not named yet\n   - \[`project-parrot`\]/m, 'an unnamed home says so');
+  const same = syncProfile(readme, registry, [...repos, { name: 'pet-program-77', private: false, description: '' }], [...programs, prog(77, 'Queue Quokka', 'pet-program-77', 'Watches retries.')]).text;
+  assert.match(same, /^77\. \*\*Queue Quokka\*\* -- watches retries\n   - \[`pet-program-77`\]\([^)]*\) -- pet program and its repo, not named yet$/m, 'a home and repo with the same name share one sub-bullet');
+  assert.match(text, /^45\. \*\*Closet Cat\*\* -- [^\n]*\n   - `pet-program-45`[^\n]*\n   - \[`the-cats-closet`\]/m, 'a pet program repo moves into the numbered list');
   assert.doesNotMatch(text.split("### Astra's PetOS")[0], /the-cats-closet/, 'and out of Web & More');
   assert.match(text, /startup-star`\]\([^)]*\) -- Startup Star: the tray tool/, 'a two-word name keeps its capitals');
   assert.deepEqual(syncProfile(text, registry, repos, programs).changes, [], 'a second run changes nothing');
@@ -58,7 +62,7 @@ test('pet-finder reports a pet repo listed under the wrong repo, pets missing fr
   assert.ok(!f.some((x) => x.repo === 'startup-star'), 'a tool without pet.json is not a pet');
 });
 
-test('hidden repos leave the profile; a pet’s home, then its tools, sit under its line (Astra, 2026-10-16)', () => {
+test('hidden repos leave the profile; a pet’s home, its repo, then its tools, sit under its line (Astra, 2026-10-16)', () => {
   const reg = { pets: [], pipeline: [], profile: { hidden: ['startup-star'], tools: { 'astras-pet-os': { home_note: 'moving to its own repo, the-farm', tools: ['the-kennel'] } } } };
   const rs = [...repos, { name: 'the-kennel', private: false, description: 'Pets made by other people.' }];
   const md = readme.replace("### Astra's PetOS", '- [`the-kennel`](https://github.com/findastra/the-kennel) -- pets made by other people\n\n### Astra\'s PetOS');
@@ -66,6 +70,15 @@ test('hidden repos leave the profile; a pet’s home, then its tools, sit under 
   assert.doesNotMatch(text, /startup-star/);
   const [before, petos] = text.split("### Astra's PetOS");
   assert.doesNotMatch(before, /the-kennel/);
-  assert.match(petos, /^1\. \*\*Friendly Farmer\*\*[^\n]*\n   - \*The Farm\* · \[`astras-pet-os`\][^\n]* -- home \[moving to its own repo, the-farm\]\n   - \[`the-kennel`\]\([^)]*\) -- pets made by other people\n18\. /m);
+  assert.match(petos, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - `the-farm` -- \*The Farm\*, the pet program \[moving to its own repo, the-farm\]\n   - \[`astras-pet-os`\][^\n]*\n   - \[`the-kennel`\]\([^)]*\) -- pets made by other people\n18\. /m);
   assert.deepEqual(syncProfile(text, reg, rs, programs).changes, [], 'a second run changes nothing');
+});
+
+test('a home with its own page is linked in its sub-bullet, and the repo follows it (Astra, 2026-10-16)', () => {
+  const reg = { pets: [], pipeline: [], profile: { hidden: ['startup-star'], tools: { 'astras-pet-os': { home_url: 'https://example.test/farm.html', repo_note: "Astra's PetOS home repo", tools: [] } } } };
+  const { text } = syncProfile(readme, reg, repos, programs);
+  assert.match(text, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - \[`the-farm`\]\(https:\/\/example\.test\/farm\.html\) -- \*The Farm\*, the pet program\n   - \[`astras-pet-os`\]\([^)]*\) -- Astra's PetOS home repo\n/m);
+  assert.deepEqual(syncProfile(text, reg, repos, programs).changes, [], 'a second run changes nothing');
+  const old = readme.replace(/^1\. .*$/m, '1. **Friendly Farmer** · [*The Farm*](https://example.test/farm.html) -- organizes the pets\n   - [`astras-pet-os`](https://github.com/findastra/astras-pet-os) -- Astra\'s PetOS home repo');
+  assert.equal(syncProfile(old, reg, repos, programs).text, text, 'the earlier home-on-the-line form converts cleanly');
 });

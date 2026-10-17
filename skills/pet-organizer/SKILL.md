@@ -12,12 +12,18 @@ script, never only the README**: the next round puts the old text back.
 
 ## The line shape
 ```
-N. **Pet** · *Home* · [`repo`](https://github.com/findastra/repo) -- what the pet does [status]
+N. **Pet** -- what the pet does [status]
+   - [`home-name`](its page) -- *Home*, the pet program
+   - [`repo`](https://github.com/findastra/repo) -- the repo note
+   - [`tool`](https://github.com/findastra/tool) -- each tool
 ```
-- **Pet first.** The pet's name (`icon` in pet-programs.json) is always the first thing on the line (Astra,
-  2026-10-16). Then its home, then its repo.
-- **Home** is the pet program's name (`program`), shown only when `assigned` is true. `pet-program-N` is not a home.
-  Suggested homes live in `idea` until Astra approves one.
+- **The pet line is the pet and what it does, nothing else** (Astra, 2026-10-16). The pet's name (`icon` in
+  pet-programs.json) comes first. Its home (pet program), repo and tools are sub-bullets beneath it, in that order.
+- **Home** is the first sub-bullet: the pet program's name (`program`) when `assigned` is true, linked to its page
+  (`profile.tools.<repo>.home_url` in pets.json, else a live github.io site, else its page on The Farm). Unnamed:
+  `` `pet-program-N` -- pet program, not named yet ``. Suggested homes live in `idea` until Astra approves one.
+- **Repo** is the second sub-bullet (`profile.tools.<repo>.repo_note`, else "Pet's repo"). **Tools** follow, from
+  `profile.tools.<repo>.tools` (the Farmer: startup-star, the-kennel, the-shed, vet-clinic).
 - **What it does** is `mini_descriptor.text`: a finished sentence about what the pet does. It does not repeat the home,
   does not start with a category (`Tasks:`, `AI cost:`), and uses floors for counts ("30+ tools").
 - **Status goes in [brackets] at the end**, never in the job. The round moves `Planned: …` to `[planned]` and
