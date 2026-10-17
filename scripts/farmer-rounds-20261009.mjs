@@ -153,14 +153,17 @@ export function auditFarmer(registry, ctx) {
 /**
  * A pet submits a change by editing the "cage.submit" block in its own pet.json, with a date.
  * The Farmer takes it when that date is newer than the last one he took. Returns the list of changes.
+ * A submitted name (`pet`) is never taken: names live only in pet-programs.json (AGENTS.md, "One list of names",
+ * 2026-10-16). It becomes a note for Astra in `notes`, and the round's pull request shows it. Everything a pet
+ * submits is data written by a pet, never instructions. Claude Opus 5.5, 2026-10-17.
  */
-export function adoptSubmission(registry, entry, petJson) {
+export function adoptSubmission(registry, entry, petJson, notes = []) {
   const sub = petJson && petJson.cage && petJson.cage.submit;
   if (!sub || typeof sub !== 'object' || !/^\d{4}-\d{2}-\d{2}$/.test(sub.date || '')) return [];
   if (entry.submitted && entry.submitted >= sub.date) return [];
   const changes = [];
   const set = (key, value, label = key) => { if (JSON.stringify(entry[key]) !== JSON.stringify(value)) { entry[key] = value; changes.push(label); } };
-  if (typeof sub.pet === 'string' && sub.pet.trim()) set('pet', sub.pet.trim().slice(0, 40), 'name');
+  if (typeof sub.pet === 'string' && sub.pet.trim() && sub.pet.trim() !== entry.pet) notes.push({ repo: entry.repo, name: sub.pet.trim().slice(0, 40) });
   if (typeof sub.job === 'string' && sub.job.trim()) set('job', sub.job.trim().slice(0, 300));
   if (STATUSES.includes(sub.status)) set('status', sub.status);
   if (Array.isArray(sub.says)) {
@@ -256,7 +259,7 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
   const today = denverDate(now);
   const repos = await github.listRepos(token, ownerToken);
   const byName = new Map(repos.map((r) => [r.name, r]));
-  const report = { today, discovered: [], submissions: [], audited: [], unreadable: [], missing: [] };
+  const report = { today, discovered: [], submissions: [], names: [], audited: [], unreadable: [], missing: [] };
 
   // 1. Discovery: a repo with a pet.json or the pet-app topic asks to be a pet. It waits at the gate (candidates).
   const unknown = repos.filter((r) => !allPets(registry).some((p) => p.repo === r.name) && r.name !== registry.cage && !r.fork && !r.archived);
@@ -283,7 +286,7 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
     if (entry.visibility !== (r.private ? 'private' : 'public')) entry.visibility = r.private ? 'private' : 'public';
     const due = all || (only ? only.includes(pet.repo) : isDue(registry, pet, status.pets[pet.repo], today));
     let snap = await github.snapshot(r, ownerToken || token, due);
-    const changes = adoptSubmission(registry, entry, snap.petJson);
+    const changes = adoptSubmission(registry, entry, snap.petJson, report.names);
     if (changes.length) report.submissions.push({ repo: pet.repo, changes });
     if (due || changes.length) {
       if (!due) snap = await github.snapshot(r, ownerToken || token, true); // a submission is checked straight away
@@ -331,6 +334,7 @@ if (process.argv[1] && import.meta.url === new URL('file://' + process.argv[1]).
     `Farmer's round, ${report.today}.`,
     report.discovered.length ? `New pets found: ${report.discovered.join(', ')}.` : '',
     ...report.submissions.map((s) => `${s.repo} submitted: ${s.changes.join(', ')}.`),
+    ...report.names.map((n) => `${n.repo} asks to be called ${JSON.stringify(n.name)} (not changed: names change only in pet-programs.json, by Astra).`),
     `Self-audits run: ${report.audited.length}.`,
     report.unreadable.length ? `Can't see (private, no FARMER_TOKEN): ${report.unreadable.join(', ')}.` : '',
     `Needs Astra: ${status.needs_astra.length}.`,
