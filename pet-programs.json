@@ -438,15 +438,15 @@
     },
     {
       "number": 30,
-      "program": "pet-program-30",
-      "assigned": false,
+      "program": "Fuzzboi Factory",
+      "assigned": true,
       "icon": "Fuzzboi Friend",
       "idea": "Fuzz Factory (or Fuzzbois, the site he watches)",
       "stage": "pipeline",
       "repo": "fuzzboi-friend",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-30-v1.0-mini-descriptor-v1.0",
+        "label": "fuzzboi-factory-v1.0-mini-descriptor-v1.0",
         "text": "Watches over the Fuzzbois website, which generates the Fuzzboi art, and shows its health with his mood. Mostly for fun: swap his look any time.",
         "reviewed": false
       }
@@ -513,30 +513,30 @@
     },
     {
       "number": 35,
-      "program": "pet-program-35",
-      "assigned": false,
+      "program": "Chat Stack",
+      "assigned": true,
       "icon": "Chat Rat",
       "idea": "Chat Nest",
       "stage": "pipeline",
       "repo": "chat-rat",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-35-v1.0-mini-descriptor-v1.0",
+        "label": "chat-stack-v1.0-mini-descriptor-v1.0",
         "text": "Saves local AI conversations and imported exports, filed by model and YYYYMMDD date, with a button that opens each folder.",
         "reviewed": false
       }
     },
     {
       "number": 36,
-      "program": "pet-program-36",
-      "assigned": false,
+      "program": "Mirror Pool",
+      "assigned": true,
       "icon": "Platform Platypus",
       "idea": "Mirror Pool",
       "stage": "pipeline",
       "repo": "platform-platypus",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-36-v1.0-mini-descriptor-v1.0",
+        "label": "mirror-pool-v1.0-mini-descriptor-v1.0",
         "text": "Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms.",
         "reviewed": false
       }
@@ -558,15 +558,15 @@
     },
     {
       "number": 38,
-      "program": "pet-program-38",
-      "assigned": false,
+      "program": "Infinite Studio",
+      "assigned": true,
       "icon": "Pole Puff",
       "idea": "Astra's Infinite Pole (the world she looks after), or Pole Lookout",
       "stage": "seed",
       "repo": "pet-program-38",
       "repo_exists": false,
       "mini_descriptor": {
-        "label": "pet-program-38-v1.0-mini-descriptor-v1.0",
+        "label": "infinite-studio-v1.0-mini-descriptor-v1.0",
         "text": "Manages Astra's Infinite Pole.",
         "reviewed": false
       }
