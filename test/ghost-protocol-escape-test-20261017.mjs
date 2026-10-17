@@ -16,8 +16,8 @@ const fn = (name) => {
   }
   throw new Error(`${name} has no end`);
 };
-const ctx = vm.createContext({});
-vm.runInContext(`${fn('escapeHTML')}\n${fn('parseSuggestJSON')}`, ctx);
+const ctx = vm.createContext({ URL });
+vm.runInContext(`${fn('escapeHTML')}\n${fn('parseSuggestJSON')}\n${fn('normalizeLink')}`, ctx);
 
 const attack = '<img src=x onerror=alert(1)>';
 
@@ -33,4 +33,20 @@ test('AI-suggested items are escaped before they are shown or saved', () => {
 test('typed items go through the same escape', () => {
   assert.match(fn('addCustomItem'), /t:escapeHTML\(title\)/);
   assert.equal(ctx.escapeHTML(attack), '&lt;img src=x onerror=alert(1)&gt;');
+});
+
+test('links are kept to http and https', () => {
+  for (const bad of ['javascript:alert(1)', 'JAVASCRIPT:alert(1)', 'data:text/html,<script>alert(1)</script>',
+    'vbscript:msgbox(1)', `"><img src=x onerror=alert(1)>`, '   ']) {
+    assert.equal(ctx.normalizeLink(bad), '', bad);
+  }
+  assert.equal(ctx.normalizeLink('example.com/a?x=1&y="2"'), 'https://example.com/a?x=1&y=%222%22');
+  assert.equal(ctx.normalizeLink('HTTP://Example.com'), 'http://example.com/');
+});
+
+test('links are fully escaped where they are shown', () => {
+  const render = fn('renderTiers');
+  assert.match(render, /it\.link && \/\^https\?:\\\/\\\/\/i\.test\(it\.link\)/);
+  assert.match(render, /href="'\+escapeHTML\(it\.link\)\+'"/);
+  assert.doesNotMatch(render, /it\.link\.replace/);
 });

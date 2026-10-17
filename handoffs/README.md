@@ -9,7 +9,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 | Card | For | Status |
 | --- | --- | --- |
 | [026: Pictures only Astra can take (Flash Audit A55), and 25 picture PRs](026-any-pictures-astra-takes-20261017.md) | any | open, waits on Astra: in-world and desktop pictures; chat-rat#4 after chat-rat#1 |
-| [025: Security follow-ups from the 2026-10-16 assessment](025-any-security-follow-ups-20261017.md) | any | open: the Farmer's round; findings 3 to 5; PR #26's security model |
+| [025: Security follow-ups from the 2026-10-16 assessment](025-any-security-follow-ups-20261017.md) | any | open: the Farmer's round; findings 3 to 5; PR #26's security model; merge the ghost-protocol link fix |
 | [021: Startup Star shows API Fairy's bubbles](021-codex-startup-star-api-fairy-bubbles-20261017.md) | Codex | open |
 | [020: Chat sync, folder rename plan row, Role Fairy (Fairy Ring #83), Nullbot dropped](020-any-chat-sync-and-folder-rename-20261017.md) | any | open, waits on Astra: File Master rename row |
 | [019: Portfolio Puffer and the portfolio](019-any-portfolio-puffer-and-the-portfolio-20261017.md) | any | open, waits on Astra: read every employer page (site merged 2026-10-17) |

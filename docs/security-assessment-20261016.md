@@ -93,16 +93,37 @@ Any AI session with those tools can reach the native farm from outside.
 ### 6. Low: Ghost Protocol shows checklist text as HTML
 
 Added 2026-10-17. Ghost Protocol (`apps/ghost-protocol-20261008.html`, and the live site from `findastra/ghost-protocol`)
-builds its checklist as HTML text. Two kinds of text were not escaped:
+builds its checklist as HTML text. Three kinds of text were not escaped fully:
 
 - **Items you type.** Only you can reach this (self-XSS). PR #25 (open) escapes them.
 - **AI-suggested items.** Model output is put into the page as HTML and saved with your items. This runs only inside
   the hosted Claude artifact, where the AI is available; the GitHub Pages copy cannot reach the AI. PR #25 does not
   cover it.
+- **Links on your items.** Only `"` was replaced before a link went into `href`. Not exploitable as written (a link
+  without `http://` or `https://` got `https://` in front, so `javascript:` became a harmless web address), but it
+  relied on that one prefix.
 
-**Fixed in this copy, 2026-10-17:** PR #25 (merged) escapes typed items; `parseSuggestJSON` now escapes suggested
-items too, guarded by `test/ghost-protocol-escape-test-20261017.mjs`. The live site gets the same fix from
-`findastra/ghost-protocol` PR #1, which waits for Astra to merge it.
+Why it matters beyond one page: every `findastra` GitHub Pages site shares the `findastra.github.io` origin, so script
+that runs on one of them can read and change every other one's `localStorage`.
+
+**Fixed in both copies, 2026-10-17:**
+- Typed items: PR #25 (merged). Suggested items: `parseSuggestJSON` escapes them before they are shown or saved, and
+  `escapeHTML` covers `'` (PR #43 here, `findastra/ghost-protocol` PR #1 on the live site; both merged by Astra).
+- Links: `normalizeLink` keeps only links the browser reads as `http` or `https` and drops everything else; the list
+  shows a link only if it starts with `http://` or `https://`, escaped in full with `escapeHTML`. In this copy and in
+  `index.html`, `content.html` and `ghost-protocol-20261008.html` of `findastra/ghost-protocol` (branch
+  `claude/link-escape-20261017`, waits for Astra to merge).
+- Test: `test/ghost-protocol-escape-test-20261017.mjs` runs the page's own `escapeHTML`, `parseSuggestJSON` and
+  `normalizeLink` (`javascript:`, `data:`, `vbscript:` and a quote-breaking link are dropped) and checks how
+  `renderTiers` writes links. Its link tests fail on the page without this fix.
+- Browser check, Chromium 2026-10-17 (Claude Opus 5.5), on the hub copy, the live `index.html` and `content.html`: a
+  typed item and an AI suggestion (from a stubbed `window.claude`), both titled `<img src=x onerror=alert(1)>`, show
+  as text in the suggestion panel, in the list, and again after a reload from `localStorage`; no alert runs, no script
+  errors; a typed `javascript:alert(1)` link is dropped. With empty storage the built-in checklist's HTML is identical
+  to the unfixed page (41 items). Control: the same check on the page before PR #25 (`04cb641`) fails, with 18 alerts.
+- Items saved before the fix stay as they were in that browser's `localStorage`.
+- The rest of the page was checked for the same mistake: the terminal's AI chat writes replies with `textContent`, and
+  the footprint panel escapes every value from the browser (including `document.referrer`) before it is shown.
 
 ## What the repo shows about the skills behind it
 
@@ -141,6 +162,7 @@ Checked again on `main` at `b904931`, across all 44 branches and PRs #22 to #36,
   (`scripts/access-policy-20261014.mjs`, `docs/security-boundaries-20261014.md`). It is not connected to anything
   yet, so finding 1 stands. PR #26 also replaces the rings and R W X model with "topology is not authority" and
   removes the Known gaps table, including gaps 11 and 12. That choice is Astra's.
-- **Finding 6** is new (above), rated low, and fixed in this copy; the live site's fix is PR #1 in `ghost-protocol`.
+- **Finding 6** is new (above), rated low. Typed and suggested items are fixed in both copies; links are fixed here
+  and wait on a `ghost-protocol` merge.
 - **Finding 1:** Astra decided not to turn on branch protection (accepted risk).
 - Open work: [card 025](../handoffs/025-any-security-follow-ups-20261017.md).

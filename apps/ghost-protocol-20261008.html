@@ -1239,7 +1239,7 @@ function renderTiers(){
       html += '      </div>';
       if(it.d || it.link){
         html += '      <div class="item-detail"><div class="item-detail-clip"><div class="item-detail-inner">'+(it.d||'');
-        if(it.link) html += '<div class="item-link"><a href="'+it.link.replace(/"/g,'&quot;')+'" target="_blank" rel="noopener">Open link &#8599;</a></div>';
+        if(it.link && /^https?:\/\//i.test(it.link)) html += '<div class="item-link"><a href="'+escapeHTML(it.link)+'" target="_blank" rel="noopener">Open link &#8599;</a></div>';
         var ws = ITEM_STEPS[it.id];
         if(ws && ws.steps && ws.steps.length){
           var doneCount = 0;
@@ -1460,7 +1460,8 @@ function normalizeLink(raw){
   var link = (raw||'').trim();
   if(!link) return '';
   if(!/^https?:\/\//i.test(link)) link = 'https://' + link;
-  return link;
+  // Only http and https links are kept; anything the browser cannot read as one is dropped.
+  try{ var u = new URL(link); return /^https?:$/.test(u.protocol) ? u.href : ''; }catch(e){ return ''; }
 }
 // Item text is rendered as HTML (built-in details carry links), so typed text is stored escaped.
 function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
