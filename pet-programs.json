@@ -237,7 +237,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "halo-list-v1.0-mini-descriptor-v1.0",
-        "text": "Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned.",
+        "text": "Opens any pet program, tool or trick in VS Code, rates how vibe-coded it is, lists its errors and suggests a clearer structure, then guides each update with Markdown notes that say what the code does. Its one goal: you understand your code.",
         "reviewed": false
       }
     },
