@@ -21,7 +21,8 @@ test('the daily round never pushes to main: it pushes a dated farmer/rounds- bra
     assert.match(p, /refs\/heads\/\$BRANCH"?$/, `every push names the round's branch: ${p}`);
     assert.doesNotMatch(p, /\bmain\b|--force|\s-f\b|--mirror|--all/, `no push to main, no force: ${p}`);
   }
-  assert.match(workflow, /BRANCH="farmer\/rounds-\$\(TZ=America\/Denver date \+%Y%m%d\)"/);
+  assert.match(workflow, /DAY="farmer\/rounds-\$\(TZ=America\/Denver date \+%Y%m%d\)"/);
+  assert.match(workflow, /while git ls-remote --exit-code --heads origin "\$BRANCH"/, 'a second round the same day takes a new name, never overwrites');
   assert.doesNotMatch(workflow, /HEAD:main|origin\s+main|git\s+pull/, 'nothing pulls or pushes main');
   assert.match(workflow, /gh pr create --base "\$BASE" --head "\$BRANCH"/);
   assert.doesNotMatch(workflow, /gh pr merge|--auto|--admin/, 'the round never merges its own pull request');

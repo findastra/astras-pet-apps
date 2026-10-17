@@ -50,15 +50,14 @@ jobs:
           BASE: ${{ github.ref_name }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="farmer/rounds-$(TZ=America/Denver date +%Y%m%d)"
+          # A second round on the same day takes the next free name (-2, -3, ...); a branch is never overwritten.
+          DAY="farmer/rounds-$(TZ=America/Denver date +%Y%m%d)"
+          BRANCH="$DAY"; n=1
+          while git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; do n=$((n + 1)); BRANCH="$DAY-$n"; done
           git config user.name "Friendly Farmer"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pets.json status cage-data.js ROSTER.md README.md RELATIONS.md MOOD-KEY.md apps/astras-pet-apps-20261008.html
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
-          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; then
-            echo "::error::Today's round branch $BRANCH already exists. Merge or close its pull request and delete the branch, then run the round again."
-            exit 1
-          fi
           git switch -c "$BRANCH"
           git commit -m "$SUMMARY"
           git push origin "HEAD:refs/heads/$BRANCH"
