@@ -34,7 +34,9 @@ export function systemMapData(registry, extra, catalog = JSON.parse(readFileSync
     n.programNumber = p.number; n.programName = p.program; n.nameAssigned = p.assigned;
     n.nameIdea = p.idea; n.catalogStage = p.stage;
     const registered = [...(registry.pets || []), ...(registry.pipeline || [])].find(x=>x.repo===p.repo);
-    const route = registered?.interface_url;
+    // A local prototype route is navigation only; it never admits a seed or grants access.
+    const localPrototype = typeof p.interface_local_url === 'string' && /^apps\/[a-z0-9-]+\.html$/.test(p.interface_local_url) ? p.interface_local_url : null;
+    const route = localPrototype || registered?.interface_url;
     if (typeof route === 'string' && (/^https:\/\//.test(route) || /^apps\/[a-z0-9-]+\.html$/.test(route))) n.programUrl=route;
   }
   for (const n of nodes.values()) {

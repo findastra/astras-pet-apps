@@ -3,7 +3,7 @@
 Every pet program in Astra's PetOS, numbered for good. Each **mini-descriptor** is one or two sentences on what the pet
 program actually does; it is shown in the pet's own repo, the findastra profile and the System Map. Its label follows
 the naming rules: `<pet-program>-v1.0-mini-descriptor-v1.0`. **Bold** program names are assigned; `pet-program-#`
-means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 81 reviewed.
+means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 82 reviewed.
 
 Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not edit this page; edit the JSON.
 
@@ -50,7 +50,7 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 39 | Procreate Panda | pet-program-39 | [pet-program-39](https://github.com/findastra/pet-program-39) | Seed | Not decided yet: Procreate Panda’s job is Astra’s to choose. *(draft)* |
 | 40 | Skill Scout | pet-program-40 | [pet-program-40](https://github.com/findastra/pet-program-40) | Seed | Watches the agent and skill files (AGENTS.md, CLAUDE.md, SKILL.md) for every AI assistant and model, and tracks what changed, who changed it and why. *(draft)* |
 | 41 | OSC Sealion | pet-program-41 | [pet-program-41](https://github.com/findastra/pet-program-41) | Seed | Monitors OSC packets and finds problems when several apps share channels to VRChat, OSCGoesBrrr and VRCFaceTracking. *(draft)* |
-| 42 | Piranesi Nessi | pet-program-42 | [pet-program-42](https://github.com/findastra/pet-program-42) | Seed | Manages Piranesi House. *(draft)* |
+| 42 | Piranesi Nessi | **Nessi's Ocean** | [pet-program-42](https://github.com/findastra/pet-program-42) | Seed | Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools. Runtime is planned. *(draft)* |
 | 43 | Photo Dodo | pet-program-43 | [pet-program-43](https://github.com/findastra/pet-program-43) | Seed | Keeps track of all your saved pictures: where each one is, what it shows, and whether it is backed up. *(draft)* |
 | 44 | Video Vulture | pet-program-44 | [pet-program-44](https://github.com/findastra/pet-program-44) | Seed | Keeps track of all your saved videos, the same way Photo Dodo does for pictures: where each one is, what it shows, and whether it is backed up. *(draft)* |
 | 45 | Closet Cat | pet-program-45 | [pet-program-45](https://github.com/findastra/pet-program-45) | Seed | Organizes your closet (what you own and what goes together) and keeps your favourite places to shop. *(draft)* |
@@ -90,3 +90,4 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 79 | AI Dashund | **AI Doghouse** | [ai-doghouse](https://github.com/findastra/ai-doghouse) | Seed | Keeps vetted research on AI agents, agentic harnesses, security and provenance, applies it to Astra’s PetOS, and writes the research paper. *(draft)* |
 | 80 | Rescue Retriever | **The Recovery Room** | [the-recovery-room](https://github.com/findastra/the-recovery-room) | Seed | After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order. *(draft)* |
 | 81 | Intel Owl | pet-program-81 | [pet-program-81](https://github.com/findastra/pet-program-81) | Seed | Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout. *(draft)* |
+| 82 | Door Dormouse | **The Threshold** | [the-threshold](https://github.com/findastra/the-threshold) | Seed | Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected. *(draft)* |
