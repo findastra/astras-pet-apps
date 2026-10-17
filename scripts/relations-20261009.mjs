@@ -24,7 +24,7 @@ export function buildRelations(registry) {
   out.push('Changes start at the bottom and are saved upward. Nothing generated is edited by hand.', '');
   out.push('| Level | Who | Owns | Saves by |', '|---|---|---|---|');
   out.push('| 1 | **Astra** | Approvals: new art (it costs money), a pet\'s job, anything in a card waiting on her | Answering a card, or telling an assistant |');
-  out.push('| 2 | **Friendly Farmer** (`astras-pet-apps`) | `pets.json`: who exists, kinds, art, relations, the mood key | His daily round, and assistants working on the Cage |');
+  out.push('| 2 | **Friendly Farmer** (`astras-pet-os`) | `pets.json`: who exists, kinds, art, relations, the mood key | His daily round, and assistants working on the Cage |');
   out.push('| 3 | **Each pet\'s repo** | Its own app, README, cards, and its own name, job, status, bubble lines, mood lines and audit | Editing its `pet.json`, and submitting identity changes in `cage.submit` |');
   out.push('| 4 | **Generated** | `cage-data.js`, `ROSTER.md`, the README table, the Farmer\'s desk, `MOOD-KEY.md`, this file, `status/pets-status.json`, the profile\'s pet list | Never by hand: the build and the rounds rewrite them |', '');
   out.push('```mermaid', 'flowchart TD');
