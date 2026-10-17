@@ -18,7 +18,7 @@ Astra wants other software developers to read her build without frustration. She
 ## Glossary: Astra's PetOS words and the standard terms
 | Astra's PetOS | Standard software term | Notes |
 |---|---|---|
-| L1, L2, L3, L4 | Intelligence levels: programs (third-party and tools), pet program (dashboard and runtime), agentic harness, verified human | L4 is the verified human who owns the entire secure ecosystem and approves everything that matters. Decided 2026-10-13, L1 and L2 redrawn 2026-10-14. |
+| L1, L2, L3, L4 | Intelligence levels: L1 third-party programs, native programs and tools you create; L2 the pet program (dashboard) and the native tricks you create; L3 the pet program's agentic harness plus your AI model; L4 the verified human (Astra, 2026-10-16) | L4 is the verified human who owns the entire secure ecosystem and approves everything that matters. Decided 2026-10-13, L1 and L2 redrawn 2026-10-14. |
 | Maker agent / checker agent | Maker-checker rule (four-eyes, two-person rule) | Was "offensive / defensive agent"; in security "offensive" means attacking. Decided 2026-10-13. |
 | Versions with `v` | Version tags (`v1.0`) | `pet-program-3-v1.0-icon-2-v1.0`: a name keeps its number, a version never hides inside it. Decided 2026-10-13. |
 | Tool box | Card or panel with a title (HTML `fieldset` with a `legend`) | Border with the versioned label on top, everything about the tool inside. |
@@ -62,6 +62,12 @@ Astra wants other software developers to read her build without frustration. She
 | Sick cow from another farm | Untrusted dependency (supply-chain risk) | Never installed without a trusted signature and Astra's approval. |
 | Gatekeeper Goddess (Iron Gates) | Policy engine / permission broker | Grants scopes; never approves her own. |
 | Pet connector / plugin | MCP server (Model Context Protocol) | How a pet program exposes tools to a harness, with declared permissions. |
+| Home (cyberhome) | The pet program: its dashboard and runtime | One per pet. Listed first under the pet. Decided 2026-10-16. |
+| Tool | Program or script the pet program owns (deterministic code) | Runs without AI. ON/OFF, sick light, version. Can be bound to clicks: one, two, three or more (Clicker Training). Decided 2026-10-16. |
+| Trick | Skill (`SKILL.md`), prompt or workflow | What the seated AI knows how to do; uses only that pet's tools. If an AI has to follow it, it is a trick. Decided 2026-10-16. |
+| Your Programs | Applications or sites you built that a pet looks after (worlds, websites) | Not tools: the pet manages them; they are not part of it. Decided 2026-10-16. |
+| Commons | Shared registry / issue tracker (the Kennel, the Shed, the vet-clinic) | Hold other people's submissions, not our code. Decided 2026-10-16. |
+| Third-party programs | Third-party software | Made by others; a pet runs them (R X). |
 
 ## App vs program
 - A **program** is any code a computer runs: apps, services, drivers, scripts, libraries.

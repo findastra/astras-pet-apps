@@ -158,6 +158,14 @@
     "sick": "I need you: {needs}.",
     "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
   },
+  "profile": {
+    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm, Astra 2026-10-16), its home first (its cyberhome), then its tools.",
+    "hidden": [],
+    "also_listed": ["findastra-discord-presence"],
+    "tools": {
+      "astras-pet-os": { "home_note": "moving to its own repo, the-farm", "tools": ["startup-star", "the-kennel", "the-shed", "vet-clinic"] }
+    }
+  },
   "rounds": {
     "about": "The Friendly Farmer's rounds (scripts/farmer-rounds-20261009.mjs). Daily: find new pet repos, take each pet's submissions from its pet.json, run the self-audits that are due, write status/pets-status.json, rebuild. Each pet audits itself on its cadence and day.",
     "status_file": "status/pets-status.json",
@@ -1158,7 +1166,8 @@
         "repo": null,
         "job": "Manages Piranesi House.",
         "for": "piranesi-house",
-        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house).",
+        "program": "Nessi's Ocean",
+        "note": "Confirmed by Astra on 2026-10-12: Piranesi Nessi manages Piranesi House, her Piranesi-inspired VRChat world (repo findastra/piranesi-house). Program named Nessi's Ocean by Astra on 2026-10-16.",
         "works_with": [
           {
             "pet": "unity-unicorn",
@@ -1211,6 +1220,7 @@
       },
       {
         "pet": "Pet Police Officer",
+        "program": "The Police Station",
         "repo": null,
         "job": "Runs The Police Station: watches every write and every agent key use, live; switches a tool, connection or key OFF (never ON); alerts Gatekeeper Goddess and Astra (L4); raises the alarm everywhere on a live break or a past breach.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Police Station (repo findastra/the-police-station, created 2026-10-14). Moves to the pipeline when Astra lets it in at the gate."
@@ -1223,9 +1233,36 @@
       },
       {
         "pet": "Rescue Retriever",
+        "program": "The Recovery Room",
         "repo": null,
         "job": "Runs The Recovery Room: after a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order, isolated and with no farmhand in its seat.",
         "note": "Approved by Astra on 2026-10-14. Pet program: The Recovery Room (repo findastra/the-recovery-room)."
+      },
+      {
+        "pet": "Intel Owl",
+        "repo": null,
+        "job": "Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout.",
+        "note": "Selected in the October 14 phone handoff supplied by Astra. Replaces Scout Fox / Intel Ibis; planned seed only, no repo or runtime yet.",
+        "works_with": [
+          {
+            "pet": "file-master",
+            "why": "Shares defensive findings; File Master retains file management ownership."
+          }
+        ]
+      },
+      {
+        "pet": "Door Dormouse",
+        "program": "The Threshold",
+        "repo": null,
+        "for": "liminal-doors",
+        "job": "Manages Liminal Doors: floor planning, tools, Unity project metadata and the preview website.",
+        "note": "Named and requested by Astra on 2026-10-16. Browser prototype is on Codex's branch; no independent repo, native desktop pet, automatic schedule, L3 connection or Unity execution grant.",
+        "works_with": [
+          {
+            "pet": "unity-unicorn",
+            "why": "The Threshold prepares world build requests; Unity Unicorn owns reusable editor tools. Exchanges are manual exports until an authorized bridge exists."
+          }
+        ]
       }
     ],
     "already_in_pipeline": [

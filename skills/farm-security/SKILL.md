@@ -86,5 +86,12 @@ The whole `astras-pet-os` repo is the core: every change to it merges only with 
 - Third-party tools and tricks come through **the Shed**, quarantined and checked like any stranger's code.
   Details: [TOOLS-AND-TRICKS.md](../../TOOLS-AND-TRICKS.md) and [PET-PROGRAM-FRAMEWORK.md](../../PET-PROGRAM-FRAMEWORK.md), sections 11 and 12.
 
+## 10. Mass-delete (Astra, 2026-10-16)
+- **One tool, one owner:** `file-master-v1.0-mass-delete-v1.0`, File Master's. Any other pet uses it only with a grant from Iron Gates that Astra approves. Rules in code: `scripts/mass-delete-guard-20261016.mjs`.
+- **Only its own things, within bounds:** a pet deletes only inside its own repo folder or declared data folder. Never another pet's folder, never the core, never `.git`, `pet.json`, `AGENTS.md`, `CLAUDE.md` or `LICENSE`. At most 200 items a run.
+- **Never a hard delete:** the tool shows the exact list, waits for L4, then moves the items to `_to_delete/<run>/` with an undo file. Emptying it is Astra's job.
+- **Everyone is told:** every plan and every run sends a notice to **File Master** and **GitHub Goldfish**. The Pet Police Officer watches the write, and it can switch the tool OFF.
+- Deleting things online (Discord Damsel's DM cleanup, Mail Snail's mail cleanup) follows the same rules: Astra approves the exact list, and File Master and Goldfish get the notice.
+
 ## 9. When unsure
 Stop and ask Astra. Name the ring, the R W X involved and what crosses which boundary.
