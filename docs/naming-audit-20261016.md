@@ -20,8 +20,8 @@
 |---|---|
 | Numbered pets (`pet-programs.json`, #1 to #82) | 82: 19 registered, 17 pipeline, 15 seed, 31 roadmap |
 | Have their own repo on GitHub | 80 (#81 Intel Owl and #82 Door Dormouse have none) |
-| Pet program (home) decided | **32** |
-| Pet program not decided yet | **50** (the next rapid round starts at **#25 Patch Cat**) |
+| Pet program (home) decided | **36** |
+| Pet program not decided yet | **46** (the next rapid round starts at **#30 Fuzzboi Friend**) |
 | Pet name not decided | 1 (#77, `pet-program-77-icon-77`) |
 | Not numbered yet | 3: **Workflow Whale** (Workflow Whirlpool, only on the PC), **Index Mole** (named by Astra on 2026-10-12, never recorded), **Role Fairy** (pet #13 on the 2026-10-07 roster, now only a Discord repo) |
 
@@ -77,16 +77,21 @@
 | 79 | AI Dashund | AI Doghouse |
 | 80 | Rescue Retriever | The Recovery Room |
 | 82 | Door Dormouse | The Threshold |
-## Rapid-question queue (50 undecided)
+## Round 18, 2026-10-16 (Astra's answers)
+
+| # | Pet | Pet program |
+|---|---|---|
+| 25 | Patch Cat | The Litter Box |
+| 26 | Meme Fiend | Cursed Archive |
+| 28 | Backup Beaver | Backup Dam |
+| 29 | Rift Rabbit | Wonderland Launchpad |
+
+## Rapid-question queue (46 undecided)
 
 Ask in order, with four explained suggestions plus free text, and save each answer to `pet-programs.json` straight away. **Idea** is the suggestion already on file.
 
 | # | Pet | Stage | Idea on file |
 |---|---|---|---|
-| 25 | Patch Cat | pipeline | Patch Clinic |
-| 26 | Meme Fiend | pipeline | Meme Lair |
-| 28 | Backup Beaver | pipeline | Backup Dam |
-| 29 | Rift Rabbit | pipeline | Rabbit Hole |
 | 30 | Fuzzboi Friend | pipeline | Fuzz Factory (or Fuzzbois, the site he watches) |
 | 31 | Wifi Butterfly | pipeline | Signal Garden |
 | 32 | Deck Duck | pipeline | Deck Pond |

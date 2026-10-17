@@ -363,30 +363,30 @@
     },
     {
       "number": 25,
-      "program": "pet-program-25",
-      "assigned": false,
+      "program": "The Litter Box",
+      "assigned": true,
       "icon": "Patch Cat",
       "idea": "Patch Clinic",
       "stage": "pipeline",
       "repo": "patch-cat",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-25-v1.0-mini-descriptor-v1.0",
+        "label": "the-litter-box-v1.0-mini-descriptor-v1.0",
         "text": "Keeps Windows, drivers and apps patched against security holes (its confirmed security role; the rest of its job is Astra’s to choose).",
         "reviewed": false
       }
     },
     {
       "number": 26,
-      "program": "pet-program-26",
-      "assigned": false,
+      "program": "Cursed Archive",
+      "assigned": true,
       "icon": "Meme Fiend",
       "idea": "Meme Lair",
       "stage": "pipeline",
       "repo": "meme-fiend",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-26-v1.0-mini-descriptor-v1.0",
+        "label": "cursed-archive-v1.0-mini-descriptor-v1.0",
         "text": "Archives your favourite memes, especially from Discord, and will run a tool for making your own (not built yet). Your memes stay on your PC.",
         "reviewed": false
       }
@@ -408,30 +408,30 @@
     },
     {
       "number": 28,
-      "program": "pet-program-28",
-      "assigned": false,
+      "program": "Backup Dam",
+      "assigned": true,
       "icon": "Backup Beaver",
       "idea": "Backup Dam",
       "stage": "pipeline",
       "repo": "backup-beaver",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-28-v1.0-mini-descriptor-v1.0",
+        "label": "backup-dam-v1.0-mini-descriptor-v1.0",
         "text": "Like API Fairy for backups: keeps track of when the last backup ran, where it is, and how to get to it.",
         "reviewed": false
       }
     },
     {
       "number": 29,
-      "program": "pet-program-29",
-      "assigned": false,
+      "program": "Wonderland Launchpad",
+      "assigned": true,
       "icon": "Rift Rabbit",
       "idea": "Rabbit Hole",
       "stage": "pipeline",
       "repo": "rift-rabbit",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-29-v1.0-mini-descriptor-v1.0",
+        "label": "wonderland-launchpad-v1.0-mini-descriptor-v1.0",
         "text": "A white rabbit that preps and tracks VR software and performance.",
         "reviewed": false
       }
