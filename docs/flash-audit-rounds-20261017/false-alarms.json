@@ -1,0 +1,3 @@
+[
+  { "repo": "api-fairy", "check": "A26", "match": "a personal C:\\Users path", "why": "the paths in `src/Snapshot.cs` and `tests/Tests.cs` are test fixtures with a made-up user folder (`you`), not personal paths (A26). The auditor now skips made-up folders." }
+]

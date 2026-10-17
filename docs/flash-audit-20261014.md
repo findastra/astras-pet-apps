@@ -79,7 +79,14 @@ After **each round**, and after substantial owner corrections within a round:
 5. Hand off the next round with exact progress and open decisions. Never count a
    Not verified check as passed merely to finish a round.
 
-All checks, A01-A56, are in one matrix in section 3, most important first.
+All checks, A01-A57, are in one matrix in section 3, most important first.
+
+### Idle Flash Audit (Astra, 2026-10-17)
+
+The same audit can run while Astra is away: every program checked, fixes that need no decision on branches with
+pull requests, a repo started for any named pet without one, and round cards for her to read on an iPad. How to run
+it, and exactly what counts as needing no decision: [idle-flash-audit-20261017.md](idle-flash-audit-20261017.md).
+First run: [flash-audit-rounds-20261017/](flash-audit-rounds-20261017/README.md).
 
 ## 3. Complete audit matrix, most important first
 
@@ -105,10 +112,11 @@ Repo, files and folders.
 
 | ID | Check | Evidence required / exception to report |
 |---|---|---|
-| A13 | Individual repo | Verify repo association, source, entry point, metadata and artwork. Look at relevant branches before saying work is absent. |
+| A13 | Individual repo | Verify repo association, source, entry point, metadata and artwork. Look at relevant branches before saying work is absent. Ask GitHub, not the catalog's `repo_exists`. **Every named pet has a repo (Astra, 2026-10-17):** a pet without one gets it started by the audit itself (the seed-repo shape in [idle-flash-audit-20261017.md](idle-flash-audit-20261017.md)), so it is never left for later. |
 | A14 | Required repo files | Check pet.json, sprite target, entry target, README, AGENTS.md, CLAUDE.md, LICENSE and applicable pet-app topic. |
 | A15 | README and credit | Check how-to-run and Limits, public credit "A pet app by Astra", model/version/date, license, truthful status and naming exceptions. |
 | A56 | Work saved in its native folder | Everything the project works on lives where a developer expects it: source, tools, pictures, docs and build output in its own repo folder (`%USERPROFILE%\Documents\Astra's PetOS\<repo>`); the user's own data (private records, saved chats, settings) in its declared data folder outside the repo (`%LOCALAPPDATA%\<repo>\`, recorded as `data_folder` in pet.json); caches and logs in that data folder, never in the repo. Nothing it makes lands in Downloads, the Desktop, a dated chat folder (`Documents\Codex\<date>`, `Documents\ChatGPT\...`), the hub or another pet's folder. Check pet.json, the code's write paths and a File Master scan of the PC. Report each stray file with its proper home; moving it goes through a File Master plan. |
+| A57 | Current names only | Live text uses today's names: **Astra's PetOS** and `astras-pet-os` (never `Astra's Pet Apps`, `astras-pet-apps` or `findastra-pet-apps`), the folder `Documents\Astra's PetOS` (never `Documents\Projects`), each repo's current GitHub name, and the pet and program names in `pet-programs.json`. Lines that tell history keep the old name, and so do names that code depends on (browser storage keys, `%LOCALAPPDATA%\astras-pet-apps`, file names other programs open): report those with what a rename would take. Fix documents on a branch; code waits for its owner. Added by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17, in the first Idle Flash Audit. |
 | A16 | Metadata and self-audit | Validate pet.json including job, runs_on, entry, sprite, status, framework, tools, links and audit cadence/subject/needs. Hatching/growing/grown must reflect evidence. |
 | A17 | Git and deployment | Record dirty files, ahead/behind commits, pushed branch, merged state and deployed version separately. Do not reset/stash/discard another agent's work. |
 
