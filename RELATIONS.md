@@ -168,4 +168,4 @@ Health Hummy, Finance Finch, Meme Fiend *. These pets' data never leaves the PC.
 
 ### On their own so far
 
-Python Panther, Astra Wisp, Patty, Voicemeeter Bug, Sugarcube *, Patch Cat *, Fuzzboi Friend *, Platform Platypus *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.
+Python Panther, Astra Wisp, Patty, Voicemeeter Bug, Platform Platypus, Sugarcube *, Patch Cat *, Fuzzboi Friend *. Every pet still submits to the Farmer and audits itself; these have no links to other pets yet.

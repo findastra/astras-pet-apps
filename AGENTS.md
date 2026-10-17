@@ -132,6 +132,8 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
 
+Platform Platypus registered with its existing seed sheet (no new paid art), card 010 closed, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17.
+
 Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16.
 
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
