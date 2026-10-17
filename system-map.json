@@ -161,7 +161,7 @@
       "type": "model",
       "state": "now",
       "layer": 5,
-      "job": "The local model inside VRChat AI Astra (represented by Astra Wisp). Her only avenues: her own pet program and the VRChat chatbox bridge. No files, no keys, no other pets."
+      "job": "The local model inside VRChat AI Astra (represented by Astra Wisp). Her only avenues: her own pet program (The Astral Plane) and her VRChat body (chatbox drafts today). No files, no keys, no other pets."
     },
     {
       "id": "profile",
@@ -988,12 +988,12 @@
     },
     {
       "id": "ai-astra",
-      "name": "AI Astra",
+      "name": "The Astral Plane",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "VRChat AI Astra: her desktop app and the bridge into the VRChat chatbox. Astra Wisp watches her health."
+      "job": "The home of AI Astra, an embodied AI: her mind and desktop app, her VRChat body (chatbox drafts today) and her voice. Astra Wisp watches her health."
     },
     {
       "id": "data-dealer-project",
@@ -2086,7 +2086,7 @@
       "to": "osc-sealion",
       "carries": "cue",
       "state": "suggested",
-      "why": "Both work through VRChat OSC: the bridge and the OSC manager should not fight over it."
+      "why": "Both work through VRChat OSC: AI Astra's VRChat body and the OSC manager should not fight over it."
     },
     {
       "from": "rift-rabbit",
@@ -2667,7 +2667,7 @@
       "to": "magic-chatbox",
       "carries": "manages",
       "state": "idea",
-      "why": "Both write to the VRChat chatbox; Astra Wisp’s bridge and Magic Chatbox should not talk over each other."
+      "why": "Both write to the VRChat chatbox; AI Astra's VRChat body and Magic Chatbox should not talk over each other."
     },
     {
       "from": "pole-puff",
@@ -4451,7 +4451,7 @@
           {
             "language": "Python",
             "percent": 90.6,
-            "why": "The AI Astra backend and its API: the bridge logic that talks to the AI and to VRChat over OSC."
+            "why": "AI Astra's mind and its API, plus the embodiment layer that carries her to VRChat over OSC."
           },
           {
             "language": "JavaScript",
