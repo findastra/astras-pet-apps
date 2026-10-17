@@ -8,11 +8,12 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
-| [017: API Fairy's desktop app has never run; verify it](017-any-api-fairy-desktop-verify-20261017.md) | any | open, waits on Astra: Malwarebytes allow-list |
+| [020: Startup Star shows API Fairy's bubbles](020-codex-startup-star-api-fairy-bubbles-20261017.md) | Codex | open |
+| [020: Chat sync, folder rename plan row, Role Fairy (Fairy Ring #83), Nullbot dropped](020-any-chat-sync-and-folder-rename-20261017.md) | any | open, waits on Astra: File Master rename row |
+| [017: API Fairy's desktop app has never run; verify it](017-any-api-fairy-desktop-verify-20261017.md) | any | done 2026-10-17 |
 | [012: Pet-first profile list and missing pets](012-farmer-pet-first-list-and-missing-pets-20261016.md) | Farmer | open, waits on Astra: #77's name, homes, Chat Rat, Workflow Whale |
-| [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
+| [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | done 2026-10-17: registered with the existing seed sheet |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |
-| [020: Chat sync, folder rename plan row, Role Fairy (Fairy Ring #83), Nullbot dropped](020-any-chat-sync-and-folder-rename-20261017.md) | any | open, waits on Astra: yes to the rename row, and merge |
 | [001: Register Claude Bot in the Cage](001-farmer-register-claude-bot.md) | Farmer | open |
 | [002: Build Claude Bot v0](002-any-build-claude-bot.md) | any | open |
 | [003: Goldfish audit of Claude Bot](003-goldfish-audit-claude-bot.md) | Goldfish | open |

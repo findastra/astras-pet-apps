@@ -1,4 +1,4 @@
-status: open (waiting on Astra: yes to the folder rename plan row, and merge this branch)
+status: taken by Claude Sonnet 5.5 (merged to main 2026-10-17; the shortcut folder is made; the real rename waits on File Master)
 for: any
 from: Claude Sonnet 5.5 (`claude-sonnet-5-5`), 2026-10-17
 needs: AGENTS.md ("One copy of each repo"), skills/pet-finder/SKILL.md, docs/naming-audit-20261016.md
@@ -34,3 +34,8 @@ Astra has said yes to item 1, merged this branch, and File Master has the rename
 ## Return
 
 Record the answers and any rename result in the next dated card; set this one to `done`.
+
+## Closed out 2026-10-17 (Astra said yes to all)
+- Merged to `main` (main merged into the branch first; two generated-file conflicts and the Platform Platypus move resolved; rebuilt; 89 of 89 tests pass).
+- Made `Documents\Astra's PetOS` a junction (shortcut folder) to `Documents\Astra's Pet Apps`, so both names open the same files and nothing moved. The real rename is still the File Master plan row above: blockers are running desktop pets and the tray Star started from the hub's `bin\`, `startup-star`, the folder-icon files in `%LOCALAPPDATA%stras-pet-apps` and any assistant working inside the folder.
+- Not done: Role Fairy art and repo files, connecting the folders with no git repo, deleting local branch `update-projects` in `findastra` (that folder has an uncommitted README change from someone else).

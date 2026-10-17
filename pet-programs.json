@@ -532,7 +532,7 @@
       "assigned": true,
       "icon": "Platform Platypus",
       "idea": "Mirror Pool",
-      "stage": "pipeline",
+      "stage": "registered",
       "repo": "platform-platypus",
       "repo_exists": true,
       "mini_descriptor": {
