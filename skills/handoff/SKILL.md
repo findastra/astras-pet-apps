@@ -12,7 +12,7 @@ Same card format as `findastra/data-dealer` (`skills/handoff/SKILL.md` there).
 ## When Astra's request is unclear or sounds like an assignment
 Check GitHub **before** asking her:
 1. List `findastra` repos. Look for the name, pet or person she used (pet names are in
-   `findastra/astras-pet-os/pets.json`; the **Friendly Farmer** is the Cage's host, so
+   `findastra/astras-pet-os/pets.json`; the **Friendly Farmer** runs The Farm, so
    "tell the farmer" means a card in `astras-pet-os/handoffs/`).
 2. Read `handoffs/README.md` in the likely repos and any card that is `open` and `for:` you
    or `any`.
