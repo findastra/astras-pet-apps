@@ -25,7 +25,7 @@ on 2026-10-17 to bring the hub up to date. Full detail: `findastra/api-fairy` `d
 - Both branches were made in clones in this chat's own workspace (the PC copies are on Codex branches, left alone) and
   pushed. Tests run: `npm test` here (see the commit).
 
-**Later the same day (Claude Opus 5.5):** Astra allowed `api-fairy\bin` in Malwarebytes. Rebuilt, 83/83 tests pass, the app ran on her PC and its window opened. Astra saw that the app's own desktop fairy was the old 2026-10-07 drawing and chose one fairy, Startup Star's: api-fairy `main` `6b1d430` removes it and uses the approved art; card 020 asks Codex to wire Startup Star's bubbles. Both api-fairy merges are on `main` (Codex L3 branch, then this record).
+**Later the same day (Claude Opus 5.5):** Astra allowed `api-fairy\bin` in Malwarebytes. Rebuilt, 83/83 tests pass, the app ran on her PC and its window opened. Astra saw that the app's own desktop fairy was the old 2026-10-07 drawing and chose one fairy, Startup Star's: api-fairy `main` `6b1d430` removes it and uses the approved art; card 021 asks Codex to wire Startup Star's bubbles. Both api-fairy merges are on `main` (Codex L3 branch, then this record).
 
 ## Waiting on Astra (answered)
 1. Malwarebytes: Allow List → Add → Allow a file or folder → `%USERPROFILE%\Documents\Astra's Pet Apps\api-fairy\bin`.
