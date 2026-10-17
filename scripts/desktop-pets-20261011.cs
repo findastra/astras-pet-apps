@@ -43,6 +43,12 @@ namespace AstraDesktopPets {
     internal static void WriteStatus(object value,bool test=false) { Directory.CreateDirectory(Path.GetDirectoryName(StateFile));File.WriteAllText(test?TestStateFile:StateFile,Json.Serialize(value)); }
     internal static void Open(string relative) { string file=SafePath(relative);if(File.Exists(file))Process.Start(new ProcessStartInfo(file) { UseShellExecute=true }); }
     internal static void StartBug(string argument) { if(!File.Exists(BugExe))return;Process.Start(new ProcessStartInfo(BugExe,argument) { UseShellExecute=false,WindowStyle=argument=="--status"?ProcessWindowStyle.Normal:ProcessWindowStyle.Hidden,WorkingDirectory=Path.GetDirectoryName(BugExe) }); }
+    internal static void StartReadmeAuditor() {
+      string script=Path.GetFullPath(Path.Combine(Root,"..","github-goldfish","scripts","start-readme-auditor-20261015.ps1"));
+      if(!File.Exists(script)){MessageBox.Show("The GitHub Goldfish README auditor is not installed beside Astra's PetOS.","GitHub Goldfish");return;}
+      string shell=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),"WindowsPowerShell","v1.0","powershell.exe");
+      Process.Start(new ProcessStartInfo(shell,"-NoProfile -File \""+script+"\" -AutoRun") { UseShellExecute=false,CreateNoWindow=true,WindowStyle=ProcessWindowStyle.Hidden,WorkingDirectory=Path.GetDirectoryName(script) });
+    }
   }
 
   internal sealed class PetSprite : IDisposable {
@@ -218,7 +224,7 @@ namespace AstraDesktopPets {
       if(!held)return;held=false;
       if(dragged||String.IsNullOrEmpty(id)||id!=pressed){Cancel();return;}
       target=id;pressed=null;count++;due=down+interval;
-      if(count>=(id=="fuzzboi-friend"?3:2))Complete();else Advance(now);
+      if(count>=(id=="fuzzboi-friend"||id=="goldfish"?3:2))Complete();else Advance(now);
     }
     internal void Advance(long now) { if(!held&&count>0&&now>due)Complete(); }
     internal void Cancel() { target=pressed=null;count=0;held=false; }
@@ -600,6 +606,7 @@ namespace AstraDesktopPets {
     internal bool ClickPending(string id) { return clicks.PendingFor(id); }
     internal void CancelClicks() { clicks.Cancel();clickTimer.Stop(); }
     void ResolveClicks(string id,int count) {
+      if(id=="goldfish"&&count==3){testActions.Add("quick:findastra-README-auditor");if(!test)PetFiles.StartReadmeAuditor();WriteStatus();return;}
       if(id=="fuzzboi-friend"&&count>=3) {
         var fuzz=pets.Find(p=>p.Id==id);if(fuzz==null)return;fuzz.NextFuzzStyle();LayoutPets();
         var window=roaming.Find(p=>p.Pet==fuzz);if(window!=null)window.RefreshSize();
@@ -690,6 +697,7 @@ namespace AstraDesktopPets {
       bool initialPets=petsOut;ToggleLauncher();if(launcherVisible||petsOut!=initialPets)throw new Exception("Tray hide changed pet visibility state.");
       ToggleLauncher();if(!launcherVisible||petsOut!=initialPets)throw new Exception("Tray show changed pet visibility state.");
       ClickTests();
+      ResolveClicks("goldfish",3);if(testActions[testActions.Count-1]!="quick:findastra-README-auditor")throw new Exception("Goldfish quick tool was not dispatched.");
       CreatePetWindows(left);
       if(roaming.Count!=pets.Count+1||!roaming.Exists(p=>p.Pet==farmer))throw new Exception("Not every pet got its own window.");
       int sparklePets=0;
@@ -796,6 +804,7 @@ namespace AstraDesktopPets {
       for(int i=0;i<3;i++){classifier.Press("farmer",point,2000+i*200);classifier.Release("farmer",2030+i*200,false);}classifier.Advance(3000);if(String.Join(",",got)!="farmer:2,farmer:1")throw new Exception("A third click must start a new gesture, not open the desk twice.");got.Clear();
       classifier.Press("voicemeeter-bug",point,4000);classifier.Release("voicemeeter-bug",4030,false);classifier.Press("voicemeeter-bug",point,4200);classifier.Release("voicemeeter-bug",4230,false);classifier.Advance(5000);if(String.Join(",",got)!="voicemeeter-bug:2")throw new Exception("Bug double click also repaired.");got.Clear();
       classifier.Press("farmer",point,6000);classifier.Release("farmer",6030,false);classifier.Press("farmer",point,6200);classifier.Cancel();classifier.Release("farmer",6300,true);classifier.Advance(7000);if(got.Count!=0)throw new Exception("Drag did not cancel pending clicks.");
+      for(int i=0;i<3;i++){classifier.Press("goldfish",point,7000+i*150);classifier.Release("goldfish",7030+i*150,false);}if(String.Join(",",got)!="goldfish:3")throw new Exception("Goldfish triple click must dispatch once, without a double click.");got.Clear();
       classifier.Press("goldfish",point,8000);classifier.Release("goldfish",8030,false);classifier.Press("chip",point,8200);classifier.Release("chip",8230,false);classifier.Advance(9000);if(String.Join(",",got)!="chip:1")throw new Exception("Clicks merged across actors.");got.Clear();
       classifier.Press("farmer",point,9200);classifier.Release("farmer",9230,false);classifier.Press("goldfish",point,9300);classifier.Release("goldfish",9330,false);classifier.Advance(9900);if(String.Join(",",got)!="goldfish:1"||classifier.Pending)throw new Exception("Actor switch kept a stale gesture.");got.Clear();
       classifier.Press("farmer",point,10000);classifier.Release("farmer",10030,false);classifier.Press("farmer",new Point(200,100),10200);classifier.Release("farmer",10230,false);classifier.Advance(11000);if(String.Join(",",got)!="farmer:1,farmer:1")throw new Exception("Double click rectangle ignored.");
@@ -833,7 +842,7 @@ namespace AstraDesktopPets {
           try { using(var window=new PetsWindow(test)) { IntPtr hwnd=window.Handle;using(var listener=new CommandListener(window,suffix))Application.Run(window); } }finally{mutex.ReleaseMutex();}
         }
         return 0;
-      } catch(Exception error) { Console.Error.WriteLine(error.Message);try{PetFiles.WriteStatus(new{running=false,error=error.Message,updated_utc=DateTime.UtcNow.ToString("o")});}catch{}return 1; }
+      } catch(Exception error) { Console.Error.WriteLine(error.ToString());try{PetFiles.WriteStatus(new{running=false,error=error.Message,updated_utc=DateTime.UtcNow.ToString("o")});}catch{}return 1; }
     }
   }
 }

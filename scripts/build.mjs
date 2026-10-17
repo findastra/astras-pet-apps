@@ -91,3 +91,5 @@ if (missing.length) { console.error(`No art at all for: ${missing.join(', ')}`);
 
 // Shared Pet Program signature, after all generated output.
 execFileSync(process.execPath, ["scripts/build-footers-20261014.mjs"], { stdio: "inherit" });
+// The connected world preview retains its own layout; the caretaker gets Pet Program controls.
+execFileSync(process.execPath, ["scripts/build-world-caretaker-20261016.mjs"], { stdio: "inherit" });

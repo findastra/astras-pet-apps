@@ -1,0 +1,9 @@
+/* Shared yellow phone / green LCD activity bubble. By Astra, Codex GPT-6. */
+.astra-l3-activity{box-sizing:border-box;background:#ffda73!important;color:#202b29!important;border:3px solid #202b29!important;box-shadow:4px 4px 0 #24362d!important;border-radius:25px!important;padding:18px!important;margin:22px auto!important;width:100%;max-width:100%;min-width:0;text-align:left;font:14px/1.6 system-ui,sans-serif}
+.astra-l3-activity h2{font:700 17px/1.4 system-ui,sans-serif!important;color:#273b28!important;margin:0 0 12px!important;letter-spacing:0!important;text-transform:none!important}
+.astra-l3-activity .astra-l3-status,.astra-l3-activity .astra-l3-source{background:#fff2bd!important;color:#273b28!important;border-radius:10px;padding:8px 12px;margin:6px 0;overflow-wrap:anywhere}
+.astra-l3-activity .astra-l3-source{font-size:12px}
+.astra-l3-activity .astra-l3-log{background:#e0edab;color:#273b28;border:2px solid #455734;border-radius:10px;padding:14px;max-height:210px;overflow:auto;font:14px/1.6 ui-monospace,monospace;overflow-wrap:anywhere}
+.astra-l3-activity .astra-l3-log p{margin:0 0 8px;color:inherit;font:inherit;background:transparent}
+.astra-l3-log:focus-visible{outline:3px solid #8655c7;outline-offset:3px}
+@media(max-width:480px){.astra-l3-activity{padding:12px!important;box-shadow:2px 2px 0 #24362d!important}.astra-l3-activity .astra-l3-log{font-size:12px}}

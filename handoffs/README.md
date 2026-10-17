@@ -8,6 +8,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
+| [016: World caretakers and shared L3 activity](016-world-caretakers-and-l3-activity-20261016.md) | any | open: browser caretaker and preview built; native pet and live connections pending |
 | [015: Flash Audit checkpoint and remaining acceptance](015-flash-audit-checkpoint-20261015.md) | any | open: 17 branches pushed; runtime, inventory and deployment checks remain |
 | [013: Goldfish Flash Audit](013-goldfish-flash-audit-20261014.md) | Goldfish | open: instructions and local metadata preflight implemented; complete tool flow pending |
 | [012: Identity-bound security and complete pet catalog](012-security-enforcement-and-pet-catalog-20261014.md) | any | open: reference implementation ready for owner review; deployment gates remain |

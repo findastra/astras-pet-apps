@@ -21,3 +21,6 @@ apps/unity-unicorn-local-tools-*.js
 # Local service addresses (ports) for this PC only; public pages name the services, never the address.
 # See docs/local-services-20261014.md.
 apps/*-local-services-*.js
+
+# Local reference book includes third-party screenshots; publish only original concept plates.
+apps/liminal-doors-assets/liminal-doors-imagebook-20261015.pdf

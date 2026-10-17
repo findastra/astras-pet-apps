@@ -148,3 +148,10 @@ Identity-bound authorization reference verifier, impersonation/replay tests, top
 Optional Codex/OpenAI and Claude Code/Anthropic planet rings, separate planned PetOS shell and bounded hover/render work by OpenAI Codex (GPT-6), 2026-10-14. Keep direct model routes distinct from application-assisted routes; neither bypasses authorization.
 
 Shared stationery, original yellow phone, non-coin map icons, paired tool lights, stable note identity, footer wrapping and Flash Audit source repairs by OpenAI Codex (GPT-6), 2026-10-15. Latest owner corrections in PET-PROGRAM-FRAMEWORK.md and docs/flash-audit-20261014.md supersede older visual rules. Branch publication is separate from deployed UI and native runtime acceptance.
+
+Goldfish README skill integration by OpenAI Codex (GPT-6), 2026-10-15: desktop
+three-click dispatch to the sibling Goldfish local launcher, packaged Aquarium
+entry, and a managed-profile guard against daily regeneration. The bounded
+maker/checker workflow is in github-goldfish; the shared Pet SDK remains planned.
+
+World caretaker prototype, connected Liminal Doors preview, and mandatory shared L3 activity display added with OpenAI Codex (GPT-6), 2026-10-16. See docs/world-caretakers-20261016.md. Native Door Dormouse art, enrollment and Unity execution remain pending.

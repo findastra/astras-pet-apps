@@ -4,6 +4,12 @@
 
 # Pet Program Framework
 
+> Owner requirement, 2026-10-16: every Pet Program includes the yellow **[Pet name] · L3 activity** bubble from the README auditor, with a green LCD and black outline. Keep it visible near the top, separate from chat. Use the shared `apps/pet-l3-activity-20261016.js` and CSS through `scripts/embed-l3-activity-20261016.mjs`. Flash Audit A52 is mandatory.
+
+The activity bubble is read-only. It shows the actual provider, task, session, update time and a bounded history of concise events from a trusted local adapter. Default to **Disconnected / Seat: empty**. Never convert page visits, ordinary browser actions, declared model names or simulated timers into agent activity. OFF, errors and stale feeds stay explicit; a feed older than two minutes must not appear live. Keep event summaries free of credentials, private prompts and raw tool output; render them as text. Opening the page does not start an agent. The in-page API is a display adapter, not authentication or a permission grant.
+
+Adapters call `window.astraL3Activity.receive({repo,status,at,provider,task,session,events})` with a fresh ISO observation time and `{at,message}` events, or dispatch `astra-l3-activity` on the document. Status is one of disconnected, idle, working, awaiting-review, complete, error or off. The repo must match the page. Duplicate snapshots do not rewrite the log; retain at most 80 events. Runtime acceptance requires observing a real job, disconnect, OFF and staleness separately from source checks.
+
 The standard every pet program follows: what its page shows, how its tools, data, versions, backlog and agents
 work, and how security patches reach every farm. Written from Astra's instructions of 2026-10-13 by Claude Opus 5.5.
 **Every new pet program is built to this, and every existing one is brought up to it.**
