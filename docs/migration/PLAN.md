@@ -147,4 +147,4 @@ Status today: **not started** for every row.
 | Q | Cache Coyote queues work offline on the Pi; Sync Mink reconciles after reconnect | Offline/online test with conflicts | 8 |
 | R | Passport Pelican alerts on synthetic deadlines without leaking; Journal Jellyfish stays private; nothing submitted without approval | Synthetic data only | 8 |
 
-The existing tests (64 on 2026-10-11, 91 on 2026-10-17) keep running as regression throughout.
+The existing tests (64 on 2026-10-11, 93 on 2026-10-17) keep running as regression throughout.

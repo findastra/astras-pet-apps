@@ -1463,7 +1463,7 @@ function normalizeLink(raw){
   return link;
 }
 // Item text is rendered as HTML (built-in details carry links), so typed text is stored escaped.
-function escapeHTML(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function addCustomItem(tid){
   var titleEl = document.getElementById('add-title-'+tid);
   var blurbEl = document.getElementById('add-blurb-'+tid);
@@ -1521,7 +1521,8 @@ function parseSuggestJSON(text){
     var arr = JSON.parse(m[0]);
     if(!Array.isArray(arr)) return null;
     return arr.filter(function(x){ return x && x.t; }).map(function(x){
-      return { t:String(x.t).slice(0,120), b:String(x.b||'').slice(0,200), d:String(x.d||'').slice(0,600) };
+      // Model output is text, never HTML: escaped here, like typed items, before it is shown or saved.
+      return { t:escapeHTML(String(x.t).slice(0,120)), b:escapeHTML(String(x.b||'').slice(0,200)), d:escapeHTML(String(x.d||'').slice(0,600)) };
     });
   }catch(e){ return null; }
 }

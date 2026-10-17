@@ -151,7 +151,7 @@ Security is shown with evidence, not claimed. Each item is something anyone can 
 | Evidence | Status |
 |---|---|
 | A written threat model: [PROTECTION-RINGS.md](PROTECTION-RINGS.md) and this page | **Done** |
-| Automated tests on every change (privacy, registry, the animal guard) | **Done (91 tests on 2026-10-17)** |
+| Automated tests on every change (privacy, registry, the animal guard) | **Done (93 tests on 2026-10-17)** |
 | GitHub secret scanning and push protection, Dependabot alerts, CodeQL code scanning and private vulnerability reporting | **Done 2026-10-14** on all 50 public repos |
 | OpenSSF Scorecard: a public score of this repo's security practices | Planned |
 | Prompt-injection drills and red-team reports from White Hat Weasel, in the sandbox | Planned |

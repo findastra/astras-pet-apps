@@ -45,6 +45,9 @@ finding 6, rated **low**: PR #25 had already described it publicly, and it is le
 a pull request, see finding 2). About five minutes in the repository settings; the biggest single gain.
 Already listed as known gap 4.
 
+**Decision (Astra, 2026-10-17): no branch protection.** This finding stays open as an accepted risk: the core changes
+with her approval by agreement, not by a setting.
+
 ### 2. High, AI-specific: pet repos write into the core without review (prompt-injection path)
 
 - Every day `scripts/farmer-rounds-20261009.mjs` reads `cage.submit` from the default branch of each registered
@@ -97,7 +100,9 @@ builds its checklist as HTML text. Two kinds of text were not escaped:
   the hosted Claude artifact, where the AI is available; the GitHub Pages copy cannot reach the AI. PR #25 does not
   cover it.
 
-**Fix:** merge PR #25, then escape suggested items the same way, in this copy and in `findastra/ghost-protocol`.
+**Fixed in this copy, 2026-10-17:** PR #25 (merged) escapes typed items; `parseSuggestJSON` now escapes suggested
+items too, guarded by `test/ghost-protocol-escape-test-20261017.mjs`. The live site gets the same fix from
+`findastra/ghost-protocol` PR #1, which waits for Astra to merge it.
 
 ## What the repo shows about the skills behind it
 
@@ -136,5 +141,6 @@ Checked again on `main` at `b904931`, across all 44 branches and PRs #22 to #36,
   (`scripts/access-policy-20261014.mjs`, `docs/security-boundaries-20261014.md`). It is not connected to anything
   yet, so finding 1 stands. PR #26 also replaces the rings and R W X model with "topology is not authority" and
   removes the Known gaps table, including gaps 11 and 12. That choice is Astra's.
-- **Finding 6** is new (above), rated low.
+- **Finding 6** is new (above), rated low, and fixed in this copy; the live site's fix is PR #1 in `ghost-protocol`.
+- **Finding 1:** Astra decided not to turn on branch protection (accepted risk).
 - Open work: [card 025](../handoffs/025-any-security-follow-ups-20261017.md).
