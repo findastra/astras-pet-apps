@@ -209,12 +209,12 @@ const online = (extra = []) => [...['astras-infinite-pole', 'astras-pet-os', 'rg
 
 test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dropped, new repos sorted', () => {
   const { text, changes } = syncProfile(profile, registry, online([{ name: 'detour-into-vr', private: false, description: 'Takes detours into VR.' }, { name: 'tool-x', private: false, description: 'A small tool.' }]));
-  assert.match(text, /^1\. \*\*Friendly Farmer\*\* · \[`astras-pet-os`\].* -- her blurb$/m, 'pet first, and her blurb is kept');
+  assert.match(text, /^1\. \*\*Friendly Farmer\*\* -- her blurb\n   - \[`astras-pet-os`\]/m, 'pet and job first, her blurb kept, the repo beneath');
   assert.match(text, /- \[`astras-infinite-pole`\].* -- Astra's own words/);
   assert.ok(!/gone-repo/.test(text), 'a deleted repo is dropped');
   assert.match(text, /`secret` \*\(private\)\*/, 'a private line is kept');
   assert.ok(!/in the wrong place/.test(text.split("### Web & More")[1]), 'a pet is moved out of Web & More');
-  assert.match(text.split("### Astra's Pet Apps")[1], /\*\*RGBee\*\* · \[`rgbee`\][^\n]* -- in the wrong place/, 'and keeps its blurb in the pet list');
+  assert.match(text.split("### Astra's Pet Apps")[1], /\*\*RGBee\*\* -- in the wrong place\n   - \[`rgbee`\]/, 'and keeps its blurb in the pet list');
   assert.match(text.split('### VR & VRChat')[1].split('###')[0], /detour-into-vr.* -- takes detours into VR$/m);
   assert.match(text.split('### Web & More')[1], /tool-x.* -- a small tool$/m);
   assert.match(text, /\*\*Chip\*\*/, 'a private registered pet is listed unlinked');
@@ -232,8 +232,8 @@ test('profile round finds the pet list under the Astra\'s PetOS heading too', ()
   const programs = [{ number: 1, program: 'The Farm', assigned: true, icon: 'Friendly Farmer', repo: 'astras-pet-os', mini_descriptor: { text: 'Organizes the pets.' } },
     { number: 47, program: 'pet-program-47', assigned: false, icon: 'Queue Quokka', repo: 'pet-program-47', mini_descriptor: { text: 'Tasks: watches retries.' } }];
   const all = syncProfile(profile, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs);
-  assert.match(all.text, /^47\. \*\*Queue Quokka\*\* · \[`pet-program-47`\][^\n]* -- tasks: watches retries$/m);
-  assert.match(all.text, /^1\. \*\*Friendly Farmer\*\* · \[\*The Farm\*\]\([^)]*\) -- organizes the pets$/m, 'pet first, then its home, linked to its page');
+  assert.match(all.text, /^47\. \*\*Queue Quokka\*\* -- tasks: watches retries\n   - `pet-program-47` -- pet program, not named yet\n   - \[`pet-program-47`\]/m);
+  assert.match(all.text, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - (?:\[`the-farm`\]\([^)]*\)|`the-farm`) -- \*The Farm\*, the pet program\n/m, 'pet and job, then its home as the first sub-bullet');
   const others = all.text.split("### Astra's Pet Apps")[0] + (all.text.split('### Web & More')[1] || '');
   assert.doesNotMatch(others, /pet-program-47/, 'a pet program never lands in another section');
   assert.deepEqual(syncProfile(all.text, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs).changes, [], 'a second run changes nothing');
