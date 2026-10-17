@@ -45,9 +45,13 @@ chat took 019 at the same time, so it is 025 (handoffs/README.md, "Card numbers 
   - `.github/workflows/farmer-daily-rounds.yml`: pushes to `farmer/rounds-YYYYMMDD` and opens a pull request into the
     branch it ran on (`main` on the schedule), closing an older open round as replaced; never pushes to `main`;
     `permissions: contents: write, pull-requests: write`; checkout and setup-node pinned by commit SHA.
-  - `test/farmer-rounds-pr-test-20261017.mjs` (5 tests, which fail on the old code): no push to main, minimal
+  - `test/farmer-rounds-pr-test-20261017.mjs` (6 tests, which fail on the old code): no push to main, minimal
     permissions and SHA pins, a submission cannot rename a pet (and the one-list test still passes), a whole round
-    with renaming submissions, the desk builder finds the host.
+    with renaming submissions, a visibility change is reported, the desk builder finds the host.
+  - The first test run of the repaired round (run 8) found `data-dealer` and `voicemeeter-bug` **public on GitHub**
+    though pets.json says private (PLAN.md decision 2). The round writes what GitHub says, and three old tests that used
+    Chip as the private example failed. Those tests now set up their own private pet, and the round names every
+    visibility change in its pull request. **Waiting on Astra:** should those two repos be private again?
   - Docs: the pet-written-data line and the rounds line in `AGENTS.md`; `PET-FILES.md` (rounds step 5, submissions);
     `skills/handoff/SKILL.md` (names change only in pet-programs.json); gap 11's status in `PROTECTION-RINGS.md` (only
     that cell: PR #26 removes the whole table, so whichever merges second resolves it); finding 2 and its update in the

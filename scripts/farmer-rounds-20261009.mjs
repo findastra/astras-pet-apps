@@ -259,7 +259,7 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
   const today = denverDate(now);
   const repos = await github.listRepos(token, ownerToken);
   const byName = new Map(repos.map((r) => [r.name, r]));
-  const report = { today, discovered: [], submissions: [], names: [], audited: [], unreadable: [], missing: [] };
+  const report = { today, discovered: [], submissions: [], names: [], visibility: [], audited: [], unreadable: [], missing: [] };
 
   // 1. Discovery: a repo with a pet.json or the pet-app topic asks to be a pet. It waits at the gate (candidates).
   const unknown = repos.filter((r) => !allPets(registry).some((p) => p.repo === r.name) && r.name !== registry.cage && !r.fork && !r.archived);
@@ -283,7 +283,10 @@ export async function runRound({ registry, status, token, ownerToken, validatePr
       status.pets[pet.repo] = { pet: pet.pet, ...auditPet(registry, pet, { readable: false, private: pet.visibility === 'private' }), checked: status.pets[pet.repo]?.checked || null };
       continue;
     }
-    if (entry.visibility !== (r.private ? 'private' : 'public')) entry.visibility = r.private ? 'private' : 'public';
+    if (entry.visibility !== (r.private ? 'private' : 'public')) {
+      report.visibility.push({ repo: pet.repo, was: entry.visibility || 'unset', now: r.private ? 'private' : 'public' }); // said in the pull request
+      entry.visibility = r.private ? 'private' : 'public';
+    }
     const due = all || (only ? only.includes(pet.repo) : isDue(registry, pet, status.pets[pet.repo], today));
     let snap = await github.snapshot(r, ownerToken || token, due);
     const changes = adoptSubmission(registry, entry, snap.petJson, report.names);
@@ -334,6 +337,7 @@ if (process.argv[1] && import.meta.url === new URL('file://' + process.argv[1]).
     `Farmer's round, ${report.today}.`,
     report.discovered.length ? `New pets found: ${report.discovered.join(', ')}.` : '',
     ...report.submissions.map((s) => `${s.repo} submitted: ${s.changes.join(', ')}.`),
+    ...report.visibility.map((v) => `${v.repo} is ${v.now} on GitHub (pets.json said ${v.was}).`),
     ...report.names.map((n) => `${n.repo} asks to be called ${JSON.stringify(n.name)} (not changed: names change only in pet-programs.json, by Astra).`),
     `Self-audits run: ${report.audited.length}.`,
     report.unreadable.length ? `Can't see (private, no FARMER_TOKEN): ${report.unreadable.join(', ')}.` : '',

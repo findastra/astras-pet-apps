@@ -65,6 +65,17 @@ test('a whole round with renaming submissions leaves every name alone and report
   assert.deepEqual(drift(r), []);
 });
 
+test('a repo whose visibility changed on GitHub is named in the round\'s report, so Astra sees it', async () => {
+  const r = clone();
+  r.pets.find((p) => p.repo === 'data-dealer').visibility = 'private';
+  const github = {
+    listRepos: async () => [{ name: 'data-dealer', private: false, topics: ['pet-app'], description: '' }],
+    snapshot: async () => ({ readable: true, files: [] }),
+  };
+  const report = await runRound({ registry: r, status: {}, github, token: null, ownerToken: null, now: new Date('2026-10-17T13:00:00Z'), log: () => {}, only: [] });
+  assert.deepEqual(report.visibility, [{ repo: 'data-dealer', was: 'private', now: 'public' }]);
+});
+
 test('the desk builder finds the host by role, whatever the repo is called', () => {
   const manager = configs.find((c) => c.type === 'manager');
   const host = registry.pets.find((p) => p.role === 'host');

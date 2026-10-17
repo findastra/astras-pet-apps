@@ -153,6 +153,7 @@ test('the Farmer is sick when he cannot see private repos, and worried while pet
 
 test('a whole round, against a pretend GitHub', async () => {
   const r = clone();
+  r.pets.find((p) => p.repo === 'data-dealer').visibility = 'private'; // the private example, whatever GitHub says today
   const status = {};
   const github = {
     listRepos: async () => [
@@ -208,6 +209,8 @@ const profile = `<h2 align="center">Hi</h2>
 const online = (extra = []) => [...['astras-infinite-pole', 'astras-pet-os', 'rgbee', 'claude-bot', 'findastra'].map((name) => ({ name, private: false, description: '' })), ...extra];
 
 test('profile round: numbered pets in Cage order, her blurbs kept, gone repos dropped, new repos sorted', () => {
+  const registry = clone();
+  registry.pets.find((p) => p.repo === 'data-dealer').visibility = 'private'; // the private example, whatever GitHub says today
   const { text, changes } = syncProfile(profile, registry, online([{ name: 'detour-into-vr', private: false, description: 'Takes detours into VR.' }, { name: 'tool-x', private: false, description: 'A small tool.' }]));
   assert.match(text, /^1\. \*\*\[Friendly Farmer\]\(https:\/\/github\.com\/findastra\/astras-pet-os\)\*\* -- her blurb$/m, 'the pet links to its repo, and her blurb is kept');
   assert.match(text, /- \[`astras-infinite-pole`\].* -- Astra's own words/);
