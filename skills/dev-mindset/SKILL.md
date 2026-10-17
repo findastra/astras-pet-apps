@@ -62,6 +62,12 @@ Astra wants other software developers to read her build without frustration. She
 | Sick cow from another farm | Untrusted dependency (supply-chain risk) | Never installed without a trusted signature and Astra's approval. |
 | Gatekeeper Goddess (Iron Gates) | Policy engine / permission broker | Grants scopes; never approves her own. |
 | Pet connector / plugin | MCP server (Model Context Protocol) | How a pet program exposes tools to a harness, with declared permissions. |
+| Home (cyberhome) | The pet program: its dashboard and runtime | One per pet. Listed first under the pet. Decided 2026-10-16. |
+| Tool | Program or script the pet program owns (deterministic code) | Runs without AI. ON/OFF, sick light, version. Can be bound to clicks: one, two, three or more (Clicker Training). Decided 2026-10-16. |
+| Trick | Skill (`SKILL.md`), prompt or workflow | What the seated AI knows how to do; uses only that pet's tools. If an AI has to follow it, it is a trick. Decided 2026-10-16. |
+| Your Programs | Applications or sites you built that a pet looks after (worlds, websites) | Not tools: the pet manages them; they are not part of it. Decided 2026-10-16. |
+| Commons | Shared registry / issue tracker (the Kennel, the Shed, the vet-clinic) | Hold other people's submissions, not our code. Decided 2026-10-16. |
+| Third-party programs | Third-party software | Made by others; a pet runs them (R X). |
 
 ## App vs program
 - A **program** is any code a computer runs: apps, services, drivers, scripts, libraries.
