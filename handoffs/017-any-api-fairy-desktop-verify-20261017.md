@@ -28,7 +28,7 @@ on 2026-10-17 to bring the hub up to date. Full detail: `findastra/api-fairy` `d
 ## Waiting on Astra
 1. Malwarebytes: Allow List → Add → Allow a file or folder → `%USERPROFILE%\Documents\Astra's Pet Apps\api-fairy\bin`.
    This is the same family as PROTECTION-RINGS.md known gap 5 (unsigned `.exe` files).
-2. api-fairy visibility: its `pet.json` says private, GitHub and `pets.json` say public. Which is right?
+2. ~~Visibility~~ Decided 2026-10-17: api-fairy stays **public**; `pet.json` updated on its branch. The repo holds no keys, personal data or personal paths (scanned all branches and history).
 3. Merge order in api-fairy: `main`, `codex/yellow-phone-20261015` and `codex/l3-activity-20261016` have diverged.
 
 ## Task
