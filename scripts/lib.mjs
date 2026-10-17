@@ -25,7 +25,8 @@ export function assetPaths(registry, id) {
   };
 }
 
-const esc = (s) => s.replace(/\|/g, '\\|');
+// Escape backslashes too: otherwise a "\|" in a job would still end the table cell.
+const esc = (s) => s.replace(/[\\|]/g, '\\$&');
 
 export function buildTable(registry) {
   const rows = (registry.pets || []).map((p) => {
