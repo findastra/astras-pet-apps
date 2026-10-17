@@ -122,6 +122,8 @@ that runs on one of them can read and change every other one's `localStorage`.
   errors; a typed `javascript:alert(1)` link is dropped. With empty storage the built-in checklist's HTML is identical
   to the unfixed page (41 items). Control: the same check on the page before PR #25 (`04cb641`) fails, with 18 alerts.
 - Items saved before the fix stay as they were in that browser's `localStorage`.
+- The rest of the page was checked for the same mistake: the terminal's AI chat writes replies with `textContent`, and
+  the footprint panel escapes every value from the browser (including `document.referrer`) before it is shown.
 
 ## What the repo shows about the skills behind it
 
