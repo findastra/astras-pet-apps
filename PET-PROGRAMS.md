@@ -3,7 +3,7 @@
 Every pet program in Astra's PetOS, numbered for good. Each **mini-descriptor** is one or two sentences on what the pet
 program actually does; it is shown in the pet's own repo, the findastra profile and the System Map. Its label follows
 the naming rules: `<pet-program>-v1.0-mini-descriptor-v1.0`. **Bold** program names are assigned; `pet-program-#`
-means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 82 reviewed.
+means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 83 reviewed.
 
 Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not edit this page; edit the JSON.
 
@@ -44,7 +44,7 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 33 | Mesh Moth | pet-program-33 | [mesh-moth](https://github.com/findastra/mesh-moth) | Pipeline | Manages Astra’s Meshtastic node: its place in the radio mesh, its health and its messages. *(draft)* |
 | 34 | Raspberry Pi Berry | **Raspberry Pi Maker** | [raspberry-berry](https://github.com/findastra/raspberry-berry) | Pipeline | Keeps track of Astra’s Raspberry Pi projects and tells her which Pis need a backup or an OS update. *(draft)* |
 | 35 | Chat Rat | **Chat Stack** | [chat-rat](https://github.com/findastra/chat-rat) | Pipeline | Saves local AI conversations and imported exports, filed by model and YYYYMMDD date, with a button that opens each folder. *(draft)* |
-| 36 | Platform Platypus | **Mirror Pool** | [platform-platypus](https://github.com/findastra/platform-platypus) | Pipeline | Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms. *(draft)* |
+| 36 | Platform Platypus | **Mirror Pool** | [platform-platypus](https://github.com/findastra/platform-platypus) | Registered | Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms. *(draft)* |
 | 37 | Dubstep Gunsmith | **Dubstep Armory** | [pet-program-37](https://github.com/findastra/pet-program-37) | Seed | Catalogs avatar gun effects and loadouts for Astra’s avatars. Its source is still only on the PC, not on GitHub. *(draft)* |
 | 38 | Pole Puff | **Infinite Studio** | [pet-program-38](https://github.com/findastra/pet-program-38) | Seed | Manages Astra's Infinite Pole. *(draft)* |
 | 39 | Procreate Panda | pet-program-39 | [pet-program-39](https://github.com/findastra/pet-program-39) | Seed | Handles the redlines Astra makes in Procreate and manages her Procreate tools and drawings. *(draft)* |
@@ -91,3 +91,4 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 80 | Rescue Retriever | **The Recovery Room** | [the-recovery-room](https://github.com/findastra/the-recovery-room) | Seed | After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order. *(draft)* |
 | 81 | Intel Owl | pet-program-81 | [pet-program-81](https://github.com/findastra/pet-program-81) | Seed | Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout. *(draft)* |
 | 82 | Door Dormouse | **The Threshold** | [the-threshold](https://github.com/findastra/the-threshold) | Seed | Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected. *(draft)* |
+| 83 | Role Fairy | **Fairy Ring** | [role-fairy](https://github.com/findastra/role-fairy) | Pipeline | Runs Mommy’s Role Fairy, a cute single-choice Discord role picker: new members get a welcome-channel link to the picker and everyone can change their role any time. *(draft)* |

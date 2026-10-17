@@ -80,6 +80,8 @@ export const PETS = [
   { id: 'ghost-protocol', what: 'a friendly small floating ghost with a rounded sheet-like head, two tiny soft arms and a gently scalloped floating hem, no legs, no props and no lettering', colours: 'pale mint and seafoam body, bright teal inner folds, dark charcoal dot eyes, tiny coral blush cheeks' },
   { id: 'project-parrot', what: 'a compact friendly parrot perched upright with a small curved beak, folded wings and a neat short tail, no props and no lettering', colours: 'scarlet-red primary body, electric ultramarine wings and tail, bright gold beak and feet' },
   { id: 'voicemeeter-bug', what: 'a tiny cute compact neckless bug with a single round joined head-and-body silhouette, short antennae and little feet, no separate head stalk, no long neck, no props and no lettering', colours: 'soft silver-grey body, vivid signal-red shell details, charcoal-black antennae and feet, tiny pink cheeks' },
+  // Platform Platypus: the seed sheet from generate-seeds-20261012.mjs, registered with Astra's OK on 2026-10-17. Same prompt, so a --match redo keeps this body.
+  { id: 'platform-platypus', what: 'a cheerful platypus standing upright, with a wide flat duck-like bill, a flat paddle tail and webbed feet, holding a small smartphone', colours: 'deep plum-purple fur, bright banana-yellow bill and feet, neon cyan phone' },
 ];
 
 const prompt = (p) => `${STYLE} The character is ${p.what}, in NEON unconventional colours: ${p.colours}. It must clearly read as ${p.what.split(',')[0]}.`;

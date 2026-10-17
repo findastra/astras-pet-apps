@@ -137,4 +137,4 @@ Checked again on `main` at `b904931`, across all 44 branches and PRs #22 to #36,
   yet, so finding 1 stands. PR #26 also replaces the rings and R W X model with "topology is not authority" and
   removes the Known gaps table, including gaps 11 and 12. That choice is Astra's.
 - **Finding 6** is new (above), rated low.
-- Open work: [card 019](../handoffs/019-any-security-follow-ups-20261017.md).
+- Open work: [card 025](../handoffs/025-any-security-follow-ups-20261017.md).

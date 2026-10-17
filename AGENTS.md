@@ -47,7 +47,7 @@ Every pet name (icon) and pet program (home) name is decided in **`pet-programs.
 ## One copy of each repo, always on GitHub (Astra, 2026-10-12)
 Work was being lost between assistants because every chat kept its own copy of the repos
 (`Documents\ChatGPT\...`, `Documents\Codex\<date>\...`) and some never pushed. From now on:
-1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Projects\<repo>`, named
+1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Astra's PetOS\<repo>` (Astra, 2026-10-17; was `Documents\Projects`, then `Documents\Astra's Pet Apps`), named
    exactly like the GitHub repo. Do not clone a second copy into a chat or dated folder. If your
    tool insists on its own workspace, push from it before you finish and say where it is.
 2. **Pull before you start** (`git fetch`, then fast-forward), and read the newest handoff.
@@ -132,7 +132,9 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
 
-Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16. Update, finding 6, card 019 and one table of handoff card numbers across every branch (`test/handoff-numbers-test-20261017.mjs`), 2026-10-17.
+Platform Platypus registered with its existing seed sheet (no new paid art), card 010 closed, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17.
+
+Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16. Update, finding 6, card 025 and one table of handoff card numbers across every branch (`test/handoff-numbers-test-20261017.mjs`), 2026-10-17.
 
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
 

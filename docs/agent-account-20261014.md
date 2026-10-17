@@ -26,10 +26,10 @@ New-Item -ItemType Directory -Force "C:\PetOS\farm" | Out-Null
 icacls "C:\PetOS\farm" /grant "petos-agent:(OI)(CI)M"
 ```
 
-Grant it the repos it works on and nothing else. For example, to let agents work in your Projects folder:
+Grant it the repos it works on and nothing else. For example, to let agents work in your pet folder:
 
 ```powershell
-icacls "$env:USERPROFILE\Documents\Projects" /grant "petos-agent:(OI)(CI)M"
+icacls "$env:USERPROFILE\Documents\Astra's PetOS" /grant "petos-agent:(OI)(CI)M"
 ```
 
 ## 3. The security folder the agents may only read

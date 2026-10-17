@@ -1,7 +1,7 @@
 # Match each program's shortcut icon to its folder's icon (Astra, 2026-10-17; Flash Audit A53).
 # Claude Opus 5.5 (claude-opus-5-5), 2026-10-17.
 #
-# For every pet folder under "Astra's Pet Apps" that has a folder icon (IconResource in its desktop.ini), every
+# For every pet folder under "Astra's PetOS" that has a folder icon (IconResource in its desktop.ini), every
 # shortcut (.lnk) in that folder gets the same icon, and so do the copies of that shortcut in the Start menu and on
 # the Desktop (same target and arguments). Startup Star's folder is the shell32 star, so its shortcut becomes the star.
 # It only changes shortcut icons. It never moves, renames or deletes anything. Run it again any time.
@@ -9,7 +9,7 @@
 #   powershell -ExecutionPolicy Bypass -File .\match-shortcut-icons-20261017.ps1            # fix
 #   powershell -ExecutionPolicy Bypass -File .\match-shortcut-icons-20261017.ps1 -WhatIf    # only report
 param(
-  [string]$Root = (Join-Path $env:USERPROFILE "Documents\Astra's Pet Apps"),
+  [string]$Root = (Join-Path $env:USERPROFILE "Documents\Astra's PetOS"),
   [switch]$WhatIf
 )
 $ErrorActionPreference = "Stop"
