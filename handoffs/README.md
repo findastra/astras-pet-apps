@@ -28,6 +28,22 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 | [008: Voicemeeter Bug to GitHub, then scrambled-audio detection](008-any-voicemeeter-bug-github-and-detection.md) | any | open: repo done; detection waits on the next failure |
 | [011: Wrap-up of Claude session 012RaHVD (movement merge WIP, README screenshots)](011-any-claude-session-012RaHVD-wrapup-20261012.md) | any | open, waits on Astra |
 
+## Merge order
+
+What Astra merges first, at the top ([skills/merge-order](../skills/merge-order/SKILL.md)). Every chat's title starts
+with its number here. Ranked by Claude Opus 5.5 on 2026-10-17; Astra can reorder it.
+
+| # | Pull request | What it is | Chat | Why here |
+| --- | --- | --- | --- | --- |
+| 1 | [astras-pet-os#46](https://github.com/findastra/astras-pet-os/pull/46) | The Farmer's round works again and opens a pull request instead of pushing to `main` (gap 11). Also tick Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests" | Fix the Farmer's round | Security, high (finding 2); the round has failed daily since 2026-10-12 |
+| 2 | [astras-pet-os#47](https://github.com/findastra/astras-pet-os/pull/47) | Ghost Protocol links kept to http and https (finding 6, hub copy) | Finish the Ghost Protocol XSS fix | Security, low; touches card 025 like #1, so its chat fixes that conflict after #1 |
+| 3 | `ghost-protocol` branch `claude/link-escape-20261017` | The same link fix on the live site | Finish the Ghost Protocol XSS fix | Same finding as #2, live site |
+| 4 | [astras-pet-os#23](https://github.com/findastra/astras-pet-os/pull/23) | Codex: README auditor, plus PR #26 (The Threshold, Liminal Doors, and the security model that replaces the rings and the Known gaps table) | Codex | Needs Astra's decision on the security model; large |
+| 5 | [astras-pet-os#36](https://github.com/findastra/astras-pet-os/pull/36) | Fuzzbois is now Fuzzboi Factory | | Feature |
+| 6 | [astras-pet-os#22](https://github.com/findastra/astras-pet-os/pull/22) | Codex: keep reviewed profile READMEs during daily rounds | Codex | Feature |
+| 7 | [astras-pet-os#8](https://github.com/findastra/astras-pet-os/pull/8) | Pole Puff draft pet app (its card becomes 024) | | Feature, oldest |
+| 8 | #1, #3, #4, #5, #7 | Cage-era pull requests from 2026-10-09 and 2026-10-10 | | Close? The Cage is retired; most are superseded |
+
 ## Card numbers on every branch
 
 A card number is used once, across `main` and every branch. **Before you write a card, take the next free number

@@ -127,6 +127,7 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - The GitHub Goldfish (`findastra/github-goldfish`) audits this repo and the whole account.
 - **The Farmer's rounds** run daily (PET-FILES.md, "Rounds, self-audits and submissions"). Pets submit changes to their own job, status, bubble lines, mood lines and audit through `cage.submit` in their pet.json; the round puts them in a pull request (`farmer/rounds-YYYYMMDD`) that Astra merges, and never pushes to `main`. A submitted name is only a note for Astra (names live in `pet-programs.json`). Do not hand-edit `status/pets-status.json`, `RELATIONS.md` or `MOOD-KEY.md`: they are generated.
 - **The pipeline** in pets.json holds pets that are on GitHub but not registered (no art yet). Registering one moves it to `pets`.
+- **Merge order:** every chat's title starts with its place in the merge order (`1 · Merge #46: …`), from the one ranked list in `handoffs/README.md` ([skills/merge-order](skills/merge-order/SKILL.md)). The app cannot sort the chat list itself.
 - **Handoffs:** work left for another assistant is a card in `handoffs/` ([skills/handoff/SKILL.md](skills/handoff/SKILL.md)). "Tell the Farmer" means a card here. Every card lists explicitly what you did (repos, commits, files, paths on Astra's PC, tests) under `## What I did`, not only what is left.
 
 ## Commands
