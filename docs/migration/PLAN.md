@@ -44,7 +44,7 @@ Evidence: [AUDIT.md](AUDIT.md), [GAP-ANALYSIS.md](GAP-ANALYSIS.md).
 | `findastra/astras-farm` | Does not exist | First-party Farm app/site and official catalog. Create after the first slice works, with Astra's OK |
 | `findastra/astras-kennel` | Does not exist | Community catalog from the registry starter (renamed from `astra-pet-registry`). Create when there is a submission flow to test |
 | `findastra/astra-pet-sdk` | Does not exist | Split out once contracts stop changing; until then `contracts/` and `sdk/` live in the hub |
-| One repo per pet | 34 pet repos exist | Keep; add a SemVer manifest to each over time, not all at once |
+| One repo per pet | 34 pet repos existed on 2026-10-11 (80 of 82 numbered pets had one on 2026-10-16: docs/naming-audit-20261016.md) | Keep; add a SemVer manifest to each over time, not all at once |
 
 ## Retiring the Cage
 
@@ -147,4 +147,4 @@ Status today: **not started** for every row.
 | Q | Cache Coyote queues work offline on the Pi; Sync Mink reconciles after reconnect | Offline/online test with conflicts | 8 |
 | R | Passport Pelican alerts on synthetic deadlines without leaking; Journal Jellyfish stays private; nothing submitted without approval | Synthetic data only | 8 |
 
-The 64 existing tests keep running as regression throughout.
+The existing tests (64 on 2026-10-11, 91 on 2026-10-17) keep running as regression throughout.

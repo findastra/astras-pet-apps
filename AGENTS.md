@@ -132,7 +132,7 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
 
-Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16.
+Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16. Update, finding 6, card 019 and one table of handoff card numbers across every branch (`test/handoff-numbers-test-20261017.mjs`), 2026-10-17.
 
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
 

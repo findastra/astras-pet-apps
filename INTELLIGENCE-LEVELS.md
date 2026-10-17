@@ -86,7 +86,8 @@ when you change a level, with the date and your evidence. Each intelligent app h
 - 🔌 $\color{red}{\textsf{Double-clicking a pipeline desktop pet only opens its GitHub page; no app is wired up.}}$
 - 🏷️ $\color{red}{\textsf{New names and jobs from 2026-10-12 are in the registry, but each pet's own repo still has the old text.}}$
   Gone Ghost, Patty and every pet with a new job: each pet's chat updates its repo's `pet.json` (the Farmer's round flags the difference until then).
-- 🏷️ $\color{red}{\textsf{Two different handoff cards are numbered 010 (Platform Platypus on main, Pole Puff on its branch).}}$
+- ~~Two different handoff cards are numbered 010~~ Fixed 2026-10-17: Pole Puff's card is 018. Card numbers across every
+  branch are in [handoffs/README.md](handoffs/README.md).
 
 ## What this shows
 
