@@ -1124,6 +1124,7 @@
     "pets": [
       {
         "pet": "Pole Puff",
+        "program": "Infinite Studio",
         "repo": null,
         "job": "Manages Astra's Infinite Pole.",
         "for": "astras-infinite-pole",
