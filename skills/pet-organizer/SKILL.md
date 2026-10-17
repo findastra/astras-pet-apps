@@ -13,13 +13,13 @@ script, never only the README**: the next round puts the old text back.
 ## The line shape
 ```
 N. **Pet** -- what the pet does [status]
-   - [`home-name`](its page) -- *Home*, the pet program
+   - [`home-name`](its page) -- the pet program
    - [`repo`](https://github.com/findastra/repo) -- the repo note
    - [`tool`](https://github.com/findastra/tool) -- each tool
 ```
 - **The pet line is the pet and what it does, nothing else** (Astra, 2026-10-16). The pet's name (`icon` in
   pet-programs.json) comes first. Its home (pet program), repo and tools are sub-bullets beneath it, in that order.
-- **Home** is the first sub-bullet: the pet program's name (`program`) when `assigned` is true, linked to its page
+- **Home** is the first sub-bullet: the pet program's name (`program`, written once as `the-farm`) when `assigned` is true, linked to its page
   (`profile.tools.<repo>.home_url` in pets.json, else a live github.io site, else its page on The Farm). Unnamed:
   `` `pet-program-N` -- pet program, not named yet ``. Suggested homes live in `idea` until Astra approves one.
 - **Repo** is the second sub-bullet (`profile.tools.<repo>.repo_note`, else "Pet's repo"). **Tools** follow, from
