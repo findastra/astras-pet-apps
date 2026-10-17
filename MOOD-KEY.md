@@ -28,7 +28,7 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 | **API Fairy** | the notes about your API keys | weekly, Wednesday | a key renewed or a note confirmed |
 | **Unity Unicorn** | your Unity and VRChat project notes | weekly, Thursday | a project opened in Unity so I can check it |
 | **Python Panther** | your Python lessons | weekly, Friday | you to do the next lesson |
-| **Astra Wisp** | the AI Astra backend and bridge | weekly, Saturday | the AI Astra app started on your PC |
+| **Astra Wisp** | AI Astra: her mind, VRChat body and voice | weekly, Saturday | the AI Astra app started on your PC |
 | **Health Hummy** | my own files (never your check-ins) | weekly, Sunday | a check-in only you can make |
 | **Finance Finch** | my own files (never your entries) | weekly, Monday | an entry only you can add |
 | **Mommy's Mommies** | Mommy's classes and events | weekly, Tuesday | a date or teacher confirmed for a session |
