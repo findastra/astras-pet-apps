@@ -201,7 +201,7 @@ Validation milestones: real end-to-end demo; 10–20 external users who install 
 
 ## 1. Non-negotiable vision
 
-Astra's Pet Apps is a local-first, multi-device ecosystem of independent utility applications with optional proactive AI agents, each represented by a pet.
+Astra's PetOS is a local-first, multi-device ecosystem of independent utility applications with optional proactive AI agents, each represented by a pet.
 
 **The Farm is a lightweight, responsive website**, not a visual Cage, game, or simulated pet habitat. It displays all pets as cards. **Under every pet is an always-visible, fast text box** for the user to submit recommendations, questions, tasks, and standing-goal suggestions. The Farm must work from **Android, iPad, iPhone, Windows, and future authorized devices and servers**. Responsive browser access is mandatory; native mobile apps are optional later.
 

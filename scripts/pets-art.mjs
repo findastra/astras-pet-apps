@@ -104,7 +104,7 @@ const fairy = {
   },
 };
 
-/* ---------- Friendly Farmer: host, manager and auditor of Astra's Pet Apps (astras-pet-apps). DRAFT. ---------- */
+/* ---------- Friendly Farmer: host, manager and auditor of Astra's PetOS (astras-pet-os). DRAFT. ---------- */
 const farmer = {
   id: 'farmer', name: 'Friendly Farmer', ink: '#3a2010',
   body(cv, mood) {

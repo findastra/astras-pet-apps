@@ -1,4 +1,4 @@
-// Local companion interfaces for Astra's Pet Apps. OpenAI Codex (GPT-6), 2026-10-08.
+// Local companion interfaces for Astra's PetOS. OpenAI Codex (GPT-6), 2026-10-08.
 // Existing applications are copied separately; this builds only the browser companions below.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -7,7 +7,7 @@ process.chdir(fileURLToPath(new URL('..', import.meta.url)));
 const registry = JSON.parse(readFileSync('pets.json', 'utf8'));
 const art = JSON.parse(readFileSync('art/frames/index.json', 'utf8'));
 const configs = [
-  { repo: 'astras-pet-apps', type: 'manager', title: "Astra's Pet Apps", subtitle: 'The Farmer’s desk', lead: 'Open your apps, review what needs attention, and keep a small follow-up list.', accent: '#dbe870', limit: 'App availability comes from the registry. Follow-up flags are your personal notes.' },
+  { repo: 'astras-pet-apps', type: 'manager', title: "Astra's PetOS", subtitle: 'The Farmer’s desk', lead: 'Open your apps, review what needs attention, and keep a small follow-up list.', accent: '#dbe870', limit: 'App availability comes from the registry. Follow-up flags are your personal notes.' },
   { repo: 'api-fairy', type: 'keys', title: 'API Fairy', subtitle: 'Key metadata notebook', lead: 'Remember where a key lives, what uses it, and when you want to review it.', accent: '#c8a1f4', limit: 'Store names and locations only. This browser notebook does not read or watch your keys. The existing Windows app provides that separate functionality.' },
   { repo: 'learn-python', type: 'python', title: 'Python Panther', subtitle: 'A small practice desk', lead: 'Read a tiny Python example, predict its output, then check your answer.', accent: '#c7df66', limit: 'These exercises check expected answers locally. This page does not execute Python code.' },
   { repo: 'vrchat-ai-astra', type: 'vrchat', title: 'Astra Wisp', subtitle: 'VRChat AI Astra · readiness desk', lead: 'Prepare an embodiment session and keep track of the steps you have actually checked.', accent: '#acb2ff', limit: 'The existing AI Astra app runs through Electron and Python. This browser companion does not connect to the backend, change learned memory, or send VRChat messages.' },
@@ -160,7 +160,8 @@ for (const config of configs) {
   // Published companions retain their exact source bytes and version footer.
   // The Farmer's manager is generated from the current Cage registry.
   if (config.type !== 'manager' && existsSync(output) && !refreshExisting) { preserved++; continue; }
-  const pet = registry.pets.find((p) => p.repo === config.repo);
+  // The Farmer's desk keeps its old file key (astras-pet-apps-20261008.html); his registry repo is astras-pet-os.
+  const pet = registry.pets.find((p) => p.repo === config.repo || (config.repo === 'astras-pet-apps' && p.repo === 'astras-pet-os'));
   const image = 'data:image/png;base64,' + readFileSync(art.pets[pet.art].frames.idle).toString('base64');
   const statusFile = registry.rounds && registry.rounds.status_file;
   const status = statusFile && existsSync(statusFile) ? JSON.parse(readFileSync(statusFile, 'utf8')) : null;
@@ -168,7 +169,7 @@ for (const config of configs) {
     frames: art.pets[p.art] ? Object.fromEntries(Object.entries(art.pets[p.art].frames).map(([m, f]) => [m, '../' + f])) : null }));
   const data = { ...config, ...(config.type === 'manager' ? { pets: registry.pets, everyone, status, order: ORDER } : {}) };
   const serialized = JSON.stringify(data).replaceAll('<', '\\u003c');
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="author" content="Astra; OpenAI Codex GPT-6"><title>${esc(config.title)} · Astra's Pet Apps</title><style>${css}</style></head><body style="--accent:${config.accent}"><header><img src="${image}" alt="${esc(pet.pet)}"><p class="eyebrow">${esc(config.subtitle)}</p><h1>${esc(config.title)}</h1><p>${esc(config.lead)}</p><p id="feedback" role="status" aria-live="polite"></p></header><main></main><footer><p class="limit">${esc(config.limit)}</p><p>Made by Astra · Local companion interface · 2026-10-08 · Built with OpenAI Codex (GPT-6)</p></footer><script>window.APP_CONFIG=${serialized};(${clientMain.toString()})();</script></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="author" content="Astra; OpenAI Codex GPT-6"><title>${esc(config.title)} · Astra's PetOS</title><style>${css}</style></head><body style="--accent:${config.accent}"><header><img src="${image}" alt="${esc(pet.pet)}"><p class="eyebrow">${esc(config.subtitle)}</p><h1>${esc(config.title)}</h1><p>${esc(config.lead)}</p><p id="feedback" role="status" aria-live="polite"></p></header><main></main><footer><p class="limit">${esc(config.limit)}</p><p>Made by Astra · Local companion interface · 2026-10-08 · Built with OpenAI Codex (GPT-6)</p></footer><script>window.APP_CONFIG=${serialized};(${clientMain.toString()})();</script></body></html>`;
   writeFileSync(output, html);
   built++;
 }

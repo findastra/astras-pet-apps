@@ -1,6 +1,6 @@
 // The Farmer's profile round: keeps findastra/findastra's README matched to the repos on GitHub.
 // Claude Opus 5.5 (claude-opus-5-5), 2026-10-09. Run daily by findastra/findastra's workflow:
-//   node astras-pet-apps/scripts/farmer-profile-20261009.mjs --readme README.md --registry astras-pet-apps/pets.json
+//   node astras-pet-os/scripts/farmer-profile-20261009.mjs --readme README.md --registry astras-pet-os/pets.json
 //
 // It only touches the repo lists. The header, tagline, socials, headings and Astra's own blurbs stay as
 // she wrote them (layout rules: github-goldfish/docs/profile-style-20261009.md). It:

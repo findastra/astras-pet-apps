@@ -9,7 +9,7 @@ Changes start at the bottom and are saved upward. Nothing generated is edited by
 | Level | Who | Owns | Saves by |
 |---|---|---|---|
 | 1 | **Astra** | Approvals: new art (it costs money), a pet's job, anything in a card waiting on her | Answering a card, or telling an assistant |
-| 2 | **Friendly Farmer** (`astras-pet-apps`) | `pets.json`: who exists, kinds, art, relations, the mood key | His daily round, and assistants working on the Cage |
+| 2 | **Friendly Farmer** (`astras-pet-os`) | `pets.json`: who exists, kinds, art, relations, the mood key | His daily round, and assistants working on the Cage |
 | 3 | **Each pet's repo** | Its own app, README, cards, and its own name, job, status, bubble lines, mood lines and audit | Editing its `pet.json`, and submitting identity changes in `cage.submit` |
 | 4 | **Generated** | `cage-data.js`, `ROSTER.md`, the README table, the Farmer's desk, `MOOD-KEY.md`, this file, `status/pets-status.json`, the profile's pet list | Never by hand: the build and the rounds rewrite them |
 
