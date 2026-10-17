@@ -18,7 +18,7 @@ To redraw the stand-in art: `node scripts/draw-pole-puff-20261011.mjs` (Node 20+
 - No behaviour yet: nothing that manages the world is built.
 - Art is a hand-drawn stand-in, not yet the generated house art, and is a draft until Astra approves it. Mood symbols are not composited.
 - A seed in `pets.json`, not in the pipeline: the `pole-puff` repo waits on Astra's OK. See
-  [card 010](https://github.com/findastra/astras-pet-apps/blob/main/handoffs/010-any-pole-puff-repo-20261012.md).
+  [card 018](https://github.com/findastra/astras-pet-os/blob/claude/pole-puff-draft-20261012/handoffs/018-any-pole-puff-repo-20261012.md).
 
 ## License
 

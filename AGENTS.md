@@ -102,4 +102,4 @@ Latest owner follow-up, OpenAI Codex (GPT-6), 2026-10-11: use docs/pet-revisions
 Paired desktop revision by OpenAI Codex (GPT-6), 2026-10-11: Paper Girl has no NEWS lettering and matches File Master's small rectangular eyes. File Master wears a crown and stern expression. They stay together during roaming; dragging either makes it lead. See docs/pet-partners-20261011.md. Preserve their equal heights and the existing no-sparkle rule.
 
 Herd Web (`herd-web-20261012.html`, `herd-web.json`, `scripts/herd-web-20261012.mjs`, template `scripts/herd-web-template-20261012.html`, guarded by `test/herd-web-test-20261012.mjs`): the 3D map of every pet, model, program and piece of infrastructure and the links between them, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12. Pet-to-pet links belong in `relations` in pets.json; links with a non-pet end belong in herd-web.json.
-Pole Puff draft app (`drafts/pole-puff/`, card 010; repo waits on Astra's OK) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12.
+Pole Puff draft app (`drafts/pole-puff/`, card 018; repo waits on Astra's OK) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12.
