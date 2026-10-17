@@ -47,7 +47,7 @@ Every pet name (icon) and pet program (home) name is decided in **`pet-programs.
 ## One copy of each repo, always on GitHub (Astra, 2026-10-12)
 Work was being lost between assistants because every chat kept its own copy of the repos
 (`Documents\ChatGPT\...`, `Documents\Codex\<date>\...`) and some never pushed. From now on:
-1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Astra's Pet Apps\<repo>` (moved from `Documents\Projects` in October 2026), named
+1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Astra's PetOS\<repo>` (Astra, 2026-10-17; was `Documents\Projects`, then `Documents\Astra's Pet Apps`), named
    exactly like the GitHub repo. Do not clone a second copy into a chat or dated folder. If your
    tool insists on its own workspace, push from it before you finish and say where it is.
 2. **Pull before you start** (`git fetch`, then fast-forward), and read the newest handoff.
@@ -132,7 +132,9 @@ The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Far
 - `npm run build`, `npm run check` (add `-- --online` to ask GitHub), `npm test`
 - Node 20+. If `node` is missing from PATH on Astra's PC, the Codex bundled runtime works.
 
-Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16.
+Platform Platypus registered with its existing seed sheet (no new paid art), card 010 closed, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17.
+
+Security assessment (`docs/security-assessment-20261016.md`, known gaps 11 and 12) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16. Update, finding 6, card 025 and one table of handoff card numbers across every branch (`test/handoff-numbers-test-20261017.mjs`), 2026-10-17.
 
 System tray launcher added with OpenAI Codex (GPT-6), 2026-10-11. Desktop source and build: scripts/desktop-pets-20261011.cs and build-desktop-pets-20261011.ps1. See docs/tray-star-handoff-20261011.md before changing the installed desktop app.
 
@@ -148,3 +150,4 @@ Astra's PetOS System Map, also called the 3D PFD (`system-map-20261012.html`, `s
 ASTRAS_PET_OS name and top-level architecture file (`ASTRAS_PET_OS.md`) by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-12.
 Astra's PetOS restructuring with Claude Opus 5.5 (`claude-opus-5-5`), head chat, 2026-10-12: repo renamed to astras-pet-os; the Cage retired from the Farmer's job and the README; names Gone Ghost and Patty; jobs from Astra's descriptions; seeds Photo Dodo and Video Vulture; Journal Jellyfish; INTELLIGENCE-LEVELS.md (program, runtime, updates, agentic harness, errors); the System Map's own-program shell, scroll and scroll-click controls, and pet icons (art/icons, art/seeds drafts).
 Pet-first profile lines (`N. **Pet** · *Home* · [`repo`](link) -- job [status]`), the Friendly Farmer's `pet-organizer` and `pet-finder` tricks (skills/pet-organizer, skills/pet-finder) and the read-only pet-finder tool (`scripts/pet-finder-20261016.mjs`, guarded by `test/pet-first-test-20261016.mjs`) with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-16. Card 012 lists what waits on Astra. Later the same day Astra moved the home, repo and tools off the pet line into sub-bullets: `N. **Pet** -- job [status]`, then `- home`, `- repo`, `- tools` (skills/pet-organizer).
+Flash Audit put in priority order (most imperative first, with the insertion rule), new checks A54 third-party programs, A55 pictures and A56 work saved in its native folder, and the project-image-generator decision, by Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-17.

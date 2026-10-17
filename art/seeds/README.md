@@ -8,7 +8,7 @@ When a seed gets its own repo, its art moves there.
 | OSC Sealion | [osc-sealion-sheet-20261012.png](osc-sealion-sheet-20261012.png) | 2026-10-12 |
 | Piranesi Nessi | [piranesi-nessi-sheet-20261012.png](piranesi-nessi-sheet-20261012.png) | 2026-10-12 |
 | Procreate Panda | [procreate-panda-sheet-20261012.png](procreate-panda-sheet-20261012.png) | 2026-10-12 |
-| Platform Platypus | [platform-platypus-sheet-20261012.png](platform-platypus-sheet-20261012.png) | 2026-10-12 |
+| Platform Platypus | [platform-platypus-sheet-20261012.png](platform-platypus-sheet-20261012.png) | 2026-10-12; registered with this sheet 2026-10-17 (now also `art/sheets/platform-platypus-20261012.png`) |
 | Skill Scout | [skill-scout-sheet-20261012.png](skill-scout-sheet-20261012.png) | 2026-10-12, with the Mommies sheet as the style reference |
 | Photo Dodo | [photo-dodo-sheet-20261012.png](photo-dodo-sheet-20261012.png) | 2026-10-12 |
 | Video Vulture | [video-vulture-sheet-20261012.png](video-vulture-sheet-20261012.png) | 2026-10-12 |

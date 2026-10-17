@@ -1,4 +1,4 @@
-status: open (waiting on Astra: merge the portfolio's rescue branch; read every employer page before it goes live)
+status: open (waiting on Astra: read every employer page before it goes live)
 for: any (Portfolio Puffer's chat)
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-17
 needs: skills/farm-security/SKILL.md section 5 (the portfolio exception), findastra/findastra.github.io README, findastra/github-goldfish AGENTS.md
@@ -10,7 +10,8 @@ needs: skills/farm-security/SKILL.md section 5 (the portfolio exception), findas
 - **Created `findastra/findastra.github.io`** (public, with Astra's OK). `main` holds only a README and `.gitignore`
   (commit `ed6ff07`). The site that had been built on Astra's PC with no git (cyber `index.html`, `parchment.html`,
   `drafts/`, `art/`, data files; 92 files, 3 MB) is on branch `claude/rescue-portfolio-20261017`, commit `44df106`,
-  pushed as found. Privacy scan before the push: no surname, email, personal path or key.
+  pushed as found. Privacy scan before the push: no surname, email, personal path or key. Astra merged it
+  (findastra/findastra.github.io#1) on 2026-10-17.
 - The PC folder `%USERPROFILE%\Documents\Astra's Pet Apps\findastra.github.io` is now that git repo, checked out on the
   rescue branch. Its files were last changed about 01:11 on 2026-10-17, so another chat may still be working in it:
   pull before editing.
@@ -28,7 +29,7 @@ needs: skills/farm-security/SKILL.md section 5 (the portfolio exception), findas
   2026-10-17 on branch `claude/flash-audit-order-20261017`).
 
 ## Done when
-Astra has merged the site, every employer page is hers word for word, Puffer's weekly proposal runs, and the
+Every employer page is hers word for word, Puffer's weekly proposal runs, and the
 Goldfish exemption is tested.
 
 ## Return

@@ -89,7 +89,7 @@ is bound to that exact farmhand, harness, device and person. Trust is **earned i
 |---|---|---|
 | Claude (via Claude Code), chosen OpenAI models (via Codex) | Allowed helpers | Take a seat with a short-lived key, within each pet's grants. They help build and test Astra's own model. |
 | Astra's local farmhand (in training) | Short leash, earning trust | Fingerprinted (a hash of its weights); few grants at first. L4 promotes it as it passes her tests, until she relies on it most. |
-| AI Astra's mind (the local model inside VRChat AI Astra, shown as Astra Wisp) | Narrow avenues | Her own pet program and the VRChat chatbox bridge only: no files, no keys, no other pets. |
+| AI Astra's mind (the local model inside VRChat AI Astra, shown as Astra Wisp) | Narrow avenues | Her own pet program (The Astral Plane) and her VRChat body (chatbox drafts) only: no files, no keys, no other pets. |
 | Anything else | Not allowed | Cannot get a key, so it cannot act. The Police Station alarms if one tries. |
 
 A cloud model cannot prove cryptographically which model answered; we trust the provider over an encrypted
@@ -151,7 +151,7 @@ Security is shown with evidence, not claimed. Each item is something anyone can 
 | Evidence | Status |
 |---|---|
 | A written threat model: [PROTECTION-RINGS.md](PROTECTION-RINGS.md) and this page | **Done** |
-| Automated tests on every change (privacy, registry, the animal guard) | **Done (74 tests)** |
+| Automated tests on every change (privacy, registry, the animal guard) | **Done (93 tests on 2026-10-17)** |
 | GitHub secret scanning and push protection, Dependabot alerts, CodeQL code scanning and private vulnerability reporting | **Done 2026-10-14** on all 50 public repos |
 | OpenSSF Scorecard: a public score of this repo's security practices | Planned |
 | Prompt-injection drills and red-team reports from White Hat Weasel, in the sandbox | Planned |
