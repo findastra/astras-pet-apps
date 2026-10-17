@@ -57,7 +57,7 @@ flowchart LR
     meme_fiend["Meme Fiend *"]
   end
   subgraph Stage["Stage"]
-    mommys["Mommy's Mommies"]
+    mommys_mommies["Mommy's Mommies"]
     drum_dog["Drum Dog"]
     rgbee["RGBee *"]
     deck_duck["Deck Duck *"]
@@ -95,8 +95,8 @@ flowchart LR
   github_goldfish -.->|keys| api_fairy
   astras_pet_os -.->|shipped| portfolio_puffer
   claude_bot -.->|status| findastra_discord_presence
-  mommys -.->|cue| rgbee
-  mommys -.->|cue| drum_dog
+  mommys_mommies -.->|cue| rgbee
+  mommys_mommies -.->|cue| drum_dog
   drum_dog -.->|cue| rgbee
   deck_duck -.->|cue| rgbee
   deck_duck -.->|cue| claude_bot
@@ -104,7 +104,7 @@ flowchart LR
   astras_gif_maker -.->|art| meme_fiend
   file_master -.->|findings| backup_beaver
   mail_snail -->|findings| finance_finch
-  mommys -->|cue| findastra_discord_presence
+  mommys_mommies -->|cue| findastra_discord_presence
   github_goldfish -.->|shipped| portfolio_puffer
   mine_mole -.->|findings| finance_finch
   mesh_moth -.->|status| raspberry_berry

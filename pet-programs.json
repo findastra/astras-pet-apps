@@ -12,7 +12,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "the-farm-v1.0-mini-descriptor-v1.0",
-        "text": "Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra.",
+        "text": "Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra’s (L4) attention.",
         "reviewed": false
       }
     },
@@ -42,7 +42,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "data-dealer-v1.0-mini-descriptor-v1.0",
-        "text": "Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her.",
+        "text": "Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her attention.",
         "reviewed": false
       }
     },
@@ -72,7 +72,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "unity-stable-v1.0-mini-descriptor-v1.0",
-        "text": "A local Unity and VRChat desk with avatar plans, 26 dated tools, open-arch audits, concise summaries and evidenced execution history.",
+        "text": "A local Unity and VRChat desk with avatar plans, 25+ dated tools, open-arch audits, concise summaries and evidenced execution history.",
         "reviewed": false
       }
     },
@@ -143,11 +143,11 @@
       "icon": "Mommy's Mommies",
       "idea": "Mommy's Academy",
       "stage": "registered",
-      "repo": "mommys",
+      "repo": "mommys-mommies",
       "repo_exists": true,
       "mini_descriptor": {
         "label": "mommys-green-room-v1.0-mini-descriptor-v1.0",
-        "text": "A local planning room for Mommy's classes and events, with session details, readiness and notes. Calendar and Discord connections are planned.",
+        "text": "A local planning room for Mommy's classes and events, with session details, readiness and notes [calendar and Discord connections planned]",
         "reviewed": false
       }
     },
@@ -207,7 +207,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "iced-out-iceberg-v1.0-mini-descriptor-v1.0",
-        "text": "Drafts and tracks portfolio updates locally. GitHub and LinkedIn connections are planned; publishing is manual.",
+        "text": "Drafts and tracks portfolio updates locally; publishing is manual [GitHub and LinkedIn connections planned]",
         "reviewed": false
       }
     },
@@ -222,7 +222,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "bass-and-biscuits-v1.0-mini-descriptor-v1.0",
-        "text": "Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted. Ableton Live connections are planned.",
+        "text": "Saves and samples music found online for Ableton Live, and plans releases: the first album, DJ mixes and where each one is hosted [Ableton Live connections planned]",
         "reviewed": false
       }
     },
@@ -237,7 +237,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "halo-list-v1.0-mini-descriptor-v1.0",
-        "text": "Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned.",
+        "text": "Records code-review findings and next steps, then exports a Markdown worklist [editor connections planned]",
         "reviewed": false
       }
     },
@@ -327,7 +327,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "light-hive-v1.0-mini-descriptor-v1.0",
-        "text": "Plans and previews lighting scenes for every RGB light in the room: room lights, mouse pad, mouse, PC and keyboard. Sending scenes to the real lights is planned.",
+        "text": "Plans and previews lighting scenes for every RGB light in the room: room lights, mouse pad, mouse, PC and keyboard [sending scenes to the real lights planned]",
         "reviewed": false
       }
     },
@@ -387,7 +387,7 @@
       "repo_exists": true,
       "mini_descriptor": {
         "label": "cursed-archive-v1.0-mini-descriptor-v1.0",
-        "text": "Archives your favourite memes, especially from Discord, and will run a tool for making your own (not built yet). Your memes stay on your PC.",
+        "text": "Archives your favourite memes, especially from Discord, and keeps them on your PC [meme-making tool planned]",
         "reviewed": false
       }
     },
@@ -627,7 +627,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "nessis-ocean-v1.0-mini-descriptor-v1.0",
-        "text": "Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools. Runtime is planned.",
+        "text": "Piranesi Nessi's world caretaker for Piranesi House: its Unity project, preview website and use of shared Unity Unicorn tools [runtime planned]",
         "reviewed": false
       }
     },
@@ -702,7 +702,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-47-v1.0-mini-descriptor-v1.0",
-        "text": "Tasks: watches retries, stalled jobs and agent handoffs.",
+        "text": "Watches task retries, stalled jobs and agent handoffs.",
         "reviewed": false
       }
     },
@@ -717,7 +717,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-48-v1.0-mini-descriptor-v1.0",
-        "text": "Observability: correlates logs, traces, health and failures.",
+        "text": "Correlates logs, traces, health and failures.",
         "reviewed": false
       }
     },
@@ -732,7 +732,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-49-v1.0-mini-descriptor-v1.0",
-        "text": "Hosts: home servers, uptime, service health.",
+        "text": "Watches home servers, uptime and service health.",
         "reviewed": false
       }
     },
@@ -747,7 +747,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-50-v1.0-mini-descriptor-v1.0",
-        "text": "Containers: Docker health and authorized management.",
+        "text": "Watches Docker container health and manages containers with Astra’s OK.",
         "reviewed": false
       }
     },
@@ -762,7 +762,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-51-v1.0-mini-descriptor-v1.0",
-        "text": "Quality: tests and release verification.",
+        "text": "Runs tests and verifies releases.",
         "reviewed": false
       }
     },
@@ -792,7 +792,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-53-v1.0-mini-descriptor-v1.0",
-        "text": "Network: packet loss, DNS, latency, routing.",
+        "text": "Watches the network: packet loss, DNS, latency and routing.",
         "reviewed": false
       }
     },
@@ -807,7 +807,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-54-v1.0-mini-descriptor-v1.0",
-        "text": "Calendar: scheduling, conflicts and reminders.",
+        "text": "Manages the calendar: scheduling, conflicts and reminders.",
         "reviewed": false
       }
     },
@@ -822,7 +822,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-55-v1.0-mini-descriptor-v1.0",
-        "text": "Web and marketing operations: website QA and authorized browser work.",
+        "text": "Checks websites and does authorized browser work for web and marketing.",
         "reviewed": false
       }
     },
@@ -837,7 +837,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-56-v1.0-mini-descriptor-v1.0",
-        "text": "Data engineering: data integrity, schemas, pipelines.",
+        "text": "Checks data integrity, schemas and pipelines.",
         "reviewed": false
       }
     },
@@ -852,7 +852,7 @@
       "repo_exists": false,
       "mini_descriptor": {
         "label": "pet-program-57-v1.0-mini-descriptor-v1.0",
-        "text": "Dependency updates: packages, compatibility, rollback prep.",
+        "text": "Prepares package updates, checks compatibility and plans rollbacks.",
         "reviewed": false
       }
     },

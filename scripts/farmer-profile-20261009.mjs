@@ -63,7 +63,11 @@ export function syncProfile(readme, registry, repos, programs = null) {
   const toolsOf = registry.profile?.tools || {};
   // also_listed: pet repos Astra also lists in another section on purpose (findastra-discord-presence under Discord).
   const alsoListed = new Set(registry.profile?.also_listed || []);
-  const places = Object.values(toolsOf).flatMap((t) => t.tools || []).filter((r) => !petRepos.has(r));
+  // commons (Astra, 2026-10-16): one-line bullets under the Intelligence Levels table, before the numbered pets, in the
+  // System Map's style: "- How they all connect: [Astra's PetOS System Map](…)", then the Kennel, the Shed, the Vet Clinic.
+  const commons = (registry.profile?.commons || []).filter((c) => c.url || online.has(c.repo));
+  const commonLine = (c) => `- ${c.text}: [${c.name}](${c.url || `https://github.com/${OWNER}/${c.repo}`})`;
+  const places = [...Object.values(toolsOf).flatMap((t) => t.tools || []), ...commons.map((c) => c.repo).filter(Boolean)].filter((r) => !petRepos.has(r));
   // Every pet's sub-bullets: its home (pet program) first, then its repo, then its tools.
   const subLines = (repo) => {
     const t = toolsOf[repo] || {};
@@ -146,7 +150,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     changes.push(`added ${r.name} to ${target.title}`);
   }
 
-  const isList = (ln) => PET_LINE.test(ln) || BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln) || PET_HOME.test(ln) || /^\s+- /.test(ln);
+  const isCommon = (ln) => commons.some((c) => ln === commonLine(c) || ln === commonLine(c).slice(2) || ln.startsWith(`${c.text}: [`) || ln.startsWith(`- ${c.text}: [`));
+  const isList = (ln) => isCommon(ln) || PET_LINE.test(ln) || BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln) || PET_HOME.test(ln) || /^\s+- /.test(ln);
   out.push(...lines.slice(0, sections.length ? sections[0].start : lines.length));
   for (const sec of sections) {
     const body = lines.slice(sec.start + 1, sec.end);
@@ -156,8 +161,13 @@ export function syncProfile(readme, registry, repos, programs = null) {
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
       // A sub-bullet nests only when it is indented past the number ("10. " is 4 wide), so the indent follows the number.
       const listed = petLines.flatMap((ln, i) => [ln, ...subLines(petRepoOf[i]).map((x) => ' '.repeat(ln.indexOf(' ') + 1) + x)]);
-      if (first < 0) out.push('', ...listed, ...body);
-      else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
+      const withCommons = commons.length ? [...commons.map(commonLine), '', ...listed] : listed;
+      if (first < 0) out.push('', ...withCommons, ...body);
+      else {
+        const lead = body.slice(0, first);
+        while (lead.length && !lead.at(-1).trim()) lead.pop(); // one blank line before the commons, however many there were
+        out.push(...lead, '', ...withCommons, ...body.slice(last + 1));
+      }
       continue;
     }
     const kept = [];

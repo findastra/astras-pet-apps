@@ -1746,7 +1746,7 @@
       "why": "Unity Unicorn will personalize an avatar's face-tracking rig in conjunction with VRCFT (Astra, 2026-10-12)."
     },
     {
-      "from": "mommys",
+      "from": "mommys-mommies",
       "to": "calendar-crow",
       "carries": "cue",
       "state": "planned",
@@ -2426,7 +2426,7 @@
     },
     {
       "from": "laptop-pc",
-      "to": "mommys",
+      "to": "mommys-mommies",
       "carries": "cue",
       "state": "suggested",
       "why": "The laptop does streaming and recording (Astra, 2026-10-12). Mommy's classes and events may be streamed or recorded."
@@ -4278,7 +4278,7 @@
           }
         ]
       },
-      "mommys": {
+      "mommys-mommies": {
         "languages": [
           {
             "language": "HTML",
@@ -4547,7 +4547,7 @@
     "rift-rabbit": "rift-rabbit",
     "health-hummy": "health-hummy",
     "finance-finch": "finance-finch",
-    "mommys": "mommys",
+    "mommys-mommies": "mommys-mommies",
     "drum-dog": "drum-dog",
     "vrchat-ai-astra": "vrchat-ai-astra",
     "data-dealer": "data-dealer",

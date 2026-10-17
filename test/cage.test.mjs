@@ -44,7 +44,7 @@ test('the count is derived, and drawn characters match it', () => {
 });
 
 test("Mommy's Mommies are one pet in one sprite: they never appear apart", () => {
-  const m = registry.pets.find((p) => p.repo === 'mommys');
+  const m = registry.pets.find((p) => p.repo === 'mommys-mommies');
   assert.equal(m.art, 'mommys-mommies');
   assert.equal((m.companions || []).length, 0);
   assert.ok(m.says['mommys-mommies'].length > 0);

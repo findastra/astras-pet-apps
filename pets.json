@@ -159,11 +159,17 @@
     "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
   },
   "profile": {
-    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm; Role Fairy taken off by Astra; The Farm links to its own page, 2026-10-16), its home first (its cyberhome), then its tools.",
+    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm; Role Fairy taken off by Astra; The Farm links to its own page, 2026-10-16), its home first (its cyberhome), then its tools. commons = one-line bullets under the Intelligence Levels table, before the numbered pets: the System Map, the Kennel, the Shed and the Vet Clinic (Astra, 2026-10-16).",
     "hidden": ["role-fairy"],
     "also_listed": ["findastra-discord-presence"],
+    "commons": [
+      { "text": "How they all connect", "name": "Astra's PetOS System Map", "url": "https://findastra.github.io/astras-pet-os/system-map-20261012.html" },
+      { "text": "Pets made by other people for Astra's PetOS", "name": "The Kennel", "repo": "the-kennel" },
+      { "text": "Tools and tricks made by other creators for Astra's PetOS", "name": "The Shed", "repo": "the-shed" },
+      { "text": "Is your pet sick? Tickets and community cures for Astra's PetOS", "name": "Vet Clinic", "repo": "vet-clinic" }
+    ],
     "tools": {
-      "astras-pet-os": { "home_url": "https://findastra.github.io/astras-pet-os/apps/astras-pet-apps-20261008.html", "repo_note": "Astra's PetOS home repo", "tools": ["startup-star", "the-kennel", "the-shed", "vet-clinic"] }
+      "astras-pet-os": { "home_url": "https://findastra.github.io/astras-pet-os/apps/astras-pet-apps-20261008.html", "repo_note": "Astra's PetOS home repo", "tools": ["startup-star"] }
     }
   },
   "rounds": {
@@ -324,14 +330,14 @@
         "why": "Claude Bot's status feeds the Anthropic presence card."
       },
       {
-        "from": "mommys",
+        "from": "mommys-mommies",
         "to": "rgbee",
         "carries": "cue",
         "state": "idea",
         "why": "A class or show starts its lighting scene."
       },
       {
-        "from": "mommys",
+        "from": "mommys-mommies",
         "to": "drum-dog",
         "carries": "cue",
         "state": "idea",
@@ -387,7 +393,7 @@
         "why": "Bills Astra has not paid yet, found in her mail, go to Finance Finch. Astra, 2026-10-12. Finance data stays on her PC."
       },
       {
-        "from": "mommys",
+        "from": "mommys-mommies",
         "to": "findastra-discord-presence",
         "carries": "cue",
         "state": "planned",
@@ -449,7 +455,7 @@
         "meme-fiend"
       ],
       "Stage": [
-        "mommys",
+        "mommys-mommies",
         "drum-dog",
         "rgbee",
         "deck-duck",
@@ -661,7 +667,7 @@
       }
     },
     {
-      "repo": "mommys",
+      "repo": "mommys-mommies",
       "pet": "Mommy's Mommies",
       "role": "pet",
       "art": "mommys-mommies",
