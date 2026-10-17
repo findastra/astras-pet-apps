@@ -8,6 +8,8 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
+| [019: Portfolio Puffer and the portfolio](019-any-portfolio-puffer-and-the-portfolio-20261017.md) | any | open, waits on Astra: merge the site; read every employer page |
+| [018: Curious faces and Health Hummy's beak](018-any-curious-faces-and-hummy-beak-20261017.md) | any | open, waits on Astra: OpenAI credits |
 | [012: Pet-first profile list and missing pets](012-farmer-pet-first-list-and-missing-pets-20261016.md) | Farmer | open, waits on Astra: #77's name, homes, Chat Rat, Workflow Whale |
 | [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |

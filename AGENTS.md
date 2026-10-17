@@ -47,7 +47,7 @@ Every pet name (icon) and pet program (home) name is decided in **`pet-programs.
 ## One copy of each repo, always on GitHub (Astra, 2026-10-12)
 Work was being lost between assistants because every chat kept its own copy of the repos
 (`Documents\ChatGPT\...`, `Documents\Codex\<date>\...`) and some never pushed. From now on:
-1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Projects\<repo>`, named
+1. **One working copy per repo on Astra's PC:** `%USERPROFILE%\Documents\Astra's Pet Apps\<repo>` (moved from `Documents\Projects` in October 2026), named
    exactly like the GitHub repo. Do not clone a second copy into a chat or dated folder. If your
    tool insists on its own workspace, push from it before you finish and say where it is.
 2. **Pull before you start** (`git fetch`, then fast-forward), and read the newest handoff.
