@@ -357,6 +357,24 @@
     "sleep": "art/frames/voicemeeter-bug/sleep-20261008.png"
    },
    "sheet": "art/sheets/voicemeeter-bug-20261008.png"
+  },
+  "platform-platypus": {
+   "size": [
+    256,
+    256
+   ],
+   "frames": {
+    "idle": "art/frames/platform-platypus/idle-20261012.png",
+    "blink": "art/frames/platform-platypus/blink-20261012.png",
+    "happy": "art/frames/platform-platypus/happy-20261012.png",
+    "curious": "art/frames/platform-platypus/curious-20261012.png",
+    "worried": "art/frames/platform-platypus/worried-20261012.png",
+    "sad": "art/frames/platform-platypus/sad-20261012.png",
+    "sick": "art/frames/platform-platypus/sick-20261012.png",
+    "alarmed": "art/frames/platform-platypus/alarmed-20261012.png",
+    "sleep": "art/frames/platform-platypus/sleep-20261012.png"
+   },
+   "sheet": "art/sheets/platform-platypus-20261012.png"
   }
  }
 }

@@ -1,5 +1,5 @@
 ---
-status: open (waiting on Astra: which art to register: the existing seed sheet art/seeds/platform-platypus-sheet-20261012.png, or one new paid sheet)
+status: done (registered 2026-10-17 with the existing seed sheet, on Astra's OK)
 for: farmer
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-11
 needs: PET-FILES.md, pets.json, platform-platypus pet.json
@@ -30,6 +30,18 @@ needs: PET-FILES.md, pets.json, platform-platypus pet.json
   Its AGENTS.md still points at the Cage; that waits until Codex's branches `codex/yellow-phone-20261015`
   and `codex/l3-activity-20261016` are merged, because they edit the same file.
 - Updated this card and its row in handoffs/README.md on branch `claude/platypus-and-folder-rule-20261017`.
+- Registered on branch `claude/register-platypus-20261017`: Astra chose the existing seed sheet over a new
+  paid one, so no image was generated or paid for. `art/sheets/platform-platypus-20261012.png` (copied from
+  `art/seeds/`) and nine frames in `art/frames/platform-platypus/*-20261012.png` from `scripts/build-frames.mjs`;
+  roster checked by eye.
+- pets.json: moved from `pipeline` to `pets` (`art` platform-platypus, `asset_date` 20261012, kind `penguin` for
+  a plain ground walk until the Farmer picks a kind, `interface_url` the live page, bundled copy
+  `apps/platform-platypus-20261017.html` from platform-platypus `main`). pet-programs.json stage and
+  INTELLIGENCE-LEVELS.md kind are now registered; the seed prompt is in `PETS` in `scripts/generate-pets.mjs`
+  (same words, so `--match` keeps this body).
+- `npm run build -- --metadata-only`, `npm run check` (20 pet apps), `npm test` (89 passed).
+- Not done: the art stays a draft until Astra approves it; the platypus repo does not carry its own copy of the
+  frames yet.
 
 ## Task
 

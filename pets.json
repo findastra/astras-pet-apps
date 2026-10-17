@@ -899,6 +899,24 @@
         "needs": "the Bug running on your PC"
       },
       "visibility": "private"
+    },
+    {
+      "repo": "platform-platypus",
+      "pet": "Platform Platypus",
+      "role": "pet",
+      "art": "platform-platypus",
+      "kind": "penguin",
+      "asset_date": "20261012",
+      "status": "hatching",
+      "published": true,
+      "job": "Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms.",
+      "added": "2026-10-13",
+      "note": "DRAFT art until Astra approves it: a purple platypus with a yellow bill and a cyan phone, the seed sheet generated 2026-10-12 (art/seeds/platform-platypus-sheet-20261012.png). Registered with that sheet on Astra's OK, 2026-10-17, by Claude Opus 5.5. Kind 'penguin' only borrows a plain ground walk; a platypus-specific kind is the Farmer's call.",
+      "interface_local_url": "apps/platform-platypus-20261017.html",
+      "interface_url": "https://findastra.github.io/platform-platypus/",
+      "interface_live_url": "https://findastra.github.io/platform-platypus/",
+      "audit": { "cadence": "weekly", "subject": "how Astra's pages look across iPhone, Android, iPad and desktop", "needs": "something only you can do" },
+      "visibility": "public"
     }
   ],
   "pipeline": [
@@ -1103,20 +1121,6 @@
         "subject": "my plan",
         "needs": "a job: what should Raspberry Pi Maker do?"
       }
-    },
-    {
-      "repo": "platform-platypus",
-      "pet": "Platform Platypus",
-      "visibility": "public",
-      "status": "hatching",
-      "job": "Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms.",
-      "added": "2026-10-13",
-      "audit": {
-        "cadence": "weekly",
-        "subject": "how Astra's pages look across iPhone, Android, iPad and desktop",
-        "needs": "something only you can do"
-      },
-      "note": "Repo created 2026-10-13 with Astra's OK; moved from the seeds."
     }
   ],
   "seeds": {
