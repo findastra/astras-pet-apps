@@ -43,6 +43,39 @@ Mood numbers: 1 calm, 2 blink, 3 happy, 4 curious, 5 worried, 6 sad, 7 sick, 8 s
 
 ## 3. The page, top to bottom
 
+### Layout (Astra's sketch, 2026-10-16): this order wins over the list below
+
+Dark slate stationery and light, hand-lettered text. Every group sits in a thin bordered box with its label set into
+the top border, in lowercase-with-hyphens. The tool, notes and connection boxes from the list below go inside the
+matching box here.
+
+1. **`<pet>-cyberhome`** (top left, square): the pet's habitat. The real desktop pet docks here when the page is open.
+   Its paired lights sit on the top edge.
+2. **Title** (to the right of the cyberhome): the **home (pet program) name**, large, then `V<semver> // <YYYYMMDD>` on
+   the same line, for example `The Unity Den   V3.0.0 // 20261016`.
+3. **`<home>-pet-program-quick-summary`** (box under the title): one to three plain sentences: what the home is, who
+   runs it (you and the pet), and what it organizes. Taken from the pet's mini-descriptor.
+4. **`<pet>-intelligence-levels`**: one boxed group per level, L1 first, then L2, L3 and L4.
+   - **L1: Third Party Program(s), Native Programs & Tools you create.** Columns: intelligence level, activity
+     status, 3rd party programs, native programs, tools. Example from the sketch: L1 ○ | ○○ Unity · ○○ VCC · ○○ VRChat
+     | ○○ Piranesi House · ○○ Unity Unicorn Icon | ○○ copyright-collector · ○○ copyright-auditor.
+   - **L2: Pet Program, Native Tricks you create.** The dashboard itself and the tricks it manages (for example
+     ○○ weekly-update-from-friendly-farmer · ○○ weekly-copyright-auditor), plus the status line, notes and backlog,
+     connections and links.
+   - **L3: Pet Program Agentic Harness + Your AI Model** (proposed contents): the seat (model, task, since), the L3
+     activity bubble, and the tricks it is running now.
+   - **L4: Human (User)** (proposed contents): approvals waiting on you, sick reports, the pet passport.
+   - **activity status:** one light per level. **○○ before every item:** the paired lights. The left one is ON/OFF
+     (green/red). The right one is maintenance: blue means working, orange means you marked it as needing work.
+5. **`<pet>-chat`** (fixed, bottom right): the paired lights and the circle-arrow button that opens the pet's chat
+   (cyberdeck).
+
+**One source for the page:** each pet's `pet.json` holds an `intelligence_levels` block, with `L1` (`third_party`,
+`native`, `tools`) and `L2` (`tricks`). The page draws its boxes from that block, so the page, the map and the audit
+always agree. [docs/pet-page-review-20261016.md](docs/pet-page-review-20261016.md) shows what each pet has today.
+
+### Older detail (still required inside the boxes above)
+
 Every pet program page is made of tool boxes. Each has a border, its versioned label on the top border, and
 everything about that tool inside it.
 
