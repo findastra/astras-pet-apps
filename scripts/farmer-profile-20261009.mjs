@@ -23,11 +23,11 @@ const PET_FIRST = /^\d+\. \*\*([^*]+)\*\*(?: · \*([^*]+)\*)? · (?:\[`([^`]+)`\
 // A home with its own page (Astra, 2026-10-16): N. **Pet** · [*Home*](page) -- what it does. Its repo is the first sub-line.
 const PET_HOME = /^\d+\. \*\*([^*]+)\*\* · \[?\*([^*]+)\*(?:\]\(([^)]+)\))? -- (.*)$/; // also reads an unlinked *Home*
 // The pet and what it does, nothing else (Astra, 2026-10-16). Home, repo and tools are the sub-bullets beneath it.
-const PET_LINE = /^\d+\. \*\*([^*]+)\*\* -- (.*)$/;
+// The pet's name is its own link, to its repo (Astra, 2026-10-16): N. **[Pet](repo)** -- what it does.
+const PET_LINE = /^\d+\. \*\*(?:\[([^\]]+)\]\([^)]*\)|([^*]+))\*\* -- (.*)$/;
 // The home's sub-bullet: - [`the-farm`](page) -- the pet program. The name is said once (Astra, 2026-10-16).
 const HOME_SUB = /^\s+- (?:\[`[^`]+`\]\([^)]*\)|`[^`]+`(?: \*\(private\)\*)?) -- (?:(?:\*[^*]+\*, )?the pet program|pet program(?: and its repo)?, not named yet)/;
 const PAGES = `https://${OWNER}.github.io/astras-pet-os`;
-const possessive = (n) => (/ies$/.test(n) ? `${n}'` : `${n}'s`);
 const slug = (s) => s.toLowerCase().replace(/['’]/g, '').replace(/&/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const link = (repo, isPrivate) => (isPrivate ? `\`${repo}\` *(private)*` : `[\`${repo}\`](https://github.com/${OWNER}/${repo})`);
 // Astra's blurbs start lowercase and end without a full stop; names keep their capitals.
@@ -45,8 +45,8 @@ export function splitStatus(text) {
   job = job.slice(m[0].length);
   return { job: job[0].toUpperCase() + job.slice(1), status: m[1].toLowerCase() };
 }
-const petLine = (number, pet, job, status) =>
-  `${number}. **${pet}** -- ${[job, status ? `[${status}]` : ''].filter(Boolean).join(' ') || '[job not chosen yet]'}`;
+const petLine = (number, pet, job, status, url = null) =>
+  `${number}. **${url ? `[${pet}](${url})` : pet}** -- ${[job, status ? `[${status}]` : ''].filter(Boolean).join(' ') || '[job not chosen yet]'}`;
 
 /** @returns {{ text: string, changes: string[] }} */
 export function syncProfile(readme, registry, repos, programs = null) {
@@ -79,19 +79,14 @@ export function syncProfile(readme, registry, repos, programs = null) {
       const name = p.assigned ? slug(p.program) : `pet-program-${p.number}`;
       const target = t.home_url || live || farmPage;
       const note = p.assigned ? `the pet program${t.home_note ? ` [${t.home_note}]` : ''}` : 'pet program, not named yet';
-      const hasRepo = online.has(homeRepo) || isPriv(homeRepo);
-      // Same name for the home and the repo (spoonfed, pet-program-47): one sub-bullet, not two (Astra, 2026-10-16).
-      if (hasRepo && name === homeRepo && !t.repo_note) {
-        const page = target && target !== `https://github.com/${OWNER}/${homeRepo}` ? ` · [page](${target})` : '';
-        const both = p.assigned ? `the pet program and its repo${t.home_note ? ` [${t.home_note}]` : ''}` : 'pet program and its repo, not named yet';
-        out.push(`   - ${link(homeRepo, isPriv(homeRepo))} -- ${both}${page}`);
-        for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
-        return out;
-      }
-      out.push(`   - ${target ? `[\`${name}\`](${target})` : `\`${name}\``} -- ${note}`);
+      // The pet's name already links to its repo, so the repo is not listed again (Astra, 2026-10-16). A home with
+      // no page of its own links to the repo when they share a name (spoonfed).
+      const href = target || (name === homeRepo && online.has(homeRepo) && !isPriv(homeRepo) ? `https://github.com/${OWNER}/${homeRepo}` : null);
+      out.push(`- ${href ? `[\`${name}\`](${href})` : `\`${name}\``} -- ${note}`);
     }
-    if (online.has(homeRepo) || isPriv(homeRepo)) out.push(`   - ${link(homeRepo, isPriv(homeRepo))} -- ${t.repo_note || `${possessive(p ? p.icon : reg?.pet || 'the pet')} repo`}`);
-    for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
+    // A repo that is more than the pet's (astras-pet-os, "Astra's PetOS home repo") keeps its own line.
+    if (t.repo_note && (online.has(homeRepo) || isPriv(homeRepo))) out.push(`- ${link(homeRepo, isPriv(homeRepo))} -- ${t.repo_note}`);
+    for (const r of t.tools || []) if (online.has(r)) out.push(`- ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
     return out;
   };
 
@@ -103,7 +98,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     let m;
     const sub = !HOME_SUB.test(ln) && /^\s*- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/.exec(ln);
     if (sub && !blurbs.has(sub[1] || sub[2])) blurbs.set(sub[1] || sub[2], sub[3]);
-    if ((m = PET_LINE.exec(ln))) { const r = (programs || []).find((x) => x.icon === m[1])?.repo || pets.find((x) => x.pet === m[1])?.repo; if (r) blurbs.set(r, m[2]); }
+    if ((m = PET_LINE.exec(ln))) { const n = m[1] || m[2]; const r = (programs || []).find((x) => x.icon === n)?.repo || pets.find((x) => x.pet === n)?.repo; if (r) blurbs.set(r, m[3]); }
     else if ((m = PET_HOME.exec(ln))) { const p = (programs || []).find((x) => x.icon === m[1]); if (p) blurbs.set(p.repo, m[4]); }
     else if ((m = PET_FIRST.exec(ln))) blurbs.set(m[3] || m[4], m[5]);
     else if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
@@ -123,7 +118,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     const isPrivate = r ? r.private : reg?.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
     const { job, status } = splitStatus(p.mini_descriptor.text);
-    petLines.push(petLine(p.number, p.icon, job && lowerFirst(job), status));
+    petLines.push(petLine(p.number, p.icon, job && lowerFirst(job), status, r && !isPrivate ? `https://github.com/${OWNER}/${p.repo}` : null));
     petRepoOf.push(p.repo);
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.icon} (${p.repo})`);
   }
@@ -132,7 +127,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     const isPrivate = r ? r.private : p.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
     const blurb = blurbs.get(p.repo) || lowerFirst(p.job);
-    petLines.push(petLine(petLines.length + 1, p.pet, blurb, null));
+    petLines.push(petLine(petLines.length + 1, p.pet, blurb, null, r && !isPrivate ? `https://github.com/${OWNER}/${p.repo}` : null));
     petRepoOf.push(p.repo);
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.pet} (${p.repo})`);
   }
@@ -159,7 +154,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (sec === petSection) {
       const first = body.findIndex(isList);
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
-      const listed = petLines.flatMap((ln, i) => [ln, ...subLines(petRepoOf[i])]);
+      // A sub-bullet nests only when it is indented past the number ("10. " is 4 wide), so the indent follows the number.
+      const listed = petLines.flatMap((ln, i) => [ln, ...subLines(petRepoOf[i]).map((x) => ' '.repeat(ln.indexOf(' ') + 1) + x)]);
       if (first < 0) out.push('', ...listed, ...body);
       else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
       continue;

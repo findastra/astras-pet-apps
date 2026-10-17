@@ -12,18 +12,19 @@ script, never only the README**: the next round puts the old text back.
 
 ## The line shape
 ```
-N. **Pet** -- what the pet does [status]
+N. **[Pet](https://github.com/findastra/repo)** -- what the pet does [status]
    - [`home-name`](its page) -- the pet program
-   - [`repo`](https://github.com/findastra/repo) -- the repo note
    - [`tool`](https://github.com/findastra/tool) -- each tool
 ```
 - **The pet line is the pet and what it does, nothing else** (Astra, 2026-10-16). The pet's name (`icon` in
-  pet-programs.json) comes first. Its home (pet program), repo and tools are sub-bullets beneath it, in that order.
-- **Home** is the first sub-bullet: the pet program's name (`program`, written once as `the-farm`) when `assigned` is true, linked to its page
-  (`profile.tools.<repo>.home_url` in pets.json, else a live github.io site, else its page on The Farm). Unnamed:
+  pet-programs.json) comes first and is its own link, to its repo. A private repo is not linked.
+- **No name twice.** The repo is not listed again beneath the pet, and the home's name is said once, as its link
+  text (`the-farm -- the pet program`, not `the-farm -- The Farm, the pet program`).
+- **Home** is the first sub-bullet when `assigned` is true, linked to its page (`profile.tools.<repo>.home_url` in
+  pets.json, else a live github.io site, else its page on The Farm, else the repo when they share a name). Unnamed:
   `` `pet-program-N` -- pet program, not named yet ``. Suggested homes live in `idea` until Astra approves one.
-- **Repo** is the second sub-bullet (`profile.tools.<repo>.repo_note`, else "Pet's repo"). **Tools** follow, from
-  `profile.tools.<repo>.tools` (the Farmer: startup-star, the-kennel, the-shed, vet-clinic).
+- **Tools** follow, from `profile.tools.<repo>.tools`. A repo that is more than the pet's own
+  (`repo_note`, e.g. astras-pet-os, "Astra's PetOS home repo") keeps its own line before the tools.
 - **What it does** is `mini_descriptor.text`: a finished sentence about what the pet does. It does not repeat the home,
   does not start with a category (`Tasks:`, `AI cost:`), and uses floors for counts ("30+ tools").
 - **Status goes in [brackets] at the end**, never in the job. The round moves `Planned: …` to `[planned]` and
