@@ -10,7 +10,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 | --- | --- | --- |
 | [017: API Fairy's desktop app has never run; verify it](017-any-api-fairy-desktop-verify-20261017.md) | any | open, waits on Astra: Malwarebytes allow-list |
 | [012: Pet-first profile list and missing pets](012-farmer-pet-first-list-and-missing-pets-20261016.md) | Farmer | open, waits on Astra: #77's name, homes, Chat Rat, Workflow Whale |
-| [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: GitHub repo and art OK; local only |
+| [010: Register Platform Platypus](010-farmer-register-platform-platypus-20261011.md) | Farmer | open, waits on Astra: which art (existing seed sheet or one new paid sheet); repo and topic done |
 | [009: Register Spoonfed Sugarcube](009-farmer-register-spoonfed-sugarcube-20261011.md) | Farmer | open, art waits on Astra's OK; local only |
 | [001: Register Claude Bot in the Cage](001-farmer-register-claude-bot.md) | Farmer | open |
 | [002: Build Claude Bot v0](002-any-build-claude-bot.md) | any | open |
