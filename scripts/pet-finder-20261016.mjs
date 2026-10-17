@@ -9,7 +9,7 @@
 //
 //   node scripts/pet-finder-20261016.mjs                       # asks GitHub (GITHUB_TOKEN optional)
 //   node scripts/pet-finder-20261016.mjs --repos repos.json    # offline: [{ name, private, description, petJson }]
-//   node scripts/pet-finder-20261016.mjs --local "%USERPROFILE%\Documents\Astra's Pet Apps"
+//   node scripts/pet-finder-20261016.mjs --local "%USERPROFILE%\Documents\Astra's PetOS"
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 

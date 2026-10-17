@@ -14,13 +14,13 @@ animal by saying so (`skills/farm-security`). Astra decides every addition.
 | `pet-programs.json` | Every pet program, numbered for good. The profile's pet list is written from it. |
 | `pets.json` | The registry: registered pets and the pipeline (the animals). |
 | GitHub (`findastra/*`) | Each pet's repo and its `pet.json`. |
-| Astra's PC | `%USERPROFILE%\Documents\Astra's Pet Apps\<repo>`: pets that may not be pushed yet. |
+| Astra's PC | `%USERPROFILE%\Documents\Astra's PetOS\<repo>`: pets that may not be pushed yet. |
 
 ## Run it
 ```
 node scripts/pet-finder-20261016.mjs                     # asks GitHub; GITHUB_TOKEN optional
 node scripts/pet-finder-20261016.mjs --repos repos.json  # offline: [{ name, private, description, petJson }]
-node scripts/pet-finder-20261016.mjs --local "%USERPROFILE%\Documents\Astra's Pet Apps"   # on the PC
+node scripts/pet-finder-20261016.mjs --local "%USERPROFILE%\Documents\Astra's PetOS"   # on the PC
 ```
 
 ## What it reports
