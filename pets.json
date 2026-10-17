@@ -1297,11 +1297,6 @@
       "why": "Local VRChat world project, not published."
     },
     {
-      "name": "Image Bridge",
-      "repo": "image-bridge",
-      "why": "Local tool for the presence card art, not published."
-    },
-    {
       "name": "Fuzzbois",
       "repo": "fuzzbois",
       "why": "Local art project, not published."

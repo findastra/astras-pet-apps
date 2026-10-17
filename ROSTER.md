@@ -196,7 +196,6 @@ Public repos or local projects that might be pets. The Goldfish flags none of th
 
 - **Astra's Infinite Pole** (`astras-infinite-pole`): Public Unity world source; maybe the Unity Unicorn's home.
 - **Piranesi House** (`piranesi-house`): Local VRChat world project, not published.
-- **Image Bridge** (`image-bridge`): Local tool for the presence card art, not published.
 - **Fuzzbois** (`fuzzbois`): Local art project, not published.
 
 ## How a new pet joins

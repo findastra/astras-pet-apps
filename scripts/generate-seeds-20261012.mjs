@@ -9,7 +9,7 @@
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const BRIDGE = process.env.IMAGE_BRIDGE || '../image-bridge/imagine.mjs';
+const BRIDGE = process.env.IMAGE_BRIDGE || '../findastra-discord-presence/image-bridge/imagine.mjs';
 const OUT = 'art/seeds';
 const src = readFileSync('scripts/generate-pets.mjs', 'utf8');
 const body = src.slice(src.indexOf('const STYLE = [') + 'const STYLE = ['.length, src.indexOf("].join(' ');"));

@@ -15,14 +15,14 @@
 // after a failure. It stops on the first billing or rate-limit error rather than burning
 // through the rest of the list.
 //
-// Needs the image bridge (../image-bridge/imagine.mjs) and OPENAI_API_KEY. Override the
+// Needs the image bridge (../findastra-discord-presence/image-bridge/imagine.mjs, in findastra/findastra-discord-presence) and OPENAI_API_KEY. Override the
 // bridge location with IMAGE_BRIDGE=/path/to/imagine.mjs.
 import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { sheetToSprite } from './sheet-to-sprites.mjs';
 import { assetPaths } from './lib.mjs';
 
-const BRIDGE = process.env.IMAGE_BRIDGE || '../image-bridge/imagine.mjs';
+const BRIDGE = process.env.IMAGE_BRIDGE || '../findastra-discord-presence/image-bridge/imagine.mjs';
 const SHEETS = 'art/sheets';
 const OUT = 'art/generated';
 

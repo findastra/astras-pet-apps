@@ -71,7 +71,8 @@ generations give nine slightly different creatures, which is why it is done this
 3. `npm run build` converts the sheets and draws `art/roster.png`. **Look at it** before
    calling anything done.
 
-Each pet costs one image from the image bridge, billed to Astra's OpenAI account, so do not
+Each pet costs one image from the image bridge (`image-bridge/` in
+[findastra-discord-presence](https://github.com/findastra/findastra-discord-presence), a tool of Discord Damsel), billed to Astra's OpenAI account, so do not
 regenerate the whole set to change one pet.
 
 **Never plainly regenerate a pet whose art Astra has approved.** One generation produces all
