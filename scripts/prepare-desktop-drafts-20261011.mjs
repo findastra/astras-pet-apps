@@ -42,7 +42,7 @@ for(const mood of ['idle','blink']){
 const meshRevised=join(projects,'mesh-moth','desktop-art','mesh-moth');
 add('mesh-moth','Mesh Moth',existsSync(join(meshRevised,'idle-20261011.png'))?meshRevised:dir,'idle-20261011.png','blink-20261011.png');
 add('spoonfed-sugarcube','Sugarcube',join(firstDir(join(projects,'spoonfed-sugarcube','spoonfed-art-20261011'),join(projects,'spoonfed-art-20261011')),'draft-art','spoonfed-sugarcube'),'idle-20261011.png','blink-20261011.png','spoonfed');
-const fuzzRoot=join(cache,'fuzzbois'),fuzzRecipes=join(fuzzRoot,'desktop-recipes-20261011.json');
+const fuzzRoot=join(cache,'fuzzboi-factory'),fuzzRecipes=join(fuzzRoot,'desktop-recipes-20261011.json');
 if(existsSync(fuzzRecipes)){
   const fuzz=pets.find(p=>p.id==='fuzzboi-friend');
   fuzz.variants=JSON.parse(readFileSync(fuzzRecipes)).variants.map(v=>({code:v.code,style:v.style,layers:v.layers.map(p=>join(fuzzRoot,p))}));

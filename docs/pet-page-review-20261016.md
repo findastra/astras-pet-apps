@@ -48,7 +48,7 @@ honest: missing programs are not errors.
 | 27 | Gif Giraffe | Astra's GIF Maker | — | Astra's GIF Maker | — | — |
 | 28 | Backup Beaver | Backup Dam | — | — | — | — |
 | 29 | Rift Rabbit | Wonderland Launchpad | SteamVR, Meta Horizon Link, Virtual Desktop, the OVR tools, Space Calibrator, BS Manager and the rest of the v | — | — | — |
-| 30 | Fuzzboi Friend | — | — | Fuzzbois site | — | — |
+| 30 | Fuzzboi Friend | — | — | Fuzzboi Factory site | — | — |
 | 31 | Wifi Butterfly | — | — | — | — | — |
 | 32 | Deck Duck | — | Elgato Stream Deck | — | — | — |
 | 33 | Mesh Moth | — | Meshtastic | — | — | — |

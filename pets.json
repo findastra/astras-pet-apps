@@ -1043,7 +1043,7 @@
       "pet": "Fuzzboi Friend",
       "visibility": "public",
       "status": "hatching",
-      "job": "Watches over the Fuzzbois website, which generates the Fuzzboi art, and shows its health with his mood. Mostly for fun: swap his look any time.",
+      "job": "Watches over the Fuzzboi Factory website, which generates the Fuzzboi art, and shows its health with his mood. Mostly for fun: swap his look any time.",
       "added": "2026-10-09",
       "audit": {
         "cadence": "weekly",
@@ -1302,8 +1302,8 @@
       "why": "Local tool for the presence card art, not published."
     },
     {
-      "name": "Fuzzbois",
-      "repo": "fuzzbois",
+      "name": "Fuzzboi Factory",
+      "repo": "fuzzboi-factory",
       "why": "Local art project, not published."
     }
   ]
