@@ -273,7 +273,7 @@ agent-optional tutorial wording. These are requirements, not implemented UI clai
 
 Keep Flash Audit until Astra chooses otherwise; no renaming based on suggestions alone.
 
-## Current visual checks A44–A51 — owner corrections, 2026-10-15
+## Current visual checks A44–A52 — owner corrections, 2026-10-15
 
 These replace the October 14 coin, pink-theme, hidden-control and never-wrap footer rules.
 

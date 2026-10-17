@@ -159,8 +159,8 @@
     "sad": "I couldn't finish checking {subject}. My fault; I'll try again."
   },
   "profile": {
-    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm; Role Fairy taken off by Astra; The Farm links to its own page, 2026-10-16), its home first (its cyberhome), then its tools.",
-    "hidden": ["role-fairy"],
+    "about": "Astra, 2026-10-16: how the profile round lists repos that are not numbered pets. hidden = never on the profile. tools = under a pet's line (Startup Star moved under The Farm; Role Fairy taken off by Astra, then made a pet again with the program Fairy Ring on 2026-10-17; The Farm links to its own page, 2026-10-16), its home first (its cyberhome), then its tools.",
+    "hidden": [],
     "also_listed": ["findastra-discord-presence"],
     "tools": {
       "astras-pet-os": { "home_url": "https://findastra.github.io/astras-pet-os/apps/astras-pet-apps-20261008.html", "repo_note": "Astra's PetOS home repo", "tools": ["startup-star", "the-kennel", "the-shed", "vet-clinic"] }
@@ -613,7 +613,7 @@
       "source_commit": "5e15125a7d35144f883117c51b9f3cd2faf26c40",
       "audit": {
         "cadence": "weekly",
-        "subject": "the AI Astra backend and bridge",
+        "subject": "AI Astra: her mind, VRChat body and voice",
         "needs": "the AI Astra app started on your PC"
       }
     },
@@ -1121,6 +1121,20 @@
         "subject": "my plan",
         "needs": "a job: what should Raspberry Pi Maker do?"
       }
+    },
+    {
+      "repo": "role-fairy",
+      "pet": "Role Fairy",
+      "visibility": "public",
+      "status": "hatching",
+      "job": "Runs Mommy’s Role Fairy, a cute single-choice Discord role picker: new members get a welcome-channel link to the picker and everyone can change their role any time.",
+      "added": "2026-10-17",
+      "audit": {
+        "cadence": "weekly",
+        "subject": "Mommy’s Discord role picker and its roles",
+        "needs": "the Discord bot's access to the server"
+      },
+      "note": "Astra, 2026-10-17: Role Fairy is a pet; its pet program is Fairy Ring (#83). Needs pet.json, the pet-app topic and art before it can be registered."
     }
   ],
   "seeds": {

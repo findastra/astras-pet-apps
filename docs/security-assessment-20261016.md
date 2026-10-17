@@ -7,9 +7,8 @@ honest read of what the repo shows about the skills behind it. Asked for by Astr
 **Scope.** This repo only. The other `findastra` repos were not reviewed. Nothing was changed in the code; this
 page is a report. Companion to [SECURITY.md](../SECURITY.md) and [PROTECTION-RINGS.md](../PROTECTION-RINGS.md).
 
-**One finding is not on this page.** It is a medium-severity, exploitable bug in a public pet program, and
-SECURITY.md says a way to break in is never posted publicly. Astra has the details from the review chat. Fix
-it in that pet's repo first (the hub only holds a copy), then add it here.
+**Update, 2026-10-17:** see [the end of this page](#update-2026-10-17). The finding first kept off this page is now
+finding 6, rated **low**: PR #25 had already described it publicly, and it is less reachable than first thought.
 
 ## What was checked
 
@@ -18,7 +17,7 @@ it in that pet's repo first (the hub only holds a copy), then add it here.
   desktop programs (C#) and the HTML pages in `apps/`, `cage.html` and the System Map.
 - The full git history of every branch, scanned for API keys, tokens and private keys.
 - Branch protection on `main`, read from the GitHub API.
-- `npm test`: 79 of 79 passed.
+- `npm test`: 79 of 79 passed (at `04cb641`).
 
 ## What is done well
 
@@ -45,6 +44,9 @@ it in that pet's repo first (the hub only holds a copy), then add it here.
 **Fix:** turn on branch protection for `main` (require a pull request; allow the Farmer's workflow only through
 a pull request, see finding 2). About five minutes in the repository settings; the biggest single gain.
 Already listed as known gap 4.
+
+**Decision (Astra, 2026-10-17): no branch protection.** This finding stays open as an accepted risk: the core changes
+with her approval by agreement, not by a setting.
 
 ### 2. High, AI-specific: pet repos write into the core without review (prompt-injection path)
 
@@ -88,6 +90,20 @@ Any AI session with those tools can reach the native farm from outside.
 
 **Fix:** publish a SHA-256 for each release zip and check it before `Unblock-File`; pin actions by SHA.
 
+### 6. Low: Ghost Protocol shows checklist text as HTML
+
+Added 2026-10-17. Ghost Protocol (`apps/ghost-protocol-20261008.html`, and the live site from `findastra/ghost-protocol`)
+builds its checklist as HTML text. Two kinds of text were not escaped:
+
+- **Items you type.** Only you can reach this (self-XSS). PR #25 (open) escapes them.
+- **AI-suggested items.** Model output is put into the page as HTML and saved with your items. This runs only inside
+  the hosted Claude artifact, where the AI is available; the GitHub Pages copy cannot reach the AI. PR #25 does not
+  cover it.
+
+**Fixed in this copy, 2026-10-17:** PR #25 (merged) escapes typed items; `parseSuggestJSON` now escapes suggested
+items too, guarded by `test/ghost-protocol-escape-test-20261017.mjs`. The live site gets the same fix from
+`findastra/ghost-protocol` PR #1, which waits for Astra to merge it.
+
 ## What the repo shows about the skills behind it
 
 Asked by Astra: does this GitHub show programming, cybersecurity, networking and AI knowledge?
@@ -109,3 +125,22 @@ minutes may not decode "animals", "farmhands" or "the Police Station".
 3. Build one real networking piece: a firewall allowlist for the agent account, or private remote access
    with test evidence.
 4. Add a one-page plain-language version of SECURITY.md that uses only standard terms.
+
+## Update, 2026-10-17
+
+Checked again on `main` at `b904931`, across all 44 branches and PRs #22 to #36, by Claude Opus 5.5.
+
+- **Finding 2 is switched off by a crash, for now.** The Farmer's daily round has failed every day since the
+  2026-10-12 rename: `scripts/build-interfaces-20261008.mjs` still looks for the host as `astras-pet-apps`. The round
+  still reads pet submissions first (on 2026-10-16: jobs, a status, bubble lines and moods from three pets), then dies
+  before its commit. **Fix the crash only together with finding 2**, or unreviewed writes to `main` start again.
+- **Finding 2 now also breaks the one-list rule** (AGENTS.md, 2026-10-16: names live only in `pet-programs.json`). A
+  pet's `cage.submit` can still rename it in `pets.json`; `test/name-list-test-20261016.mjs` then fails the round.
+  The fix: a submitted name becomes a note for Astra, not a change.
+- **Finding 1:** Codex's PR #26 adds a tested reference checker for signed, scoped requests
+  (`scripts/access-policy-20261014.mjs`, `docs/security-boundaries-20261014.md`). It is not connected to anything
+  yet, so finding 1 stands. PR #26 also replaces the rings and R W X model with "topology is not authority" and
+  removes the Known gaps table, including gaps 11 and 12. That choice is Astra's.
+- **Finding 6** is new (above), rated low, and fixed in this copy; the live site's fix is PR #1 in `ghost-protocol`.
+- **Finding 1:** Astra decided not to turn on branch protection (accepted risk).
+- Open work: [card 025](../handoffs/025-any-security-follow-ups-20261017.md).
