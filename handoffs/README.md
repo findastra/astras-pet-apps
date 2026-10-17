@@ -8,6 +8,7 @@ To start: "Take the next open card for <you | any> in findastra/astras-pet-os."
 
 | Card | For | Status |
 | --- | --- | --- |
+| [026: Pictures only Astra can take (Flash Audit A55), and 25 picture PRs](026-any-pictures-astra-takes-20261017.md) | any | open, waits on Astra: in-world and desktop pictures; merging the PRs |
 | [025: Security follow-ups from the 2026-10-16 assessment](025-any-security-follow-ups-20261017.md) | any | open: the Farmer's round; findings 3 to 5; PR #26's security model; merge the ghost-protocol link fix |
 | [021: Startup Star shows API Fairy's bubbles](021-codex-startup-star-api-fairy-bubbles-20261017.md) | Codex | open |
 | [020: Chat sync, folder rename plan row, Role Fairy (Fairy Ring #83), Nullbot dropped](020-any-chat-sync-and-folder-rename-20261017.md) | any | open, waits on Astra: File Master rename row |
@@ -32,7 +33,7 @@ below and add its row here in the same commit**, so two chats working at once ne
 on a branch keep the number below when they reach `main`. `test/handoff-numbers-test-20261017.mjs` fails when two
 cards share a number, or when a card uses a number this table gives to another card.
 
-**Next free number: 026.** Checked on 2026-10-17 across every branch by Claude Opus 5.5. When numbers clashed, the
+**Next free number: 027.** Checked on 2026-10-17 across every branch by Claude Opus 5.5. When numbers clashed, the
 card that reached `main` first kept its number, then the oldest card on a branch.
 
 | No. | Card | Where it is now |
@@ -51,6 +52,7 @@ card that reached `main` first kept its number, then the oldest card on a branch
 | 023 | `023-halo-list-vscode-angel-program-20261017.md` | `claude/halo-list-program-20261017`, still named `013-…`: rename it to 023 when it is merged |
 | 024 | `024-any-pole-puff-repo-20261012.md` | `claude/pole-puff-draft-20261012` (PR #8; was 010) |
 | 025 | `025-any-security-follow-ups-20261017.md` | `main` |
+| 026 | `026-any-pictures-astra-takes-20261017.md` | `claude/pictures-20261017` (PR #45) |
 
 Old drafts on dropped branches have no number: `001`–`005` on `pets-roam-life-20261009` (the "claude mini pet"
 before it was named Claude Bot, and a new-pet lineup) and `008-farmer-register-new-placeholders.md` on
