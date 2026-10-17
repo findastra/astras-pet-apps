@@ -57,5 +57,6 @@ A pet changes its own lines by submitting `moods` (and `audit`) in `cage.submit`
 | **Deck Duck** * | my plan | weekly, Thursday | a job: what should Deck Duck do |
 | **Mesh Moth** * | the Meshtastic node plan | weekly, Friday | a job: what should Mesh Moth watch |
 | **Raspberry Pi Berry** * | my plan | weekly, Saturday | a job: what should Raspberry Pi Maker do |
+| **Role Fairy** * | Mommy’s Discord role picker and its roles | weekly, Sunday | the Discord bot's access to the server |
 
 \* in the pipeline: on GitHub, not registered in the Cage yet.

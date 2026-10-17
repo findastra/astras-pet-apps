@@ -1462,6 +1462,8 @@ function normalizeLink(raw){
   if(!/^https?:\/\//i.test(link)) link = 'https://' + link;
   return link;
 }
+// Item text is rendered as HTML (built-in details carry links), so typed text is stored escaped.
+function escapeHTML(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 function addCustomItem(tid){
   var titleEl = document.getElementById('add-title-'+tid);
   var blurbEl = document.getElementById('add-blurb-'+tid);
@@ -1470,7 +1472,7 @@ function addCustomItem(tid){
   var title = titleEl.value.trim();
   if(!title){ titleEl.focus(); return; }
   var id = 'custom_'+tid+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-  var item = { id:id, tierId:tid, t:title, b:blurbEl.value.trim(), d:detailEl.value.trim(), link: normalizeLink(linkEl && linkEl.value), custom:true };
+  var item = { id:id, tierId:tid, t:escapeHTML(title), b:escapeHTML(blurbEl.value.trim()), d:escapeHTML(detailEl.value.trim()), link: normalizeLink(linkEl && linkEl.value), custom:true };
   if(!state.customItems[tid]) state.customItems[tid] = [];
   state.customItems[tid].push(item);
   saveState();
@@ -1478,7 +1480,7 @@ function addCustomItem(tid){
   updateStats();
   reflowOpenTier(tid);
   Sound.notify();
-  toast('ITEM ADDED', '"'+title+'" added to your checklist.');
+  toast('ITEM ADDED', '"'+item.t+'" added to your checklist.');
 }
 
 var SUGGEST_QUOTA = 8;

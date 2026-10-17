@@ -132,53 +132,6 @@ const farmer = {
   face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 14, my: 19, cx: 9, cy: 18, tr: [26, 0], tl: [1, 2], pl: [21, 14] }, this.ink); },
 };
 
-/* ---------- Nullbot: stands on the Cage. DRAFT, my own drawing in the same style. ---------- */
-const SCREEN = {
-  idle: '#ff4a4a', blink: '#a02a2a', happy: '#7dff9e', curious: '#6ee7ff', worried: '#ffc247',
-  sad: '#6fa8ff', sick: '#cfe8cf', alarmed: '#ff4a4a', sleep: '#4a5280',
-};
-const nullbot = {
-  id: 'nullbot', name: 'Nullbot', ink: '#14162a',
-  body(cv, mood) {
-    const d = droop(mood);
-    paint(cv, rrect(5, 8, 26, 26, 4), '#454a6e', { hi: '#6a70a0', lo: '#2c3050' });
-    const arm = rrect(2, d ? 17 : 14, 4, d ? 23 : 20, 1);
-    paint(cv, union(arm, mirrored(arm)), '#454a6e', { hi: '#6a70a0', lo: '#2c3050' });
-    const leg = rrect(9, 27, 13, 30, 1);
-    paint(cv, union(leg, mirrored(leg)), '#2c3050', { hi: '#454a6e' });
-    cv.set(9, 24, '#ff5a5f'); cv.set(11, 24, '#ffd166'); cv.set(20, 24, '#7ee787'); cv.set(22, 24, '#6ee7ff');
-    // antenna: curly cord and a bulb that droops when it is unhappy
-    const cord = d ? [[16, 7], [17, 6], [18, 6], [19, 7], [19, 8]] : [[16, 7], [16, 6], [15, 5], [15, 4], [16, 3], [17, 3]];
-    for (const [x, y] of cord) cv.set(x, y, '#8a90b8');
-    const bulb = d ? [20, 9] : [18, 2];
-    const bulbCol = { sad: '#4a6aa8', sick: '#7a9a7a', sleep: '#3a4068', alarmed: '#ff4a4a', happy: '#7dff9e', worried: '#ffc247' }[mood] || '#6ee7ff';
-    for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) cv.set(bulb[0] + dx, bulb[1] + dy, bulbCol);
-    this._tintMood = mood;
-  },
-  face(cv, mood) {
-    const bg = mood === 'sleep' ? '#0c0e18' : '#080a14';
-    paint(cv, rrect(7, 10, 24, 21, 2), '#1a1c2e', { flat: true });
-    paint(cv, rrect(8, 11, 23, 20, 1), bg, { flat: true });
-    const col = SCREEN[mood];
-    const c = { ink: col, white: '#ffffff', tongue: col };
-    if (mood === 'idle') text(cv, 'NULL', 8, 13, col);
-    else if (mood === 'blink') { text(cv, 'NULL', 8, 13, col); for (let x = 8; x <= 23; x++) cv.set(x, 15, bg); }
-    else if (mood === 'sick') {
-      let s = 7; const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
-      for (let y = 11; y <= 20; y++) for (let x = 8; x <= 23; x++) if (rnd() < 0.3) cv.set(x, y, rnd() < 0.5 ? '#2a4a2e' : '#587a58');
-      eyes(cv, 'sick', 11, 13, c); mouth(cv, 'wavy', 17, c);
-    } else {
-      const m = MOOD[mood];
-      eyes(cv, m.eyes, 11, 13, c);
-      if (m.brow && mood !== 'alarmed') brows(cv, m.brow, 11, 13, c);
-      mouth(cv, m.mouth, mood === 'alarmed' ? 17 : 17, c);
-      if (m.tear) { cv.both(11, 16, '#4fa3ea'); }
-    }
-    const m = MOOD[mood];
-    for (const s of m.st || []) { const [name, where] = s.split('@'); const [x, y] = where === 'tl' ? [1, 3] : [26, 1]; put(cv, name, x, y); }
-  },
-};
-
 /* ---------- Unity Unicorn ---------- */
 const unicorn = {
   id: 'unity-unicorn', name: 'Unity Unicorn', ink: '#3a2058',
@@ -412,7 +365,7 @@ const damsel = {
   face(cv, mood) { standardFace(cv, mood, { ex: 11, ey: 15, my: 20, cx: 9, cy: 19, eye: '#5865f2', tr: [26, 4], tl: [1, 4], pl: [20, 13] }, this.ink); },
 };
 
-export const PETS = [nullbot, farmer, goldfish, chip, fairy, unicorn, panther, wisp, hummy, finch, twinAstra, twinDevilish, paperGirl, fileMaster, roleFairy, damsel];
+export const PETS = [farmer, goldfish, chip, fairy, unicorn, panther, wisp, hummy, finch, twinAstra, twinDevilish, paperGirl, fileMaster, roleFairy, damsel];
 
 export function render(def, mood) {
   const cv = new Cv();

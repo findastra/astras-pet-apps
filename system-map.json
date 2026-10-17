@@ -4493,6 +4493,15 @@
           }
         ]
       },
+      "role-fairy": {
+        "languages": [
+          {
+            "language": "JavaScript",
+            "percent": 100.0,
+            "why": "The whole Discord bot: it builds the single-choice role menu and the welcome-channel message. Measured from GitHub on 2026-10-17."
+          }
+        ]
+      },
       "mail-snail": {
         "languages": [
           {
