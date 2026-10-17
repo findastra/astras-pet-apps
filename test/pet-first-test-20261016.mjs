@@ -40,10 +40,11 @@ test('every pet line is the pet, linked to its repo, and what it does; the home 
   assert.ok(lines.includes('35. **[Chat Rat](https://github.com/findastra/chat-rat)** -- [job not chosen yet]'));
   assert.match(text, /^1\. \*\*\[Friendly Farmer\]\(https:\/\/github\.com\/findastra\/astras-pet-os\)\*\* -- organizes the pets\n   - `the-farm` -- the pet program\n18\. /m, 'the home beneath; the repo is not listed again');
   assert.doesNotMatch(text, /'s repo$/m, 'no "Pet\'s repo" lines');
-  assert.match(text, /^18\. [^\n]*\n   - `pet-program-18` -- pet program, not named yet\n35\. /m, 'an unnamed home says so');
+  assert.match(text, /^18\. [^\n]*\n    - `pet-program-18` -- pet program, not named yet\n35\. /m, 'an unnamed home says so');
   const same = syncProfile(readme, registry, [...repos, { name: 'pet-program-77', private: false, description: '' }], [...programs, prog(77, 'Queue Quokka', 'pet-program-77', 'Watches retries.')]).text;
-  assert.match(same, /^77\. \*\*\[Queue Quokka\]\([^)]*pet-program-77\)\*\* -- watches retries\n   - \[`pet-program-77`\]\([^)]*\) -- pet program, not named yet$/m, 'a home sharing the repo name links to the repo');
-  assert.match(text, /^45\. \*\*\[Closet Cat\]\([^)]*the-cats-closet\)\*\* -- [^\n]*\n   - `pet-program-45`/m, 'a pet program repo moves into the numbered list');
+  assert.match(same, /^77\. \*\*\[Queue Quokka\]\([^)]*pet-program-77\)\*\* -- watches retries\n    - \[`pet-program-77`\]\([^)]*\) -- pet program, not named yet$/m, 'a home sharing the repo name links to the repo');
+  assert.match(text, /^45\. \*\*\[Closet Cat\]\([^)]*the-cats-closet\)\*\* -- [^\n]*\n    - `pet-program-45`/m, 'a pet program repo moves into the numbered list');
+  assert.ok(text.split('\n').every((l) => !/^ +- /.test(l) || /^ {3}- /.test(l) || /^ {4}- /.test(l)), 'sub-bullets are indented');
   assert.doesNotMatch(text.split("### Astra's PetOS")[0], /the-cats-closet/, 'and out of Web & More');
   assert.match(text, /startup-star`\]\([^)]*\) -- Startup Star: the tray tool/, 'a two-word name keeps its capitals');
   assert.deepEqual(syncProfile(text, registry, repos, programs).changes, [], 'a second run changes nothing');

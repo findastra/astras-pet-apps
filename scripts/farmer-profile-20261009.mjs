@@ -82,11 +82,11 @@ export function syncProfile(readme, registry, repos, programs = null) {
       // The pet's name already links to its repo, so the repo is not listed again (Astra, 2026-10-16). A home with
       // no page of its own links to the repo when they share a name (spoonfed).
       const href = target || (name === homeRepo && online.has(homeRepo) && !isPriv(homeRepo) ? `https://github.com/${OWNER}/${homeRepo}` : null);
-      out.push(`   - ${href ? `[\`${name}\`](${href})` : `\`${name}\``} -- ${note}`);
+      out.push(`- ${href ? `[\`${name}\`](${href})` : `\`${name}\``} -- ${note}`);
     }
     // A repo that is more than the pet's (astras-pet-os, "Astra's PetOS home repo") keeps its own line.
-    if (t.repo_note && (online.has(homeRepo) || isPriv(homeRepo))) out.push(`   - ${link(homeRepo, isPriv(homeRepo))} -- ${t.repo_note}`);
-    for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
+    if (t.repo_note && (online.has(homeRepo) || isPriv(homeRepo))) out.push(`- ${link(homeRepo, isPriv(homeRepo))} -- ${t.repo_note}`);
+    for (const r of t.tools || []) if (online.has(r)) out.push(`- ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
     return out;
   };
 
@@ -154,7 +154,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (sec === petSection) {
       const first = body.findIndex(isList);
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
-      const listed = petLines.flatMap((ln, i) => [ln, ...subLines(petRepoOf[i])]);
+      // A sub-bullet nests only when it is indented past the number ("10. " is 4 wide), so the indent follows the number.
+      const listed = petLines.flatMap((ln, i) => [ln, ...subLines(petRepoOf[i]).map((x) => ' '.repeat(ln.indexOf(' ') + 1) + x)]);
       if (first < 0) out.push('', ...listed, ...body);
       else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
       continue;
