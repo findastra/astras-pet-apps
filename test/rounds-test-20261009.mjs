@@ -232,7 +232,7 @@ test('profile round finds the pet list under the Astra\'s PetOS heading too', ()
   const programs = [{ number: 1, program: 'The Farm', assigned: true, icon: 'Friendly Farmer', repo: 'astras-pet-os', mini_descriptor: { text: 'Organizes the pets.' } },
     { number: 47, program: 'pet-program-47', assigned: false, icon: 'Queue Quokka', repo: 'pet-program-47', mini_descriptor: { text: 'Tasks: watches retries.' } }];
   const all = syncProfile(profile, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs);
-  assert.match(all.text, /^47\. \*\*Queue Quokka\*\* -- tasks: watches retries\n   - `pet-program-47` -- pet program, not named yet\n   - \[`pet-program-47`\]/m);
+  assert.match(all.text, /^47\. \*\*Queue Quokka\*\* -- tasks: watches retries\n   - \[`pet-program-47`\]\([^)]*\) -- pet program and its repo, not named yet$/m, 'same-name home and repo share one sub-bullet');
   assert.match(all.text, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - (?:\[`the-farm`\]\([^)]*\)|`the-farm`) -- \*The Farm\*, the pet program\n/m, 'pet and job, then its home as the first sub-bullet');
   const others = all.text.split("### Astra's Pet Apps")[0] + (all.text.split('### Web & More')[1] || '');
   assert.doesNotMatch(others, /pet-program-47/, 'a pet program never lands in another section');

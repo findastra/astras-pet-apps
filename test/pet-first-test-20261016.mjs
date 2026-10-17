@@ -40,6 +40,8 @@ test('every pet line is the pet and what it does; home, repo and tools are sub-b
   assert.ok(lines.includes('35. **Chat Rat** -- [job not chosen yet]'));
   assert.match(text, /^1\. \*\*Friendly Farmer\*\* -- organizes the pets\n   - `the-farm` -- \*The Farm\*, the pet program\n   - \[`astras-pet-os`\]\([^)]*\) -- Friendly Farmer's repo\n18\. /m, 'home first, then the repo');
   assert.match(text, /^18\. [^\n]*\n   - `pet-program-18` -- pet program, not named yet\n   - \[`project-parrot`\]/m, 'an unnamed home says so');
+  const same = syncProfile(readme, registry, [...repos, { name: 'pet-program-77', private: false, description: '' }], [...programs, prog(77, 'Queue Quokka', 'pet-program-77', 'Watches retries.')]).text;
+  assert.match(same, /^77\. \*\*Queue Quokka\*\* -- watches retries\n   - \[`pet-program-77`\]\([^)]*\) -- pet program and its repo, not named yet$/m, 'a home and repo with the same name share one sub-bullet');
   assert.match(text, /^45\. \*\*Closet Cat\*\* -- [^\n]*\n   - `pet-program-45`[^\n]*\n   - \[`the-cats-closet`\]/m, 'a pet program repo moves into the numbered list');
   assert.doesNotMatch(text.split("### Astra's PetOS")[0], /the-cats-closet/, 'and out of Web & More');
   assert.match(text, /startup-star`\]\([^)]*\) -- Startup Star: the tray tool/, 'a two-word name keeps its capitals');

@@ -25,7 +25,7 @@ const PET_HOME = /^\d+\. \*\*([^*]+)\*\* · \[?\*([^*]+)\*(?:\]\(([^)]+)\))? -- 
 // The pet and what it does, nothing else (Astra, 2026-10-16). Home, repo and tools are the sub-bullets beneath it.
 const PET_LINE = /^\d+\. \*\*([^*]+)\*\* -- (.*)$/;
 // The home's sub-bullet: - [`the-farm`](page) -- *The Farm*, the pet program
-const HOME_SUB = /^\s+- (?:\[`[^`]+`\]\([^)]*\)|`[^`]+`(?: \*\(private\)\*)?) -- (?:\*[^*]+\*, the pet program|pet program, not named yet)/;
+const HOME_SUB = /^\s+- (?:\[`[^`]+`\]\([^)]*\)|`[^`]+`(?: \*\(private\)\*)?) -- (?:\*[^*]+\*, the pet program|pet program(?: and its repo)?, not named yet)/;
 const PAGES = `https://${OWNER}.github.io/astras-pet-os`;
 const possessive = (n) => (/ies$/.test(n) ? `${n}'` : `${n}'s`);
 const slug = (s) => s.toLowerCase().replace(/['’]/g, '').replace(/&/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -79,6 +79,15 @@ export function syncProfile(readme, registry, repos, programs = null) {
       const name = p.assigned ? slug(p.program) : `pet-program-${p.number}`;
       const target = t.home_url || live || farmPage;
       const note = p.assigned ? `*${p.program}*, the pet program${t.home_note ? ` [${t.home_note}]` : ''}` : 'pet program, not named yet';
+      const hasRepo = online.has(homeRepo) || isPriv(homeRepo);
+      // Same name for the home and the repo (spoonfed, pet-program-47): one sub-bullet, not two (Astra, 2026-10-16).
+      if (hasRepo && name === homeRepo && !t.repo_note) {
+        const page = target && target !== `https://github.com/${OWNER}/${homeRepo}` ? ` · [page](${target})` : '';
+        const both = p.assigned ? `*${p.program}*, the pet program and its repo${t.home_note ? ` [${t.home_note}]` : ''}` : 'pet program and its repo, not named yet';
+        out.push(`   - ${link(homeRepo, isPriv(homeRepo))} -- ${both}${page}`);
+        for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
+        return out;
+      }
       out.push(`   - ${target ? `[\`${name}\`](${target})` : `\`${name}\``} -- ${note}`);
     }
     if (online.has(homeRepo) || isPriv(homeRepo)) out.push(`   - ${link(homeRepo, isPriv(homeRepo))} -- ${t.repo_note || `${possessive(p ? p.icon : reg?.pet || 'the pet')} repo`}`);
