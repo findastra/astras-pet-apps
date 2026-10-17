@@ -10,7 +10,7 @@ const configs = [
   { repo: 'astras-pet-apps', type: 'manager', title: "Astra's Pet Apps", subtitle: 'The Farmer’s desk', lead: 'Open your apps, review what needs attention, and keep a small follow-up list.', accent: '#dbe870', limit: 'App availability comes from the registry. Follow-up flags are your personal notes.' },
   { repo: 'api-fairy', type: 'keys', title: 'API Fairy', subtitle: 'Key metadata notebook', lead: 'Remember where a key lives, what uses it, and when you want to review it.', accent: '#c8a1f4', limit: 'Store names and locations only. This browser notebook does not read or watch your keys. The existing Windows app provides that separate functionality.' },
   { repo: 'learn-python', type: 'python', title: 'Python Panther', subtitle: 'A small practice desk', lead: 'Read a tiny Python example, predict its output, then check your answer.', accent: '#c7df66', limit: 'These exercises check expected answers locally. This page does not execute Python code.' },
-  { repo: 'vrchat-ai-astra', type: 'vrchat', title: 'Astra Wisp', subtitle: 'VRChat AI Astra · readiness desk', lead: 'Prepare an embodiment session and keep track of the steps you have actually checked.', accent: '#acb2ff', limit: 'The existing AI Astra app runs through Electron and Python. This browser companion does not connect to the backend, change learned memory, or send VRChat messages.' },
+  { repo: 'the-astral-plane', file: 'vrchat-ai-astra', type: 'vrchat', title: 'Astra Wisp', subtitle: 'VRChat AI Astra · readiness desk', lead: 'Prepare an embodiment session and keep track of the steps you have actually checked.', accent: '#acb2ff', limit: 'The existing AI Astra app runs through Electron and Python. This browser companion does not connect to the backend, change learned memory, or send VRChat messages.' },
   { repo: 'file-master', type: 'files', title: 'File Master', subtitle: 'Review a cleanup plan', lead: 'Import the scanner’s plan.csv, inspect each proposed action, and export your approval choices.', accent: '#efbf7b', limit: 'This reviewer never moves, renames, or deletes files. Changes happen only when you separately run the existing File Master tools.' },
   { repo: 'findastra-discord-presence', type: 'discord', title: 'Discord Damsel', subtitle: 'Your presence control room', lead: 'Open the installed OpenAI or Anthropic companion, and keep a short setup checklist.', accent: '#bcb9ff', limit: 'The two existing controllers run on your own PC. This hub does not start them or change Discord activity by itself.' },
   { repo: 'paper-girl', type: 'paper', title: 'Paper Girl', subtitle: 'Your daily science rabbit hole', lead: 'The original science-discovery desk is available below.', accent: '#dfa7c1', live: 'https://findastra.github.io/paper-girl/', limit: 'The original app needs an internet connection. This package preserves its live interface instead of substituting a new reading app.' },
@@ -156,7 +156,7 @@ mkdirSync('apps', { recursive: true });
 let built = 0, preserved = 0;
 for (const config of configs) {
   if (requested.size && !requested.has(config.repo)) continue;
-  const output = `apps/${config.repo}-20261008.html`;
+  const output = `apps/${config.file || config.repo}-20261008.html`;
   // Published companions retain their exact source bytes and version footer.
   // The Farmer's manager is generated from the current Cage registry.
   if (config.type !== 'manager' && existsSync(output) && !refreshExisting) { preserved++; continue; }

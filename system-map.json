@@ -2082,7 +2082,7 @@
       "why": "Overlap to settle: both check how pages look on phones, tablets and desktop."
     },
     {
-      "from": "vrchat-ai-astra",
+      "from": "the-astral-plane",
       "to": "osc-sealion",
       "carries": "cue",
       "state": "suggested",
@@ -2663,7 +2663,7 @@
       "why": "Deck Duck is the Elgato Stream Deck pet."
     },
     {
-      "from": "vrchat-ai-astra",
+      "from": "the-astral-plane",
       "to": "magic-chatbox",
       "carries": "manages",
       "state": "idea",
@@ -3027,7 +3027,7 @@
       "why": "Installed on the Desktop PC."
     },
     {
-      "from": "vrchat-ai-astra",
+      "from": "the-astral-plane",
       "to": "ai-astra",
       "carries": "opens",
       "state": "now",
@@ -4446,7 +4446,7 @@
           }
         ]
       },
-      "vrchat-ai-astra": {
+      "the-astral-plane": {
         "languages": [
           {
             "language": "Python",
@@ -4558,7 +4558,7 @@
     "finance-finch": "finance-finch",
     "mommys": "mommys",
     "drum-dog": "drum-dog",
-    "vrchat-ai-astra": "vrchat-ai-astra",
+    "the-astral-plane": "the-astral-plane",
     "data-dealer": "data-dealer",
     "paper-girl": "paper-girl",
     "fuzzboi-friend": "fuzzboi-friend",
@@ -4580,7 +4580,7 @@
     "piranesi-nessi": "piranesi-house",
     "procreate-panda": "astras-pet-os",
     "closet-cat": "astras-pet-os",
-    "ai-astra": "vrchat-ai-astra",
+    "ai-astra": "the-astral-plane",
     "data-dealer-project": "data-dealer",
     "paper-girl-site": "paper-girl",
     "gif-maker": "astras-gif-maker",
