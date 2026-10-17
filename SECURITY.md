@@ -156,4 +156,5 @@ Security is shown with evidence, not claimed. Each item is something anyone can 
 | OpenSSF Scorecard: a public score of this repo's security practices | Planned |
 | Prompt-injection drills and red-team reports from White Hat Weasel, in the sandbox | Planned |
 | Outside review: the community (vet-clinic) now, a professional audit later | Open |
+| Security assessment by an AI reviewer: [docs/security-assessment-20261016.md](docs/security-assessment-20261016.md) | Done 2026-10-16; fixes open |
 | Provenance: who made and changed everything: [PROVENANCE.md](PROVENANCE.md) | Partly done |

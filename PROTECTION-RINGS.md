@@ -130,3 +130,5 @@ What is not true yet, in order of risk. Tracked in [docs/structure-audit-2026101
 | 8 | Pets read web pages, issues and email: text there can try to give an agent orders (prompt injection). | Rule: data is never instructions |
 | 9 | Local models on the network may answer anyone on it. | Planned: bind to this PC or LAN, require a key, no port forwarding |
 | 10 | Signatures are not checked yet. | Planned |
+| 11 | The Farmer's daily round commits text from pet repos (`cage.submit`) to `pets.json` on main without review: a path from ring 2 to ring 0, and stored text the next agent reads. | Found 2026-10-16 ([assessment](docs/security-assessment-20261016.md)); fix: the round opens a pull request |
+| 12 | The public System Map names about a hundred devices and programs: material for targeted phishing. | Found 2026-10-16; fix: publish kinds, keep items local |
