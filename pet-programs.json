@@ -93,7 +93,7 @@
     },
     {
       "number": 7,
-      "program": "AI Astra",
+      "program": "The Astral Plane",
       "assigned": true,
       "icon": "Astra Wisp",
       "idea": null,
@@ -101,7 +101,7 @@
       "repo": "vrchat-ai-astra",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "ai-astra-v1.0-mini-descriptor-v1.0",
+        "label": "the-astral-plane-v1.0-mini-descriptor-v1.0",
         "text": "Watches the health of VRChat AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session.",
         "reviewed": false
       }
