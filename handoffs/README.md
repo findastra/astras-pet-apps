@@ -37,7 +37,7 @@ with its number here. Ranked by Claude Opus 5.5 on 2026-10-17; Astra can reorder
 | --- | --- | --- | --- | --- |
 | 1 | [astras-pet-os#46](https://github.com/findastra/astras-pet-os/pull/46) | The Farmer's round works again and opens a pull request instead of pushing to `main` (gap 11). Also tick Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests" | Fix the Farmer's round | Security, high (finding 2); the round has failed daily since 2026-10-12 |
 | 2 | [astras-pet-os#47](https://github.com/findastra/astras-pet-os/pull/47) | Ghost Protocol links kept to http and https (finding 6, hub copy) | Finish the Ghost Protocol XSS fix | Security, low; touches card 025 like #1, so its chat fixes that conflict after #1 |
-| 3 | `ghost-protocol` branch `claude/link-escape-20261017` | The same link fix on the live site | Finish the Ghost Protocol XSS fix | Same finding as #2, live site |
+| 3 | [ghost-protocol#3](https://github.com/findastra/ghost-protocol/pull/3) | The same link fix on the live site | Finish the Ghost Protocol XSS fix | Same finding as #2, live site |
 | 4 | [astras-pet-os#23](https://github.com/findastra/astras-pet-os/pull/23) | Codex: README auditor, plus PR #26 (The Threshold, Liminal Doors, and the security model that replaces the rings and the Known gaps table) | Codex | Needs Astra's decision on the security model; large |
 | 5 | [astras-pet-os#36](https://github.com/findastra/astras-pet-os/pull/36) | Fuzzbois is now Fuzzboi Factory | | Feature |
 | 6 | [astras-pet-os#22](https://github.com/findastra/astras-pet-os/pull/22) | Codex: keep reviewed profile READMEs during daily rounds | Codex | Feature |
