@@ -16,7 +16,12 @@ the GitHub shows programming, cybersecurity, networking and AI knowledge.
 - **Branch `claude/pole-puff-draft-20261012`:** its card `010-any-pole-puff-repo-20261012.md` renamed to
   `018-any-pole-puff-repo-20261012.md` (010 is Platform Platypus on `main`).
 - Read only: every branch, PRs #22–#36, the last five runs of the Farmer's daily rounds and the failing job log.
-- Nothing on Astra's PC was touched. The session had remote-control tools for it; they were not used.
+- Nothing on Astra's PC was touched. The session had remote-control tools for it; they were used only to check
+  whether the PC was online (it was not, last seen 88 hours earlier).
+- **Chat Rat:** Astra asked for this chat to be recorded. It ran in the cloud, so Chat Rat's saver cannot see it. An
+  import file in Chat Rat's format (`conversation-import-20261016.md`, source `claude-code-cloud`, id
+  `astras-pet-os:session_01TguXHjbrVeHscuKMCGzJCp`) was built with Chat Rat's own parser and sent to Astra in the chat.
+  It is not in any repo (Chat Rat's rule).
 
 ## What is not done
 1. **Branch protection on `main`** (Settings → Branches → require a pull request). Only Astra can change it.
@@ -31,6 +36,10 @@ the GitHub shows programming, cybersecurity, networking and AI knowledge.
    table, including gaps 11 and 12. Astra decides; then gaps 11 and 12 either stay or move to the new page.
 5. When PR #23 or #26 merges, rename its `012-security-enforcement-and-pet-catalog-20261014.md` to `017-…`.
 6. Findings 3 (public map inventory), 4 (remote control default) and 5 (installer and Actions hardening) are open.
+7. **Chat Rat:** on the PC, put `claude-code-cloud-conversations-20261017.json` (sent in the chat) in
+   `%USERPROFILE%\Documents\Chats\inbox` and click **Save missing chats**. Chat Rat's saver is only on its branches
+   (`codex/chat-rat-save-20261016`, `claude/missed-search-20261016`), not on its `main`.
+8. This branch (`ccr-483ff706-pukle6`) is pushed but not merged into `main`, and has no pull request yet.
 
 ## Done when
 Every item above is done or answered, and the assessment's update section says so.
