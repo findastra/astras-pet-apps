@@ -17,6 +17,8 @@ const BULLET = /^- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$
 const NUMBERED = /^\d+\. (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- \*\*([^*]+)\*\* · (.*)$/;
 // Pet first (Astra, 2026-10-16): N. **Pet** · *Home* · [`repo`](link) -- what the pet does [status]. Home is optional.
 const PET_FIRST = /^\d+\. \*\*([^*]+)\*\*(?: · \*([^*]+)\*)? · (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/;
+// A home with its own page (Astra, 2026-10-16): N. **Pet** · [*Home*](page) -- what it does. Its repo is the first sub-line.
+const PET_HOME = /^\d+\. \*\*([^*]+)\*\* · \[?\*([^*]+)\*(?:\]\(([^)]+)\))? -- (.*)$/; // also reads an unlinked *Home*
 const link = (repo, isPrivate) => (isPrivate ? `\`${repo}\` *(private)*` : `[\`${repo}\`](https://github.com/${OWNER}/${repo})`);
 // Astra's blurbs start lowercase and end without a full stop; names keep their capitals.
 // A two-word name that opens the line ("Startup Star: …", "Closet Cat's …") keeps its capitals too.
@@ -58,7 +60,9 @@ export function syncProfile(readme, registry, repos, programs = null) {
     const p = (programs || []).find((x) => x.repo === repo);
     const homeRepo = t.home_repo || repo;
     const home = p && p.assigned ? p.program : null;
-    const out = home ? [`   - *${home}* · ${link(homeRepo, online.get(homeRepo)?.private)} -- home${t.home_note ? ` [${t.home_note}]` : ''}`] : [];
+    const out = t.home_url && home
+      ? (online.has(homeRepo) ? [`   - ${link(homeRepo, online.get(homeRepo).private)} -- ${t.repo_note || blurbs.get(homeRepo) || 'home repo'}`] : [])
+      : home ? [`   - *${home}* · ${link(homeRepo, online.get(homeRepo)?.private)} -- home${t.home_note ? ` [${t.home_note}]` : ''}`] : [];
     for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
     return out;
   };
@@ -71,7 +75,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
     let m;
     const sub = /^\s*- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/.exec(ln);
     if (sub && !blurbs.has(sub[1] || sub[2])) blurbs.set(sub[1] || sub[2], sub[3]);
-    if ((m = PET_FIRST.exec(ln))) blurbs.set(m[3] || m[4], m[5]);
+    if ((m = PET_HOME.exec(ln))) { const p = (programs || []).find((x) => x.icon === m[1]); if (p) blurbs.set(p.repo, m[4]); }
+    else if ((m = PET_FIRST.exec(ln))) blurbs.set(m[3] || m[4], m[5]);
     else if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
     else if ((m = BULLET.exec(ln))) blurbs.set(m[1] || m[2], m[3]);
   });
@@ -83,12 +88,17 @@ export function syncProfile(readme, registry, repos, programs = null) {
 
   // The pet apps list.
   const petLines = [];
+  const petRepoOf = [];
   if (programs) for (const p of programs) {
     const r = online.get(p.repo); const reg = pets.find((x) => x.repo === p.repo);
     const isPrivate = r ? r.private : reg?.visibility === 'private';
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
     const { job, status } = splitStatus(p.mini_descriptor.text);
-    petLines.push(petLine(p.number, p.icon, p.assigned ? p.program : null, link(p.repo, isPrivate), job && lowerFirst(job), status));
+    const homeUrl = p.assigned && toolsOf[p.repo]?.home_url;
+    petLines.push(homeUrl
+      ? `${p.number}. **${p.icon}** · [*${p.program}*](${homeUrl}) -- ${[job && lowerFirst(job), status ? `[${status}]` : ''].filter(Boolean).join(' ')}`
+      : petLine(p.number, p.icon, p.assigned ? p.program : null, link(p.repo, isPrivate), job && lowerFirst(job), status));
+    petRepoOf.push(p.repo);
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.icon} (${p.repo})`);
   }
   else for (const p of pets) {
@@ -97,6 +107,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (!r && !isPrivate) continue; // not on GitHub (or not visible): leave it out
     const blurb = blurbs.get(p.repo) || lowerFirst(p.job);
     petLines.push(petLine(petLines.length + 1, p.pet, null, link(p.repo, isPrivate), blurb, null));
+    petRepoOf.push(p.repo);
     if (!mentioned.has(p.repo)) changes.push(`added pet ${p.pet} (${p.repo})`);
   }
 
@@ -114,7 +125,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     changes.push(`added ${r.name} to ${target.title}`);
   }
 
-  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln) || /^\s+- /.test(ln);
+  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln) || PET_HOME.test(ln) || /^\s+- /.test(ln);
   out.push(...lines.slice(0, sections.length ? sections[0].start : lines.length));
   for (const sec of sections) {
     const body = lines.slice(sec.start + 1, sec.end);
@@ -122,7 +133,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (sec === petSection) {
       const first = body.findIndex(isList);
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
-      const listed = petLines.flatMap((ln) => { const m = PET_FIRST.exec(ln); return [ln, ...subLines(m && (m[3] || m[4]))]; });
+      const listed = petLines.flatMap((ln, i) => { const m = PET_FIRST.exec(ln); return [ln, ...subLines(petRepoOf[i] || (m && (m[3] || m[4])))]; });
       if (first < 0) out.push('', ...listed, ...body);
       else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
       continue;
@@ -149,7 +160,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     out.push(...kept);
   }
   let text = out.join('\n');
-  const old = lines.filter((l) => NUMBERED.test(l) || PET_FIRST.test(l)).join('\n');
+  const old = lines.filter((l) => NUMBERED.test(l) || PET_FIRST.test(l) || PET_HOME.test(l)).join('\n');
   if (old !== petLines.join('\n') && !changes.some((c) => c.startsWith('added pet'))) changes.push('reordered or refreshed the pet apps list');
   if (text === readme) return { text, changes: [] };
   if (!changes.length) changes.push('tidied the pet list layout');

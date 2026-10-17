@@ -233,7 +233,7 @@ test('profile round finds the pet list under the Astra\'s PetOS heading too', ()
     { number: 47, program: 'pet-program-47', assigned: false, icon: 'Queue Quokka', repo: 'pet-program-47', mini_descriptor: { text: 'Tasks: watches retries.' } }];
   const all = syncProfile(profile, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs);
   assert.match(all.text, /^47\. \*\*Queue Quokka\*\* · \[`pet-program-47`\][^\n]* -- tasks: watches retries$/m);
-  assert.match(all.text, /^1\. \*\*Friendly Farmer\*\* · \*The Farm\* · \[`astras-pet-os`\][^\n]* -- organizes the pets$/m, 'pet first, then its home');
+  assert.match(all.text, /^1\. \*\*Friendly Farmer\*\* · \[\*The Farm\*\]\([^)]*\) -- organizes the pets$/m, 'pet first, then its home, linked to its page');
   const others = all.text.split("### Astra's Pet Apps")[0] + (all.text.split('### Web & More')[1] || '');
   assert.doesNotMatch(others, /pet-program-47/, 'a pet program never lands in another section');
   assert.deepEqual(syncProfile(all.text, registry, online([{ name: 'pet-program-47', private: false, description: 'Queue Quokka' }]), programs).changes, [], 'a second run changes nothing');

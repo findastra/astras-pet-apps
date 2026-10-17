@@ -69,3 +69,12 @@ test('hidden repos leave the profile; a pet’s home, then its tools, sit under 
   assert.match(petos, /^1\. \*\*Friendly Farmer\*\*[^\n]*\n   - \*The Farm\* · \[`astras-pet-os`\][^\n]* -- home \[moving to its own repo, the-farm\]\n   - \[`the-kennel`\]\([^)]*\) -- pets made by other people\n18\. /m);
   assert.deepEqual(syncProfile(text, reg, rs, programs).changes, [], 'a second run changes nothing');
 });
+
+test('a home with its own page is linked on the pet line, and its repo becomes the first sub-line (Astra, 2026-10-16)', () => {
+  const reg = { pets: [], pipeline: [], profile: { hidden: ['startup-star'], tools: { 'astras-pet-os': { home_url: 'https://example.test/farm.html', repo_note: "Astra's PetOS home repo", tools: [] } } } };
+  const { text } = syncProfile(readme, reg, repos, programs);
+  assert.match(text, /^1\. \*\*Friendly Farmer\*\* · \[\*The Farm\*\]\(https:\/\/example\.test\/farm\.html\) -- organizes the pets\n   - \[`astras-pet-os`\]\([^)]*\) -- Astra's PetOS home repo\n/m);
+  assert.deepEqual(syncProfile(text, reg, repos, programs).changes, [], 'a second run changes nothing');
+  const unlinked = text.replace(/\[\*The Farm\*\]\([^)]*\)/, '*The Farm*');
+  assert.equal(syncProfile(unlinked, reg, repos, programs).text, text, 'an unlinked home is read and linked again');
+});
