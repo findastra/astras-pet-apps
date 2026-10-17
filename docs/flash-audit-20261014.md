@@ -49,7 +49,7 @@ If source rules remain contradictory, report the conflict rather than silently c
 3. Show its current icon and nine-emotion sheet. Inspect desktop, page and repo versions.
 4. Run the matrix below. Store evidence for every result, including passes. Do not infer
    a working app from HTTP 200, a file's existence, a passing build, or a successful launch request.
-5. Tell Astra only **Missing**, **Incorrect**, and **Not verified** findings. Do not list
+5. Tell Astra only **Missing**, **Incorrect**, and **Not verified** findings, in the matrix's priority order. Do not list
    successful checks. Artwork and unresolved questions remain visible as review materials.
 6. Ask rapid questions only for unresolved decisions: four name suggestions with a short
    explanation each plus free text; implemented vs approved-planned vs proposed tools;
@@ -79,55 +79,110 @@ After **each round**, and after substantial owner corrections within a round:
 5. Hand off the next round with exact progress and open decisions. Never count a
    Not verified check as passed merely to finish a round.
 
-Current visual checks A44-A52 appear below and are part of this matrix.
+All checks, A01-A56, are in one matrix in section 3, most important first.
 
-## 3. Complete audit matrix
+## 3. Complete audit matrix, most important first
+
+**Priority rule (Astra, 2026-10-17):** checks run and are reported in this order, most imperative first. A new check is inserted at its priority position in the right tier, never appended at the end. IDs never change or renumber (other files link to them); a new check takes the next free ID. Report findings in this order too.
+
+### 1. Is it a pet, and is it named
+Nothing else matters until these pass.
 
 | ID | Check | Evidence required / exception to report |
 |---|---|---|
+| A06 | Pet name | Compare mascot name across page, registry, map and metadata. Report conflicts, typos and placeholders. |
+| A07 | Program name/version | Preserve chosen names; check versioned labels and stable numbers. Ask four suggestions plus custom only where undecided. |
 | A01 | Current icon | Show the actual image; identify desktop and page sources. Report absent, stale or inconsistent art. |
+| A53 | Program icon matches its folder | Every program a pet folder opens (its shortcut in the folder, the Start menu copy, the Desktop copy) wears the same icon as that folder, never the program's generic icon. Startup Star's folder is the Windows star (`shell32.dll,43`), so its shortcut is the star. Read the folder's `desktop.ini` IconResource and each shortcut's IconLocation; check installers set the folder icon too, so a reinstall does not undo it. A folder with no icon of its own is reported (pick one), not passed. Fix: `scripts/match-shortcut-icons-20261017.ps1` (only changes shortcut icons). Recorded by Claude Opus 5.5 (`claude-opus-5-5`). |
+| A09 | Program interface | Inspect a real interface and required framework sections. Flag missing page, placeholder, dead controls or incomplete blocks. |
+| A11 | Desktop launch | Exercise the actual pet's double-click and verify the intended interface appears. If unavailable, mark Not verified. |
+| A10 | Website route | Open configured program URL, follow redirects and inspect destination. Flag repo links posing as applications, wrong apps, errors and unexplained auth gates. |
+| A54 | Third-party programs | List every program made by others that the pet runs or looks after (L1, ring 5): name, where it is installed, version, and whether it is on this PC (not installed is asleep, "not on this PC", not a defect). It must match the page's Third Party Programs row, pet.json, the Made by others column in INTELLIGENCE-LEVELS.md and the System Map. Launch routes are real and bounded (A46). Report any program missing from one list or listed but never used. |
+| A08 | Purpose and scope | Compare intended job with actual behavior; distinguish program, runtime and harness. Flag overlaps and planned features claimed as built. |
+
+### 2. Where the work lives
+Repo, files and folders.
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
+| A13 | Individual repo | Verify repo association, source, entry point, metadata and artwork. Look at relevant branches before saying work is absent. |
+| A14 | Required repo files | Check pet.json, sprite target, entry target, README, AGENTS.md, CLAUDE.md, LICENSE and applicable pet-app topic. |
+| A15 | README and credit | Check how-to-run and Limits, public credit "A pet app by Astra", model/version/date, license, truthful status and naming exceptions. |
+| A56 | Work saved in its native folder | Everything the project works on lives where a developer expects it: source, tools, pictures, docs and build output in its own repo folder (`%USERPROFILE%\Documents\Astra's PetOS\<repo>`); the user's own data (private records, saved chats, settings) in its declared data folder outside the repo (`%LOCALAPPDATA%\<repo>\`, recorded as `data_folder` in pet.json); caches and logs in that data folder, never in the repo. Nothing it makes lands in Downloads, the Desktop, a dated chat folder (`Documents\Codex\<date>`, `Documents\ChatGPT\...`), the hub or another pet's folder. Check pet.json, the code's write paths and a File Master scan of the PC. Report each stray file with its proper home; moving it goes through a File Master plan. |
+| A16 | Metadata and self-audit | Validate pet.json including job, runs_on, entry, sprite, status, framework, tools, links and audit cadence/subject/needs. Hatching/growing/grown must reflect evidence. |
+| A17 | Git and deployment | Record dirty files, ahead/behind commits, pushed branch, merged state and deployed version separately. Do not reset/stash/discard another agent's work. |
+
+### 3. Pictures and art
+What people see first.
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
+| A55 | Pictures | The README and the repo page show **several real pictures** of what the project does, best picture first: the pet, its program page, and the program working. Creative projects (worlds, art, sites, games) have **at least three**, including in-world or 3D views. Program PFDs (the System Map, diagrams, especially the 3D views) appear as pictures too. Pictures are committed in the repo (`docs/images/<name>-<date>.png`), have alt text, and show no personal data, private chats or other people without their OK. Made or refreshed with `project-image-generator` (GitHub Goldfish's tool; Portfolio Puffer uses it by grant), and the portfolio (findastra.github.io) shows them. Pet art alone or a placeholder is Missing, not Pass. |
 | A02 | Nine emotions | Show Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick and Sad; inspect all frames for missing, duplicate, mislabeled or inconsistent expressions. |
 | A03 | Emotion behavior | Verify each state is reachable and means the correct runtime condition, not just that its PNG exists. Legacy filenames may remain stable; labels use the current nine states. Blink is an animation only. |
 | A04 | Art publication | Compare local active assets with individual-repo blobs, including sheet, frames and sprite metadata. Report unpushed or stale art and invalid paths. |
 | A05 | Art format and provenance | Check transparent 256px source frames, approved style/body/size, black outline, no unwanted sparkles, source/license, and owner exceptions. Separate source resolution from desktop display size. |
-| A06 | Pet name | Compare mascot name across page, registry, map and metadata. Report conflicts, typos and placeholders. |
-| A07 | Program name/version | Preserve chosen names; check versioned labels and stable numbers. Ask four suggestions plus custom only where undecided. |
-| A08 | Purpose and scope | Compare intended job with actual behavior; distinguish program, runtime and harness. Flag overlaps and planned features claimed as built. |
-| A09 | Program interface | Inspect a real interface and required framework sections. Flag missing page, placeholder, dead controls or incomplete blocks. |
-| A10 | Website route | Open configured program URL, follow redirects and inspect destination. Flag repo links posing as applications, wrong apps, errors and unexplained auth gates. |
-| A11 | Desktop launch | Exercise the actual pet's double-click and verify the intended interface appears. If unavailable, mark Not verified. |
-| A12 | Map/catalog navigation | Check icon/program links, program-to-map node link, stable identity and correct relationships in both directions. |
-| A13 | Individual repo | Verify repo association, source, entry point, metadata and artwork. Look at relevant branches before saying work is absent. |
-| A14 | Required repo files | Check pet.json, sprite target, entry target, README, AGENTS.md, CLAUDE.md, LICENSE and applicable pet-app topic. |
-| A15 | README and credit | Check how-to-run and Limits, public credit "A pet app by Astra", model/version/date, license, truthful status and naming exceptions. |
-| A16 | Metadata and self-audit | Validate pet.json including job, runs_on, entry, sprite, status, framework, tools, links and audit cadence/subject/needs. Hatching/growing/grown must reflect evidence. |
-| A17 | Git and deployment | Record dirty files, ahead/behind commits, pushed branch, merged state and deployed version separately. Do not reset/stash/discard another agent's work. |
+| A49 | Emotion key | Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick, Sad in 3/2/1 columns. Label in white rounded bubble border, pet on right; blink is animation, not a state. Describe actual signal/threshold sources and unknown queues. |
+
+### 4. Tools and safety
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
 | A18 | Official tool inventory | Separate implemented, owner-approved planned, and proposed tools. Record purpose, version, owner, permissions, dependencies and add-your-own decisions. |
 | A19 | Tool behavior | Verify inputs, outputs, errors and intended actions for each tool. Use safe fixtures for changing actions; live checks require authorized scope. |
-| A20 | Manual maintenance light | Every tool has a left-side blue/orange maintenance light, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
 | A21 | Tool OFF enforcement | Verify execution actually stops/prevents new work, state is controlled outside the tool, and security OFF cannot be self-reenabled. Report unsupported enforcement as a gap. |
+| A20 | Manual maintenance light | Every tool has a left-side blue/orange maintenance light, distinct from ON/OFF and automatic health. Report persists to backlog/Farmer; tests cannot silently clear it. |
+| A48 | Paired lights | Left-side stacked green/red ON/OFF and blue/orange manual maintenance lights; fixed spacing and common positioning; visible closed or open; tooltips, keyboard focus, persisted state and actual gates. |
+| A26 | Privacy and permissions | Check exact allowed data/actions, owner approvals, secret storage and untrusted inputs. No private data or credentials in public repos/reports. |
+| A25 | Integrations/accounts | Check supported services, feature detection, account selection, connection denial, expiry, disconnect and provider-specific limits. No connection from domain guessing alone. |
+| A27 | Preview and recovery | For changes, verify appropriate preview/approval, undo or recovery, partial failures, retry safety and audit records. |
+| A42 | Credential help | Adjacent (?) What is this hover/focus memo explains optionality, purpose, scope, storage and destination without exposing secrets. |
+| A28 | Pet connections | Verify sender/receiver, purpose, granted scope, actual data flow, last exchange and independent connection OFF. Match registry relations and map. |
+
+### 5. Chat and agent
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
 | A22 | Chatbot and seat status | Click the exact pet-icon launcher; verify the shared chat panel, header [Pet name] Chat in the original yellow phone, actual L3 connection/model/task, consent, replies, close/reopen and honest disconnected state. A rendered panel alone is not a functioning chatbot. |
+| A52 | L3 activity bubble | Every Pet Program has a visible yellow **[Pet name] · L3 activity** bubble, green LCD and black outline near the top. Show actual provider/task/session, timestamps and concise bounded events. Verify disconnected, idle, working, awaiting review, complete, error, OFF and stale states against a real authorized host. No invented activity, secrets, raw prompts or automatic job launch. The source preflight reports Missing or Not verified, never runtime Pass from an embed marker. Check desktop/mobile layout and persistence after regeneration. |
 | A23 | Chat-created tools | Verify request capture, authorized agent dispatch, build progress, independent review, tests, version registration and list entry. No self-granted access. |
 | A24 | Ready indicator | Green plus text refers to a checked version; connection and authorization are separate. Failures or unreviewed code cannot appear ready. |
-| A25 | Integrations/accounts | Check supported services, feature detection, account selection, connection denial, expiry, disconnect and provider-specific limits. No connection from domain guessing alone. |
-| A26 | Privacy and permissions | Check exact allowed data/actions, owner approvals, secret storage and untrusted inputs. No private data or credentials in public repos/reports. |
-| A27 | Preview and recovery | For changes, verify appropriate preview/approval, undo or recovery, partial failures, retry safety and audit records. |
-| A28 | Pet connections | Verify sender/receiver, purpose, granted scope, actual data flow, last exchange and independent connection OFF. Match registry relations and map. |
+| A43 | Emotion/message hierarchy | Verify simultaneous conditions select one highest-priority unresolved message and matching emotion using explicit policy, not frame order. Test stale success, failure, owner-needed state, dismissal and cosmetic blink. Missing global hierarchy is Not verified, not an invented priority order. |
+
+### 6. Page layout standard
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
+| A44 | Original yellow phone | Shared original Chip shell; current pet artwork; opens the actual pet chat without coin geometry or spinning animation. Preserve existing host handlers. |
+| A45 | Paper and zoom | Portrait paper width; normal initial view; Ctrl+wheel from full-page fit to 100%, no zoom bar; no horizontal overflow at 390px. Real browser acceptance is separate from handler tests. |
+| A46 | Program launch rows | Third Party Programs then Your Programs: square cloud-framed app icons with accessible names and real bounded launch routes; installer labels distinguish installation from an installed app. |
+| A47 | Shared base | Your Tools followed by Your Tutorials/Your Notes side by side, stacking on narrow screens; exactly two Play/Care tutorials; visible Clicker Training and About. |
+| A50 | Backdrop and text | Each pet has a distinct stationery palette; Damsel blue wrinkles, purple/light-blue controls and restrained neon-pink sparkles. All text has a deliberate surface. No approved pet art regenerated. |
+| A51 | Footer | Centered, spacious, slightly staggered wrapping groups between thin rules; status, Made by Astra/date, social icons and static Farmer home icon. No coin or horizontal scrollbar. Verify all links remain reachable. |
+| A41 | Clicker Training | Every program has a bordered list of real desktop click bindings. One click shows the most important emotion-linked message; two clicks show/hide the Pet Program window (background work is controlled separately); three clicks runs an explicitly assigned quick tool. Verify sequence disambiguation, drag suppression, OFF/permissions and honest unavailable states before claiming native support. |
+| A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
+| A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
+| A12 | Map/catalog navigation | Check icon/program links, program-to-map node link, stable identity and correct relationships in both directions. |
+| A31 | Status and link labels | Check data owner, last entry, update/version, seat, map node, and links grouped by kind with origin/location/visibility labels. |
+
+### 7. Tutorials
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
+| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Its page tool box launches the L3 chatbot into that tutorial and retains a left-side maintenance light and separate ON/OFF switch. Verify OFF prevents launch/stops the active tour. |
+| A37 | Play and care SOPs | Every pet has Play with and Care for numbered SOPs delivered in L3 chat. Click each page-listed tutorial tool; verify correct chat context, real steps, prerequisites, expected results, version and stop/help path. No standalone tutorial page or fictional steps for planned features. |
+| A40 | Guided focus and functioning tour | Exercise Next/Back/Pause/Resume/Exit. Only a step number and soft border/background glow appear at the real target; explanations remain in chat. Verify scroll/resize alignment, missing-target handling, keyboard access, reduced motion, and cleanup on completion/OFF. Verify actual user-visible results, not just source/tests. |
+
+### 8. Data, releases and records
+
+| ID | Check | Evidence required / exception to report |
+|---|---|---|
 | A29 | Notes/backlog | Verify notes, screenshots, requests and defect reports persist, retain tool/version association, and reach the actual destination. |
 | A30 | Data continuity | Verify export/import, schema version, backup/migration on update and persistence across versions. Private test data stays private. |
-| A31 | Status and link labels | Check data owner, last entry, update/version, seat, map node, and links grouped by kind with origin/location/visibility labels. |
 | A32 | Pet Collar and release trust | Check provenance, signature claims, install/update history and recovery evidence. Planned signing is not verified signing. |
 | A33 | Registration/admission | Check candidate/pipeline/registered stage, owner admission, pet-app discovery, registration handoff and dated submission. No automatic trust from discovery. |
 | A34 | Generated artifacts/tests | Use canonical sources/builders; check generated registry/docs/art, documented build/check/tests, visual inspection and relevant runtime acceptance. |
 | A35 | Handoff and unresolved work | Record exact evidence, commits, touched files, remaining issues, owners and next steps. Say explicitly what is only on a branch. |
-| A36 | First-visit tutorial | The Farm has tutorial-tools and a reopenable first-time-here-tutorial. Its page tool box launches the L3 chatbot into that tutorial and retains a left-side maintenance light and separate ON/OFF switch. Verify OFF prevents launch/stops the active tour. |
-| A37 | Play and care SOPs | Every pet has Play with and Care for numbered SOPs delivered in L3 chat. Click each page-listed tutorial tool; verify correct chat context, real steps, prerequisites, expected results, version and stop/help path. No standalone tutorial page or fictional steps for planned features. |
-| A38 | Tool organization | Verify browsing by pet, subject category and nested groups, search and multi-category tags, while one canonical tool retains its identity/owner. Distinguish health category from software-health status. |
-| A39 | Pet-icon navigation | Every cross-pet program hyperlink is the current pet icon, with accessible name, tooltip, keyboard focus and usable hit area. Check real destination, hosted/local assets and offline behavior where applicable. Missing program route shows unavailable, not a repo substituted as the program. |
-| A40 | Guided focus and functioning tour | Exercise Next/Back/Pause/Resume/Exit. Only a step number and soft border/background glow appear at the real target; explanations remain in chat. Verify scroll/resize alignment, missing-target handling, keyboard access, reduced motion, and cleanup on completion/OFF. Verify actual user-visible results, not just source/tests. |
-| A41 | Clicker Training | Every program has a bordered list of real desktop click bindings. One click shows the most important emotion-linked message; two clicks show/hide the Pet Program window (background work is controlled separately); three clicks runs an explicitly assigned quick tool. Verify sequence disambiguation, drag suppression, OFF/permissions and honest unavailable states before claiming native support. |
-| A42 | Credential help | Adjacent (?) What is this hover/focus memo explains optionality, purpose, scope, storage and destination without exposing secrets. |
-| A43 | Emotion/message hierarchy | Verify simultaneous conditions select one highest-priority unresolved message and matching emotion using explicit policy, not frame order. Test stale success, failure, owner-needed state, dismissal and cosmetic blink. Missing global hierarchy is Not verified, not an invented priority order. |
 
 Harness seats are model-independent through supported authorized adapters. Do not
 force a single provider choice or claim every model already connects automatically.
@@ -222,23 +277,11 @@ Keep Flash Audit until Astra chooses otherwise; no renaming based on suggestions
 
 These replace the October 14 coin, pink-theme, hidden-control and never-wrap footer rules.
 
-| ID | Check | Evidence required |
-|---|---|---|
-| A44 | Original yellow phone | Shared original Chip shell; current pet artwork; opens the actual pet chat without coin geometry or spinning animation. Preserve existing host handlers. |
-| A45 | Paper and zoom | Portrait paper width; normal initial view; Ctrl+wheel from full-page fit to 100%, no zoom bar; no horizontal overflow at 390px. Real browser acceptance is separate from handler tests. |
-| A46 | Program launch rows | Third Party Programs then Your Programs: square cloud-framed app icons with accessible names and real bounded launch routes; installer labels distinguish installation from an installed app. |
-| A47 | Shared base | Your Tools followed by Your Tutorials/Your Notes side by side, stacking on narrow screens; exactly two Play/Care tutorials; visible Clicker Training and About. |
-| A48 | Paired lights | Left-side stacked green/red ON/OFF and blue/orange manual maintenance lights; fixed spacing and common positioning; visible closed or open; tooltips, keyboard focus, persisted state and actual gates. |
-| A49 | Emotion key | Sleepy, Awake, Idle, Curious, Happy, Worried, Alarmed, Sick, Sad in 3/2/1 columns. Label in white rounded bubble border, pet on right; blink is animation, not a state. Describe actual signal/threshold sources and unknown queues. |
-| A50 | Backdrop and text | Each pet has a distinct stationery palette; Damsel blue wrinkles, purple/light-blue controls and restrained neon-pink sparkles. All text has a deliberate surface. No approved pet art regenerated. |
-| A51 | Footer | Centered, spacious, slightly staggered wrapping groups between thin rules; status, Made by Astra/date, social icons and static Farmer home icon. No coin or horizontal scrollbar. Verify all links remain reachable. |
-| A52 | L3 activity bubble | Every Pet Program has a visible yellow **[Pet name] · L3 activity** bubble, green LCD and black outline near the top. Show actual provider/task/session, timestamps and concise bounded events. Verify disconnected, idle, working, awaiting review, complete, error, OFF and stale states against a real authorized host. No invented activity, secrets, raw prompts or automatic job launch. The source preflight reports Missing or Not verified, never runtime Pass from an embed marker. Check desktop/mobile layout and persistence after regeneration. |
+Rows moved into the matrix in section 3, in priority order.
 
 ## Program icons — owner correction, 2026-10-17
 
-| ID | Check | Evidence required |
-|---|---|---|
-| A53 | Program icon matches its folder | Every program a pet folder opens (its shortcut in the folder, the Start menu copy, the Desktop copy) wears the same icon as that folder, never the program's generic icon. Startup Star's folder is the Windows star (`shell32.dll,43`), so its shortcut is the star. Read the folder's `desktop.ini` IconResource and each shortcut's IconLocation; check installers set the folder icon too, so a reinstall does not undo it. A folder with no icon of its own is reported (pick one), not passed. Fix: `scripts/match-shortcut-icons-20261017.ps1` (only changes shortcut icons). Recorded by Claude Opus 5.5 (`claude-opus-5-5`). |
+Rows moved into the matrix in section 3, in priority order.
 
 ## Mandatory Clicker Training preservation — owner correction, 2026-10-15
 
