@@ -1,4 +1,4 @@
-status: open (waiting on Astra: the in-world and desktop pictures listed under Task; merging the 25 picture PRs)
+status: open (waiting on Astra: the in-world and desktop pictures listed under Task; chat-rat#4 waits on chat-rat#1)
 for: any
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-17
 needs: docs/flash-audit-20261014.md (A55), findastra.github.io `art/projects/project-images-20261017.json`, github-goldfish `scripts/project-image-generator-20261017.mjs`
@@ -7,7 +7,8 @@ needs: docs/flash-audit-20261014.md (A55), findastra.github.io `art/projects/pro
 Task from another Claude session (2026-10-17): add real pictures to every findastra repo that fails Flash Audit A55, using the
 screenshots taken that morning, and list the pictures only Astra can take.
 
-- **25 pull requests, all on branch `claude/pictures-20261017`, none merged.** Each adds `docs/images/<repo>-…-20261017.png`
+- **25 pull requests, all on branch `claude/pictures-20261017`. 24 merged with Astra's OK on 2026-10-17; chat-rat#4 stays open
+  until chat-rat#1 merges.** Each adds `docs/images/<repo>-…-20261017.png`
   (1280×800, taken with project-image-generator) and a short **Pictures** section near the top of `README.md`, with alt text and a
   credit line. README and pictures only; no code changed. All 25 are mergeable, and CI passes where a repo has it.
   - Program page as published by this hub: [file-master#4](https://github.com/findastra/file-master/pull/4),
@@ -34,6 +35,8 @@ screenshots taken that morning, and list the pictures only Astra can take.
 - **A55 on the branches**, scored with project-image-generator's own `pickImages` and `a55` against `claude/pictures-20261017`:
   22 pass and 3 too-few (drum-dog, meme-fiend, mommys-mommies: creative, so A55 asks for three). On `main` all 25 are missing,
   except the hub, which is too-few.
+- **After the 24 merges (2026-10-17):** project-image-generator run on `main` for these 25 repos: 21 pass, 3 too-few (drum-dog,
+  meme-fiend, mommys-mommies), and chat-rat missing until #4 merges.
 - On Astra's PC: nothing in any project folder changed. Worktrees and clones were in Claude's temp folder.
 
 ## Task
