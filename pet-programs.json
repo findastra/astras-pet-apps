@@ -438,15 +438,15 @@
     },
     {
       "number": 30,
-      "program": "pet-program-30",
-      "assigned": false,
+      "program": "Fuzzboi Factory",
+      "assigned": true,
       "icon": "Fuzzboi Friend",
       "idea": "Fuzz Factory (or Fuzzbois, the site he watches)",
       "stage": "pipeline",
       "repo": "fuzzboi-friend",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "pet-program-30-v1.0-mini-descriptor-v1.0",
+        "label": "fuzzboi-factory-v1.0-mini-descriptor-v1.0",
         "text": "Watches over the Fuzzbois website, which generates the Fuzzboi art, and shows its health with his mood. Mostly for fun: swap his look any time.",
         "reviewed": false
       }
