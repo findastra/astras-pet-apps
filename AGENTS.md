@@ -22,7 +22,7 @@ no "I'll read it if I need it". This applies to small tasks too.
 Skills in `skills/` are not loaded automatically, so finding and reading them is your job.
 
 ## One list of names (Astra, 2026-10-16)
-Every pet name (icon) and pet program (home) name is decided in **`pet-programs.json` only**, in the same chat that decides it, on a branch merged that day. Never write a new name into pets.json, the System Map, INTELLIGENCE-LEVELS.md, a doc or a repo first: `npm test` (test/name-list-test-20261016.mjs) fails when another list disagrees, and the Farmer's profile round writes the README from the list. Tools vs tricks: a **tool** is code a pet program owns and runs without AI (ON/OFF, sick light, can be bound to a click: one, two, three or more); a **trick** is a skill its seated AI follows, using only that pet's tools.
+Every pet name (icon) and pet program (home) name is decided in **`pet-programs.json` only**, in the same chat that decides it, on a branch Astra merges (the same day when she can). Never write a new name into pets.json, the System Map, INTELLIGENCE-LEVELS.md, a doc or a repo first: `npm test` (test/name-list-test-20261016.mjs) fails when another list disagrees, and the Farmer's profile round writes the README from the list. Tools vs tricks: a **tool** is code a pet program owns and runs without AI (ON/OFF, sick light, can be bound to a click: one, two, three or more); a **trick** is a skill its seated AI follows, using only that pet's tools.
 
 ## Protection rings and animal code (Astra, 2026-10-13)
 **🐾 Everything inside the harness is an animal. Agents can only control animals.** Read
@@ -91,7 +91,7 @@ ASTRAS_PET_OS v5.2 filed as the canonical architecture, with the Phase 0 audit, 
 Voicemeeter Bug (made with OpenAI Codex (GPT-6) on 2026-10-08) registered on main from the unmerged roam-free branch, with Claude Opus 5.5 (`claude-opus-5-5`), 2026-10-11. His Windows app and source are still only on Astra's PC.
 
 ## What this is
-The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, who hosts the Cage today and will run the Farm under ASTRAS_PET_OS. `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
+The hub for Astra's pet apps and itself a pet app: its pet is the **Friendly Farmer**, whose pet program is The Farm (the Cage is retired; `cage.html` still works). `pets.json` is the single registry. Everything else (README table, ROSTER.md, `cage-data.js`, the art) is generated from it.
 
 ## Rules
 - **`pets.json` is the source of truth.** Never hand-edit the README table between the `pets:start` / `pets:end` markers, `ROSTER.md`, `cage-data.js` or `art/`. Run `npm run build`.
