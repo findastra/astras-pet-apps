@@ -3,7 +3,7 @@
 Every pet program in Astra's PetOS, numbered for good. Each **mini-descriptor** is one or two sentences on what the pet
 program actually does; it is shown in the pet's own repo, the findastra profile and the System Map. Its label follows
 the naming rules: `<pet-program>-v1.0-mini-descriptor-v1.0`. **Bold** program names are assigned; `pet-program-#`
-means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 82 reviewed.
+means not named yet. *(draft)* means Astra has not reviewed it yet: 0 of 83 reviewed.
 
 Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not edit this page; edit the JSON.
 
@@ -91,3 +91,4 @@ Generated from [pet-programs.json](pet-programs.json) by `npm run build`. Do not
 | 80 | Rescue Retriever | **The Recovery Room** | [the-recovery-room](https://github.com/findastra/the-recovery-room) | Seed | After a shutdown, rebuilds the farm from the verified release, restores clean backups from before the incident, and restarts everything in the safe order. *(draft)* |
 | 81 | Intel Owl | pet-program-81 | [pet-program-81](https://github.com/findastra/pet-program-81) | Seed | Researches emerging cyber threats, CVEs, adversary tactics and public advisories, including lawful Tor-based intelligence sources when separately authorized. Shares defensive findings with File Master and security pets; distinct from Cipher Owl and Skill Scout. *(draft)* |
 | 82 | Door Dormouse | **The Threshold** | [the-threshold](https://github.com/findastra/the-threshold) | Seed | Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected. *(draft)* |
+| 83 | Role Fairy | **Fairy Ring** | [role-fairy](https://github.com/findastra/role-fairy) | Pipeline | Runs Mommy’s Role Fairy, a cute single-choice Discord role picker: new members get a welcome-channel link to the picker and everyone can change their role any time. *(draft)* |
