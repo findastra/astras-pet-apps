@@ -24,17 +24,11 @@
     },
     "api-fairy": {
       "pet": "API Fairy",
-      "mood": "worried",
-      "says": "To fix: my README needs \"Limits\"",
+      "mood": "happy",
+      "says": "All good.",
       "needs": [],
-      "findings": [
-        {
-          "sev": "warn",
-          "msg": "README has no \"Limits\" section.",
-          "label": "my README needs \"Limits\""
-        }
-      ],
-      "checked": "2026-10-10T05:48:42.552Z"
+      "findings": [],
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "unity-unicorn": {
       "pet": "Unity Unicorn",
@@ -81,26 +75,10 @@
     },
     "vrchat-ai-astra": {
       "pet": "Astra Wisp",
-      "mood": "worried",
-      "says": "3 to fix: my README needs the credit line, …",
+      "mood": "sleep",
+      "says": "Not checked yet.",
       "needs": [],
-      "findings": [
-        {
-          "sev": "warn",
-          "msg": "README does not open with \"A pet app by Astra.\"",
-          "label": "my README needs the credit line"
-        },
-        {
-          "sev": "warn",
-          "msg": "README has no \"Limits\" section.",
-          "label": "my README needs \"Limits\""
-        },
-        {
-          "sev": "warn",
-          "msg": "AGENTS.md does not point at the Cage (astras-pet-apps), so I do not know how to submit changes to the Farmer.",
-          "label": "my AGENTS.md should point at the Cage"
-        }
-      ],
+      "findings": [],
       "checked": "2026-10-10T05:48:42.552Z"
     },
     "health-hummy": {
@@ -121,16 +99,10 @@
     },
     "mommys": {
       "pet": "Mommy's Mommies",
-      "mood": "happy",
-      "says": "All good.",
+      "mood": "sleep",
+      "says": "Not checked yet.",
       "needs": [],
-      "findings": [
-        {
-          "sev": "note",
-          "msg": "My pet.json describes my job differently from the Cage. Submit the one I want (cage.submit) or copy the Cage's.",
-          "label": "my job wording differs from the Cage"
-        }
-      ],
+      "findings": [],
       "checked": "2026-10-10T05:48:42.552Z"
     },
     "paper-girl": {
@@ -227,7 +199,7 @@
           "label": "my job wording differs from the Cage"
         }
       ],
-      "checked": "2026-10-10T05:48:42.552Z"
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "drum-dog": {
       "pet": "Drum Dog",
@@ -343,13 +315,11 @@
     },
     "mail-snail": {
       "pet": "Mail Snail",
-      "mood": "sick",
-      "says": "Need: a job: what should Mail Snail do",
-      "needs": [
-        "a job: what should Mail Snail do"
-      ],
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
       "findings": [],
-      "checked": "2026-10-10T05:48:42.552Z"
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "patch-cat": {
       "pet": "Patch Cat",
@@ -369,11 +339,13 @@
     },
     "astras-gif-maker": {
       "pet": "Gif Giraffe",
-      "mood": "sleep",
-      "says": "Not checked: the Farmer can't see my private repo yet.",
-      "needs": [],
+      "mood": "sick",
+      "says": "Need: a job: what kind of GIFs should I make",
+      "needs": [
+        "a job: what kind of GIFs should I make"
+      ],
       "findings": [],
-      "checked": "2026-10-10T05:48:42.552Z"
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "backup-beaver": {
       "pet": "Backup Beaver",
@@ -440,53 +412,140 @@
       "checked": "2026-10-10T05:48:42.552Z"
     },
     "raspberry-berry": {
-      "pet": "Raspberry Pi",
-      "mood": "sleep",
-      "says": "Not checked: the Farmer can't see my private repo yet.",
+      "pet": "Raspberry Pi Berry",
+      "mood": "happy",
+      "says": "All good.",
       "needs": [],
       "findings": [],
-      "checked": "2026-10-10T05:48:42.552Z"
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "astras-pet-os": {
       "pet": "Friendly Farmer",
-      "mood": "sick",
-      "says": "Need: a FARMER_TOKEN secret so I can see the private pet repos (10 private: data-dealer, voicemeeter-bug, patch-cat, meme-fiend, astras-gif…",
-      "needs": [
-        "a FARMER_TOKEN secret so I can see the private pet repos (10 private: data-dealer, voicemeeter-bug, patch-cat, meme-fiend, astras-gif-maker, backup-beaver, rift-rabbit, wifi-butterfly, mesh-moth, raspberry-berry)"
-      ],
+      "mood": "worried",
+      "says": "16 pets on GitHub wait to be registered in the Cage.",
+      "needs": [],
       "findings": [
         {
           "sev": "warn",
-          "msg": "14 pets on GitHub wait to be registered in the Cage."
+          "msg": "16 pets on GitHub wait to be registered in the Cage."
+        },
+        {
+          "sev": "warn",
+          "msg": "vrchat-ai-astra is in the registry but not on GitHub."
+        },
+        {
+          "sev": "warn",
+          "msg": "mommys is in the registry but not on GitHub."
         }
       ],
-      "checked": "2026-10-11T17:41:27.268Z"
+      "checked": "2026-10-17T09:44:53.664Z"
     },
     "voicemeeter-bug": {
       "pet": "Voicemeeter Bug",
-      "mood": "sleep",
-      "says": "Not checked: the Farmer can't see my private repo yet.",
+      "mood": "happy",
+      "says": "All good.",
       "needs": [],
       "findings": [],
-      "checked": null
+      "checked": "2026-10-17T09:44:53.664Z"
+    },
+    "platform-platypus": {
+      "pet": "Platform Platypus",
+      "mood": "happy",
+      "says": "All good.",
+      "needs": [],
+      "findings": [],
+      "checked": "2026-10-17T09:44:53.664Z"
+    },
+    "spoonfed": {
+      "pet": "Sugarcube",
+      "mood": "alarmed",
+      "says": "5 to fix: add pet.json, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "error",
+          "msg": "No pet.json, so the Cage cannot read me.",
+          "label": "add pet.json"
+        },
+        {
+          "sev": "warn",
+          "msg": "No README.md.",
+          "label": "add a README"
+        },
+        {
+          "sev": "warn",
+          "msg": "No AGENTS.md, so assistants have no rules for me.",
+          "label": "add AGENTS.md"
+        },
+        {
+          "sev": "note",
+          "msg": "No CLAUDE.md.",
+          "label": "add CLAUDE.md"
+        },
+        {
+          "sev": "warn",
+          "msg": "No LICENSE.",
+          "label": "add a LICENSE"
+        },
+        {
+          "sev": "warn",
+          "msg": "Missing the pet-app topic, so the Cage and the Goldfish cannot find me by topic.",
+          "label": "add the pet-app topic"
+        }
+      ],
+      "checked": "2026-10-17T09:44:53.664Z"
+    },
+    "role-fairy": {
+      "pet": "Role Fairy",
+      "mood": "alarmed",
+      "says": "5 to fix: add pet.json, …",
+      "needs": [],
+      "findings": [
+        {
+          "sev": "error",
+          "msg": "No pet.json, so the Cage cannot read me.",
+          "label": "add pet.json"
+        },
+        {
+          "sev": "warn",
+          "msg": "README does not open with \"A pet app by Astra.\"",
+          "label": "my README needs the credit line"
+        },
+        {
+          "sev": "warn",
+          "msg": "No AGENTS.md, so assistants have no rules for me.",
+          "label": "add AGENTS.md"
+        },
+        {
+          "sev": "note",
+          "msg": "No CLAUDE.md.",
+          "label": "add CLAUDE.md"
+        },
+        {
+          "sev": "warn",
+          "msg": "No LICENSE.",
+          "label": "add a LICENSE"
+        },
+        {
+          "sev": "warn",
+          "msg": "Missing the pet-app topic, so the Cage and the Goldfish cannot find me by topic.",
+          "label": "add the pet-app topic"
+        }
+      ],
+      "checked": "2026-10-17T09:44:53.664Z"
     }
   },
-  "updated": "2026-10-11T17:41:27.268Z",
+  "updated": "2026-10-17T09:44:53.664Z",
   "needs_astra": [
-    {
-      "repo": "astras-pet-os",
-      "pet": "Friendly Farmer",
-      "need": "a FARMER_TOKEN secret so I can see the private pet repos (10 private: data-dealer, voicemeeter-bug, patch-cat, meme-fiend, astras-gif-maker, backup-beaver, rift-rabbit, wifi-butterfly, mesh-moth, raspberry-berry)"
-    },
     {
       "repo": "rgbee",
       "pet": "RGBee",
       "need": "the brand and model of each light"
     },
     {
-      "repo": "mail-snail",
-      "pet": "Mail Snail",
-      "need": "a job: what should Mail Snail do"
+      "repo": "astras-gif-maker",
+      "pet": "Gif Giraffe",
+      "need": "a job: what kind of GIFs should I make"
     },
     {
       "repo": "fuzzboi-friend",

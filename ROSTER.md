@@ -6,7 +6,7 @@
 
 Whether each of those repos carries its `pet.json` and the `pet-app` topic is not recorded here. Run `npm run check -- --online` to ask GitHub.
 
-Last updated 2026-10-11. Drawings below are **drafts** unless their notes record Astra's approval. The pets are generated pixel art; how they are made is in [PET-FILES.md](PET-FILES.md).
+Last updated 2026-10-17. Drawings below are **drafts** unless their notes record Astra's approval. The pets are generated pixel art; how they are made is in [PET-FILES.md](PET-FILES.md).
 
 ![Every character in every mood](art/roster.png)
 
@@ -18,7 +18,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 |---|---|---|---|---|---|---|
 | 1 | **Friendly Farmer** | host | growing | [astras-pet-os](https://github.com/findastra/astras-pet-os) | Organizes the pets (intelligent apps). His daily rounds keep every pet’s status and mood, the roster, the System Map and the profile README up to date, and list what needs Astra. The Farmer’s desk opens every app. He will run the Farm, the native OS of Astra’s PetOS. | <img src="art/frames/farmer/idle-20261008.png" width="48" height="48" alt="farmer idle"> |
 | 2 | **GitHub Goldfish** | pet | growing | [github-goldfish](https://github.com/findastra/github-goldfish) | Swims through every public word on a GitHub account and flags document-control, blatant, organizational and systemic errors. | <img src="art/frames/goldfish/idle.png" width="48" height="48" alt="goldfish idle"> |
-| 3 | **Chip** | pet | hatching | private repo | Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her. | <img src="art/frames/chip/idle-20261008.png" width="48" height="48" alt="chip idle"> |
+| 3 | **Chip** | pet | hatching | [data-dealer](https://github.com/findastra/data-dealer) | Reports the health of Data Dealer, Astra’s large and important data project: its site, data, services and open work, so she sees at a glance what needs her. | <img src="art/frames/chip/idle-20261008.png" width="48" height="48" alt="chip idle"> |
 | 4 | **API Fairy** | pet | growing | [api-fairy](https://github.com/findastra/api-fairy) | Keeps notes about your API keys, never the keys themselves: where each lives and what uses it, which keys have gone stale, and which new keys to get. Lives in the corner of the Windows desktop. | <img src="art/frames/api-fairy/idle.png" width="48" height="48" alt="api-fairy idle"> |
 | 5 | **Unity Unicorn** | pet | hatching | [unity-unicorn](https://github.com/findastra/unity-unicorn) | A local Unity and VRChat desk with avatar plans, 26 dated tools, open-arch audits, concise summaries and evidenced execution history. | <img src="art/frames/unity-unicorn/idle.png" width="48" height="48" alt="unity-unicorn idle"> |
 | 6 | **Python Panther** | pet | hatching | [learn-python](https://github.com/findastra/learn-python) | A Python practice desk with short output exercises, answer checks and saved progress alongside the original lessons. | <img src="art/frames/python-panther/idle.png" width="48" height="48" alt="python-panther idle"> |
@@ -34,7 +34,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | 16 | **VSCode Angel** | pet | hatching | [vscode-angel](https://github.com/findastra/vscode-angel) | Records code-review findings and next steps, then exports a Markdown worklist. Editor connections are planned. | <img src="art/frames/vscode-angel/idle.png" width="48" height="48" alt="vscode-angel idle"> |
 | 17 | **Gone Ghost** | pet | hatching | [ghost-protocol](https://github.com/findastra/ghost-protocol) | Watches the public Ghost Protocol website and checks Astra’s own security against its research: a personal cybersecurity checklist and the steps she has completed. | <img src="art/frames/ghost-protocol/idle-20261008.png" width="48" height="48" alt="ghost-protocol idle"> |
 | 18 | **Project Parrot** | pet | hatching | [project-parrot](https://github.com/findastra/project-parrot) | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | <img src="art/frames/project-parrot/idle-20261008.png" width="48" height="48" alt="project-parrot idle"> |
-| 19 | **Voicemeeter Bug** | pet | growing | private repo | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
+| 19 | **Voicemeeter Bug** | pet | growing | [voicemeeter-bug](https://github.com/findastra/voicemeeter-bug) | Requests a supported Voicemeeter audio-engine restart on a manual click or an observed reconnect of a selected hardware output. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
 | 20 | **Platform Platypus** | pet | hatching | [platform-platypus](https://github.com/findastra/platform-platypus) | Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms. | <img src="art/frames/platform-platypus/idle-20261012.png" width="48" height="48" alt="platform-platypus idle"> |
 
 ## Every mood
@@ -207,6 +207,8 @@ Public repos or local projects that might be pets. The Goldfish flags none of th
 - **Piranesi House** (`piranesi-house`): Local VRChat world project, not published.
 - **Image Bridge** (`image-bridge`): Local tool for the presence card art, not published.
 - **Fuzzbois** (`fuzzbois`): Local art project, not published.
+- **Mommy's Mommies** (`mommys-mommies`): Found on GitHub by the Farmer's round, 2026-10-17: waiting at the gate for Astra. Says its job is: Manages Mommy's, the VRChat dance academy and entertainers club, for the Mommies. The pets are the twins from the Mommy's website, Astra and Devilish.
+- **Astra Wisp** (`the-astral-plane`): Found on GitHub by the Farmer's round, 2026-10-17: waiting at the gate for Astra. Says its job is: Watches the health of AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session.
 
 ## How a new pet joins
 
