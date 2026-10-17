@@ -2,7 +2,7 @@
 
 *The running list of everyone who lives in the Cage. Generated from [pets.json](pets.json) by `npm run build`; edit `pets.json`, not this file.*
 
-**19 pet apps so far, drawn as 19 characters (19 app pets, 0 companions, 0 mascots). 19 of the 19 pet apps have a repo on GitHub.**
+**20 pet apps so far, drawn as 20 characters (20 app pets, 0 companions, 0 mascots). 20 of the 20 pet apps have a repo on GitHub.**
 
 Whether each of those repos carries its `pet.json` and the `pet-app` topic is not recorded here. Run `npm run check -- --online` to ask GitHub.
 
@@ -10,7 +10,7 @@ Last updated 2026-10-11. Drawings below are **drafts** unless their notes record
 
 ![Every character in every mood](art/roster.png)
 
-Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity Unicorn, Python Panther, Astra Wisp, Health Hummy, Finance Finch, Mommy's Mommies, Patty, File Master, Discord Damsel, Portfolio Puffer, Drum Dog, VSCode Angel, Gone Ghost, Project Parrot, Voicemeeter Bug; columns are idle, blink, happy, curious, worried, sad, sick, alarmed, sleep.
+Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity Unicorn, Python Panther, Astra Wisp, Health Hummy, Finance Finch, Mommy's Mommies, Patty, File Master, Discord Damsel, Portfolio Puffer, Drum Dog, VSCode Angel, Gone Ghost, Project Parrot, Voicemeeter Bug, Platform Platypus; columns are idle, blink, happy, curious, worried, sad, sick, alarmed, sleep.
 
 ## Pet apps
 
@@ -35,6 +35,7 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | 17 | **Gone Ghost** | pet | hatching | [ghost-protocol](https://github.com/findastra/ghost-protocol) | Watches the public Ghost Protocol website and checks Astra’s own security against its research: a personal cybersecurity checklist and the steps she has completed. | <img src="art/frames/ghost-protocol/idle-20261008.png" width="48" height="48" alt="ghost-protocol idle"> |
 | 18 | **Project Parrot** | pet | hatching | [project-parrot](https://github.com/findastra/project-parrot) | Planned: periodically reviews OneNote for new project ideas and reminds Astra to start them. | <img src="art/frames/project-parrot/idle-20261008.png" width="48" height="48" alt="project-parrot idle"> |
 | 19 | **Voicemeeter Bug** | pet | growing | private repo | A small Windows desktop pet for restarting Voicemeeter's audio engine when audio needs repair. Its browser page explains how to open the installed app. | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="48" height="48" alt="voicemeeter-bug idle"> |
+| 20 | **Platform Platypus** | pet | hatching | [platform-platypus](https://github.com/findastra/platform-platypus) | Keeps Astra's pages working on iPhone, Android, iPad and desktop: shows a page on every device at once, checks it, tracks what each watched site still needs, and compares screenshots from two platforms. | <img src="art/frames/platform-platypus/idle-20261012.png" width="48" height="48" alt="platform-platypus idle"> |
 
 ## Every mood
 
@@ -189,6 +190,14 @@ Sheet order: rows are Friendly Farmer, GitHub Goldfish, Chip, API Fairy, Unity U
 | idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | <img src="art/frames/voicemeeter-bug/idle-20261008.png" width="56" height="56" alt="voicemeeter-bug idle"> | <img src="art/frames/voicemeeter-bug/blink-20261008.png" width="56" height="56" alt="voicemeeter-bug blink"> | <img src="art/frames/voicemeeter-bug/happy-20261008.png" width="56" height="56" alt="voicemeeter-bug happy"> | <img src="art/frames/voicemeeter-bug/curious-20261008.png" width="56" height="56" alt="voicemeeter-bug curious"> | <img src="art/frames/voicemeeter-bug/worried-20261008.png" width="56" height="56" alt="voicemeeter-bug worried"> | <img src="art/frames/voicemeeter-bug/sad-20261008.png" width="56" height="56" alt="voicemeeter-bug sad"> | <img src="art/frames/voicemeeter-bug/sick-20261008.png" width="56" height="56" alt="voicemeeter-bug sick"> | <img src="art/frames/voicemeeter-bug/alarmed-20261008.png" width="56" height="56" alt="voicemeeter-bug alarmed"> | <img src="art/frames/voicemeeter-bug/sleep-20261008.png" width="56" height="56" alt="voicemeeter-bug sleep"> |
+
+### Platform Platypus
+
+*DRAFT art until Astra approves it: a purple platypus with a yellow bill and a cyan phone, the seed sheet generated 2026-10-12 (art/seeds/platform-platypus-sheet-20261012.png). Registered with that sheet on Astra's OK, 2026-10-17, by Claude Opus 5.5. Kind 'penguin' only borrows a plain ground walk; a platypus-specific kind is the Farmer's call.*
+
+| idle | blink | happy | curious | worried | sad | sick | alarmed | sleep |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| <img src="art/frames/platform-platypus/idle-20261012.png" width="56" height="56" alt="platform-platypus idle"> | <img src="art/frames/platform-platypus/blink-20261012.png" width="56" height="56" alt="platform-platypus blink"> | <img src="art/frames/platform-platypus/happy-20261012.png" width="56" height="56" alt="platform-platypus happy"> | <img src="art/frames/platform-platypus/curious-20261012.png" width="56" height="56" alt="platform-platypus curious"> | <img src="art/frames/platform-platypus/worried-20261012.png" width="56" height="56" alt="platform-platypus worried"> | <img src="art/frames/platform-platypus/sad-20261012.png" width="56" height="56" alt="platform-platypus sad"> | <img src="art/frames/platform-platypus/sick-20261012.png" width="56" height="56" alt="platform-platypus sick"> | <img src="art/frames/platform-platypus/alarmed-20261012.png" width="56" height="56" alt="platform-platypus alarmed"> | <img src="art/frames/platform-platypus/sleep-20261012.png" width="56" height="56" alt="platform-platypus sleep"> |
 
 ## Candidates (not counted until Astra says yes)
 

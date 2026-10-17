@@ -93,7 +93,7 @@
     },
     {
       "number": 7,
-      "program": "AI Astra",
+      "program": "The Astral Plane",
       "assigned": true,
       "icon": "Astra Wisp",
       "idea": null,
@@ -101,7 +101,7 @@
       "repo": "vrchat-ai-astra",
       "repo_exists": true,
       "mini_descriptor": {
-        "label": "ai-astra-v1.0-mini-descriptor-v1.0",
+        "label": "the-astral-plane-v1.0-mini-descriptor-v1.0",
         "text": "Watches the health of VRChat AI Astra, both while she runs and while she is being worked on offline, so problems show up before a session.",
         "reviewed": false
       }
@@ -532,7 +532,7 @@
       "assigned": true,
       "icon": "Platform Platypus",
       "idea": "Mirror Pool",
-      "stage": "pipeline",
+      "stage": "registered",
       "repo": "platform-platypus",
       "repo_exists": true,
       "mini_descriptor": {
@@ -1229,6 +1229,21 @@
       "mini_descriptor": {
         "label": "the-threshold-v1.0-mini-descriptor-v1.0",
         "text": "Door Dormouse manages Liminal Doors: floors, build choices, tools, Unity project metadata and preview website. Browser prototype; L3 and Unity execution are not connected.",
+        "reviewed": false
+      }
+    },
+    {
+      "number": 83,
+      "program": "Fairy Ring",
+      "assigned": true,
+      "icon": "Role Fairy",
+      "idea": null,
+      "stage": "pipeline",
+      "repo": "role-fairy",
+      "repo_exists": true,
+      "mini_descriptor": {
+        "label": "fairy-ring-v1.0-mini-descriptor-v1.0",
+        "text": "Runs Mommy’s Role Fairy, a cute single-choice Discord role picker: new members get a welcome-channel link to the picker and everyone can change their role any time.",
         "reviewed": false
       }
     }

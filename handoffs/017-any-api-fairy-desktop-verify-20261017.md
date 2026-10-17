@@ -1,4 +1,4 @@
-status: open (waiting on Astra: allow API Fairy's build folder in Malwarebytes)
+status: done (2026-10-17)
 for: any
 from: Claude Opus 5.5 (claude-opus-5-5), 2026-10-17
 needs: findastra/api-fairy docs/handoff-claude-20261017.md, README.md (Limits), AGENTS.md; INTELLIGENCE-LEVELS.md (API Fairy row); PROTECTION-RINGS.md known gap 5
@@ -25,7 +25,9 @@ on 2026-10-17 to bring the hub up to date. Full detail: `findastra/api-fairy` `d
 - Both branches were made in clones in this chat's own workspace (the PC copies are on Codex branches, left alone) and
   pushed. Tests run: `npm test` here (see the commit).
 
-## Waiting on Astra
+**Later the same day (Claude Opus 5.5):** Astra allowed `api-fairy\bin` in Malwarebytes. Rebuilt, 83/83 tests pass, the app ran on her PC and its window opened. Astra saw that the app's own desktop fairy was the old 2026-10-07 drawing and chose one fairy, Startup Star's: api-fairy `main` `6b1d430` removes it and uses the approved art; card 021 asks Codex to wire Startup Star's bubbles. Both api-fairy merges are on `main` (Codex L3 branch, then this record).
+
+## Waiting on Astra (answered)
 1. Malwarebytes: Allow List → Add → Allow a file or folder → `%USERPROFILE%\Documents\Astra's Pet Apps\api-fairy\bin`.
    This is the same family as PROTECTION-RINGS.md known gap 5 (unsigned `.exe` files).
 2. ~~Visibility~~ Decided 2026-10-17: api-fairy stays **public**; `pet.json` updated on its branch. The repo holds no keys, personal data or personal paths (scanned all branches and history).
