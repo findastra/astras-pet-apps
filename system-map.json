@@ -1555,13 +1555,13 @@
       "job": "Voicemeeter Potato’s own virtual inputs (Voicemeeter Input, AUX, VAIO3) and outputs (B1 to B3) that apps can send to and record from."
     },
     {
-      "id": "fuzzbois-site",
-      "name": "Fuzzbois",
+      "id": "fuzzboi-factory-site",
+      "name": "Fuzzboi Factory",
       "type": "own-program",
       "state": "now",
       "layer": 6,
       "category": "Made by Astra",
-      "job": "The website that generates the Fuzzboi art: a six-digit hex code picks the look (findastra.github.io/fuzzbois). Fuzzboi Friend watches over it."
+      "job": "The website that generates the Fuzzboi art: a six-digit hex code picks the look (findastra.github.io/fuzzboi-factory). Fuzzboi Friend watches over it."
     },
     {
       "id": "fuzz-factory",
@@ -3427,10 +3427,10 @@
     },
     {
       "from": "fuzzboi-friend",
-      "to": "fuzzbois-site",
+      "to": "fuzzboi-factory-site",
       "carries": "manages",
       "state": "planned",
-      "why": "Fuzzboi Friend watches over the Fuzzbois website and shows its health with his mood (Astra, 2026-10-12)."
+      "why": "Fuzzboi Friend watches over the Fuzzboi Factory website and shows its health with his mood (Astra, 2026-10-12)."
     },
     {
       "from": "fuzzboi-friend",
@@ -3440,7 +3440,7 @@
       "why": "Fuzz Factory is this pet’s own program."
     },
     {
-      "from": "fuzzbois-site",
+      "from": "fuzzboi-factory-site",
       "to": "github",
       "carries": "runs-on",
       "state": "now",
@@ -4576,7 +4576,7 @@
     "paper-girl-site": "paper-girl",
     "gif-maker": "astras-gif-maker",
     "spoonfed-app": "spoonfed",
-    "fuzzbois-site": "fuzzbois",
+    "fuzzboi-factory-site": "fuzzboi-factory",
     "fuzz-factory": "fuzzboi-friend",
     "dubstep-gunsmith": "astras-pet-os",
     "unity-stable": "unity-unicorn",
