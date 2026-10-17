@@ -46,9 +46,22 @@ export function syncProfile(readme, registry, repos, programs = null) {
   // too, each with its mini-descriptor, and their repos never land in the other sections.
   const petRepos = new Set([...pets.map((p) => p.repo), ...(programs || []).map((p) => p.repo)]);
   // Astra, 2026-10-16 (registry.profile in pets.json): `hidden` repos are never listed (Startup Star is a tool, not a
-  // page entry); `places` (the Kennel, the Shed) are listed as bullets under the pet list, in Astra's PetOS.
+  // page entry); `tools` nests each pet's home first, then its tools (the Kennel, the Shed, the vet-clinic), under that pet.
   const hidden = new Set(registry.profile?.hidden || []);
-  const places = (registry.profile?.places || []).filter((r) => !petRepos.has(r));
+  const toolsOf = registry.profile?.tools || {};
+  // also_listed: pet repos Astra also lists in another section on purpose (findastra-discord-presence under Discord).
+  const alsoListed = new Set(registry.profile?.also_listed || []);
+  const places = Object.values(toolsOf).flatMap((t) => t.tools || []).filter((r) => !petRepos.has(r));
+  const subLines = (repo) => {
+    const t = toolsOf[repo];
+    if (!t) return [];
+    const p = (programs || []).find((x) => x.repo === repo);
+    const homeRepo = t.home_repo || repo;
+    const home = p && p.assigned ? p.program : null;
+    const out = home ? [`   - *${home}* · ${link(homeRepo, online.get(homeRepo)?.private)} -- home${t.home_note ? ` [${t.home_note}]` : ''}`] : [];
+    for (const r of t.tools || []) if (online.has(r)) out.push(`   - ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
+    return out;
+  };
 
   // Section boundaries and the blurbs Astra already wrote.
   const sections = [];
@@ -56,6 +69,8 @@ export function syncProfile(readme, registry, repos, programs = null) {
   lines.forEach((ln, i) => {
     if (/^#{2,4} /.test(ln) && !/align=/.test(ln)) sections.push({ title: ln.replace(/^#+ /, ''), start: i });
     let m;
+    const sub = /^\s*- (?:\[`([^`]+)`\]\([^)]*\)|`([^`]+)` \*\(private\)\*) -- (.*)$/.exec(ln);
+    if (sub && !blurbs.has(sub[1] || sub[2])) blurbs.set(sub[1] || sub[2], sub[3]);
     if ((m = PET_FIRST.exec(ln))) blurbs.set(m[3] || m[4], m[5]);
     else if ((m = NUMBERED.exec(ln))) blurbs.set(m[1] || m[2], m[4]);
     else if ((m = BULLET.exec(ln))) blurbs.set(m[1] || m[2], m[3]);
@@ -99,7 +114,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     changes.push(`added ${r.name} to ${target.title}`);
   }
 
-  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln);
+  const isList = (ln) => BULLET.test(ln) || NUMBERED.test(ln) || PET_FIRST.test(ln) || /^\s+- /.test(ln);
   out.push(...lines.slice(0, sections.length ? sections[0].start : lines.length));
   for (const sec of sections) {
     const body = lines.slice(sec.start + 1, sec.end);
@@ -107,8 +122,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
     if (sec === petSection) {
       const first = body.findIndex(isList);
       const last = body.length - 1 - [...body].reverse().findIndex(isList);
-      const placeLines = places.filter((r) => online.has(r)).map((r) => `- ${link(r, online.get(r).private)} -- ${blurbs.get(r) || lowerFirst(online.get(r).description) || 'no description yet'}`);
-      const listed = placeLines.length ? [...petLines, '', ...placeLines] : petLines;
+      const listed = petLines.flatMap((ln) => { const m = PET_FIRST.exec(ln); return [ln, ...subLines(m && (m[3] || m[4]))]; });
       if (first < 0) out.push('', ...listed, ...body);
       else out.push(...body.slice(0, first), ...listed, ...body.slice(last + 1));
       continue;
@@ -119,9 +133,9 @@ export function syncProfile(readme, registry, repos, programs = null) {
       const m = pf ? [ln, pf[3], pf[4]] : BULLET.exec(ln) || NUMBERED.exec(ln);
       if (m) {
         const repo = m[1] || m[2];
-        if (petRepos.has(repo)) { changes.push(`moved ${repo} to the pet apps list`); continue; }
+        if (petRepos.has(repo) && !alsoListed.has(repo)) { changes.push(`moved ${repo} to the pet apps list`); continue; }
         if (hidden.has(repo)) { changes.push(`took ${repo} off the profile`); continue; }
-        if (places.includes(repo)) { changes.push(`moved ${repo} to Astra's PetOS`); continue; }
+        if (places.includes(repo)) { changes.push(`moved ${repo} under its pet in Astra's PetOS`); continue; }
         if (!online.has(repo) && m[1]) { changes.push(`removed ${repo} (not on GitHub)`); continue; }
       }
       kept.push(ln);
@@ -138,6 +152,7 @@ export function syncProfile(readme, registry, repos, programs = null) {
   const old = lines.filter((l) => NUMBERED.test(l) || PET_FIRST.test(l)).join('\n');
   if (old !== petLines.join('\n') && !changes.some((c) => c.startsWith('added pet'))) changes.push('reordered or refreshed the pet apps list');
   if (text === readme) return { text, changes: [] };
+  if (!changes.length) changes.push('tidied the pet list layout');
   return { text, changes };
 }
 

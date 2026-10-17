@@ -58,14 +58,14 @@ test('pet-finder reports a pet repo listed under the wrong repo, pets missing fr
   assert.ok(!f.some((x) => x.repo === 'startup-star'), 'a tool without pet.json is not a pet');
 });
 
-test('hidden repos leave the profile; places move under the pet list in Astra\'s PetOS (Astra, 2026-10-16)', () => {
-  const reg = { pets: [], pipeline: [], profile: { hidden: ['startup-star'], places: ['the-kennel'] } };
+test('hidden repos leave the profile; a pet’s home, then its tools, sit under its line (Astra, 2026-10-16)', () => {
+  const reg = { pets: [], pipeline: [], profile: { hidden: ['startup-star'], tools: { 'astras-pet-os': { home_note: 'moving to its own repo, the-farm', tools: ['the-kennel'] } } } };
   const rs = [...repos, { name: 'the-kennel', private: false, description: 'Pets made by other people.' }];
   const md = readme.replace("### Astra's PetOS", '- [`the-kennel`](https://github.com/findastra/the-kennel) -- pets made by other people\n\n### Astra\'s PetOS');
   const { text } = syncProfile(md, reg, rs, programs);
   assert.doesNotMatch(text, /startup-star/);
   const [before, petos] = text.split("### Astra's PetOS");
   assert.doesNotMatch(before, /the-kennel/);
-  assert.match(petos, /^\d+\. .*\n\n- \[`the-kennel`\]\([^)]*\) -- pets made by other people$/m);
+  assert.match(petos, /^1\. \*\*Friendly Farmer\*\*[^\n]*\n   - \*The Farm\* · \[`astras-pet-os`\][^\n]* -- home \[moving to its own repo, the-farm\]\n   - \[`the-kennel`\]\([^)]*\) -- pets made by other people\n18\. /m);
   assert.deepEqual(syncProfile(text, reg, rs, programs).changes, [], 'a second run changes nothing');
 });
